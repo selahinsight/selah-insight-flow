@@ -279,7 +279,7 @@ function Runner({
             textAlign: "center",
           }}
         >
-          <h1 style={{ fontSize: 28, color: theme.text }}>제출이 완료되었습니다</h1>
+          <h1 style={{ fontSize: 28, color: theme.text, fontFamily: headingFont }}>제출이 완료되었습니다</h1>
           <p
             style={{
               marginTop: 18,
