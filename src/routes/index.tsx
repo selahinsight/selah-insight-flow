@@ -19,13 +19,13 @@ function Home() {
 
       <section className="mx-auto max-w-5xl px-6 py-20 text-center md:px-10 md:py-28">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-[var(--cream)] px-4 py-1.5 text-[11px] tracking-[0.2em] text-[var(--clay)]">
-          SELAH SURVEY STUDIO
+          SELAH INSIGHT
         </span>
         <h1 className="mx-auto mt-8 max-w-3xl font-serif text-4xl leading-tight text-foreground md:text-6xl">
           Selah Survey Studio
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-base text-foreground/75 md:text-lg">
-          ChatGPT로 만든 설문을 붙여넣고, URL로 발행하고, 응답을 관리하세요.
+          설문을 발행하고, 응답을 관리하세요
         </p>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-foreground/60">
           Selah Survey Studio는 설문 제작, 발행, 응답 수집, 분석 프롬프트 복사를 위한 내부 작업
