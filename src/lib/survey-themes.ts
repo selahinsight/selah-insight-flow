@@ -141,8 +141,26 @@ export const FONT_MOODS: { value: FontMoodKey; label: string; family: string }[]
 ];
 
 export function fontFamilyOf(mood: FontMoodKey): string {
-  return FONT_MOODS.find((f) => f.value === mood)?.family ?? FONT_MOODS[0].family;
+  return bodyFamilyOf(mood);
 }
+
+export function headingFamilyOf(mood: FontMoodKey): string {
+  switch (mood) {
+    case "clean_sans":
+      return '"Pretendard", "Inter", system-ui, sans-serif';
+    case "calm_editorial":
+      return '"EB Garamond", "Cormorant Garamond", "Noto Serif KR", Georgia, serif';
+    case "serif_point":
+    default:
+      return '"Noto Serif KR", "Cormorant Garamond", Georgia, serif';
+  }
+}
+
+export function bodyFamilyOf(mood: FontMoodKey): string {
+  // Body stays readable sans in all moods.
+  return '"Pretendard", "Inter", system-ui, sans-serif';
+}
+
 
 export function buttonClasses(style: ButtonStyleKey, t: ThemeColors): React.CSSProperties {
   if (style === "outline") {
