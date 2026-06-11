@@ -18,6 +18,29 @@ export interface Question {
 
 export type AudienceType = "general" | "christian";
 
+export type SurveyCategory =
+  | "customer_understanding"
+  | "program_application"
+  | "content_reaction"
+  | "pre_diagnosis"
+  | "feedback"
+  | "other";
+
+export const SURVEY_CATEGORIES: { value: SurveyCategory; label: string }[] = [
+  { value: "customer_understanding", label: "고객 이해 설문" },
+  { value: "program_application", label: "프로그램 신청 설문" },
+  { value: "content_reaction", label: "콘텐츠 반응 설문" },
+  { value: "pre_diagnosis", label: "사전 진단 설문" },
+  { value: "feedback", label: "후기/피드백 설문" },
+  { value: "other", label: "기타" },
+];
+
+export function categoryLabel(c: SurveyCategory): string {
+  return SURVEY_CATEGORIES.find((x) => x.value === c)?.label ?? "기타";
+}
+
+const VALID_CATEGORIES: SurveyCategory[] = SURVEY_CATEGORIES.map((c) => c.value);
+
 export interface Survey {
   id: string;
   slug: string;
@@ -25,6 +48,7 @@ export interface Survey {
   description: string;
   completion_message: string;
   audience_type: AudienceType;
+  category: SurveyCategory;
   estimated_time: string;
   bible_verse?: string;
   questions: Question[];
@@ -34,6 +58,12 @@ export interface Survey {
   // raw json (for ChatGPT prompt copy)
   sourceJson?: string;
 }
+
+export const STATUS_LABEL: Record<Survey["status"], string> = {
+  draft: "제작중",
+  published: "설문중",
+  closed: "종료",
+};
 
 export interface Response {
   id: string;
@@ -124,6 +154,7 @@ export interface ParsedSurvey {
   description?: string;
   completion_message?: string;
   audience_type?: AudienceType;
+  category?: SurveyCategory;
   estimated_time?: string;
   bible_verse?: string;
   questions: {
@@ -155,6 +186,8 @@ export function validateSurveyJson(raw: string): ValidationResult {
   if (typeof o.title !== "string" || !o.title.trim()) errors.push("title은 비어있지 않은 문자열이어야 합니다.");
   if (o.audience_type && o.audience_type !== "general" && o.audience_type !== "christian")
     errors.push('audience_type은 "general" 또는 "christian"이어야 합니다.');
+  if (o.category && !VALID_CATEGORIES.includes(o.category as SurveyCategory))
+    errors.push(`category는 ${VALID_CATEGORIES.join(" / ")} 중 하나여야 합니다.`);
   if (!Array.isArray(o.questions) || o.questions.length === 0)
     errors.push("questions 배열이 비어있습니다.");
 
@@ -205,6 +238,7 @@ export function validateSurveyJson(raw: string): ValidationResult {
         ? o.completion_message
         : "응답해 주셔서 감사합니다.",
     audience_type: (o.audience_type as AudienceType) ?? "general",
+    category: (o.category as SurveyCategory) ?? "other",
     estimated_time: typeof o.estimated_time === "string" ? o.estimated_time : "약 3분",
     bible_verse: typeof o.bible_verse === "string" ? o.bible_verse : undefined,
     questions: qs,
@@ -222,6 +256,7 @@ export function surveyFromParsed(p: ParsedSurvey, sourceJson: string): Survey {
     description: p.description ?? "",
     completion_message: p.completion_message ?? "응답해 주셔서 감사합니다.",
     audience_type: p.audience_type ?? "general",
+    category: p.category ?? "other",
     estimated_time: p.estimated_time ?? "약 3분",
     bible_verse: p.bible_verse,
     questions: p.questions.map((q) => ({
