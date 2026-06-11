@@ -117,6 +117,7 @@
 @layer utilities {
   .bg-gradient-hero { background: var(--gradient-hero); }
   .bg-gradient-rose { background: var(--gradient-rose); }
+  .bg-gradient-clay { background: var(--gradient-clay); }
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-card { box-shadow: var(--shadow-card); }
   .vertical-text { writing-mode: vertical-rl; text-orientation: mixed; }
