@@ -111,6 +111,8 @@ function Runner({
 
   const btnPrimary = buttonClasses(design.button_style, theme);
   const cardStyle = cardClasses(design.card_style, theme);
+  const headingFont = headingFamilyOf(design.font_mood);
+
 
   if (phase === "intro") {
     return (
