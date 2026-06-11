@@ -36,8 +36,7 @@ function Home() {
           Selah Studio
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-base text-foreground/70 md:text-lg">
-          Selah 콘텐츠를 보고 들어온 사람들이 자신의 상태와 반복 패턴을<br className="hidden md:inline" />
-          이해하도록 돕는 진단 설문 제작 웹앱입니다.
+          Selah 콘텐츠 기반 진단 설문 제작 및 분석
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
