@@ -22,7 +22,7 @@ function Home() {
           SELAH INSIGHT
         </span>
         <h1 className="mx-auto mt-8 max-w-3xl font-serif text-4xl leading-tight text-foreground md:text-6xl">
-          Selah Survey Studio
+          Selah Studio
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-base text-foreground/75 md:text-lg">
           설문을 발행하고, 응답을 관리하세요

@@ -35,7 +35,7 @@ export function AdminShell({
           </svg>
           <span className="font-serif text-lg tracking-[0.25em] text-[var(--clay)]">SELAH</span>
         </Link>
-        <p className="mt-1 text-[11px] text-muted-foreground">Survey Studio</p>
+        <p className="mt-1 text-[11px] text-muted-foreground">Studio</p>
 
         <nav className="mt-10 flex flex-col gap-1">
           {nav.map((n) => {
