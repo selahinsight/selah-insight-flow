@@ -141,10 +141,12 @@ function Runner({
               fontSize: 32,
               lineHeight: 1.3,
               color: theme.text,
+              fontFamily: headingFont,
             }}
           >
             {survey.title}
           </h1>
+
           {survey.description && (
             <p
               style={{
