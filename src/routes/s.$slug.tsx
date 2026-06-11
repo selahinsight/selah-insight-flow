@@ -665,17 +665,16 @@ function ShareSection({
             onClick={handleShare}
             disabled={busy}
             style={{
+              ...btn,
               padding: "12px 22px",
               borderRadius: 999,
               fontSize: 13,
               fontWeight: 500,
               cursor: busy ? "wait" : "pointer",
-              backgroundColor: "transparent",
-              color: theme.accent,
-              border: `1.5px solid ${theme.accent}`,
               display: "inline-flex",
               alignItems: "center",
               gap: 6,
+              opacity: 0.92,
             }}
           >
             <Share2 size={14} /> 이미지로 공유하기
@@ -693,8 +692,9 @@ function ShareSection({
         }}
         aria-hidden
       >
-        <ResultShareCard ref={cardRef} survey={survey} design={design} />
+        <ResultShareCard ref={cardRef} survey={survey} design={design} qrDataUrl={qrDataUrl} />
       </div>
+
     </>
   );
 }
