@@ -28,8 +28,6 @@ function Home() {
           설문을 발행하고, 응답을 관리하세요
         </p>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-foreground/60">
-          Selah Survey Studio는 설문 제작, 발행, 응답 수집, 분석 프롬프트 복사를 위한 내부 작업
-          도구입니다.
         </p>
 
         <div className="mt-10 flex justify-center">
