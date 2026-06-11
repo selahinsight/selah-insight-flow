@@ -224,21 +224,31 @@ function Wrap({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[var(--ivory)] px-5 py-10">
       <div className="mx-auto max-w-xl">
-        <div className="mb-6 flex items-center gap-2">
-          <svg width="22" height="22" viewBox="0 0 40 40" className="text-[var(--clay)]">
-            <path
-              d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.2"
-            />
-          </svg>
-          <span className="font-serif text-xs tracking-[0.25em] text-[var(--clay)]">
-            SELAH · DIAGNOSIS
-          </span>
+        <div className="mb-6 flex items-center justify-between gap-2">
+          <button
+            onClick={() => {
+              if (window.history.length > 1) window.history.back();
+              else window.location.href = "/";
+            }}
+            className="grid h-8 w-8 place-items-center rounded-full border border-border bg-white text-foreground/70 hover:bg-[var(--sand)]/60"
+            title="이전"
+            aria-label="이전"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <div className="flex items-center gap-2">
+            <svg width="22" height="22" viewBox="0 0 40 40" className="text-[var(--clay)]">
+              <path d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z" fill="none" stroke="currentColor" strokeWidth="1.2" />
+            </svg>
+            <span className="font-serif text-xs tracking-[0.25em] text-[var(--clay)]">SELAH · DIAGNOSIS</span>
+          </div>
+          <span className="w-8" />
         </div>
         {children}
       </div>
     </div>
   );
 }
+

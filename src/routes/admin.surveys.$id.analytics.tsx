@@ -38,6 +38,7 @@ function Analytics() {
     <AdminShell
       title={survey.title}
       subtitle="응답 분석 · 키워드 · 전환 가능성"
+      showBack
       actions={
         <button
           onClick={downloadCsv}

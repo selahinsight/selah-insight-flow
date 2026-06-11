@@ -1,8 +1,9 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { LayoutDashboard, FilePlus2, ListChecks, Settings2, BarChart3 } from "lucide-react";
+import { ArrowLeft, BarChart3, FilePlus2, Home, LayoutDashboard, ListChecks, Settings2 } from "lucide-react";
 
 const nav = [
+  { to: "/", label: "메인", icon: Home, exact: true },
   { to: "/admin", label: "대시보드", icon: LayoutDashboard, exact: true },
   { to: "/admin/new", label: "새 설문 만들기", icon: FilePlus2 },
 ];
@@ -12,24 +13,24 @@ export function AdminShell({
   title,
   subtitle,
   actions,
+  showBack = false,
 }: {
   children: ReactNode;
   title: string;
   subtitle?: string;
   actions?: ReactNode;
+  showBack?: boolean;
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const router = useRouter();
   return (
     <div className="flex min-h-screen w-full bg-[var(--ivory)] text-foreground">
-      {/* Sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-border/60 bg-white/60 px-5 py-8 md:flex md:flex-col">
-        <Link to="/admin" className="flex items-center gap-2">
+      <aside className="hidden w-64 shrink-0 border-r border-border/60 bg-[var(--cream)] px-5 py-8 md:flex md:flex-col">
+        <Link to="/" className="flex items-center gap-2">
           <svg width="28" height="28" viewBox="0 0 40 40" className="text-[var(--clay)]">
             <path
               d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.2"
+              fill="none" stroke="currentColor" strokeWidth="1.2"
             />
           </svg>
           <span className="font-serif text-lg tracking-[0.25em] text-[var(--clay)]">SELAH</span>
@@ -44,9 +45,7 @@ export function AdminShell({
                 key={n.to}
                 to={n.to}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition ${
-                  active
-                    ? "bg-[var(--rose-soft)]/40 text-[var(--clay)]"
-                    : "text-foreground/70 hover:bg-white"
+                  active ? "bg-[var(--sand)] text-[var(--clay)]" : "text-foreground/70 hover:bg-white"
                 }`}
               >
                 <n.icon className="h-4 w-4" />
@@ -56,24 +55,30 @@ export function AdminShell({
           })}
         </nav>
 
-        <div className="mt-10 rounded-2xl bg-gradient-rose p-4 text-xs text-white/95 shadow-soft">
+        <div className="mt-10 rounded-2xl bg-gradient-clay p-4 text-xs text-white/95 shadow-soft">
           <p className="font-serif text-base">자기진단형 설문</p>
-          <p className="mt-1 text-white/80">
-            관리자가 만들고, 응답자가 자기 상태를 확인합니다.
-          </p>
+          <p className="mt-1 text-white/80">관리자가 만들고, 응답자가 자기 상태를 확인합니다.</p>
         </div>
 
         <div className="mt-auto pt-8 text-[11px] text-muted-foreground">© SELAH</div>
       </aside>
 
-      {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 bg-white/40 px-6 py-5 md:px-10">
-          <div>
-            <h1 className="font-serif text-2xl text-foreground md:text-3xl">{title}</h1>
-            {subtitle && (
-              <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
+        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 bg-[var(--cream)]/60 px-6 py-5 md:px-10">
+          <div className="flex items-center gap-3">
+            {showBack && (
+              <button
+                onClick={() => router.history.back()}
+                className="grid h-9 w-9 place-items-center rounded-full border border-border/60 bg-white text-foreground/70 transition hover:bg-[var(--sand)]/60"
+                title="이전 화면"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
             )}
+            <div>
+              <h1 className="font-serif text-2xl text-foreground md:text-3xl">{title}</h1>
+              {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
+            </div>
           </div>
           {actions && <div className="flex items-center gap-2">{actions}</div>}
         </header>
@@ -92,7 +97,7 @@ export function SurveyTabs({ id }: { id: string }) {
     { to: `/admin/surveys/${id}/analytics`, label: "결과 분석", icon: BarChart3 },
   ];
   return (
-    <div className="mb-8 flex flex-wrap gap-1 rounded-full bg-white/70 p-1 shadow-card">
+    <div className="mb-8 flex flex-wrap gap-1 rounded-full bg-white p-1 shadow-card">
       {tabs.map((t) => {
         const active = pathname === t.to;
         return (
@@ -100,9 +105,7 @@ export function SurveyTabs({ id }: { id: string }) {
             key={t.to}
             to={t.to}
             className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm transition ${
-              active
-                ? "bg-[var(--clay)] text-white shadow"
-                : "text-foreground/70 hover:bg-white"
+              active ? "bg-[var(--clay)] text-white shadow" : "text-foreground/70 hover:bg-[var(--sand)]/50"
             }`}
           >
             <t.icon className="h-3.5 w-3.5" />

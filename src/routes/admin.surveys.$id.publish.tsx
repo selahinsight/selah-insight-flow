@@ -18,7 +18,7 @@ function Publish() {
   const isPublished = survey.status === "published";
 
   return (
-    <AdminShell title={survey.title} subtitle="공개 링크를 발행하고 응답을 수집합니다.">
+    <AdminShell title={survey.title} subtitle="공개 링크를 발행하고 응답을 수집합니다." showBack>
       <SurveyTabs id={id} />
 
       <div className="grid gap-6 lg:grid-cols-5">

@@ -23,7 +23,7 @@ function ResultEditor() {
   }
 
   return (
-    <AdminShell title={survey.title} subtitle="무료 / 유료 결과지와 유형별 문구를 편집합니다.">
+    <AdminShell title={survey.title} subtitle="무료 / 유료 결과지와 유형별 문구를 편집합니다." showBack>
       <SurveyTabs id={id} />
 
       <div className="grid gap-6 lg:grid-cols-2">
