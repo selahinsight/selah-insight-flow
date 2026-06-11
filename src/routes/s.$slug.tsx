@@ -537,6 +537,16 @@ function ShareSection({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [busy, setBusy] = useState(false);
+  const [qrDataUrl, setQrDataUrl] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = `${window.location.origin}/s/${survey.slug}`;
+    QRCode.toDataURL(url, { margin: 1, width: 320 })
+      .then((d) => setQrDataUrl(d))
+      .catch(() => undefined);
+  }, [survey.slug]);
+
 
   async function renderPng(): Promise<Blob | null> {
     if (!cardRef.current) return null;
