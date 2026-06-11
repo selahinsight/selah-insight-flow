@@ -8,11 +8,9 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
-import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-
 
 function NotFoundComponent() {
   return (
@@ -79,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "설문제작" },
+      { name: "description", content: "Selah Insight Lab is a self-diagnosis survey web app for understanding personal patterns." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "설문제작" },
+      { property: "og:description", content: "Selah Insight Lab is a self-diagnosis survey web app for understanding personal patterns." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "설문제작" },
+      { name: "twitter:description", content: "Selah Insight Lab is a self-diagnosis survey web app for understanding personal patterns." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2e8ed4bc-866c-4c7e-8df2-ed133352025c/id-preview-6382f91a--462fdd2e-b4a7-4a96-a5f6-827de32916ed.lovable.app-1781145104396.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2e8ed4bc-866c-4c7e-8df2-ed133352025c/id-preview-6382f91a--462fdd2e-b4a7-4a96-a5f6-827de32916ed.lovable.app-1781145104396.png" },
     ],
     links: [
       {
@@ -120,9 +122,8 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <Toaster />
     </QueryClientProvider>
   );
 }
-
