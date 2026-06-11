@@ -2,8 +2,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { useSurveys } from "@/lib/use-surveys";
 import { deleteSurvey, upsertSurvey } from "@/lib/survey-store";
-import { Copy, Eye, BarChart3, Pencil, Plus, Trash2, Link2 } from "lucide-react";
+import { Eye, BarChart3, Pencil, Plus, Trash2, Link2 } from "lucide-react";
 import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/admin/")({
   component: Dashboard,
