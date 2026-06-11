@@ -1,4 +1,5 @@
 // Selah Survey theme presets. Layout is fixed — only mood/colors switch.
+import type React from "react";
 
 export type ThemeKey =
   | "warm_ivory"
