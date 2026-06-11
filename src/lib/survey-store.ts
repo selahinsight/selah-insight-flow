@@ -1,6 +1,31 @@
 // Selah Survey Studio — JSON-schema backed survey store (localStorage).
 // Shape is intentionally close to a future Lovable Cloud table so the swap is easy.
 
+import { DEFAULT_DESIGN, type DesignSettings } from "./survey-themes";
+
+export interface ShareCardConfig {
+  enabled: boolean;
+  title?: string;
+  summary?: string;       // 결과 요약 / 진단 유형명
+  description?: string;   // 한 줄 설명
+  hashtags?: string[];
+  encouragement?: string; // 짧은 응원 문장
+  cta_text?: string;
+  include_verse?: boolean;
+}
+
+export const DEFAULT_SHARE_CARD: ShareCardConfig = {
+  enabled: true,
+  title: undefined,
+  summary: undefined,
+  description: undefined,
+  hashtags: [],
+  encouragement: "당신의 속도로, 회복은 이미 시작되고 있어요.",
+  cta_text: "나도 진단해보기",
+  include_verse: true,
+};
+
+
 export type QuestionType =
   | "short_text"
   | "long_text"
