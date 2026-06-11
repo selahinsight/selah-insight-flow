@@ -269,6 +269,22 @@ export function validateSurveyJson(raw: string): ValidationResult {
 
   if (errors.length) return { ok: false, errors };
 
+  const sc = (o.share_card && typeof o.share_card === "object" && !Array.isArray(o.share_card))
+    ? (o.share_card as Record<string, unknown>)
+    : undefined;
+  const share_card: ShareCardConfig | undefined = sc
+    ? {
+        enabled: sc.enabled !== false,
+        title: typeof sc.title === "string" ? sc.title : undefined,
+        summary: typeof sc.summary === "string" ? sc.summary : undefined,
+        description: typeof sc.description === "string" ? sc.description : undefined,
+        hashtags: Array.isArray(sc.hashtags) ? (sc.hashtags as unknown[]).filter((x): x is string => typeof x === "string") : undefined,
+        encouragement: typeof sc.encouragement === "string" ? sc.encouragement : undefined,
+        cta_text: typeof sc.cta_text === "string" ? sc.cta_text : undefined,
+        include_verse: sc.include_verse !== false,
+      }
+    : undefined;
+
   const data: ParsedSurvey = {
     title: (o.title as string).trim(),
     slug: typeof o.slug === "string" ? o.slug : undefined,
@@ -282,9 +298,11 @@ export function validateSurveyJson(raw: string): ValidationResult {
     estimated_time: typeof o.estimated_time === "string" ? o.estimated_time : "약 3분",
     bible_verse: typeof o.bible_verse === "string" ? o.bible_verse : undefined,
     questions: qs,
+    share_card,
   };
   return { ok: true, errors: [], data };
 }
+
 
 export function surveyFromParsed(p: ParsedSurvey, sourceJson: string): Survey {
   const id = uid("sv");
