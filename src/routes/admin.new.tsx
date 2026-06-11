@@ -11,6 +11,18 @@ import {
   type Survey,
 } from "@/lib/survey-store";
 import {
+  DEFAULT_DESIGN,
+  THEMES,
+  BUTTON_STYLES,
+  CARD_STYLES,
+  FONT_MOODS,
+  type DesignSettings,
+  type ThemeKey,
+  type ButtonStyleKey,
+  type CardStyleKey,
+  type FontMoodKey,
+} from "@/lib/survey-themes";
+import {
   CheckCircle2,
   AlertTriangle,
   ClipboardPaste,
@@ -18,8 +30,21 @@ import {
   Link2,
   BarChart3,
   Pencil,
+  Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 
 export const Route = createFileRoute("/admin/new")({
   component: NewSurvey,
