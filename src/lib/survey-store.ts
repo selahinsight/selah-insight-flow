@@ -201,7 +201,9 @@ export interface ParsedSurvey {
     required?: boolean;
     options?: string[];
   }[];
+  share_card?: ShareCardConfig;
 }
+
 
 export interface ValidationResult {
   ok: boolean;
