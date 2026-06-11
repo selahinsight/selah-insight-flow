@@ -194,6 +194,71 @@ function Runner({
   }
 
   if (phase === "done") {
+    if (result) {
+      return (
+        <Wrap theme={theme} design={design}>
+          <div
+            style={{
+              ...cardStyle,
+              borderRadius: 24,
+              padding: 36,
+            }}
+          >
+            <p style={{ fontSize: 12, letterSpacing: "0.25em", color: theme.accent, textAlign: "center" }}>
+              YOUR RESULT
+            </p>
+            <p style={{ marginTop: 14, fontSize: 13, color: theme.muted, textAlign: "center" }}>
+              {survey.title}
+            </p>
+            <h1
+              style={{
+                marginTop: 8,
+                fontSize: 32,
+                lineHeight: 1.3,
+                color: theme.text,
+                textAlign: "center",
+              }}
+            >
+              당신의 결과는 {result.title}이에요.
+            </h1>
+            {result.summary && (
+              <p style={{ marginTop: 20, fontSize: 15, lineHeight: 1.65, color: theme.text, opacity: 0.85, textAlign: "center" }}>
+                {result.summary}
+              </p>
+            )}
+            {result.description && (
+              <p style={{ marginTop: 18, fontSize: 14, lineHeight: 1.75, whiteSpace: "pre-wrap", color: theme.text, opacity: 0.8 }}>
+                {result.description}
+              </p>
+            )}
+            {(result.bibleVerse || (survey.audience_type === "christian" && survey.bible_verse)) && (
+              <div
+                style={{
+                  marginTop: 24,
+                  padding: 16,
+                  borderRadius: 14,
+                  backgroundColor: theme.bg,
+                  borderLeft: `3px solid ${theme.accent}`,
+                  fontStyle: "italic",
+                  color: theme.text,
+                  fontSize: 14,
+                }}
+              >
+                “{result.bibleVerse ?? survey.bible_verse}”
+              </div>
+            )}
+            {survey.completion_message && (
+              <p style={{ marginTop: 22, fontSize: 13, color: theme.muted, textAlign: "center", whiteSpace: "pre-wrap" }}>
+                {survey.completion_message}
+              </p>
+            )}
+          </div>
+
+          <ResultActions survey={survey} result={result} design={design} theme={theme} />
+        </Wrap>
+      );
+    }
+
     return (
       <Wrap theme={theme} design={design}>
         <div
@@ -238,6 +303,7 @@ function Runner({
           <ShareSection survey={survey} design={design} theme={theme} />
         )}
       </Wrap>
+
     );
   }
 
