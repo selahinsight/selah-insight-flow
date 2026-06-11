@@ -838,7 +838,7 @@ function ResultActions({
         style={{ position: "fixed", left: -99999, top: 0, pointerEvents: "none" }}
         aria-hidden
       >
-        <ResultDiagnosisCard ref={cardRef} survey={survey} result={result} design={design} />
+        <ResultDiagnosisCard ref={cardRef} survey={survey} result={result} design={design} qrDataUrl={qrDataUrl} />
       </div>
     </>
   );
