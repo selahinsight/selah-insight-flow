@@ -33,7 +33,7 @@ function Home() {
           SELAH DIAGNOSIS SURVEY · ANALISIS
         </span>
         <h1 className="mx-auto mt-8 max-w-3xl font-serif text-4xl leading-tight text-foreground md:text-6xl">
-          Selah Studio
+          Selah Survey Studio
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-base text-foreground/70 md:text-lg">
           Selah 콘텐츠 기반 진단 설문 제작 및 분석
