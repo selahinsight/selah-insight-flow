@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
+import QRCode from "qrcode";
 import {
   addResponse,
   computeResultType,
@@ -15,9 +16,11 @@ import { useSurveys } from "@/lib/use-surveys";
 import {
   DEFAULT_DESIGN,
   THEMES,
+  bodyFamilyOf,
   buttonClasses,
   cardClasses,
   fontFamilyOf,
+  headingFamilyOf,
   type DesignSettings,
   type ThemeColors,
 } from "@/lib/survey-themes";
@@ -25,6 +28,7 @@ import { ResultShareCard } from "@/components/survey/result-share-card";
 import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { Download, Share2 } from "lucide-react";
 import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/s/$slug")({
   component: RespondentSurvey,
