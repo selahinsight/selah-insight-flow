@@ -177,31 +177,38 @@ function EditQuestions() {
 
             {(q.type === "single_choice" || q.type === "multiple_choice") && (
               <div className="mt-3 space-y-2">
-                {(q.options ?? []).map((label, oi) => (
-                  <div key={oi} className="flex items-center gap-2">
-                    <input
-                      value={label}
-                      onChange={(e) => {
-                        const qs = [...survey.questions];
-                        const opts = [...(q.options ?? [])];
-                        opts[oi] = e.target.value;
-                        qs[i] = { ...q, options: opts };
-                        update(qs);
-                      }}
-                      className="flex-1 rounded-lg border border-border/60 bg-white px-3 py-2 text-sm"
-                    />
-                    <IconBtn
-                      onClick={() => {
-                        const qs = [...survey.questions];
-                        qs[i] = { ...q, options: (q.options ?? []).filter((_, j) => j !== oi) };
-                        update(qs);
-                      }}
-                      title="삭제"
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </IconBtn>
-                  </div>
-                ))}
+                {(q.options ?? []).map((opt, oi) => {
+                  const label = typeof opt === "string" ? opt : opt.text;
+                  return (
+                    <div key={oi} className="flex items-center gap-2">
+                      <input
+                        value={label}
+                        onChange={(e) => {
+                          const qs = [...survey.questions];
+                          const opts = [...(q.options ?? [])];
+                          const cur = opts[oi];
+                          opts[oi] =
+                            typeof cur === "string"
+                              ? e.target.value
+                              : { ...cur, text: e.target.value };
+                          qs[i] = { ...q, options: opts };
+                          update(qs);
+                        }}
+                        className="flex-1 rounded-lg border border-border/60 bg-white px-3 py-2 text-sm"
+                      />
+                      <IconBtn
+                        onClick={() => {
+                          const qs = [...survey.questions];
+                          qs[i] = { ...q, options: (q.options ?? []).filter((_, j) => j !== oi) };
+                          update(qs);
+                        }}
+                        title="삭제"
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </IconBtn>
+                    </div>
+                  );
+                })}
                 <button
                   onClick={() => {
                     const qs = [...survey.questions];
