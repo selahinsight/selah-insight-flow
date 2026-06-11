@@ -30,7 +30,7 @@ function Home() {
 
       <section className="mx-auto max-w-5xl px-6 py-16 text-center md:px-10 md:py-24">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-[var(--cream)] px-4 py-1.5 text-[11px] tracking-[0.2em] text-[var(--clay)]">
-          DIAGNOSIS LAB · SELF-DIAGNOSIS SURVEY BUILDER
+          SELAH DIAGNOSIS SURVEY · ANALISIS
         </span>
         <h1 className="mx-auto mt-8 max-w-3xl font-serif text-4xl leading-tight text-foreground md:text-6xl">
           Selah Studio
