@@ -225,10 +225,12 @@ function Runner({
                 lineHeight: 1.3,
                 color: theme.text,
                 textAlign: "center",
+                fontFamily: headingFont,
               }}
             >
               당신의 결과는 {result.title}이에요.
             </h1>
+
             {result.summary && (
               <p style={{ marginTop: 20, fontSize: 15, lineHeight: 1.65, color: theme.text, opacity: 0.85, textAlign: "center" }}>
                 {result.summary}
