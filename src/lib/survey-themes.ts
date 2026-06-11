@@ -196,6 +196,3 @@ function hexAlpha(hex: string, a: number): string {
   const b = parseInt(n.slice(4, 6), 16);
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
-
-// react import shim for CSSProperties type without React in scope
-import type React from "react";
