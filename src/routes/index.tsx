@@ -33,7 +33,7 @@ function Home() {
           DIAGNOSIS LAB · SELF-DIAGNOSIS SURVEY BUILDER
         </span>
         <h1 className="mx-auto mt-8 max-w-3xl font-serif text-4xl leading-tight text-foreground md:text-6xl">
-          자기진단 설문을 만들고,<br />결과를 분석하고,<br />프로그램 연결까지 설계하세요.
+          Selah Studio
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-base text-foreground/70 md:text-lg">
           Selah 콘텐츠를 보고 들어온 사람들이 자신의 상태와 반복 패턴을<br className="hidden md:inline" />
