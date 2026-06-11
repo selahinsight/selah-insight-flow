@@ -731,3 +731,86 @@ function Wrap({
     </div>
   );
 }
+
+function ResultActions({
+  survey,
+  result,
+  design,
+  theme,
+}: {
+  survey: Survey;
+  result: ResultType;
+  design: DesignSettings;
+  theme: ThemeColors;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [busy, setBusy] = useState(false);
+
+  async function handleDownload() {
+    if (!cardRef.current) return;
+    try {
+      setBusy(true);
+      const dataUrl = await toPng(cardRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        width: 1080,
+        height: 1350,
+      });
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = `selah-result-${result.id}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      toast.success("결과 카드를 저장했어요");
+    } catch (e) {
+      console.error(e);
+      toast.error("저장에 실패했어요");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const btn = buttonClasses(design.button_style, theme);
+
+  return (
+    <>
+      <div
+        style={{
+          marginTop: 16,
+          display: "flex",
+          gap: 10,
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <button
+          onClick={handleDownload}
+          disabled={busy}
+          style={{
+            ...btn,
+            padding: "12px 22px",
+            borderRadius: 999,
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: busy ? "wait" : "pointer",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+          }}
+        >
+          <Download size={14} /> 이미지로 저장
+        </button>
+      </div>
+
+      {/* Off-screen capture source */}
+      <div
+        style={{ position: "fixed", left: -99999, top: 0, pointerEvents: "none" }}
+        aria-hidden
+      >
+        <ResultDiagnosisCard ref={cardRef} survey={survey} result={result} design={design} />
+      </div>
+    </>
+  );
+}
+
