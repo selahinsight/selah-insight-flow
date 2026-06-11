@@ -33,12 +33,33 @@ export type QuestionType =
   | "multiple_choice"
   | "scale_1_5";
 
+export interface OptionObject {
+  text: string;
+  resultType?: string;
+}
+export type SurveyOption = string | OptionObject;
+
+export function optionText(o: SurveyOption): string {
+  return typeof o === "string" ? o : o.text;
+}
+export function optionResultType(o: SurveyOption): string | undefined {
+  return typeof o === "string" ? undefined : o.resultType;
+}
+
 export interface Question {
   id: string;
   type: QuestionType;
   text: string;
   required?: boolean;
-  options?: string[]; // for single_choice / multiple_choice
+  options?: SurveyOption[];
+}
+
+export interface ResultType {
+  id: string;
+  title: string;
+  summary?: string;
+  description?: string;
+  bibleVerse?: string;
 }
 
 export type AudienceType = "general" | "christian";
@@ -59,6 +80,7 @@ export const SURVEY_CATEGORIES: { value: SurveyCategory; label: string }[] = [
   { value: "feedback", label: "후기/피드백 설문" },
   { value: "other", label: "기타" },
 ];
+
 
 export function categoryLabel(c: SurveyCategory): string {
   return SURVEY_CATEGORIES.find((x) => x.value === c)?.label ?? "기타";
