@@ -2,232 +2,164 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { AdminShell } from "@/components/admin/admin-shell";
 import {
-  AUDIENCE_OPTIONS,
-  PURPOSE_OPTIONS,
-  THEME_OPTIONS,
-  TONE_OPTIONS,
-  generateSurveyFromInputs,
+  validateSurveyJson,
+  surveyFromParsed,
   upsertSurvey,
-  type Survey,
+  type ParsedSurvey,
 } from "@/lib/survey-store";
-import { Sparkles } from "lucide-react";
+import { CheckCircle2, AlertTriangle, ClipboardPaste } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/new")({
   component: NewSurvey,
 });
 
+const EXAMPLE = `{
+  "title": "감정 회복 자기진단",
+  "slug": "emotion-recovery",
+  "description": "지금 내 감정 상태를 살펴보는 짧은 진단입니다.",
+  "completion_message": "응답이 저장되었습니다. 곧 결과를 정리해서 알려드릴게요.",
+  "audience_type": "general",
+  "estimated_time": "약 3분",
+  "questions": [
+    {
+      "type": "single_choice",
+      "text": "요즘 가장 자주 느끼는 감정은?",
+      "options": ["지친다", "복잡하다", "무감각하다", "회복 중"]
+    },
+    { "type": "scale_1_5", "text": "지금 내 회복 에너지 점수는?" },
+    { "type": "long_text", "text": "지금 가장 회복되고 싶은 영역을 적어주세요." }
+  ]
+}`;
+
 function NewSurvey() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    title: "",
-    purposes: [PURPOSE_OPTIONS[0]] as string[],
-    customPurpose: "",
-    audience: AUDIENCE_OPTIONS[0],
-    coreInfo: "",
-    questionCount: 8,
-    tone: TONE_OPTIONS[0],
-    resultCount: 4,
-    theme: "ivory" as Survey["theme"],
-  });
-  const [busy, setBusy] = useState(false);
+  const [json, setJson] = useState("");
+  const [errors, setErrors] = useState<string[]>([]);
+  const [parsed, setParsed] = useState<ParsedSurvey | null>(null);
 
-  function update<K extends keyof typeof form>(k: K, v: (typeof form)[K]) {
-    setForm((f) => ({ ...f, [k]: v }));
-  }
-  function togglePurpose(p: string) {
-    setForm((f) => ({
-      ...f,
-      purposes: f.purposes.includes(p) ? f.purposes.filter((x) => x !== p) : [...f.purposes, p],
-    }));
-  }
-
-  function onGenerate() {
-    if (!form.title.trim()) {
-      toast.error("설문 주제를 입력해 주세요");
+  function validate() {
+    setParsed(null);
+    if (!json.trim()) {
+      setErrors(["JSON을 붙여넣어 주세요."]);
       return;
     }
-    if (form.purposes.length === 0 && !form.customPurpose.trim()) {
-      toast.error("설문 목적을 하나 이상 선택해 주세요");
+    const r = validateSurveyJson(json);
+    if (!r.ok) {
+      setErrors(r.errors);
       return;
     }
-    setBusy(true);
-    setTimeout(() => {
-      const s = generateSurveyFromInputs(form);
-      upsertSurvey(s);
-      toast.success("AI 시뮬레이션으로 초안을 생성했습니다");
-      navigate({ to: "/admin/surveys/$id/edit", params: { id: s.id } });
-    }, 500);
+    setErrors([]);
+    setParsed(r.data ?? null);
+  }
+
+  function createAndGo() {
+    if (!parsed) return;
+    const s = surveyFromParsed(parsed, json);
+    upsertSurvey(s);
+    toast.success("설문이 만들어졌습니다");
+    navigate({ to: "/admin/surveys/$id/edit", params: { id: s.id } });
   }
 
   return (
     <AdminShell
       title="새 설문 만들기"
-      subtitle="기본 정보를 입력하면 AI가 설문 초안을 만들어 드립니다."
+      subtitle="ChatGPT에서 만든 설문 JSON을 붙여넣으면, 설문 URL을 발행하고 응답을 관리할 수 있습니다."
       showBack
     >
       <div className="grid gap-8 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
-          <Card>
-            <Field label="설문 주제" hint="예: 관계 패턴 진단, 번아웃 자기진단, 감정 회복 진단">
-              <input
-                value={form.title}
-                onChange={(e) => update("title", e.target.value)}
-                placeholder="설문 제목을 입력하세요"
-                className="w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--clay)]/30"
-              />
-            </Field>
-
-            <Field label="설문 목적 (다중 선택)" hint="여러 목적을 동시에 가질 수 있습니다">
-              <div className="flex flex-wrap gap-2">
-                {PURPOSE_OPTIONS.map((o) => {
-                  const active = form.purposes.includes(o);
-                  return (
-                    <button
-                      key={o}
-                      type="button"
-                      onClick={() => togglePurpose(o)}
-                      className={`rounded-full border px-4 py-2 text-sm transition ${
-                        active
-                          ? "border-[var(--clay)] bg-[var(--clay)] text-white"
-                          : "border-border/60 bg-white text-foreground/80 hover:bg-[var(--sand)]/40"
-                      }`}
-                    >
-                      {o}
-                    </button>
-                  );
-                })}
-              </div>
-              <input
-                value={form.customPurpose}
-                onChange={(e) => update("customPurpose", e.target.value)}
-                placeholder="직접 입력 — 예: 신규 프로그램 사전 진단"
-                className="mt-3 w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--clay)]/30"
-              />
-            </Field>
-
-            <Field label="응답자 관계">
-              <Pills value={form.audience} onChange={(v) => update("audience", v)} options={AUDIENCE_OPTIONS} />
-            </Field>
-
-            <Field label="알고 싶은 핵심 정보" hint="예: 현재 감정 상태, 회복 루틴, 구매 장벽">
-              <textarea
-                value={form.coreInfo}
-                onChange={(e) => update("coreInfo", e.target.value)}
-                rows={3}
-                placeholder="응답자에게서 알고 싶은 정보를 자유롭게 적어주세요"
-                className="w-full rounded-xl border border-border/70 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--clay)]/30"
-              />
-            </Field>
-          </Card>
-
-          <Card>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <Field label="질문 개수">
-                <Stepper value={form.questionCount} min={3} max={20} onChange={(v) => update("questionCount", v)} />
-              </Field>
-              <Field label="결과 유형 개수">
-                <Stepper value={form.resultCount} min={2} max={8} onChange={(v) => update("resultCount", v)} />
-              </Field>
+        <div className="space-y-4 lg:col-span-2">
+          <div className="rounded-2xl border border-border/60 bg-white/80 p-6 shadow-card">
+            <div className="mb-3 flex items-center justify-between">
+              <label className="text-sm font-medium text-foreground">설문 JSON</label>
+              <button
+                type="button"
+                onClick={() => setJson(EXAMPLE)}
+                className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-white px-3 py-1 text-xs text-foreground/70 hover:bg-[var(--sand)]/40"
+              >
+                <ClipboardPaste className="h-3 w-3" /> 예시 채우기
+              </button>
             </div>
-            <Field label="질문 톤">
-              <Pills value={form.tone} onChange={(v) => update("tone", v)} options={TONE_OPTIONS} />
-            </Field>
+            <textarea
+              value={json}
+              onChange={(e) => setJson(e.target.value)}
+              rows={20}
+              spellCheck={false}
+              placeholder="ChatGPT에서 만든 설문 JSON을 여기에 붙여넣으세요"
+              className="w-full rounded-xl border border-border/70 bg-[var(--ivory)] px-4 py-3 font-mono text-xs leading-relaxed text-foreground/90 focus:outline-none focus:ring-2 focus:ring-[var(--clay)]/30"
+            />
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              <button
+                onClick={validate}
+                className="rounded-full bg-[var(--clay)] px-5 py-2.5 text-sm font-medium text-white shadow-soft"
+              >
+                JSON 검증하기
+              </button>
+              {parsed && (
+                <button
+                  onClick={createAndGo}
+                  className="rounded-full border border-[var(--clay)] bg-white px-5 py-2.5 text-sm font-medium text-[var(--clay)]"
+                >
+                  설문 미리보기로 이동 →
+                </button>
+              )}
+            </div>
 
-            <Field label="컬러 테마">
-              <div className="flex flex-wrap gap-2">
-                {THEME_OPTIONS.map((t) => {
-                  const active = form.theme === t.value;
-                  return (
-                    <button
-                      key={t.value}
-                      type="button"
-                      onClick={() => update("theme", t.value)}
-                      className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition ${
-                        active ? "border-[var(--clay)] bg-white shadow-card" : "border-border/60 bg-white/60 hover:bg-white"
-                      }`}
-                    >
-                      <span className="h-4 w-4 rounded-full border border-black/10" style={{ background: t.swatch }} />
-                      {t.label}
-                    </button>
-                  );
-                })}
+            {errors.length > 0 && (
+              <div className="mt-5 rounded-xl border border-destructive/30 bg-destructive/5 p-4">
+                <div className="mb-2 flex items-center gap-2 text-sm font-medium text-destructive">
+                  <AlertTriangle className="h-4 w-4" /> 검증 오류
+                </div>
+                <ul className="ml-5 list-disc space-y-1 text-sm text-destructive/90">
+                  {errors.map((e, i) => (
+                    <li key={i}>{e}</li>
+                  ))}
+                </ul>
               </div>
-            </Field>
-          </Card>
+            )}
+
+            {parsed && (
+              <div className="mt-5 rounded-xl border border-[var(--sage)] bg-[var(--sage)]/15 p-4">
+                <div className="mb-2 flex items-center gap-2 text-sm font-medium text-[var(--clay)]">
+                  <CheckCircle2 className="h-4 w-4" /> 검증 완료
+                </div>
+                <p className="text-sm text-foreground/80">
+                  <strong>{parsed.title}</strong> · 질문 {parsed.questions.length}개 ·{" "}
+                  {parsed.audience_type === "christian" ? "기독교인용" : "일반"} ·{" "}
+                  {parsed.estimated_time}
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
         <aside className="space-y-4">
-          <div className="sticky top-6 rounded-3xl bg-gradient-clay p-6 text-white shadow-soft">
-            <div className="flex items-center justify-between">
-              <Sparkles className="h-6 w-6" />
-              <span className="rounded-full bg-white/15 px-3 py-1 text-[10px] tracking-wider">
-                AI 생성 시뮬레이션
-              </span>
-            </div>
-            <p className="mt-3 font-serif text-xl leading-snug">
-              입력한 주제·목적·핵심 정보를<br />반영해 질문을 만듭니다
+          <div className="rounded-3xl border border-border/60 bg-white/70 p-6 shadow-card">
+            <p className="font-serif text-lg text-foreground">JSON 스키마</p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              ChatGPT에 아래 스키마로 설문 JSON을 만들어 달라고 요청하세요.
             </p>
-            <p className="mt-2 text-sm text-white/80">
-              아직 Lovable AI Gateway가 연결되기 전 단계입니다. 생성된 초안은 자유롭게 편집할 수 있어요.
-            </p>
-            <button
-              disabled={busy}
-              onClick={onGenerate}
-              className="mt-6 w-full rounded-full bg-white px-5 py-3 text-sm font-medium text-[var(--clay)] shadow disabled:opacity-60"
-            >
-              {busy ? "생성 중..." : "AI로 설문 생성"}
-            </button>
+            <ul className="mt-4 space-y-1 text-xs text-foreground/80">
+              <li>· title (string, 필수)</li>
+              <li>· slug (string, 선택)</li>
+              <li>· description (string)</li>
+              <li>· completion_message (string)</li>
+              <li>· audience_type: general / christian</li>
+              <li>· estimated_time (string)</li>
+              <li>· bible_verse (string, 선택)</li>
+              <li>· questions[] (필수)</li>
+            </ul>
+            <p className="mt-4 text-xs font-medium text-foreground">질문 유형</p>
+            <ul className="mt-1 space-y-1 text-xs text-foreground/80">
+              <li>· short_text</li>
+              <li>· long_text</li>
+              <li>· single_choice (options[])</li>
+              <li>· multiple_choice (options[])</li>
+              <li>· scale_1_5</li>
+            </ul>
           </div>
         </aside>
       </div>
     </AdminShell>
-  );
-}
-
-function Card({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="space-y-5 rounded-2xl border border-border/60 bg-white/80 p-6 shadow-card">{children}</div>
-  );
-}
-function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="mb-2 block text-sm font-medium text-foreground">{label}</label>
-      {hint && <p className="mb-2 text-xs text-muted-foreground">{hint}</p>}
-      {children}
-    </div>
-  );
-}
-function Pills({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: string[] }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((o) => {
-        const active = value === o;
-        return (
-          <button
-            key={o}
-            type="button"
-            onClick={() => onChange(o)}
-            className={`rounded-full border px-4 py-2 text-sm transition ${
-              active
-                ? "border-[var(--clay)] bg-[var(--clay)] text-white"
-                : "border-border/60 bg-white text-foreground/80 hover:bg-[var(--sand)]/40"
-            }`}
-          >
-            {o}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-function Stepper({ value, min, max, onChange }: { value: number; min: number; max: number; onChange: (v: number) => void }) {
-  return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-white px-2 py-1">
-      <button type="button" onClick={() => onChange(Math.max(min, value - 1))} className="grid h-8 w-8 place-items-center rounded-full hover:bg-[var(--sand)]/50">−</button>
-      <span className="w-10 text-center font-serif text-lg text-[var(--clay)]">{value}</span>
-      <button type="button" onClick={() => onChange(Math.min(max, value + 1))} className="grid h-8 w-8 place-items-center rounded-full hover:bg-[var(--sand)]/50">+</button>
-    </div>
   );
 }

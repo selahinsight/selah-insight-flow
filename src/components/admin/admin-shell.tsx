@@ -4,7 +4,7 @@ import { ArrowLeft, BarChart3, FilePlus2, Home, LayoutDashboard, ListChecks, Set
 
 const nav = [
   { to: "/", label: "메인", icon: Home, exact: true },
-  { to: "/admin", label: "대시보드", icon: LayoutDashboard, exact: true },
+  { to: "/admin", label: "내 설문", icon: LayoutDashboard, exact: true },
   { to: "/admin/new", label: "새 설문 만들기", icon: FilePlus2 },
 ];
 
@@ -35,7 +35,7 @@ export function AdminShell({
           </svg>
           <span className="font-serif text-lg tracking-[0.25em] text-[var(--clay)]">SELAH</span>
         </Link>
-        <p className="mt-1 text-[11px] text-muted-foreground">Diagnosis Lab · Admin</p>
+        <p className="mt-1 text-[11px] text-muted-foreground">Survey Studio</p>
 
         <nav className="mt-10 flex flex-col gap-1">
           {nav.map((n) => {
@@ -56,8 +56,10 @@ export function AdminShell({
         </nav>
 
         <div className="mt-10 rounded-2xl bg-gradient-clay p-4 text-xs text-white/95 shadow-soft">
-          <p className="font-serif text-base">자기진단형 설문</p>
-          <p className="mt-1 text-white/80">관리자가 만들고, 응답자가 자기 상태를 확인합니다.</p>
+          <p className="font-serif text-base">내부 작업 도구</p>
+          <p className="mt-1 text-white/80">
+            ChatGPT에서 만든 설문 JSON을 붙여넣어 URL을 발행하고 응답을 관리합니다.
+          </p>
         </div>
 
         <div className="mt-auto pt-8 text-[11px] text-muted-foreground">© SELAH</div>
@@ -91,13 +93,12 @@ export function AdminShell({
 export function SurveyTabs({ id }: { id: string }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const tabs = [
-    { to: `/admin/surveys/${id}/edit`, label: "질문 편집", icon: ListChecks },
-    { to: `/admin/surveys/${id}/result`, label: "결과지 편집", icon: ListChecks },
+    { to: `/admin/surveys/${id}/edit`, label: "편집", icon: ListChecks },
     { to: `/admin/surveys/${id}/publish`, label: "공개 설정", icon: Settings2 },
-    { to: `/admin/surveys/${id}/analytics`, label: "결과 분석", icon: BarChart3 },
+    { to: `/admin/surveys/${id}/analytics`, label: "응답 보기", icon: BarChart3 },
   ];
   return (
-    <div className="mb-8 flex flex-wrap gap-1 rounded-full bg-white p-1 shadow-card">
+    <div className="mb-8 inline-flex flex-wrap gap-1 rounded-full bg-white p-1 shadow-card">
       {tabs.map((t) => {
         const active = pathname === t.to;
         return (

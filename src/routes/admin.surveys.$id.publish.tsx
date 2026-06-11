@@ -14,11 +14,12 @@ function Publish() {
   const survey = useSurvey(id);
   if (!survey) return <AdminShell title="설문 없음">{null}</AdminShell>;
 
-  const url = typeof window !== "undefined" ? `${window.location.origin}/s/${survey.slug}` : `/s/${survey.slug}`;
+  const url =
+    typeof window !== "undefined" ? `${window.location.origin}/s/${survey.slug}` : `/s/${survey.slug}`;
   const isPublished = survey.status === "published";
 
   return (
-    <AdminShell title={survey.title} subtitle="공개 링크를 발행하고 응답을 수집합니다." showBack>
+    <AdminShell title={survey.title} subtitle="설문 URL을 발행하고 응답을 수집합니다." showBack>
       <SurveyTabs id={id} />
 
       <div className="grid gap-6 lg:grid-cols-5">
@@ -26,9 +27,9 @@ function Publish() {
           <div className="rounded-2xl border border-border/60 bg-white/70 p-6 shadow-card">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-serif text-xl text-foreground">공개 상태</h3>
+                <h3 className="font-serif text-xl text-foreground">상태</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  공개로 전환하면 응답자가 링크로 설문에 참여할 수 있습니다.
+                  발행하면 URL로 누구나 설문에 참여할 수 있습니다.
                 </p>
               </div>
               <button
@@ -42,20 +43,20 @@ function Publish() {
                 }`}
               >
                 {isPublished ? <Globe2 className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
-                {isPublished ? "공개 중" : "공개로 전환"}
+                {isPublished ? "발행 중" : "발행하기"}
               </button>
             </div>
           </div>
 
           <div className="rounded-2xl border border-border/60 bg-white/70 p-6 shadow-card">
-            <h3 className="font-serif text-xl text-foreground">공개 링크</h3>
-            <p className="mt-1 text-sm text-muted-foreground">이 링크를 공유해 응답을 받으세요.</p>
+            <h3 className="font-serif text-xl text-foreground">설문 URL</h3>
+            <p className="mt-1 text-sm text-muted-foreground">이 URL을 공유해 응답을 받으세요.</p>
             <div className="mt-4 flex items-center gap-2 rounded-xl border border-border/60 bg-[var(--ivory)] px-4 py-3 font-mono text-xs text-foreground/80">
               <span className="flex-1 truncate">{url}</span>
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(url);
-                  toast.success("링크가 복사되었습니다");
+                  toast.success("URL이 복사되었습니다");
                 }}
                 className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-xs shadow"
               >
@@ -71,21 +72,13 @@ function Publish() {
               </a>
             </div>
           </div>
-
-          <div className="rounded-2xl border border-dashed border-border/70 bg-white/50 p-6">
-            <h3 className="font-serif text-lg text-foreground">결제 (준비 중)</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              유료 상세 결과지 결제는 다음 단계에서 연결됩니다. 지금은 "상세 결과지 신청하기"
-              버튼으로 수집됩니다.
-            </p>
-          </div>
         </div>
 
         <aside className="lg:col-span-2">
-          <div className="rounded-3xl bg-gradient-rose p-6 text-white shadow-soft">
-            <p className="font-serif text-lg">설문 미리보기</p>
+          <div className="rounded-3xl bg-gradient-clay p-6 text-white shadow-soft">
+            <p className="font-serif text-lg">응답자 화면 미리보기</p>
             <p className="mt-1 text-sm text-white/85">
-              모바일에서 응답자가 보게 될 화면을 확인해 보세요.
+              응답자가 보게 될 시작 화면과 질문 흐름을 확인하세요.
             </p>
             <a
               href={`/s/${survey.slug}`}
