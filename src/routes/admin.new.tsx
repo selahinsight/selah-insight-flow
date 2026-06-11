@@ -11,6 +11,18 @@ import {
   type Survey,
 } from "@/lib/survey-store";
 import {
+  DEFAULT_DESIGN,
+  THEMES,
+  BUTTON_STYLES,
+  CARD_STYLES,
+  FONT_MOODS,
+  type DesignSettings,
+  type ThemeKey,
+  type ButtonStyleKey,
+  type CardStyleKey,
+  type FontMoodKey,
+} from "@/lib/survey-themes";
+import {
   CheckCircle2,
   AlertTriangle,
   ClipboardPaste,
@@ -18,8 +30,21 @@ import {
   Link2,
   BarChart3,
   Pencil,
+  Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 
 export const Route = createFileRoute("/admin/new")({
   component: NewSurvey,
@@ -50,6 +75,7 @@ function NewSurvey() {
   const [errors, setErrors] = useState<string[]>([]);
   const [parsed, setParsed] = useState<ParsedSurvey | null>(null);
   const [category, setCategory] = useState<SurveyCategory>("other");
+  const [design, setDesign] = useState<DesignSettings>({ ...DEFAULT_DESIGN });
   const [created, setCreated] = useState<Survey | null>(null);
 
   function validate() {
@@ -69,14 +95,24 @@ function NewSurvey() {
     if (r.data?.category) setCategory(r.data.category);
   }
 
+  function clearAll() {
+    setJson("");
+    setErrors([]);
+    setParsed(null);
+    setCreated(null);
+    toast.success("입력 내용이 삭제되었습니다.");
+  }
+
   function createAndPublish() {
     if (!parsed) return;
     const s = surveyFromParsed({ ...parsed, category }, json);
     s.status = "published"; // 발행하여 테스트 응답 가능
+    s.design_settings = { ...design };
     upsertSurvey(s);
     setCreated(s);
     toast.success("설문이 만들어졌습니다 (설문중)");
   }
+
 
   const shareUrl =
     created && typeof window !== "undefined"
@@ -92,16 +128,48 @@ function NewSurvey() {
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
           <div className="rounded-2xl border border-border/60 bg-white/80 p-6 shadow-card">
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-3 flex items-center justify-between gap-2">
               <label className="text-sm font-medium text-foreground">설문 JSON</label>
-              <button
-                type="button"
-                onClick={() => setJson(EXAMPLE)}
-                className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-white px-3 py-1 text-xs text-foreground/70 hover:bg-[var(--sand)]/40"
-              >
-                <ClipboardPaste className="h-3 w-3" /> 예시 채우기
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setJson(EXAMPLE)}
+                  className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-white px-3 py-1 text-xs text-foreground/70 hover:bg-[var(--sand)]/40"
+                >
+                  <ClipboardPaste className="h-3 w-3" /> 예시 채우기
+                </button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      type="button"
+                      disabled={!json.trim() && !parsed && errors.length === 0}
+                      className="inline-flex items-center gap-1 rounded-full border border-[#C99A8E]/60 bg-white px-3 py-1 text-xs text-[#A8675C] hover:bg-[#F4E6E2]/40 disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      <Trash2 className="h-3 w-3" /> 전체 삭제
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>입력 내용을 모두 지울까요?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        새 설문 만들기 화면의 JSON 입력 내용만 지워집니다.
+                        기존에 발행된 설문이나 응답 데이터는 삭제되지 않습니다.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>취소</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={clearAll}
+                        className="bg-[#B7766F] hover:bg-[#A8675C]"
+                      >
+                        지우기
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
             </div>
+
             <textarea
               value={json}
               onChange={(e) => setJson(e.target.value)}
@@ -167,6 +235,12 @@ function NewSurvey() {
                 </p>
               </div>
             )}
+
+            {parsed && !created && (
+              <DesignSettingsPanel value={design} onChange={setDesign} />
+            )}
+
+
 
             {created && (
               <div className="mt-5 rounded-2xl border border-[var(--sage)] bg-[var(--sage)]/20 p-5">
@@ -255,3 +329,144 @@ function NewSurvey() {
     </AdminShell>
   );
 }
+
+function DesignSettingsPanel({
+  value,
+  onChange,
+}: {
+  value: DesignSettings;
+  onChange: (d: DesignSettings) => void;
+}) {
+  const t = THEMES[value.theme];
+  return (
+    <div className="mt-5 rounded-2xl border border-border/60 bg-[var(--ivory)]/60 p-5">
+      <p className="text-sm font-medium text-foreground">디자인 설정</p>
+      <p className="mt-1 text-xs text-muted-foreground">
+        설문 레이아웃은 고정되어 있고, 컬러와 무드만 선택할 수 있어요.
+      </p>
+
+      {/* Color theme */}
+      <div className="mt-4">
+        <p className="mb-2 text-xs font-medium text-foreground/80">컬러 테마</p>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {(Object.keys(THEMES) as ThemeKey[]).map((key) => {
+            const th = THEMES[key];
+            const active = key === value.theme;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => onChange({ ...value, theme: key })}
+                className={`flex items-center gap-2 rounded-xl border bg-white px-3 py-2 text-left transition ${
+                  active ? "border-[var(--clay)] ring-1 ring-[var(--clay)]" : "border-border/60"
+                }`}
+              >
+                <span className="flex shrink-0 gap-0.5">
+                  {th.swatch.map((c, i) => (
+                    <span
+                      key={i}
+                      className="h-5 w-2.5 rounded-sm"
+                      style={{ backgroundColor: c }}
+                    />
+                  ))}
+                </span>
+                <span className="text-xs text-foreground/80">{th.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Button style */}
+      <div className="mt-4 grid gap-4 sm:grid-cols-3">
+        <SelectChips
+          label="버튼 스타일"
+          options={BUTTON_STYLES}
+          value={value.button_style}
+          onChange={(v) => onChange({ ...value, button_style: v as ButtonStyleKey })}
+        />
+        <SelectChips
+          label="카드 스타일"
+          options={CARD_STYLES}
+          value={value.card_style}
+          onChange={(v) => onChange({ ...value, card_style: v as CardStyleKey })}
+        />
+        <SelectChips
+          label="폰트 무드"
+          options={FONT_MOODS.map((f) => ({ value: f.value, label: f.label }))}
+          value={value.font_mood}
+          onChange={(v) => onChange({ ...value, font_mood: v as FontMoodKey })}
+        />
+      </div>
+
+      {/* Mini preview */}
+      <div
+        className="mt-4 rounded-xl p-4"
+        style={{ backgroundColor: t.bg, color: t.text }}
+      >
+        <div
+          className="rounded-lg p-3"
+          style={{
+            backgroundColor: t.surface,
+            border: `1px solid ${t.border}`,
+          }}
+        >
+          <p className="text-[10px] tracking-[0.25em]" style={{ color: t.accent }}>
+            PREVIEW
+          </p>
+          <p className="mt-1 text-sm" style={{ color: t.text }}>
+            설문 미리보기 예시
+          </p>
+          <button
+            type="button"
+            className="mt-2 rounded-full px-3 py-1 text-xs"
+            style={{
+              backgroundColor: t.accent,
+              color: t.accentText,
+            }}
+          >
+            시작하기
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SelectChips({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: { value: string; label: string }[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <p className="mb-2 text-xs font-medium text-foreground/80">{label}</p>
+      <div className="flex flex-wrap gap-1.5">
+        {options.map((o) => {
+          const active = value === o.value;
+          return (
+            <button
+              key={o.value}
+              type="button"
+              onClick={() => onChange(o.value)}
+              className={`rounded-full border px-3 py-1 text-xs transition ${
+                active
+                  ? "border-[var(--clay)] bg-[var(--clay)] text-white"
+                  : "border-border/60 bg-white text-foreground/70"
+              }`}
+            >
+              {o.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
