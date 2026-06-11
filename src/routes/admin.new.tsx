@@ -128,16 +128,48 @@ function NewSurvey() {
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
           <div className="rounded-2xl border border-border/60 bg-white/80 p-6 shadow-card">
-            <div className="mb-3 flex items-center justify-between">
+            <div className="mb-3 flex items-center justify-between gap-2">
               <label className="text-sm font-medium text-foreground">설문 JSON</label>
-              <button
-                type="button"
-                onClick={() => setJson(EXAMPLE)}
-                className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-white px-3 py-1 text-xs text-foreground/70 hover:bg-[var(--sand)]/40"
-              >
-                <ClipboardPaste className="h-3 w-3" /> 예시 채우기
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setJson(EXAMPLE)}
+                  className="inline-flex items-center gap-1 rounded-full border border-border/60 bg-white px-3 py-1 text-xs text-foreground/70 hover:bg-[var(--sand)]/40"
+                >
+                  <ClipboardPaste className="h-3 w-3" /> 예시 채우기
+                </button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      type="button"
+                      disabled={!json.trim() && !parsed && errors.length === 0}
+                      className="inline-flex items-center gap-1 rounded-full border border-[#C99A8E]/60 bg-white px-3 py-1 text-xs text-[#A8675C] hover:bg-[#F4E6E2]/40 disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      <Trash2 className="h-3 w-3" /> 전체 삭제
+                    </button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>입력 내용을 모두 지울까요?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        새 설문 만들기 화면의 JSON 입력 내용만 지워집니다.
+                        기존에 발행된 설문이나 응답 데이터는 삭제되지 않습니다.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>취소</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={clearAll}
+                        className="bg-[#B7766F] hover:bg-[#A8675C]"
+                      >
+                        지우기
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
             </div>
+
             <textarea
               value={json}
               onChange={(e) => setJson(e.target.value)}
