@@ -109,7 +109,9 @@ function writeAll(list: Survey[]) {
 }
 
 export function listSurveys(): Survey[] {
-  return readAll().sort((a, b) => b.createdAt - a.createdAt);
+  return readAll()
+    .filter((s) => !s.deletedAt)
+    .sort((a, b) => b.createdAt - a.createdAt);
 }
 export function getSurvey(id: string): Survey | undefined {
   return readAll().find((s) => s.id === id);
