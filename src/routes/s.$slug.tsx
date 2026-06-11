@@ -77,6 +77,8 @@ function Runner({
   const [phase, setPhase] = useState<Phase>("intro");
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[] | number>>({});
+  const [result, setResult] = useState<ResultType | undefined>(undefined);
+  const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
 
   const total = survey.questions.length;
   const q = survey.questions[i];
@@ -94,6 +96,12 @@ function Runner({
       submittedAt: Date.now(),
       answers,
     });
+    const rt = computeResultType(
+      survey,
+      answers,
+      lastPickRef.current ? [lastPickRef.current] : undefined,
+    );
+    setResult(rt);
     setPhase("done");
   }
 
