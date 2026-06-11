@@ -355,7 +355,7 @@ function Runner({
       </div>
 
       <div style={{ ...cardStyle, borderRadius: 24, padding: 28 }}>
-        <h2 style={{ fontSize: 24, lineHeight: 1.4, color: theme.text }}>{q.text}</h2>
+        <h2 style={{ fontSize: 24, lineHeight: 1.4, color: theme.text, fontFamily: headingFont }}>{q.text}</h2>
 
         <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 10 }}>
           {q.type === "short_text" && (
