@@ -99,6 +99,7 @@ export interface Survey {
   estimated_time: string;
   bible_verse?: string;
   questions: Question[];
+  resultTypes?: ResultType[];
   status: "draft" | "published" | "closed";
   createdAt: number;
   deletedAt?: number | null;
@@ -107,6 +108,7 @@ export interface Survey {
   share_card?: ShareCardConfig;
   sourceJson?: string;
 }
+
 
 
 export function softDeleteSurvey(id: string) {
