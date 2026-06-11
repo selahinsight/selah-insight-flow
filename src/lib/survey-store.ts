@@ -154,6 +154,7 @@ export interface ParsedSurvey {
   description?: string;
   completion_message?: string;
   audience_type?: AudienceType;
+  category?: SurveyCategory;
   estimated_time?: string;
   bible_verse?: string;
   questions: {
