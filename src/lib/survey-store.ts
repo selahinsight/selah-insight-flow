@@ -54,9 +54,18 @@ export interface Survey {
   questions: Question[];
   status: "draft" | "published" | "closed";
   createdAt: number;
+  deletedAt?: number | null;
   responses: Response[];
   // raw json (for ChatGPT prompt copy)
   sourceJson?: string;
+}
+
+export function softDeleteSurvey(id: string) {
+  const list = readAllRaw();
+  const s = list.find((x) => x.id === id);
+  if (!s) return;
+  s.deletedAt = Date.now();
+  writeAll(list);
 }
 
 export const STATUS_LABEL: Record<Survey["status"], string> = {
