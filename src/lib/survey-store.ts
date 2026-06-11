@@ -238,6 +238,7 @@ export function validateSurveyJson(raw: string): ValidationResult {
         ? o.completion_message
         : "응답해 주셔서 감사합니다.",
     audience_type: (o.audience_type as AudienceType) ?? "general",
+    category: (o.category as SurveyCategory) ?? "other",
     estimated_time: typeof o.estimated_time === "string" ? o.estimated_time : "약 3분",
     bible_verse: typeof o.bible_verse === "string" ? o.bible_verse : undefined,
     questions: qs,
