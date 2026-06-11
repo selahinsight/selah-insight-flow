@@ -1,7 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
-import { addResponse, getSurveyBySlug, uid, type Survey } from "@/lib/survey-store";
+import {
+  addResponse,
+  computeResultType,
+  getSurveyBySlug,
+  optionResultType,
+  optionText,
+  uid,
+  type ResultType,
+  type Survey,
+} from "@/lib/survey-store";
 import { useSurveys } from "@/lib/use-surveys";
 import {
   DEFAULT_DESIGN,
@@ -13,6 +22,7 @@ import {
   type ThemeColors,
 } from "@/lib/survey-themes";
 import { ResultShareCard } from "@/components/survey/result-share-card";
+import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { Download, Share2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -67,6 +77,8 @@ function Runner({
   const [phase, setPhase] = useState<Phase>("intro");
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[] | number>>({});
+  const [result, setResult] = useState<ResultType | undefined>(undefined);
+  const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
 
   const total = survey.questions.length;
   const q = survey.questions[i];
@@ -84,6 +96,12 @@ function Runner({
       submittedAt: Date.now(),
       answers,
     });
+    const rt = computeResultType(
+      survey,
+      answers,
+      lastPickRef.current ? [lastPickRef.current] : undefined,
+    );
+    setResult(rt);
     setPhase("done");
   }
 
@@ -176,6 +194,71 @@ function Runner({
   }
 
   if (phase === "done") {
+    if (result) {
+      return (
+        <Wrap theme={theme} design={design}>
+          <div
+            style={{
+              ...cardStyle,
+              borderRadius: 24,
+              padding: 36,
+            }}
+          >
+            <p style={{ fontSize: 12, letterSpacing: "0.25em", color: theme.accent, textAlign: "center" }}>
+              YOUR RESULT
+            </p>
+            <p style={{ marginTop: 14, fontSize: 13, color: theme.muted, textAlign: "center" }}>
+              {survey.title}
+            </p>
+            <h1
+              style={{
+                marginTop: 8,
+                fontSize: 32,
+                lineHeight: 1.3,
+                color: theme.text,
+                textAlign: "center",
+              }}
+            >
+              당신의 결과는 {result.title}이에요.
+            </h1>
+            {result.summary && (
+              <p style={{ marginTop: 20, fontSize: 15, lineHeight: 1.65, color: theme.text, opacity: 0.85, textAlign: "center" }}>
+                {result.summary}
+              </p>
+            )}
+            {result.description && (
+              <p style={{ marginTop: 18, fontSize: 14, lineHeight: 1.75, whiteSpace: "pre-wrap", color: theme.text, opacity: 0.8 }}>
+                {result.description}
+              </p>
+            )}
+            {(result.bibleVerse || (survey.audience_type === "christian" && survey.bible_verse)) && (
+              <div
+                style={{
+                  marginTop: 24,
+                  padding: 16,
+                  borderRadius: 14,
+                  backgroundColor: theme.bg,
+                  borderLeft: `3px solid ${theme.accent}`,
+                  fontStyle: "italic",
+                  color: theme.text,
+                  fontSize: 14,
+                }}
+              >
+                “{result.bibleVerse ?? survey.bible_verse}”
+              </div>
+            )}
+            {survey.completion_message && (
+              <p style={{ marginTop: 22, fontSize: 13, color: theme.muted, textAlign: "center", whiteSpace: "pre-wrap" }}>
+                {survey.completion_message}
+              </p>
+            )}
+          </div>
+
+          <ResultActions survey={survey} result={result} design={design} theme={theme} />
+        </Wrap>
+      );
+    }
+
     return (
       <Wrap theme={theme} design={design}>
         <div
@@ -220,6 +303,7 @@ function Runner({
           <ShareSection survey={survey} design={design} theme={theme} />
         )}
       </Wrap>
+
     );
   }
 
@@ -327,24 +411,30 @@ function Runner({
             </div>
           )}
           {(q.type === "single_choice" || q.type === "multiple_choice") &&
-            (q.options ?? []).map((o) => {
+            (q.options ?? []).map((opt, oi) => {
+              const label = optionText(opt);
               const current = answers[q.id];
               const isMulti = q.type === "multiple_choice";
               const selected = isMulti
-                ? Array.isArray(current) && current.includes(o)
-                : current === o;
+                ? Array.isArray(current) && current.includes(label)
+                : current === label;
               return (
                 <button
-                  key={o}
+                  key={`${label}-${oi}`}
                   onClick={() => {
                     if (isMulti) {
                       const arr = Array.isArray(current) ? [...current] : [];
-                      const idx = arr.indexOf(o);
+                      const idx = arr.indexOf(label);
                       if (idx >= 0) arr.splice(idx, 1);
-                      else arr.push(o);
+                      else arr.push(label);
                       setAnswers({ ...answers, [q.id]: arr });
                     } else {
-                      setAnswers({ ...answers, [q.id]: o });
+                      setAnswers({ ...answers, [q.id]: label });
+                    }
+                    const rt = optionResultType(opt);
+                    if (rt && !isMulti) {
+                      // track last selected resultType for tie-break
+                      lastPickRef.current = { qid: q.id, resultType: rt };
                     }
                   }}
                   style={{
@@ -362,7 +452,7 @@ function Runner({
                     cursor: "pointer",
                   }}
                 >
-                  <span>{o}</span>
+                  <span>{label}</span>
                   <span
                     style={{
                       width: 20,
@@ -641,3 +731,86 @@ function Wrap({
     </div>
   );
 }
+
+function ResultActions({
+  survey,
+  result,
+  design,
+  theme,
+}: {
+  survey: Survey;
+  result: ResultType;
+  design: DesignSettings;
+  theme: ThemeColors;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [busy, setBusy] = useState(false);
+
+  async function handleDownload() {
+    if (!cardRef.current) return;
+    try {
+      setBusy(true);
+      const dataUrl = await toPng(cardRef.current, {
+        cacheBust: true,
+        pixelRatio: 2,
+        width: 1080,
+        height: 1350,
+      });
+      const a = document.createElement("a");
+      a.href = dataUrl;
+      a.download = `selah-result-${result.id}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      toast.success("결과 카드를 저장했어요");
+    } catch (e) {
+      console.error(e);
+      toast.error("저장에 실패했어요");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const btn = buttonClasses(design.button_style, theme);
+
+  return (
+    <>
+      <div
+        style={{
+          marginTop: 16,
+          display: "flex",
+          gap: 10,
+          justifyContent: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <button
+          onClick={handleDownload}
+          disabled={busy}
+          style={{
+            ...btn,
+            padding: "12px 22px",
+            borderRadius: 999,
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: busy ? "wait" : "pointer",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+          }}
+        >
+          <Download size={14} /> 이미지로 저장
+        </button>
+      </div>
+
+      {/* Off-screen capture source */}
+      <div
+        style={{ position: "fixed", left: -99999, top: 0, pointerEvents: "none" }}
+        aria-hidden
+      >
+        <ResultDiagnosisCard ref={cardRef} survey={survey} result={result} design={design} />
+      </div>
+    </>
+  );
+}
+

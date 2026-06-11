@@ -153,7 +153,8 @@ function Analytics() {
           {survey.questions.map((q, i) => {
             if (q.type === "single_choice" || q.type === "multiple_choice") {
               const counts: Record<string, number> = {};
-              (q.options ?? []).forEach((o) => (counts[o] = 0));
+              const labels = (q.options ?? []).map((o) => (typeof o === "string" ? o : o.text));
+              labels.forEach((l) => (counts[l] = 0));
               survey.responses.forEach((r) => {
                 const v = r.answers[q.id];
                 const vals = Array.isArray(v) ? v : v !== undefined ? [String(v)] : [];
@@ -168,16 +169,16 @@ function Analytics() {
                     Q{i + 1}. {q.text}
                   </p>
                   <div className="mt-3 space-y-2">
-                    {(q.options ?? []).map((o) => (
-                      <div key={o}>
+                    {labels.map((l) => (
+                      <div key={l}>
                         <div className="mb-1 flex items-center justify-between text-xs">
-                          <span>{o}</span>
-                          <span className="text-muted-foreground">{counts[o]}</span>
+                          <span>{l}</span>
+                          <span className="text-muted-foreground">{counts[l]}</span>
                         </div>
                         <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--rose-soft)]/30">
                           <div
                             className="h-full rounded-full bg-gradient-rose"
-                            style={{ width: `${(counts[o] / max) * 100}%` }}
+                            style={{ width: `${(counts[l] / max) * 100}%` }}
                           />
                         </div>
                       </div>

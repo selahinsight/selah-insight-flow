@@ -33,12 +33,33 @@ export type QuestionType =
   | "multiple_choice"
   | "scale_1_5";
 
+export interface OptionObject {
+  text: string;
+  resultType?: string;
+}
+export type SurveyOption = string | OptionObject;
+
+export function optionText(o: SurveyOption): string {
+  return typeof o === "string" ? o : o.text;
+}
+export function optionResultType(o: SurveyOption): string | undefined {
+  return typeof o === "string" ? undefined : o.resultType;
+}
+
 export interface Question {
   id: string;
   type: QuestionType;
   text: string;
   required?: boolean;
-  options?: string[]; // for single_choice / multiple_choice
+  options?: SurveyOption[];
+}
+
+export interface ResultType {
+  id: string;
+  title: string;
+  summary?: string;
+  description?: string;
+  bibleVerse?: string;
 }
 
 export type AudienceType = "general" | "christian";
@@ -60,6 +81,7 @@ export const SURVEY_CATEGORIES: { value: SurveyCategory; label: string }[] = [
   { value: "other", label: "기타" },
 ];
 
+
 export function categoryLabel(c: SurveyCategory): string {
   return SURVEY_CATEGORIES.find((x) => x.value === c)?.label ?? "기타";
 }
@@ -77,6 +99,7 @@ export interface Survey {
   estimated_time: string;
   bible_verse?: string;
   questions: Question[];
+  resultTypes?: ResultType[];
   status: "draft" | "published" | "closed";
   createdAt: number;
   deletedAt?: number | null;
@@ -85,6 +108,7 @@ export interface Survey {
   share_card?: ShareCardConfig;
   sourceJson?: string;
 }
+
 
 
 export function softDeleteSurvey(id: string) {
@@ -199,10 +223,12 @@ export interface ParsedSurvey {
     type: QuestionType;
     text: string;
     required?: boolean;
-    options?: string[];
+    options?: SurveyOption[];
   }[];
+  resultTypes?: ResultType[];
   share_card?: ShareCardConfig;
 }
+
 
 
 export interface ValidationResult {
@@ -248,13 +274,29 @@ export function validateSurveyJson(raw: string): ValidationResult {
         return;
       }
       const t = qq.type as QuestionType;
+      let normalizedOptions: SurveyOption[] | undefined;
       if (t === "single_choice" || t === "multiple_choice") {
         if (!Array.isArray(qq.options) || qq.options.length < 2) {
-          errors.push(`questions[${i}].options는 2개 이상의 문자열 배열이어야 합니다.`);
+          errors.push(`questions[${i}].options는 2개 이상이어야 합니다.`);
           return;
         }
-        if (!qq.options.every((x) => typeof x === "string")) {
-          errors.push(`questions[${i}].options는 모두 문자열이어야 합니다.`);
+        normalizedOptions = [];
+        let badOpt = false;
+        for (const op of qq.options) {
+          if (typeof op === "string") {
+            normalizedOptions.push(op);
+          } else if (op && typeof op === "object" && typeof (op as Record<string, unknown>).text === "string") {
+            const oo = op as Record<string, unknown>;
+            normalizedOptions.push({
+              text: oo.text as string,
+              resultType: typeof oo.resultType === "string" ? oo.resultType : undefined,
+            });
+          } else {
+            badOpt = true;
+          }
+        }
+        if (badOpt) {
+          errors.push(`questions[${i}].options 항목은 문자열 또는 { text, resultType? } 객체여야 합니다.`);
           return;
         }
       }
@@ -262,10 +304,39 @@ export function validateSurveyJson(raw: string): ValidationResult {
         type: t,
         text: qq.text as string,
         required: qq.required as boolean | undefined,
-        options: qq.options as string[] | undefined,
+        options: normalizedOptions,
       });
     });
   }
+
+  // resultTypes (optional)
+  let resultTypes: ResultType[] | undefined;
+  if (Array.isArray(o.resultTypes)) {
+    resultTypes = [];
+    o.resultTypes.forEach((rt, i) => {
+      if (!rt || typeof rt !== "object") {
+        errors.push(`resultTypes[${i}]는 객체여야 합니다.`);
+        return;
+      }
+      const r = rt as Record<string, unknown>;
+      if (typeof r.id !== "string" || !r.id.trim()) {
+        errors.push(`resultTypes[${i}].id가 필요합니다.`);
+        return;
+      }
+      if (typeof r.title !== "string" || !r.title.trim()) {
+        errors.push(`resultTypes[${i}].title이 필요합니다.`);
+        return;
+      }
+      resultTypes!.push({
+        id: r.id,
+        title: r.title,
+        summary: typeof r.summary === "string" ? r.summary : undefined,
+        description: typeof r.description === "string" ? r.description : undefined,
+        bibleVerse: typeof r.bibleVerse === "string" ? r.bibleVerse : (typeof r.bible_verse === "string" ? r.bible_verse as string : undefined),
+      });
+    });
+  }
+
 
   if (errors.length) return { ok: false, errors };
 
@@ -298,6 +369,7 @@ export function validateSurveyJson(raw: string): ValidationResult {
     estimated_time: typeof o.estimated_time === "string" ? o.estimated_time : "약 3분",
     bible_verse: typeof o.bible_verse === "string" ? o.bible_verse : undefined,
     questions: qs,
+    resultTypes,
     share_card,
   };
   return { ok: true, errors: [], data };
@@ -324,6 +396,7 @@ export function surveyFromParsed(p: ParsedSurvey, sourceJson: string): Survey {
       required: q.required ?? true,
       options: q.options,
     })),
+    resultTypes: p.resultTypes,
     status: "draft",
     createdAt: Date.now(),
     responses: [],
@@ -332,6 +405,41 @@ export function surveyFromParsed(p: ParsedSurvey, sourceJson: string): Survey {
     sourceJson,
   };
 }
+
+// Compute result type id from answers (most-frequent; tie → last selected)
+export function computeResultType(
+  survey: Survey,
+  answers: Record<string, string | string[] | number>,
+  orderedSelections?: { qid: string; resultType: string }[],
+): ResultType | undefined {
+  if (!survey.resultTypes?.length) return undefined;
+  const counts: Record<string, number> = {};
+  let lastResultType: string | undefined;
+  // Walk questions in order
+  for (const q of survey.questions) {
+    if (q.type !== "single_choice" && q.type !== "multiple_choice") continue;
+    const ans = answers[q.id];
+    const picked = Array.isArray(ans) ? ans : ans !== undefined ? [String(ans)] : [];
+    for (const text of picked) {
+      const opt = (q.options ?? []).find((o) => optionText(o) === text);
+      const rt = opt ? optionResultType(opt) : undefined;
+      if (rt) {
+        counts[rt] = (counts[rt] ?? 0) + 1;
+        lastResultType = rt;
+      }
+    }
+  }
+  // Allow override via ordered selections (preserve last-pick tie-break exactness)
+  if (orderedSelections?.length) {
+    lastResultType = orderedSelections[orderedSelections.length - 1].resultType;
+  }
+  const max = Math.max(0, ...Object.values(counts));
+  if (max === 0) return undefined;
+  const top = Object.entries(counts).filter(([, n]) => n === max).map(([k]) => k);
+  const winner = top.length === 1 ? top[0] : (lastResultType && top.includes(lastResultType) ? lastResultType : top[top.length - 1]);
+  return survey.resultTypes.find((r) => r.id === winner);
+}
+
 
 
 // ---------- Seed sample ----------
