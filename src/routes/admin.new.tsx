@@ -329,3 +329,144 @@ function NewSurvey() {
     </AdminShell>
   );
 }
+
+function DesignSettingsPanel({
+  value,
+  onChange,
+}: {
+  value: DesignSettings;
+  onChange: (d: DesignSettings) => void;
+}) {
+  const t = THEMES[value.theme];
+  return (
+    <div className="mt-5 rounded-2xl border border-border/60 bg-[var(--ivory)]/60 p-5">
+      <p className="text-sm font-medium text-foreground">디자인 설정</p>
+      <p className="mt-1 text-xs text-muted-foreground">
+        설문 레이아웃은 고정되어 있고, 컬러와 무드만 선택할 수 있어요.
+      </p>
+
+      {/* Color theme */}
+      <div className="mt-4">
+        <p className="mb-2 text-xs font-medium text-foreground/80">컬러 테마</p>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {(Object.keys(THEMES) as ThemeKey[]).map((key) => {
+            const th = THEMES[key];
+            const active = key === value.theme;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => onChange({ ...value, theme: key })}
+                className={`flex items-center gap-2 rounded-xl border bg-white px-3 py-2 text-left transition ${
+                  active ? "border-[var(--clay)] ring-1 ring-[var(--clay)]" : "border-border/60"
+                }`}
+              >
+                <span className="flex shrink-0 gap-0.5">
+                  {th.swatch.map((c, i) => (
+                    <span
+                      key={i}
+                      className="h-5 w-2.5 rounded-sm"
+                      style={{ backgroundColor: c }}
+                    />
+                  ))}
+                </span>
+                <span className="text-xs text-foreground/80">{th.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Button style */}
+      <div className="mt-4 grid gap-4 sm:grid-cols-3">
+        <SelectChips
+          label="버튼 스타일"
+          options={BUTTON_STYLES}
+          value={value.button_style}
+          onChange={(v) => onChange({ ...value, button_style: v as ButtonStyleKey })}
+        />
+        <SelectChips
+          label="카드 스타일"
+          options={CARD_STYLES}
+          value={value.card_style}
+          onChange={(v) => onChange({ ...value, card_style: v as CardStyleKey })}
+        />
+        <SelectChips
+          label="폰트 무드"
+          options={FONT_MOODS.map((f) => ({ value: f.value, label: f.label }))}
+          value={value.font_mood}
+          onChange={(v) => onChange({ ...value, font_mood: v as FontMoodKey })}
+        />
+      </div>
+
+      {/* Mini preview */}
+      <div
+        className="mt-4 rounded-xl p-4"
+        style={{ backgroundColor: t.bg, color: t.text }}
+      >
+        <div
+          className="rounded-lg p-3"
+          style={{
+            backgroundColor: t.surface,
+            border: `1px solid ${t.border}`,
+          }}
+        >
+          <p className="text-[10px] tracking-[0.25em]" style={{ color: t.accent }}>
+            PREVIEW
+          </p>
+          <p className="mt-1 text-sm" style={{ color: t.text }}>
+            설문 미리보기 예시
+          </p>
+          <button
+            type="button"
+            className="mt-2 rounded-full px-3 py-1 text-xs"
+            style={{
+              backgroundColor: t.accent,
+              color: t.accentText,
+            }}
+          >
+            시작하기
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SelectChips({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: { value: string; label: string }[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <p className="mb-2 text-xs font-medium text-foreground/80">{label}</p>
+      <div className="flex flex-wrap gap-1.5">
+        {options.map((o) => {
+          const active = value === o.value;
+          return (
+            <button
+              key={o.value}
+              type="button"
+              onClick={() => onChange(o.value)}
+              className={`rounded-full border px-3 py-1 text-xs transition ${
+                active
+                  ? "border-[var(--clay)] bg-[var(--clay)] text-white"
+                  : "border-border/60 bg-white text-foreground/70"
+              }`}
+            >
+              {o.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
