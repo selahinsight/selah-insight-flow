@@ -1,7 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
-import { addResponse, getSurveyBySlug, uid, type Survey } from "@/lib/survey-store";
+import {
+  addResponse,
+  computeResultType,
+  getSurveyBySlug,
+  optionResultType,
+  optionText,
+  uid,
+  type ResultType,
+  type Survey,
+} from "@/lib/survey-store";
 import { useSurveys } from "@/lib/use-surveys";
 import {
   DEFAULT_DESIGN,
@@ -13,6 +22,7 @@ import {
   type ThemeColors,
 } from "@/lib/survey-themes";
 import { ResultShareCard } from "@/components/survey/result-share-card";
+import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { Download, Share2 } from "lucide-react";
 import { toast } from "sonner";
 
