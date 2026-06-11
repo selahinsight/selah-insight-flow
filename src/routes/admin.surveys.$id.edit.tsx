@@ -44,6 +44,7 @@ function EditQuestions() {
     <AdminShell
       title={survey.title}
       subtitle="AI가 만든 질문을 자유롭게 다듬어 보세요."
+      showBack
       actions={
         <button
           onClick={() => navigate({ to: "/admin/surveys/$id/publish", params: { id } })}
