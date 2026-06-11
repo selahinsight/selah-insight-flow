@@ -186,6 +186,8 @@ export function validateSurveyJson(raw: string): ValidationResult {
   if (typeof o.title !== "string" || !o.title.trim()) errors.push("title은 비어있지 않은 문자열이어야 합니다.");
   if (o.audience_type && o.audience_type !== "general" && o.audience_type !== "christian")
     errors.push('audience_type은 "general" 또는 "christian"이어야 합니다.');
+  if (o.category && !VALID_CATEGORIES.includes(o.category as SurveyCategory))
+    errors.push(`category는 ${VALID_CATEGORIES.join(" / ")} 중 하나여야 합니다.`);
   if (!Array.isArray(o.questions) || o.questions.length === 0)
     errors.push("questions 배열이 비어있습니다.");
 
