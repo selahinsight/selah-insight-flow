@@ -90,7 +90,7 @@ function Dashboard() {
 
   return (
     <AdminShell
-      title="내 설문 작업실"
+      title="Survey Studio"
       subtitle=""
       actions={
         <button

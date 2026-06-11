@@ -56,7 +56,7 @@ export function AdminShell({
         </nav>
 
         <div className="mt-10 rounded-2xl bg-gradient-clay p-4 text-xs text-white/95 shadow-soft">
-          <p className="font-serif text-base">내부 작업 도구</p>
+          <p className="font-serif text-base">내부 Tool</p>
           <p className="mt-1 text-white/80">
             ChatGPT에서 만든 설문 JSON을 붙여넣어 URL을 발행하고 응답을 관리합니다.
           </p>
