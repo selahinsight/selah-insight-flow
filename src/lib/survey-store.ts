@@ -18,6 +18,29 @@ export interface Question {
 
 export type AudienceType = "general" | "christian";
 
+export type SurveyCategory =
+  | "customer_understanding"
+  | "program_application"
+  | "content_reaction"
+  | "pre_diagnosis"
+  | "feedback"
+  | "other";
+
+export const SURVEY_CATEGORIES: { value: SurveyCategory; label: string }[] = [
+  { value: "customer_understanding", label: "고객 이해 설문" },
+  { value: "program_application", label: "프로그램 신청 설문" },
+  { value: "content_reaction", label: "콘텐츠 반응 설문" },
+  { value: "pre_diagnosis", label: "사전 진단 설문" },
+  { value: "feedback", label: "후기/피드백 설문" },
+  { value: "other", label: "기타" },
+];
+
+export function categoryLabel(c: SurveyCategory): string {
+  return SURVEY_CATEGORIES.find((x) => x.value === c)?.label ?? "기타";
+}
+
+const VALID_CATEGORIES: SurveyCategory[] = SURVEY_CATEGORIES.map((c) => c.value);
+
 export interface Survey {
   id: string;
   slug: string;
@@ -25,6 +48,7 @@ export interface Survey {
   description: string;
   completion_message: string;
   audience_type: AudienceType;
+  category: SurveyCategory;
   estimated_time: string;
   bible_verse?: string;
   questions: Question[];
@@ -34,6 +58,12 @@ export interface Survey {
   // raw json (for ChatGPT prompt copy)
   sourceJson?: string;
 }
+
+export const STATUS_LABEL: Record<Survey["status"], string> = {
+  draft: "제작중",
+  published: "설문중",
+  closed: "종료",
+};
 
 export interface Response {
   id: string;
