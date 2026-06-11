@@ -337,24 +337,30 @@ function Runner({
             </div>
           )}
           {(q.type === "single_choice" || q.type === "multiple_choice") &&
-            (q.options ?? []).map((o) => {
+            (q.options ?? []).map((opt, oi) => {
+              const label = optionText(opt);
               const current = answers[q.id];
               const isMulti = q.type === "multiple_choice";
               const selected = isMulti
-                ? Array.isArray(current) && current.includes(o)
-                : current === o;
+                ? Array.isArray(current) && current.includes(label)
+                : current === label;
               return (
                 <button
-                  key={o}
+                  key={`${label}-${oi}`}
                   onClick={() => {
                     if (isMulti) {
                       const arr = Array.isArray(current) ? [...current] : [];
-                      const idx = arr.indexOf(o);
+                      const idx = arr.indexOf(label);
                       if (idx >= 0) arr.splice(idx, 1);
-                      else arr.push(o);
+                      else arr.push(label);
                       setAnswers({ ...answers, [q.id]: arr });
                     } else {
-                      setAnswers({ ...answers, [q.id]: o });
+                      setAnswers({ ...answers, [q.id]: label });
+                    }
+                    const rt = optionResultType(opt);
+                    if (rt && !isMulti) {
+                      // track last selected resultType for tie-break
+                      lastPickRef.current = { qid: q.id, resultType: rt };
                     }
                   }}
                   style={{
@@ -372,7 +378,7 @@ function Runner({
                     cursor: "pointer",
                   }}
                 >
-                  <span>{o}</span>
+                  <span>{label}</span>
                   <span
                     style={{
                       width: 20,
