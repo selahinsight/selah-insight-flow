@@ -274,13 +274,29 @@ export function validateSurveyJson(raw: string): ValidationResult {
         return;
       }
       const t = qq.type as QuestionType;
+      let normalizedOptions: SurveyOption[] | undefined;
       if (t === "single_choice" || t === "multiple_choice") {
         if (!Array.isArray(qq.options) || qq.options.length < 2) {
-          errors.push(`questions[${i}].options는 2개 이상의 문자열 배열이어야 합니다.`);
+          errors.push(`questions[${i}].options는 2개 이상이어야 합니다.`);
           return;
         }
-        if (!qq.options.every((x) => typeof x === "string")) {
-          errors.push(`questions[${i}].options는 모두 문자열이어야 합니다.`);
+        normalizedOptions = [];
+        let badOpt = false;
+        for (const op of qq.options) {
+          if (typeof op === "string") {
+            normalizedOptions.push(op);
+          } else if (op && typeof op === "object" && typeof (op as Record<string, unknown>).text === "string") {
+            const oo = op as Record<string, unknown>;
+            normalizedOptions.push({
+              text: oo.text as string,
+              resultType: typeof oo.resultType === "string" ? oo.resultType : undefined,
+            });
+          } else {
+            badOpt = true;
+          }
+        }
+        if (badOpt) {
+          errors.push(`questions[${i}].options 항목은 문자열 또는 { text, resultType? } 객체여야 합니다.`);
           return;
         }
       }
@@ -288,10 +304,39 @@ export function validateSurveyJson(raw: string): ValidationResult {
         type: t,
         text: qq.text as string,
         required: qq.required as boolean | undefined,
-        options: qq.options as string[] | undefined,
+        options: normalizedOptions,
       });
     });
   }
+
+  // resultTypes (optional)
+  let resultTypes: ResultType[] | undefined;
+  if (Array.isArray(o.resultTypes)) {
+    resultTypes = [];
+    o.resultTypes.forEach((rt, i) => {
+      if (!rt || typeof rt !== "object") {
+        errors.push(`resultTypes[${i}]는 객체여야 합니다.`);
+        return;
+      }
+      const r = rt as Record<string, unknown>;
+      if (typeof r.id !== "string" || !r.id.trim()) {
+        errors.push(`resultTypes[${i}].id가 필요합니다.`);
+        return;
+      }
+      if (typeof r.title !== "string" || !r.title.trim()) {
+        errors.push(`resultTypes[${i}].title이 필요합니다.`);
+        return;
+      }
+      resultTypes!.push({
+        id: r.id,
+        title: r.title,
+        summary: typeof r.summary === "string" ? r.summary : undefined,
+        description: typeof r.description === "string" ? r.description : undefined,
+        bibleVerse: typeof r.bibleVerse === "string" ? r.bibleVerse : (typeof r.bible_verse === "string" ? r.bible_verse as string : undefined),
+      });
+    });
+  }
+
 
   if (errors.length) return { ok: false, errors };
 
