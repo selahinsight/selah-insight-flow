@@ -256,6 +256,7 @@ export function surveyFromParsed(p: ParsedSurvey, sourceJson: string): Survey {
     description: p.description ?? "",
     completion_message: p.completion_message ?? "응답해 주셔서 감사합니다.",
     audience_type: p.audience_type ?? "general",
+    category: p.category ?? "other",
     estimated_time: p.estimated_time ?? "약 3분",
     bible_verse: p.bible_verse,
     questions: p.questions.map((q) => ({
