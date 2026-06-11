@@ -9,38 +9,157 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as SSlugRouteImport } from './routes/s.$slug'
+import { Route as AdminNewRouteImport } from './routes/admin.new'
+import { Route as AdminSurveysIdRouteImport } from './routes/admin.surveys.$id'
+import { Route as AdminSurveysIdResultRouteImport } from './routes/admin.surveys.$id.result'
+import { Route as AdminSurveysIdPublishRouteImport } from './routes/admin.surveys.$id.publish'
+import { Route as AdminSurveysIdEditRouteImport } from './routes/admin.surveys.$id.edit'
+import { Route as AdminSurveysIdAnalyticsRouteImport } from './routes/admin.surveys.$id.analytics'
 
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const SSlugRoute = SSlugRouteImport.update({
+  id: '/s/$slug',
+  path: '/s/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminNewRoute = AdminNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSurveysIdRoute = AdminSurveysIdRouteImport.update({
+  id: '/surveys/$id',
+  path: '/surveys/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSurveysIdResultRoute = AdminSurveysIdResultRouteImport.update({
+  id: '/result',
+  path: '/result',
+  getParentRoute: () => AdminSurveysIdRoute,
+} as any)
+const AdminSurveysIdPublishRoute = AdminSurveysIdPublishRouteImport.update({
+  id: '/publish',
+  path: '/publish',
+  getParentRoute: () => AdminSurveysIdRoute,
+} as any)
+const AdminSurveysIdEditRoute = AdminSurveysIdEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => AdminSurveysIdRoute,
+} as any)
+const AdminSurveysIdAnalyticsRoute = AdminSurveysIdAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminSurveysIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin/new': typeof AdminNewRoute
+  '/s/$slug': typeof SSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
+  '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
+  '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
+  '/admin/surveys/$id/result': typeof AdminSurveysIdResultRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/new': typeof AdminNewRoute
+  '/s/$slug': typeof SSlugRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
+  '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
+  '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
+  '/admin/surveys/$id/result': typeof AdminSurveysIdResultRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin/new': typeof AdminNewRoute
+  '/s/$slug': typeof SSlugRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
+  '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
+  '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
+  '/admin/surveys/$id/result': typeof AdminSurveysIdResultRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/admin/new'
+    | '/s/$slug'
+    | '/admin/'
+    | '/admin/surveys/$id'
+    | '/admin/surveys/$id/analytics'
+    | '/admin/surveys/$id/edit'
+    | '/admin/surveys/$id/publish'
+    | '/admin/surveys/$id/result'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin/new'
+    | '/s/$slug'
+    | '/admin'
+    | '/admin/surveys/$id'
+    | '/admin/surveys/$id/analytics'
+    | '/admin/surveys/$id/edit'
+    | '/admin/surveys/$id/publish'
+    | '/admin/surveys/$id/result'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/admin/new'
+    | '/s/$slug'
+    | '/admin/'
+    | '/admin/surveys/$id'
+    | '/admin/surveys/$id/analytics'
+    | '/admin/surveys/$id/edit'
+    | '/admin/surveys/$id/publish'
+    | '/admin/surveys/$id/result'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  SSlugRoute: typeof SSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +167,101 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/s/$slug': {
+      id: '/s/$slug'
+      path: '/s/$slug'
+      fullPath: '/s/$slug'
+      preLoaderRoute: typeof SSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/new': {
+      id: '/admin/new'
+      path: '/new'
+      fullPath: '/admin/new'
+      preLoaderRoute: typeof AdminNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/surveys/$id': {
+      id: '/admin/surveys/$id'
+      path: '/surveys/$id'
+      fullPath: '/admin/surveys/$id'
+      preLoaderRoute: typeof AdminSurveysIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/surveys/$id/result': {
+      id: '/admin/surveys/$id/result'
+      path: '/result'
+      fullPath: '/admin/surveys/$id/result'
+      preLoaderRoute: typeof AdminSurveysIdResultRouteImport
+      parentRoute: typeof AdminSurveysIdRoute
+    }
+    '/admin/surveys/$id/publish': {
+      id: '/admin/surveys/$id/publish'
+      path: '/publish'
+      fullPath: '/admin/surveys/$id/publish'
+      preLoaderRoute: typeof AdminSurveysIdPublishRouteImport
+      parentRoute: typeof AdminSurveysIdRoute
+    }
+    '/admin/surveys/$id/edit': {
+      id: '/admin/surveys/$id/edit'
+      path: '/edit'
+      fullPath: '/admin/surveys/$id/edit'
+      preLoaderRoute: typeof AdminSurveysIdEditRouteImport
+      parentRoute: typeof AdminSurveysIdRoute
+    }
+    '/admin/surveys/$id/analytics': {
+      id: '/admin/surveys/$id/analytics'
+      path: '/analytics'
+      fullPath: '/admin/surveys/$id/analytics'
+      preLoaderRoute: typeof AdminSurveysIdAnalyticsRouteImport
+      parentRoute: typeof AdminSurveysIdRoute
+    }
   }
 }
 
+interface AdminSurveysIdRouteChildren {
+  AdminSurveysIdAnalyticsRoute: typeof AdminSurveysIdAnalyticsRoute
+  AdminSurveysIdEditRoute: typeof AdminSurveysIdEditRoute
+  AdminSurveysIdPublishRoute: typeof AdminSurveysIdPublishRoute
+  AdminSurveysIdResultRoute: typeof AdminSurveysIdResultRoute
+}
+
+const AdminSurveysIdRouteChildren: AdminSurveysIdRouteChildren = {
+  AdminSurveysIdAnalyticsRoute: AdminSurveysIdAnalyticsRoute,
+  AdminSurveysIdEditRoute: AdminSurveysIdEditRoute,
+  AdminSurveysIdPublishRoute: AdminSurveysIdPublishRoute,
+  AdminSurveysIdResultRoute: AdminSurveysIdResultRoute,
+}
+
+const AdminSurveysIdRouteWithChildren = AdminSurveysIdRoute._addFileChildren(
+  AdminSurveysIdRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminNewRoute: typeof AdminNewRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminSurveysIdRoute: typeof AdminSurveysIdRouteWithChildren
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminNewRoute: AdminNewRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminSurveysIdRoute: AdminSurveysIdRouteWithChildren,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  SSlugRoute: SSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
