@@ -91,7 +91,7 @@ function Dashboard() {
   return (
     <AdminShell
       title="내 설문 작업실"
-      subtitle="설문을 유형별로 모아 보고, 응답을 관리합니다."
+      subtitle=""
       actions={
         <button
           onClick={() => navigate({ to: "/admin/new" })}
