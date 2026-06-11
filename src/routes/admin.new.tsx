@@ -75,6 +75,7 @@ function NewSurvey() {
   const [errors, setErrors] = useState<string[]>([]);
   const [parsed, setParsed] = useState<ParsedSurvey | null>(null);
   const [category, setCategory] = useState<SurveyCategory>("other");
+  const [design, setDesign] = useState<DesignSettings>({ ...DEFAULT_DESIGN });
   const [created, setCreated] = useState<Survey | null>(null);
 
   function validate() {
@@ -94,14 +95,24 @@ function NewSurvey() {
     if (r.data?.category) setCategory(r.data.category);
   }
 
+  function clearAll() {
+    setJson("");
+    setErrors([]);
+    setParsed(null);
+    setCreated(null);
+    toast.success("입력 내용이 삭제되었습니다.");
+  }
+
   function createAndPublish() {
     if (!parsed) return;
     const s = surveyFromParsed({ ...parsed, category }, json);
     s.status = "published"; // 발행하여 테스트 응답 가능
+    s.design_settings = { ...design };
     upsertSurvey(s);
     setCreated(s);
     toast.success("설문이 만들어졌습니다 (설문중)");
   }
+
 
   const shareUrl =
     created && typeof window !== "undefined"
