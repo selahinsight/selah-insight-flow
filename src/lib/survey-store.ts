@@ -369,6 +369,7 @@ export function validateSurveyJson(raw: string): ValidationResult {
     estimated_time: typeof o.estimated_time === "string" ? o.estimated_time : "약 3분",
     bible_verse: typeof o.bible_verse === "string" ? o.bible_verse : undefined,
     questions: qs,
+    resultTypes,
     share_card,
   };
   return { ok: true, errors: [], data };
@@ -395,6 +396,7 @@ export function surveyFromParsed(p: ParsedSurvey, sourceJson: string): Survey {
       required: q.required ?? true,
       options: q.options,
     })),
+    resultTypes: p.resultTypes,
     status: "draft",
     createdAt: Date.now(),
     responses: [],
@@ -403,6 +405,41 @@ export function surveyFromParsed(p: ParsedSurvey, sourceJson: string): Survey {
     sourceJson,
   };
 }
+
+// Compute result type id from answers (most-frequent; tie → last selected)
+export function computeResultType(
+  survey: Survey,
+  answers: Record<string, string | string[] | number>,
+  orderedSelections?: { qid: string; resultType: string }[],
+): ResultType | undefined {
+  if (!survey.resultTypes?.length) return undefined;
+  const counts: Record<string, number> = {};
+  let lastResultType: string | undefined;
+  // Walk questions in order
+  for (const q of survey.questions) {
+    if (q.type !== "single_choice" && q.type !== "multiple_choice") continue;
+    const ans = answers[q.id];
+    const picked = Array.isArray(ans) ? ans : ans !== undefined ? [String(ans)] : [];
+    for (const text of picked) {
+      const opt = (q.options ?? []).find((o) => optionText(o) === text);
+      const rt = opt ? optionResultType(opt) : undefined;
+      if (rt) {
+        counts[rt] = (counts[rt] ?? 0) + 1;
+        lastResultType = rt;
+      }
+    }
+  }
+  // Allow override via ordered selections (preserve last-pick tie-break exactness)
+  if (orderedSelections?.length) {
+    lastResultType = orderedSelections[orderedSelections.length - 1].resultType;
+  }
+  const max = Math.max(0, ...Object.values(counts));
+  if (max === 0) return undefined;
+  const top = Object.entries(counts).filter(([, n]) => n === max).map(([k]) => k);
+  const winner = top.length === 1 ? top[0] : (lastResultType && top.includes(lastResultType) ? lastResultType : top[top.length - 1]);
+  return survey.resultTypes.find((r) => r.id === winner);
+}
+
 
 
 // ---------- Seed sample ----------
