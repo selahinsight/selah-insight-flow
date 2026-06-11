@@ -1,10 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AdminShell } from "@/components/admin/admin-shell";
 import { useSurveys } from "@/lib/use-surveys";
-import { deleteSurvey, upsertSurvey } from "@/lib/survey-store";
-import { Eye, BarChart3, Pencil, Plus, Trash2, Link2 } from "lucide-react";
+import { upsertSurvey } from "@/lib/survey-store";
+import { Eye, BarChart3, Pencil, Plus, Link2, XCircle } from "lucide-react";
 import { toast } from "sonner";
-
 
 export const Route = createFileRoute("/admin/")({
   component: Dashboard,
@@ -20,17 +19,17 @@ function Dashboard() {
   function copyLink(slug: string) {
     const url = `${window.location.origin}/s/${slug}`;
     navigator.clipboard.writeText(url);
-    toast.success("공개 링크가 복사되었습니다");
+    toast.success("URL이 복사되었습니다");
   }
 
   return (
     <AdminShell
-      title="내가 만든 설문"
-      subtitle="설문을 만들고, 응답을 받고, 분석합니다."
+      title="내 설문 작업실"
+      subtitle="설문 JSON을 붙여넣어 URL을 발행하고, 응답을 관리합니다."
       actions={
         <button
           onClick={() => navigate({ to: "/admin/new" })}
-          className="inline-flex items-center gap-2 rounded-full bg-gradient-rose px-5 py-2.5 text-sm font-medium text-white shadow-soft transition hover:translate-y-[-1px]"
+          className="inline-flex items-center gap-2 rounded-full bg-[var(--clay)] px-5 py-2.5 text-sm font-medium text-white shadow-soft transition hover:translate-y-[-1px]"
         >
           <Plus className="h-4 w-4" /> 새 설문 만들기
         </button>
@@ -38,7 +37,7 @@ function Dashboard() {
     >
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Stat label="전체 설문" value={surveys.length} />
-        <Stat label="공개 중" value={published} />
+        <Stat label="발행 중" value={published} />
         <Stat label="누적 응답" value={totalResponses} />
       </div>
 
@@ -50,7 +49,7 @@ function Dashboard() {
             <thead className="bg-[var(--rose-soft)]/20 text-left text-xs uppercase tracking-wider text-foreground/60">
               <tr>
                 <th className="px-5 py-4">설문</th>
-                <th className="px-5 py-4">공개 상태</th>
+                <th className="px-5 py-4">상태</th>
                 <th className="px-5 py-4">응답 수</th>
                 <th className="px-5 py-4">최근 응답</th>
                 <th className="px-5 py-4 text-right">액션</th>
@@ -59,6 +58,14 @@ function Dashboard() {
             <tbody>
               {surveys.map((s) => {
                 const last = s.responses[s.responses.length - 1];
+                const statusLabel =
+                  s.status === "published" ? "발행 중" : s.status === "closed" ? "닫힘" : "초안";
+                const statusClass =
+                  s.status === "published"
+                    ? "bg-[var(--sage)]/40 text-[var(--clay)]"
+                    : s.status === "closed"
+                      ? "bg-muted text-muted-foreground line-through"
+                      : "bg-muted text-muted-foreground";
                 return (
                   <tr key={s.id} className="border-t border-border/60 align-middle">
                     <td className="px-5 py-4">
@@ -70,25 +77,14 @@ function Dashboard() {
                         {s.title}
                       </Link>
                       <p className="mt-0.5 text-xs text-muted-foreground">
-                        {s.audience} · 질문 {s.questions.length}개 · 유형 {s.resultTypes.length}개
+                        {s.audience_type === "christian" ? "기독교인용" : "일반"} · 질문{" "}
+                        {s.questions.length}개 · {s.estimated_time}
                       </p>
                     </td>
                     <td className="px-5 py-4">
-                      <button
-                        onClick={() => {
-                          upsertSurvey({
-                            ...s,
-                            status: s.status === "published" ? "draft" : "published",
-                          });
-                        }}
-                        className={`rounded-full px-3 py-1 text-xs ${
-                          s.status === "published"
-                            ? "bg-[var(--sage)]/40 text-[var(--clay)]"
-                            : "bg-muted text-muted-foreground"
-                        }`}
-                      >
-                        {s.status === "published" ? "공개" : "비공개"}
-                      </button>
+                      <span className={`rounded-full px-3 py-1 text-xs ${statusClass}`}>
+                        {statusLabel}
+                      </span>
                     </td>
                     <td className="px-5 py-4 text-foreground/80">{s.responses.length}</td>
                     <td className="px-5 py-4 text-xs text-muted-foreground">
@@ -96,28 +92,39 @@ function Dashboard() {
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center justify-end gap-1">
-                        <IconBtn title="편집" onClick={() => navigate({ to: "/admin/surveys/$id/edit", params: { id: s.id } })}>
-                          <Pencil className="h-4 w-4" />
-                        </IconBtn>
-                        <IconBtn title="결과 보기" onClick={() => navigate({ to: "/admin/surveys/$id/analytics", params: { id: s.id } })}>
-                          <BarChart3 className="h-4 w-4" />
-                        </IconBtn>
                         <IconBtn title="미리보기" onClick={() => window.open(`/s/${s.slug}`, "_blank")}>
                           <Eye className="h-4 w-4" />
                         </IconBtn>
-                        <IconBtn title="링크 복사" onClick={() => copyLink(s.slug)}>
+                        <IconBtn title="URL 복사" onClick={() => copyLink(s.slug)}>
                           <Link2 className="h-4 w-4" />
                         </IconBtn>
                         <IconBtn
-                          title="삭제"
+                          title="응답 보기"
+                          onClick={() =>
+                            navigate({ to: "/admin/surveys/$id/analytics", params: { id: s.id } })
+                          }
+                        >
+                          <BarChart3 className="h-4 w-4" />
+                        </IconBtn>
+                        <IconBtn
+                          title="편집"
+                          onClick={() =>
+                            navigate({ to: "/admin/surveys/$id/edit", params: { id: s.id } })
+                          }
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </IconBtn>
+                        <IconBtn
+                          title={s.status === "closed" ? "다시 열기" : "닫기"}
                           onClick={() => {
-                            if (confirm("이 설문을 삭제할까요?")) {
-                              deleteSurvey(s.id);
-                              toast.success("삭제되었습니다");
-                            }
+                            upsertSurvey({
+                              ...s,
+                              status: s.status === "closed" ? "draft" : "closed",
+                            });
+                            toast.success(s.status === "closed" ? "다시 열었습니다" : "설문을 닫았습니다");
                           }}
                         >
-                          <Trash2 className="h-4 w-4 text-destructive" />
+                          <XCircle className="h-4 w-4 text-destructive" />
                         </IconBtn>
                       </div>
                     </td>
@@ -157,11 +164,11 @@ function EmptyState() {
     <div className="rounded-3xl border border-dashed border-border/80 bg-white/50 p-12 text-center shadow-card">
       <p className="font-serif text-2xl text-foreground">아직 만든 설문이 없습니다</p>
       <p className="mt-2 text-sm text-muted-foreground">
-        AI로 첫 번째 자기진단 설문을 만들어 보세요.
+        ChatGPT에서 만든 설문 JSON을 붙여넣어 첫 설문을 만들어 보세요.
       </p>
       <Link
         to="/admin/new"
-        className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-rose px-6 py-2.5 text-sm font-medium text-white shadow-soft"
+        className="mt-6 inline-flex items-center gap-2 rounded-full bg-[var(--clay)] px-6 py-2.5 text-sm font-medium text-white shadow-soft"
       >
         <Plus className="h-4 w-4" /> 새 설문 만들기
       </Link>

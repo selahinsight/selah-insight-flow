@@ -1,7 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AdminShell, SurveyTabs } from "@/components/admin/admin-shell";
 import { useSurvey } from "@/lib/use-surveys";
-import { Download } from "lucide-react";
+import {
+  buildAnalysisPrompt,
+  buildContentIdeaPrompt,
+  buildCustomerLanguageDump,
+} from "@/lib/survey-store";
+import { Download, Copy } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/surveys/$id/analytics")({
   component: Analytics,
@@ -13,17 +19,22 @@ function Analytics() {
   if (!survey) return <AdminShell title="설문 없음">{null}</AdminShell>;
 
   const total = survey.responses.length;
-  const byType = survey.resultTypes.map((t) => ({
-    key: t.key,
-    name: t.name,
-    count: survey.responses.filter((r) => r.resultTypeKey === t.key).length,
-  }));
 
   function downloadCsv() {
-    const headers = ["id", "submittedAt", "audience", "resultTypeKey"];
-    const rows = survey!.responses.map((r) =>
-      [r.id, new Date(r.submittedAt).toISOString(), r.audience ?? "", r.resultTypeKey].join(","),
-    );
+    const headers = ["id", "submittedAt", ...survey!.questions.map((q, i) => `Q${i + 1}`)];
+    const rows = survey!.responses.map((r) => {
+      const cells = [
+        r.id,
+        new Date(r.submittedAt).toISOString(),
+        ...survey!.questions.map((q) => {
+          const v = r.answers[q.id];
+          if (v === undefined) return "";
+          const s = Array.isArray(v) ? v.join(" | ") : String(v);
+          return `"${s.replace(/"/g, '""')}"`;
+        }),
+      ];
+      return cells.join(",");
+    });
     const csv = [headers.join(","), ...rows].join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
@@ -34,131 +45,159 @@ function Analytics() {
     URL.revokeObjectURL(url);
   }
 
+  async function copy(text: string, label: string) {
+    await navigator.clipboard.writeText(text);
+    toast.success(`${label}을(를) 복사했습니다`);
+  }
+
   return (
-    <AdminShell
-      title={survey.title}
-      subtitle="응답 분석 · 키워드 · 전환 가능성"
-      showBack
-      actions={
+    <AdminShell title={survey.title} subtitle="응답 데이터와 ChatGPT 분석 프롬프트" showBack>
+      <SurveyTabs id={id} />
+
+      <div className="mb-6 flex flex-wrap gap-2">
         <button
           onClick={downloadCsv}
           className="inline-flex items-center gap-2 rounded-full bg-[var(--clay)] px-5 py-2.5 text-sm font-medium text-white shadow-soft"
         >
           <Download className="h-4 w-4" /> CSV 다운로드
         </button>
-      }
-    >
-      <SurveyTabs id={id} />
+        <button
+          onClick={() => copy(buildAnalysisPrompt(survey!), "ChatGPT 분석 프롬프트")}
+          className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-white px-5 py-2.5 text-sm text-foreground/80 hover:bg-[var(--sand)]/40"
+        >
+          <Copy className="h-4 w-4" /> ChatGPT 분석 프롬프트 복사
+        </button>
+        <button
+          onClick={() => copy(buildContentIdeaPrompt(survey!), "콘텐츠 아이디어 프롬프트")}
+          className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-white px-5 py-2.5 text-sm text-foreground/80 hover:bg-[var(--sand)]/40"
+        >
+          <Copy className="h-4 w-4" /> 콘텐츠 아이디어 프롬프트 복사
+        </button>
+        <button
+          onClick={() => copy(buildCustomerLanguageDump(survey!), "고객 실제 표현")}
+          className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-white px-5 py-2.5 text-sm text-foreground/80 hover:bg-[var(--sand)]/40"
+        >
+          <Copy className="h-4 w-4" /> 고객 실제 표현 복사
+        </button>
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
         <Stat label="전체 응답" value={total} />
-        <Stat label="유형 수" value={survey.resultTypes.length} />
         <Stat label="질문 수" value={survey.questions.length} />
+        <Stat
+          label="주관식 응답"
+          value={survey.responses.reduce((a, r) => {
+            return (
+              a +
+              Object.entries(r.answers).filter(([qid, v]) => {
+                const q = survey.questions.find((x) => x.id === qid);
+                return (
+                  (q?.type === "short_text" || q?.type === "long_text") &&
+                  typeof v === "string" &&
+                  v.trim().length > 0
+                );
+              }).length
+            );
+          }, 0)}
+        />
       </div>
 
-      <Section title="유형별 분포">
-        {byType.length === 0 || total === 0 ? (
-          <Empty />
-        ) : (
-          <div className="space-y-3">
-            {byType.map((t) => {
-              const pct = total ? Math.round((t.count / total) * 100) : 0;
-              return (
-                <div key={t.key}>
-                  <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="font-serif text-foreground">
-                      {t.key} — {t.name}
-                    </span>
-                    <span className="text-muted-foreground">
-                      {t.count}명 · {pct}%
-                    </span>
-                  </div>
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--rose-soft)]/30">
-                    <div
-                      className="h-full rounded-full bg-gradient-rose"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </Section>
-
-      <div className="mt-8 grid gap-4 lg:grid-cols-2">
-        <Section title="고객이 실제로 쓴 표현">
-          <KeywordCloud
-            words={["회복", "지친다", "관계", "방향", "에너지", "혼자", "휴식", "균형"]}
-          />
-        </Section>
-        <Section title="반복적으로 등장한 문제">
-          <ul className="space-y-2 text-sm text-foreground/80">
-            <li>· 충분히 쉬어도 회복이 잘 안 된다</li>
-            <li>· 관계에서 같은 패턴이 반복된다</li>
-            <li>· 무엇부터 시작해야 할지 모르겠다</li>
-          </ul>
-        </Section>
-        <Section title="구매 장벽">
-          <ul className="space-y-2 text-sm text-foreground/80">
-            <li>· 효과가 있을지 확신이 없다</li>
-            <li>· 가격 부담</li>
-            <li>· 시간 확보가 어렵다</li>
-          </ul>
-        </Section>
-        <Section title="프로그램 니즈 · 콘텐츠 아이디어">
-          <ul className="space-y-2 text-sm text-foreground/80">
-            <li>· 회복 루틴 30일 챌린지</li>
-            <li>· 관계 패턴 1:1 진단</li>
-            <li>· 짧은 명상 & 셀프케어 가이드</li>
-          </ul>
-        </Section>
-      </div>
-
-      <Section title="질문별 응답 통계">
-        <div className="space-y-3">
-          {survey.questions.map((q, i) => (
-            <div key={q.id} className="rounded-xl border border-border/60 bg-white/70 p-4">
-              <p className="text-sm font-medium text-foreground">
-                Q{i + 1}. {q.text}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                {q.type === "text" ? "주관식 응답" : "선택지별 분포는 응답이 쌓이면 표시됩니다."}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
-      <Section title="전환 가능성이 높은 응답자">
+      <Section title="응답 목록">
         {total === 0 ? (
           <Empty />
         ) : (
-          <div className="overflow-hidden rounded-xl border border-border/60 bg-white/70">
+          <div className="overflow-x-auto rounded-xl border border-border/60 bg-white/70">
             <table className="w-full text-sm">
               <thead className="bg-[var(--rose-soft)]/20 text-left text-xs uppercase tracking-wider text-foreground/60">
                 <tr>
                   <th className="px-4 py-3">ID</th>
-                  <th className="px-4 py-3">유형</th>
-                  <th className="px-4 py-3">관계</th>
                   <th className="px-4 py-3">제출일</th>
+                  {survey.questions.map((_, i) => (
+                    <th key={i} className="px-4 py-3">
+                      Q{i + 1}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {survey.responses.slice(0, 8).map((r) => (
-                  <tr key={r.id} className="border-t border-border/60">
-                    <td className="px-4 py-3 font-mono text-xs">{r.id}</td>
-                    <td className="px-4 py-3">{r.resultTypeKey}</td>
-                    <td className="px-4 py-3">{r.audience ?? "—"}</td>
-                    <td className="px-4 py-3 text-xs text-muted-foreground">
-                      {new Date(r.submittedAt).toLocaleDateString()}
-                    </td>
-                  </tr>
-                ))}
+                {survey.responses
+                  .slice()
+                  .reverse()
+                  .map((r) => (
+                    <tr key={r.id} className="border-t border-border/60 align-top">
+                      <td className="px-4 py-3 font-mono text-[11px]">{r.id}</td>
+                      <td className="px-4 py-3 text-xs text-muted-foreground">
+                        {new Date(r.submittedAt).toLocaleString()}
+                      </td>
+                      {survey.questions.map((q) => {
+                        const v = r.answers[q.id];
+                        let display = "—";
+                        if (Array.isArray(v)) display = v.join(", ");
+                        else if (v !== undefined && v !== "") display = String(v);
+                        return (
+                          <td key={q.id} className="px-4 py-3 text-xs text-foreground/80">
+                            {display}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
         )}
+      </Section>
+
+      <Section title="질문별 분포">
+        <div className="space-y-3">
+          {survey.questions.map((q, i) => {
+            if (q.type === "single_choice" || q.type === "multiple_choice") {
+              const counts: Record<string, number> = {};
+              (q.options ?? []).forEach((o) => (counts[o] = 0));
+              survey.responses.forEach((r) => {
+                const v = r.answers[q.id];
+                const vals = Array.isArray(v) ? v : v !== undefined ? [String(v)] : [];
+                vals.forEach((x) => {
+                  if (counts[x] !== undefined) counts[x] += 1;
+                });
+              });
+              const max = Math.max(1, ...Object.values(counts));
+              return (
+                <div key={q.id} className="rounded-xl border border-border/60 bg-white/70 p-4">
+                  <p className="text-sm font-medium text-foreground">
+                    Q{i + 1}. {q.text}
+                  </p>
+                  <div className="mt-3 space-y-2">
+                    {(q.options ?? []).map((o) => (
+                      <div key={o}>
+                        <div className="mb-1 flex items-center justify-between text-xs">
+                          <span>{o}</span>
+                          <span className="text-muted-foreground">{counts[o]}</span>
+                        </div>
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--rose-soft)]/30">
+                          <div
+                            className="h-full rounded-full bg-gradient-rose"
+                            style={{ width: `${(counts[o] / max) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <div key={q.id} className="rounded-xl border border-border/60 bg-white/70 p-4">
+                <p className="text-sm font-medium text-foreground">
+                  Q{i + 1}. {q.text}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {q.type === "scale_1_5" ? "1-5 척도" : "주관식"} — 표는 위 응답 목록에서 확인하세요.
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </Section>
     </AdminShell>
   );
@@ -184,22 +223,6 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function KeywordCloud({ words }: { words: string[] }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {words.map((w, i) => (
-        <span
-          key={w}
-          className="rounded-full bg-[var(--rose-soft)]/40 px-3 py-1 text-[var(--clay)]"
-          style={{ fontSize: `${0.8 + ((i * 7) % 5) * 0.08}rem` }}
-        >
-          {w}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 function Empty() {
-  return <p className="text-sm text-muted-foreground">아직 데이터가 없습니다.</p>;
+  return <p className="text-sm text-muted-foreground">아직 응답이 없습니다.</p>;
 }

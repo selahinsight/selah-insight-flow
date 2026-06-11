@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { addResponse, getSurveyBySlug, uid, type Survey } from "@/lib/survey-store";
 import { useSurveys } from "@/lib/use-surveys";
 
@@ -25,7 +25,9 @@ function RespondentSurvey() {
   if (survey.status !== "published") {
     return (
       <Wrap>
-        <p className="font-serif text-2xl text-foreground">이 설문은 아직 비공개입니다.</p>
+        <p className="font-serif text-2xl text-foreground">
+          {survey.status === "closed" ? "이 설문은 종료되었습니다." : "이 설문은 아직 공개되지 않았습니다."}
+        </p>
       </Wrap>
     );
   }
@@ -33,14 +35,16 @@ function RespondentSurvey() {
   return <Runner survey={survey} />;
 }
 
+type Phase = "intro" | "questions" | "done";
+
 function Runner({ survey }: { survey: Survey }) {
+  const [phase, setPhase] = useState<Phase>("intro");
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[] | number>>({});
-  const [submitted, setSubmitted] = useState<{ key: string } | null>(null);
 
-  const q = survey.questions[i];
   const total = survey.questions.length;
-  const progress = ((i + (submitted ? 1 : 0)) / total) * 100;
+  const q = survey.questions[i];
+  const progress = phase === "done" ? 100 : (i / total) * 100;
 
   function next() {
     if (i < total - 1) setI(i + 1);
@@ -48,61 +52,61 @@ function Runner({ survey }: { survey: Survey }) {
   }
 
   function submit() {
-    // pick the most common typeKey from selected options
-    const counts: Record<string, number> = {};
-    Object.entries(answers).forEach(([qid, val]) => {
-      const question = survey.questions.find((x) => x.id === qid);
-      if (!question?.options) return;
-      const vals = Array.isArray(val) ? val : [val];
-      vals.forEach((v) => {
-        const opt = question.options!.find((o) => o.id === v);
-        if (opt?.typeKey) counts[opt.typeKey] = (counts[opt.typeKey] ?? 0) + 1;
-      });
-    });
-    const key =
-      Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] ??
-      survey.resultTypes[0]?.key ??
-      "A";
     addResponse({
       id: uid("r"),
       surveyId: survey.id,
       submittedAt: Date.now(),
       answers,
-      resultTypeKey: key,
     });
-    setSubmitted({ key });
+    setPhase("done");
   }
 
-  if (submitted) {
-    const t = survey.resultTypes.find((x) => x.key === submitted.key) ?? survey.resultTypes[0];
+  if (phase === "intro") {
     return (
       <Wrap>
-        <span className="rounded-full bg-[var(--clay)] px-4 py-1 text-xs text-white">
-          당신의 유형 · {t.key}
-        </span>
-        <h1 className="mt-5 font-serif text-3xl text-foreground md:text-4xl">{t.name}</h1>
-        <p className="mt-3 text-foreground/75">{t.oneLiner}</p>
-
-        <div className="mt-8 rounded-2xl border border-border/60 bg-white/80 p-6 shadow-card">
-          <p className="text-sm text-foreground/80">{survey.freeResultIntro}</p>
-          <ul className="mt-4 space-y-2 text-sm text-foreground">
-            {t.features.map((f, k) => (
-              <li key={k} className="flex gap-2">
-                <span className="text-[var(--clay)]">·</span>
-                {f}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mt-6 rounded-2xl bg-gradient-rose p-6 text-white shadow-soft">
-          <p className="font-serif text-lg">{survey.paidResultIntro}</p>
-          <a
-            href={survey.ctaUrl || "#"}
-            className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-medium text-[var(--clay)]"
+        <div className="rounded-3xl border border-border/60 bg-white/80 p-8 shadow-card text-center">
+          <p className="text-[11px] tracking-[0.25em] text-[var(--clay)]">
+            SELAH SURVEY · {survey.audience_type === "christian" ? "FOR CHRISTIANS" : "GENERAL"}
+          </p>
+          <h1 className="mt-4 font-serif text-3xl leading-snug text-foreground md:text-4xl">
+            {survey.title}
+          </h1>
+          {survey.description && (
+            <p className="mx-auto mt-4 max-w-md text-sm text-foreground/75">{survey.description}</p>
+          )}
+          <p className="mt-3 text-xs text-muted-foreground">예상 소요 시간 · {survey.estimated_time}</p>
+          {survey.audience_type === "christian" && survey.bible_verse && (
+            <div className="mx-auto mt-6 max-w-md rounded-2xl bg-[var(--cream)] p-4 text-sm italic text-[var(--clay)]">
+              “{survey.bible_verse}”
+            </div>
+          )}
+          <p className="mt-6 text-sm text-foreground/70">
+            정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
+          </p>
+          <button
+            onClick={() => setPhase("questions")}
+            className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--clay)] px-8 py-3 text-sm font-medium text-white shadow-soft"
           >
-            {survey.ctaLabel || "상세 결과지 신청하기"}
-          </a>
+            시작하기
+          </button>
+        </div>
+      </Wrap>
+    );
+  }
+
+  if (phase === "done") {
+    return (
+      <Wrap>
+        <div className="rounded-3xl border border-border/60 bg-white/80 p-8 shadow-card text-center">
+          <h1 className="font-serif text-3xl text-foreground">제출이 완료되었습니다</h1>
+          <p className="mt-4 text-sm text-foreground/75 whitespace-pre-wrap">
+            {survey.completion_message}
+          </p>
+          {survey.audience_type === "christian" && survey.bible_verse && (
+            <div className="mx-auto mt-6 max-w-md rounded-2xl bg-[var(--cream)] p-4 text-sm italic text-[var(--clay)]">
+              “{survey.bible_verse}”
+            </div>
+          )}
         </div>
       </Wrap>
     );
@@ -128,7 +132,15 @@ function Runner({ survey }: { survey: Survey }) {
       <h2 className="font-serif text-2xl leading-snug text-foreground md:text-3xl">{q.text}</h2>
 
       <div className="mt-6 space-y-2">
-        {q.type === "text" && (
+        {q.type === "short_text" && (
+          <input
+            value={(answers[q.id] as string) ?? ""}
+            onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.value })}
+            className="w-full rounded-2xl border border-border/70 bg-white px-4 py-3 text-sm"
+            placeholder="답을 입력해주세요"
+          />
+        )}
+        {q.type === "long_text" && (
           <textarea
             value={(answers[q.id] as string) ?? ""}
             onChange={(e) => setAnswers({ ...answers, [q.id]: e.target.value })}
@@ -137,15 +149,15 @@ function Runner({ survey }: { survey: Survey }) {
             placeholder="편하게 적어주세요"
           />
         )}
-        {q.type === "scale" && (
+        {q.type === "scale_1_5" && (
           <div className="flex flex-wrap gap-2">
-            {Array.from({ length: 10 }, (_, n) => n + 1).map((n) => {
+            {[1, 2, 3, 4, 5].map((n) => {
               const active = answers[q.id] === n;
               return (
                 <button
                   key={n}
                   onClick={() => setAnswers({ ...answers, [q.id]: n })}
-                  className={`h-11 w-11 rounded-full text-sm transition ${
+                  className={`h-12 w-12 rounded-full text-sm transition ${
                     active
                       ? "bg-[var(--clay)] text-white"
                       : "border border-border/60 bg-white hover:bg-[var(--rose-soft)]/30"
@@ -157,25 +169,25 @@ function Runner({ survey }: { survey: Survey }) {
             })}
           </div>
         )}
-        {(q.type === "single" || q.type === "multi") &&
-          q.options?.map((o) => {
+        {(q.type === "single_choice" || q.type === "multiple_choice") &&
+          (q.options ?? []).map((o) => {
             const current = answers[q.id];
-            const isMulti = q.type === "multi";
+            const isMulti = q.type === "multiple_choice";
             const selected = isMulti
-              ? Array.isArray(current) && current.includes(o.id)
-              : current === o.id;
+              ? Array.isArray(current) && current.includes(o)
+              : current === o;
             return (
               <button
-                key={o.id}
+                key={o}
                 onClick={() => {
                   if (isMulti) {
                     const arr = Array.isArray(current) ? [...current] : [];
-                    const idx = arr.indexOf(o.id);
+                    const idx = arr.indexOf(o);
                     if (idx >= 0) arr.splice(idx, 1);
-                    else arr.push(o.id);
+                    else arr.push(o);
                     setAnswers({ ...answers, [q.id]: arr });
                   } else {
-                    setAnswers({ ...answers, [q.id]: o.id });
+                    setAnswers({ ...answers, [q.id]: o });
                   }
                 }}
                 className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-5 py-4 text-left text-sm transition ${
@@ -184,7 +196,7 @@ function Runner({ survey }: { survey: Survey }) {
                     : "border-border/60 bg-white/70 hover:bg-white"
                 }`}
               >
-                <span>{o.label}</span>
+                <span>{o}</span>
                 <span
                   className={`grid h-5 w-5 place-items-center rounded-full border ${
                     selected ? "border-[var(--clay)] bg-[var(--clay)]" : "border-border"
@@ -211,9 +223,9 @@ function Runner({ survey }: { survey: Survey }) {
         </button>
         <button
           onClick={next}
-          className="rounded-full bg-gradient-rose px-8 py-3 text-sm font-medium text-white shadow-soft"
+          className="rounded-full bg-[var(--clay)] px-8 py-3 text-sm font-medium text-white shadow-soft"
         >
-          {i === total - 1 ? "제출하고 결과 보기" : "다음"}
+          {i === total - 1 ? "제출하기" : "다음"}
         </button>
       </div>
     </Wrap>
@@ -224,31 +236,14 @@ function Wrap({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[var(--ivory)] px-5 py-10">
       <div className="mx-auto max-w-xl">
-        <div className="mb-6 flex items-center justify-between gap-2">
-          <button
-            onClick={() => {
-              if (window.history.length > 1) window.history.back();
-              else window.location.href = "/";
-            }}
-            className="grid h-8 w-8 place-items-center rounded-full border border-border bg-white text-foreground/70 hover:bg-[var(--sand)]/60"
-            title="이전"
-            aria-label="이전"
-          >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M15 18l-6-6 6-6" />
-            </svg>
-          </button>
-          <div className="flex items-center gap-2">
-            <svg width="22" height="22" viewBox="0 0 40 40" className="text-[var(--clay)]">
-              <path d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z" fill="none" stroke="currentColor" strokeWidth="1.2" />
-            </svg>
-            <span className="font-serif text-xs tracking-[0.25em] text-[var(--clay)]">SELAH · DIAGNOSIS</span>
-          </div>
-          <span className="w-8" />
+        <div className="mb-6 flex items-center justify-center gap-2">
+          <svg width="22" height="22" viewBox="0 0 40 40" className="text-[var(--clay)]">
+            <path d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z" fill="none" stroke="currentColor" strokeWidth="1.2" />
+          </svg>
+          <span className="font-serif text-xs tracking-[0.25em] text-[var(--clay)]">SELAH</span>
         </div>
         {children}
       </div>
     </div>
   );
 }
-
