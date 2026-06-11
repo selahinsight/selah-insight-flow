@@ -223,10 +223,12 @@ export interface ParsedSurvey {
     type: QuestionType;
     text: string;
     required?: boolean;
-    options?: string[];
+    options?: SurveyOption[];
   }[];
+  resultTypes?: ResultType[];
   share_card?: ShareCardConfig;
 }
+
 
 
 export interface ValidationResult {
