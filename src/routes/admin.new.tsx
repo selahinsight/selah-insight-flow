@@ -314,6 +314,7 @@ function NewSurvey() {
               <li>· estimated_time (string)</li>
               <li>· bible_verse (string, 선택)</li>
               <li>· questions[] (필수)</li>
+              <li>· resultTypes[] (선택, 결과형 진단)</li>
             </ul>
             <p className="mt-4 text-xs font-medium text-foreground">질문 유형</p>
             <ul className="mt-1 space-y-1 text-xs text-foreground/80">
@@ -323,6 +324,11 @@ function NewSurvey() {
               <li>· multiple_choice (options[])</li>
               <li>· scale_1_5</li>
             </ul>
+            <p className="mt-4 text-xs font-medium text-foreground">결과형 옵션</p>
+            <pre className="mt-1 rounded-lg bg-[var(--ivory)] p-2 text-[10px] leading-relaxed text-foreground/70">{`"options": [
+  { "text": "선택지 텍스트", "resultType": "future_anxiety" }
+]`}</pre>
+
           </div>
         </aside>
       </div>
