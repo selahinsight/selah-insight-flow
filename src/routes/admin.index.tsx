@@ -150,7 +150,7 @@ function Dashboard() {
 
   return (
     <AdminShell
-      title="Survey Studio"
+      title="Studio"
       subtitle=""
       actions={
         <button

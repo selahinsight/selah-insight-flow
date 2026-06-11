@@ -1,6 +1,6 @@
 import { createFileRoute, Navigate } from "@tanstack/react-router";
 
-// Legacy "result editor" route is no longer part of Survey Studio.
+// Legacy "result editor" route is no longer part of Studio.
 // Redirect to the edit screen so existing links keep working.
 export const Route = createFileRoute("/admin/surveys/$id/result")({
   component: Redirect,

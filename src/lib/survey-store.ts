@@ -1,4 +1,4 @@
-// Selah Survey Studio — JSON-schema backed survey store (localStorage).
+// Selah Studio — JSON-schema backed survey store (localStorage).
 // Shape is intentionally close to a future Lovable Cloud table so the swap is easy.
 
 import { DEFAULT_DESIGN, type DesignSettings } from "./survey-themes";
