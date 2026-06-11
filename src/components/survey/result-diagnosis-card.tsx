@@ -1,22 +1,30 @@
 import { forwardRef } from "react";
 import type { Survey, ResultType } from "@/lib/survey-store";
-import { THEMES, fontFamilyOf, type DesignSettings } from "@/lib/survey-themes";
+import {
+  THEMES,
+  bodyFamilyOf,
+  headingFamilyOf,
+  type DesignSettings,
+} from "@/lib/survey-themes";
 
 interface Props {
   survey: Survey;
   result: ResultType;
   design: DesignSettings;
+  qrDataUrl?: string;
 }
 
 /**
  * 1080x1350 portrait diagnostic result card.
- * Contains: SELAH brand, survey title, result type name, summary, description, verse.
- * Never includes raw respondent answers.
+ * Contains: SELAH brand, survey title, result type name, summary, description, verse, QR.
+ * Never includes raw respondent answers or the URL as text.
  */
 export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
-  function ResultDiagnosisCard({ survey, result, design }, ref) {
+  function ResultDiagnosisCard({ survey, result, design, qrDataUrl }, ref) {
     const t = THEMES[design.theme];
     const verse = result.bibleVerse ?? survey.bible_verse;
+    const headingFont = headingFamilyOf(design.font_mood);
+    const bodyFont = bodyFamilyOf(design.font_mood);
     return (
       <div
         ref={ref}
@@ -25,7 +33,7 @@ export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
           height: 1350,
           backgroundColor: t.bg,
           color: t.text,
-          fontFamily: fontFamilyOf(design.font_mood),
+          fontFamily: bodyFont,
           padding: 80,
           display: "flex",
           flexDirection: "column",
@@ -79,7 +87,7 @@ export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
         </div>
 
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", marginTop: 24 }}>
-          <div style={{ fontSize: 26, color: t.muted }}>당신의 결과는</div>
+          <div style={{ fontSize: 26, color: t.muted, fontFamily: bodyFont }}>당신의 결과는</div>
           <div
             style={{
               fontSize: 86,
@@ -88,6 +96,7 @@ export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
               letterSpacing: "-0.01em",
               color: t.text,
               marginTop: 12,
+              fontFamily: headingFont,
             }}
           >
             {result.title}
@@ -102,6 +111,7 @@ export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
                 color: t.text,
                 opacity: 0.8,
                 maxWidth: 820,
+                fontFamily: bodyFont,
               }}
             >
               {result.summary}
@@ -118,6 +128,7 @@ export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
                 opacity: 0.75,
                 maxWidth: 860,
                 whiteSpace: "pre-wrap",
+                fontFamily: bodyFont,
               }}
             >
               {result.description}
@@ -137,6 +148,7 @@ export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
                 maxWidth: 860,
                 backgroundColor: t.surface,
                 borderRadius: 8,
+                fontFamily: headingFont,
               }}
             >
               “{verse}”
@@ -151,15 +163,35 @@ export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
             borderTop: `1px solid ${t.border}`,
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-end",
+            alignItems: "center",
+            gap: 24,
           }}
         >
-          <div style={{ fontSize: 20, color: t.muted, letterSpacing: "0.06em" }}>
-            나도 진단해보기 · /s/{survey.slug}
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <div style={{ fontSize: 24, color: t.text, letterSpacing: "0.04em", fontFamily: headingFont }}>
+              나도 진단해보기
+            </div>
+            <div style={{ fontSize: 16, color: t.muted, letterSpacing: "0.32em" }}>
+              SELAH · INSIGHT
+            </div>
           </div>
-          <div style={{ fontSize: 18, color: t.muted, letterSpacing: "0.32em" }}>
-            SELAH · INSIGHT
-          </div>
+          {qrDataUrl && (
+            <div
+              style={{
+                width: 160,
+                height: 160,
+                padding: 12,
+                backgroundColor: "#FFFFFF",
+                borderRadius: 14,
+                border: `1px solid ${t.border}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img src={qrDataUrl} alt="" style={{ width: "100%", height: "100%" }} />
+            </div>
+          )}
         </div>
       </div>
     );

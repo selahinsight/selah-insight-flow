@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
+import QRCode from "qrcode";
 import {
   addResponse,
   computeResultType,
@@ -15,9 +16,11 @@ import { useSurveys } from "@/lib/use-surveys";
 import {
   DEFAULT_DESIGN,
   THEMES,
+  bodyFamilyOf,
   buttonClasses,
   cardClasses,
   fontFamilyOf,
+  headingFamilyOf,
   type DesignSettings,
   type ThemeColors,
 } from "@/lib/survey-themes";
@@ -25,6 +28,7 @@ import { ResultShareCard } from "@/components/survey/result-share-card";
 import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { Download, Share2 } from "lucide-react";
 import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/s/$slug")({
   component: RespondentSurvey,
@@ -107,6 +111,8 @@ function Runner({
 
   const btnPrimary = buttonClasses(design.button_style, theme);
   const cardStyle = cardClasses(design.card_style, theme);
+  const headingFont = headingFamilyOf(design.font_mood);
+
 
   if (phase === "intro") {
     return (
@@ -135,10 +141,12 @@ function Runner({
               fontSize: 32,
               lineHeight: 1.3,
               color: theme.text,
+              fontFamily: headingFont,
             }}
           >
             {survey.title}
           </h1>
+
           {survey.description && (
             <p
               style={{
@@ -217,10 +225,12 @@ function Runner({
                 lineHeight: 1.3,
                 color: theme.text,
                 textAlign: "center",
+                fontFamily: headingFont,
               }}
             >
               당신의 결과는 {result.title}이에요.
             </h1>
+
             {result.summary && (
               <p style={{ marginTop: 20, fontSize: 15, lineHeight: 1.65, color: theme.text, opacity: 0.85, textAlign: "center" }}>
                 {result.summary}
@@ -269,7 +279,7 @@ function Runner({
             textAlign: "center",
           }}
         >
-          <h1 style={{ fontSize: 28, color: theme.text }}>제출이 완료되었습니다</h1>
+          <h1 style={{ fontSize: 28, color: theme.text, fontFamily: headingFont }}>제출이 완료되었습니다</h1>
           <p
             style={{
               marginTop: 18,
@@ -345,7 +355,7 @@ function Runner({
       </div>
 
       <div style={{ ...cardStyle, borderRadius: 24, padding: 28 }}>
-        <h2 style={{ fontSize: 24, lineHeight: 1.4, color: theme.text }}>{q.text}</h2>
+        <h2 style={{ fontSize: 24, lineHeight: 1.4, color: theme.text, fontFamily: headingFont }}>{q.text}</h2>
 
         <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 10 }}>
           {q.type === "short_text" && (
@@ -527,6 +537,16 @@ function ShareSection({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [busy, setBusy] = useState(false);
+  const [qrDataUrl, setQrDataUrl] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = `${window.location.origin}/s/${survey.slug}`;
+    QRCode.toDataURL(url, { margin: 1, width: 320 })
+      .then((d) => setQrDataUrl(d))
+      .catch(() => undefined);
+  }, [survey.slug]);
+
 
   async function renderPng(): Promise<Blob | null> {
     if (!cardRef.current) return null;
@@ -645,17 +665,16 @@ function ShareSection({
             onClick={handleShare}
             disabled={busy}
             style={{
+              ...btn,
               padding: "12px 22px",
               borderRadius: 999,
               fontSize: 13,
               fontWeight: 500,
               cursor: busy ? "wait" : "pointer",
-              backgroundColor: "transparent",
-              color: theme.accent,
-              border: `1.5px solid ${theme.accent}`,
               display: "inline-flex",
               alignItems: "center",
               gap: 6,
+              opacity: 0.92,
             }}
           >
             <Share2 size={14} /> 이미지로 공유하기
@@ -673,8 +692,9 @@ function ShareSection({
         }}
         aria-hidden
       >
-        <ResultShareCard ref={cardRef} survey={survey} design={design} />
+        <ResultShareCard ref={cardRef} survey={survey} design={design} qrDataUrl={qrDataUrl} />
       </div>
+
     </>
   );
 }
@@ -745,6 +765,16 @@ function ResultActions({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [busy, setBusy] = useState(false);
+  const [qrDataUrl, setQrDataUrl] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = `${window.location.origin}/s/${survey.slug}`;
+    QRCode.toDataURL(url, { margin: 1, width: 320 })
+      .then((d) => setQrDataUrl(d))
+      .catch(() => undefined);
+  }, [survey.slug]);
+
 
   async function handleDownload() {
     if (!cardRef.current) return;
@@ -808,7 +838,7 @@ function ResultActions({
         style={{ position: "fixed", left: -99999, top: 0, pointerEvents: "none" }}
         aria-hidden
       >
-        <ResultDiagnosisCard ref={cardRef} survey={survey} result={result} design={design} />
+        <ResultDiagnosisCard ref={cardRef} survey={survey} result={result} design={design} qrDataUrl={qrDataUrl} />
       </div>
     </>
   );

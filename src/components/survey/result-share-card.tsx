@@ -1,20 +1,28 @@
 import { forwardRef } from "react";
 import type { Survey } from "@/lib/survey-store";
-import { THEMES, fontFamilyOf, type DesignSettings } from "@/lib/survey-themes";
+import {
+  THEMES,
+  bodyFamilyOf,
+  headingFamilyOf,
+  type DesignSettings,
+} from "@/lib/survey-themes";
 
 interface Props {
   survey: Survey;
   design: DesignSettings;
+  qrDataUrl?: string;
 }
 
 /**
  * 1080x1350 Instagram-portrait share card.
- * Contains ONLY brand + title + summary + keywords + encouragement + CTA.
- * Never includes respondent answers or personal info.
+ * Contains ONLY brand + title + summary + keywords + encouragement + CTA + QR.
+ * Never includes respondent answers, personal info, or raw URL text.
  */
 export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
-  function ResultShareCard({ survey, design }, ref) {
+  function ResultShareCard({ survey, design, qrDataUrl }, ref) {
     const t = THEMES[design.theme];
+    const headingFont = headingFamilyOf(design.font_mood);
+    const bodyFont = bodyFamilyOf(design.font_mood);
     const sc = survey.share_card ?? { enabled: true };
     const summary = sc.summary ?? "지금의 나를 살펴본 시간";
     const description =
@@ -27,7 +35,6 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
       sc.include_verse !== false &&
       survey.audience_type === "christian" &&
       !!survey.bible_verse;
-    const shareUrl = typeof window !== "undefined" ? `${window.location.origin}/s/${survey.slug}` : "";
 
     return (
       <div
@@ -37,7 +44,7 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
           height: 1350,
           backgroundColor: t.bg,
           color: t.text,
-          fontFamily: fontFamilyOf(design.font_mood),
+          fontFamily: bodyFont,
           position: "relative",
           padding: 80,
           display: "flex",
@@ -46,7 +53,7 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
           overflow: "hidden",
         }}
       >
-        {/* corner ornament */}
+        {/* corner ornaments */}
         <div
           style={{
             position: "absolute",
@@ -103,7 +110,6 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
           {survey.title}
         </div>
 
-        {/* Spacer */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", marginTop: 40 }}>
           <div
             style={{
@@ -112,6 +118,7 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
               fontWeight: 500,
               letterSpacing: "-0.01em",
               color: t.text,
+              fontFamily: headingFont,
             }}
           >
             {summary}
@@ -125,6 +132,7 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
               color: t.text,
               opacity: 0.78,
               maxWidth: 820,
+              fontFamily: bodyFont,
             }}
           >
             {description}
@@ -160,6 +168,7 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
                 color: t.text,
                 opacity: 0.85,
                 maxWidth: 820,
+                fontFamily: headingFont,
               }}
             >
               “{survey.bible_verse}”
@@ -179,7 +188,7 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
           </div>
         </div>
 
-        {/* Footer CTA */}
+        {/* Footer CTA + QR */}
         <div
           style={{
             marginTop: 40,
@@ -187,35 +196,35 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
             borderTop: `1px solid ${t.border}`,
             display: "flex",
             justifyContent: "space-between",
-            alignItems: "flex-end",
+            alignItems: "center",
             gap: 24,
           }}
         >
-          <div>
-            <div style={{ fontSize: 22, color: t.muted, letterSpacing: "0.08em" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <div style={{ fontSize: 26, color: t.text, fontFamily: headingFont }}>
               {ctaText}
             </div>
-            <div
-              style={{
-                fontSize: 24,
-                marginTop: 8,
-                color: t.text,
-                wordBreak: "break-all",
-              }}
-            >
-              {shareUrl}
+            <div style={{ fontSize: 16, color: t.muted, letterSpacing: "0.32em" }}>
+              SELAH · INSIGHT
             </div>
           </div>
-          <div
-            style={{
-              fontSize: 18,
-              color: t.muted,
-              letterSpacing: "0.32em",
-              whiteSpace: "nowrap",
-            }}
-          >
-            SELAH · INSIGHT
-          </div>
+          {qrDataUrl && (
+            <div
+              style={{
+                width: 160,
+                height: 160,
+                padding: 12,
+                backgroundColor: "#FFFFFF",
+                borderRadius: 14,
+                border: `1px solid ${t.border}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img src={qrDataUrl} alt="" style={{ width: "100%", height: "100%" }} />
+            </div>
+          )}
         </div>
       </div>
     );
