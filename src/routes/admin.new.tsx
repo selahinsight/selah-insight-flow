@@ -236,6 +236,12 @@ function NewSurvey() {
               </div>
             )}
 
+            {parsed && !created && (
+              <DesignSettingsPanel value={design} onChange={setDesign} />
+            )}
+
+
+
             {created && (
               <div className="mt-5 rounded-2xl border border-[var(--sage)] bg-[var(--sage)]/20 p-5">
                 <div className="mb-2 flex items-center gap-2 text-sm font-medium text-[var(--clay)]">
