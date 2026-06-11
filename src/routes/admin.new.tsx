@@ -342,7 +342,7 @@ function DesignSettingsPanel({
     <div className="mt-5 rounded-2xl border border-border/60 bg-[var(--ivory)]/60 p-5">
       <p className="text-sm font-medium text-foreground">디자인 설정</p>
       <p className="mt-1 text-xs text-muted-foreground">
-        설문 레이아웃은 고정되어 있고, 컬러와 무드만 선택할 수 있어요.
+        컬러와 무드를 선택할 수 있어요.
       </p>
 
       {/* Color theme */}
