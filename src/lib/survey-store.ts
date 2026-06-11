@@ -61,7 +61,7 @@ export interface Survey {
 }
 
 export function softDeleteSurvey(id: string) {
-  const list = readAllRaw();
+  const list = readAll();
   const s = list.find((x) => x.id === id);
   if (!s) return;
   s.deletedAt = Date.now();
