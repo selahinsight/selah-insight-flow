@@ -29,7 +29,7 @@ function Publish() {
               <div>
                 <h3 className="font-serif text-xl text-foreground">상태</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  발행하면 URL로 누구나 설문에 참여할 수 있습니다.
+                  설문중으로 전환하면 URL로 누구나 응답할 수 있습니다.
                 </p>
               </div>
               <button
@@ -43,7 +43,7 @@ function Publish() {
                 }`}
               >
                 {isPublished ? <Globe2 className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
-                {isPublished ? "발행 중" : "발행하기"}
+                {isPublished ? "설문중" : "설문 시작하기"}
               </button>
             </div>
           </div>
