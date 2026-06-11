@@ -327,9 +327,12 @@ export function surveyFromParsed(p: ParsedSurvey, sourceJson: string): Survey {
     status: "draft",
     createdAt: Date.now(),
     responses: [],
+    design_settings: { ...DEFAULT_DESIGN },
+    share_card: p.share_card ?? { ...DEFAULT_SHARE_CARD },
     sourceJson,
   };
 }
+
 
 // ---------- Seed sample ----------
 
