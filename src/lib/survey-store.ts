@@ -81,9 +81,11 @@ export interface Survey {
   createdAt: number;
   deletedAt?: number | null;
   responses: Response[];
-  // raw json (for ChatGPT prompt copy)
+  design_settings?: DesignSettings;
+  share_card?: ShareCardConfig;
   sourceJson?: string;
 }
+
 
 export function softDeleteSurvey(id: string) {
   const list = readAll();
