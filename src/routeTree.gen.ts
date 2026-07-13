@@ -13,6 +13,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SSlugRouteImport } from './routes/s.$slug'
+import { Route as AdminSurveysRouteImport } from './routes/admin.surveys'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
 import { Route as AdminSurveysIndexRouteImport } from './routes/admin.surveys.index'
 import { Route as AdminSurveysIdRouteImport } from './routes/admin.surveys.$id'
@@ -41,20 +42,25 @@ const SSlugRoute = SSlugRouteImport.update({
   path: '/s/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSurveysRoute = AdminSurveysRouteImport.update({
+  id: '/surveys',
+  path: '/surveys',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminNewRoute = AdminNewRouteImport.update({
   id: '/new',
   path: '/new',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminSurveysIndexRoute = AdminSurveysIndexRouteImport.update({
-  id: '/surveys/',
-  path: '/surveys/',
-  getParentRoute: () => AdminRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminSurveysRoute,
 } as any)
 const AdminSurveysIdRoute = AdminSurveysIdRouteImport.update({
-  id: '/surveys/$id',
-  path: '/surveys/$id',
-  getParentRoute: () => AdminRoute,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminSurveysRoute,
 } as any)
 const AdminSurveysIdResultRoute = AdminSurveysIdResultRouteImport.update({
   id: '/result',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin/new': typeof AdminNewRoute
+  '/admin/surveys': typeof AdminSurveysRouteWithChildren
   '/s/$slug': typeof SSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
@@ -107,6 +114,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin/new': typeof AdminNewRoute
+  '/admin/surveys': typeof AdminSurveysRouteWithChildren
   '/s/$slug': typeof SSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
@@ -122,6 +130,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/admin/new'
+    | '/admin/surveys'
     | '/s/$slug'
     | '/admin/'
     | '/admin/surveys/$id'
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/admin/new'
+    | '/admin/surveys'
     | '/s/$slug'
     | '/admin/'
     | '/admin/surveys/$id'
@@ -193,6 +203,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/surveys': {
+      id: '/admin/surveys'
+      path: '/surveys'
+      fullPath: '/admin/surveys'
+      preLoaderRoute: typeof AdminSurveysRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/new': {
       id: '/admin/new'
       path: '/new'
@@ -202,17 +219,17 @@ declare module '@tanstack/react-router' {
     }
     '/admin/surveys/': {
       id: '/admin/surveys/'
-      path: '/surveys'
+      path: '/'
       fullPath: '/admin/surveys/'
       preLoaderRoute: typeof AdminSurveysIndexRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof AdminSurveysRoute
     }
     '/admin/surveys/$id': {
       id: '/admin/surveys/$id'
-      path: '/surveys/$id'
+      path: '/$id'
       fullPath: '/admin/surveys/$id'
       preLoaderRoute: typeof AdminSurveysIdRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof AdminSurveysRoute
     }
     '/admin/surveys/$id/result': {
       id: '/admin/surveys/$id/result'
@@ -263,18 +280,30 @@ const AdminSurveysIdRouteWithChildren = AdminSurveysIdRoute._addFileChildren(
   AdminSurveysIdRouteChildren,
 )
 
-interface AdminRouteChildren {
-  AdminNewRoute: typeof AdminNewRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+interface AdminSurveysRouteChildren {
   AdminSurveysIdRoute: typeof AdminSurveysIdRouteWithChildren
   AdminSurveysIndexRoute: typeof AdminSurveysIndexRoute
 }
 
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminNewRoute: AdminNewRoute,
-  AdminIndexRoute: AdminIndexRoute,
+const AdminSurveysRouteChildren: AdminSurveysRouteChildren = {
   AdminSurveysIdRoute: AdminSurveysIdRouteWithChildren,
   AdminSurveysIndexRoute: AdminSurveysIndexRoute,
+}
+
+const AdminSurveysRouteWithChildren = AdminSurveysRoute._addFileChildren(
+  AdminSurveysRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminNewRoute: typeof AdminNewRoute
+  AdminSurveysRoute: typeof AdminSurveysRouteWithChildren
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminNewRoute: AdminNewRoute,
+  AdminSurveysRoute: AdminSurveysRouteWithChildren,
+  AdminIndexRoute: AdminIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
