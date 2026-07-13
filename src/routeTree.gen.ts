@@ -13,8 +13,13 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SSlugRouteImport } from './routes/s.$slug'
+import { Route as AdminSurveysRouteImport } from './routes/admin.surveys'
+import { Route as AdminResponsesRouteImport } from './routes/admin.responses'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
+import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
+import { Route as AdminSurveysIndexRouteImport } from './routes/admin.surveys.index'
 import { Route as AdminSurveysIdRouteImport } from './routes/admin.surveys.$id'
+import { Route as AdminCustomersIdRouteImport } from './routes/admin.customers.$id'
 import { Route as AdminSurveysIdResultRouteImport } from './routes/admin.surveys.$id.result'
 import { Route as AdminSurveysIdPublishRouteImport } from './routes/admin.surveys.$id.publish'
 import { Route as AdminSurveysIdEditRouteImport } from './routes/admin.surveys.$id.edit'
@@ -40,15 +45,40 @@ const SSlugRoute = SSlugRouteImport.update({
   path: '/s/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSurveysRoute = AdminSurveysRouteImport.update({
+  id: '/surveys',
+  path: '/surveys',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminResponsesRoute = AdminResponsesRouteImport.update({
+  id: '/responses',
+  path: '/responses',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminNewRoute = AdminNewRouteImport.update({
   id: '/new',
   path: '/new',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminSurveysIdRoute = AdminSurveysIdRouteImport.update({
-  id: '/surveys/$id',
-  path: '/surveys/$id',
+const AdminCustomersRoute = AdminCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
   getParentRoute: () => AdminRoute,
+} as any)
+const AdminSurveysIndexRoute = AdminSurveysIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminSurveysRoute,
+} as any)
+const AdminSurveysIdRoute = AdminSurveysIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminSurveysRoute,
+} as any)
+const AdminCustomersIdRoute = AdminCustomersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminCustomersRoute,
 } as any)
 const AdminSurveysIdResultRoute = AdminSurveysIdResultRouteImport.update({
   id: '/result',
@@ -74,10 +104,15 @@ const AdminSurveysIdAnalyticsRoute = AdminSurveysIdAnalyticsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/new': typeof AdminNewRoute
+  '/admin/responses': typeof AdminResponsesRoute
+  '/admin/surveys': typeof AdminSurveysRouteWithChildren
   '/s/$slug': typeof SSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
   '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
@@ -85,10 +120,14 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/new': typeof AdminNewRoute
+  '/admin/responses': typeof AdminResponsesRoute
   '/s/$slug': typeof SSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
   '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
@@ -98,10 +137,15 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/new': typeof AdminNewRoute
+  '/admin/responses': typeof AdminResponsesRoute
+  '/admin/surveys': typeof AdminSurveysRouteWithChildren
   '/s/$slug': typeof SSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
   '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
@@ -112,10 +156,15 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/admin/customers'
     | '/admin/new'
+    | '/admin/responses'
+    | '/admin/surveys'
     | '/s/$slug'
     | '/admin/'
+    | '/admin/customers/$id'
     | '/admin/surveys/$id'
+    | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
     | '/admin/surveys/$id/publish'
@@ -123,10 +172,14 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin/customers'
     | '/admin/new'
+    | '/admin/responses'
     | '/s/$slug'
     | '/admin'
+    | '/admin/customers/$id'
     | '/admin/surveys/$id'
+    | '/admin/surveys'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
     | '/admin/surveys/$id/publish'
@@ -135,10 +188,15 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/admin/customers'
     | '/admin/new'
+    | '/admin/responses'
+    | '/admin/surveys'
     | '/s/$slug'
     | '/admin/'
+    | '/admin/customers/$id'
     | '/admin/surveys/$id'
+    | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
     | '/admin/surveys/$id/publish'
@@ -181,6 +239,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/surveys': {
+      id: '/admin/surveys'
+      path: '/surveys'
+      fullPath: '/admin/surveys'
+      preLoaderRoute: typeof AdminSurveysRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/responses': {
+      id: '/admin/responses'
+      path: '/responses'
+      fullPath: '/admin/responses'
+      preLoaderRoute: typeof AdminResponsesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/new': {
       id: '/admin/new'
       path: '/new'
@@ -188,12 +260,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminNewRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/customers': {
+      id: '/admin/customers'
+      path: '/customers'
+      fullPath: '/admin/customers'
+      preLoaderRoute: typeof AdminCustomersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/surveys/': {
+      id: '/admin/surveys/'
+      path: '/'
+      fullPath: '/admin/surveys/'
+      preLoaderRoute: typeof AdminSurveysIndexRouteImport
+      parentRoute: typeof AdminSurveysRoute
+    }
     '/admin/surveys/$id': {
       id: '/admin/surveys/$id'
-      path: '/surveys/$id'
+      path: '/$id'
       fullPath: '/admin/surveys/$id'
       preLoaderRoute: typeof AdminSurveysIdRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof AdminSurveysRoute
+    }
+    '/admin/customers/$id': {
+      id: '/admin/customers/$id'
+      path: '/$id'
+      fullPath: '/admin/customers/$id'
+      preLoaderRoute: typeof AdminCustomersIdRouteImport
+      parentRoute: typeof AdminCustomersRoute
     }
     '/admin/surveys/$id/result': {
       id: '/admin/surveys/$id/result'
@@ -226,6 +319,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminCustomersRouteChildren {
+  AdminCustomersIdRoute: typeof AdminCustomersIdRoute
+}
+
+const AdminCustomersRouteChildren: AdminCustomersRouteChildren = {
+  AdminCustomersIdRoute: AdminCustomersIdRoute,
+}
+
+const AdminCustomersRouteWithChildren = AdminCustomersRoute._addFileChildren(
+  AdminCustomersRouteChildren,
+)
+
 interface AdminSurveysIdRouteChildren {
   AdminSurveysIdAnalyticsRoute: typeof AdminSurveysIdAnalyticsRoute
   AdminSurveysIdEditRoute: typeof AdminSurveysIdEditRoute
@@ -244,16 +349,34 @@ const AdminSurveysIdRouteWithChildren = AdminSurveysIdRoute._addFileChildren(
   AdminSurveysIdRouteChildren,
 )
 
-interface AdminRouteChildren {
-  AdminNewRoute: typeof AdminNewRoute
-  AdminIndexRoute: typeof AdminIndexRoute
+interface AdminSurveysRouteChildren {
   AdminSurveysIdRoute: typeof AdminSurveysIdRouteWithChildren
+  AdminSurveysIndexRoute: typeof AdminSurveysIndexRoute
+}
+
+const AdminSurveysRouteChildren: AdminSurveysRouteChildren = {
+  AdminSurveysIdRoute: AdminSurveysIdRouteWithChildren,
+  AdminSurveysIndexRoute: AdminSurveysIndexRoute,
+}
+
+const AdminSurveysRouteWithChildren = AdminSurveysRoute._addFileChildren(
+  AdminSurveysRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminCustomersRoute: typeof AdminCustomersRouteWithChildren
+  AdminNewRoute: typeof AdminNewRoute
+  AdminResponsesRoute: typeof AdminResponsesRoute
+  AdminSurveysRoute: typeof AdminSurveysRouteWithChildren
+  AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminCustomersRoute: AdminCustomersRouteWithChildren,
   AdminNewRoute: AdminNewRoute,
+  AdminResponsesRoute: AdminResponsesRoute,
+  AdminSurveysRoute: AdminSurveysRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
-  AdminSurveysIdRoute: AdminSurveysIdRouteWithChildren,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
@@ -266,13 +389,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
