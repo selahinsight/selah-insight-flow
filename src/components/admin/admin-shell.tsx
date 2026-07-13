@@ -1,11 +1,13 @@
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { ArrowLeft, BarChart3, FilePlus2, Home, LayoutDashboard, ListChecks, Settings2 } from "lucide-react";
+import { ArrowLeft, BarChart3, Home, LayoutDashboard, ListChecks, MessageSquare, Settings2, Users } from "lucide-react";
 
 const nav = [
   { to: "/", label: "메인", icon: Home, exact: true },
-  { to: "/admin", label: "내 설문", icon: LayoutDashboard, exact: true },
-  { to: "/admin/new", label: "새 설문 만들기", icon: FilePlus2 },
+  { to: "/admin", label: "대시보드", icon: LayoutDashboard, exact: true },
+  { to: "/admin/surveys", label: "설문지 관리", icon: ListChecks },
+  { to: "/admin/responses", label: "응답 관리", icon: MessageSquare },
+  { to: "/admin/customers", label: "고객 관리", icon: Users },
 ];
 
 export function AdminShell({
