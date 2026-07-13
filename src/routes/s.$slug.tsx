@@ -334,9 +334,33 @@ function Runner({
               </p>
             )}
             {result.description && (
-              <p style={{ marginTop: 18, fontSize: 14, lineHeight: 1.75, whiteSpace: "pre-wrap", color: theme.text, opacity: 0.8 }}>
+              <p className="whitespace-pre-line" style={{ marginTop: 18, fontSize: 14, lineHeight: 1.75, color: theme.text, opacity: 0.8 }}>
                 {result.description}
               </p>
+            )}
+            {result.interpretation && (
+              <div style={{ marginTop: 22, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>이 유형의 의미</p>
+                <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
+                  {result.interpretation}
+                </p>
+              </div>
+            )}
+            {result.flow && (
+              <div style={{ marginTop: 16, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>흐름</p>
+                <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
+                  {result.flow}
+                </p>
+              </div>
+            )}
+            {result.small_action && (
+              <div style={{ marginTop: 16, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>실천 제안</p>
+                <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
+                  {result.small_action}
+                </p>
+              </div>
             )}
             {(result.bibleVerse || (survey.audience_type === "christian" && survey.bible_verse)) && (
               <div
@@ -355,7 +379,7 @@ function Runner({
               </div>
             )}
             {survey.completion_message && (
-              <p style={{ marginTop: 22, fontSize: 13, color: theme.muted, textAlign: "center", whiteSpace: "pre-wrap" }}>
+              <p className="whitespace-pre-line" style={{ marginTop: 22, fontSize: 13, color: theme.muted, textAlign: "center" }}>
                 {survey.completion_message}
               </p>
             )}
