@@ -402,10 +402,10 @@ function Runner({
         >
           <h1 style={{ fontSize: 28, color: theme.text, fontFamily: headingFont }}>제출이 완료되었습니다</h1>
           <p
+            className="whitespace-pre-line"
             style={{
               marginTop: 18,
               fontSize: 14,
-              whiteSpace: "pre-wrap",
               color: theme.text,
               opacity: 0.78,
             }}
