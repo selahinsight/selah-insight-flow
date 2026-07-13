@@ -150,7 +150,7 @@ function Dashboard() {
 
   return (
     <AdminShell
-      title="Studio"
+      title="설문지 관리"
       subtitle=""
       actions={
         <button

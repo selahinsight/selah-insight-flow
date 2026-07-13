@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SSlugRouteImport } from './routes/s.$slug'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
+import { Route as AdminSurveysIndexRouteImport } from './routes/admin.surveys.index'
 import { Route as AdminSurveysIdRouteImport } from './routes/admin.surveys.$id'
 import { Route as AdminSurveysIdResultRouteImport } from './routes/admin.surveys.$id.result'
 import { Route as AdminSurveysIdPublishRouteImport } from './routes/admin.surveys.$id.publish'
@@ -43,6 +44,11 @@ const SSlugRoute = SSlugRouteImport.update({
 const AdminNewRoute = AdminNewRouteImport.update({
   id: '/new',
   path: '/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSurveysIndexRoute = AdminSurveysIndexRouteImport.update({
+  id: '/surveys/',
+  path: '/surveys/',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminSurveysIdRoute = AdminSurveysIdRouteImport.update({
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/s/$slug': typeof SSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
   '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/s/$slug': typeof SSlugRoute
   '/admin': typeof AdminIndexRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
   '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/s/$slug': typeof SSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
   '/admin/surveys/$id/publish': typeof AdminSurveysIdPublishRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/s/$slug'
     | '/admin/'
     | '/admin/surveys/$id'
+    | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
     | '/admin/surveys/$id/publish'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/s/$slug'
     | '/admin'
     | '/admin/surveys/$id'
+    | '/admin/surveys'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
     | '/admin/surveys/$id/publish'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/s/$slug'
     | '/admin/'
     | '/admin/surveys/$id'
+    | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
     | '/admin/surveys/$id/publish'
@@ -186,6 +198,13 @@ declare module '@tanstack/react-router' {
       path: '/new'
       fullPath: '/admin/new'
       preLoaderRoute: typeof AdminNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/surveys/': {
+      id: '/admin/surveys/'
+      path: '/surveys'
+      fullPath: '/admin/surveys/'
+      preLoaderRoute: typeof AdminSurveysIndexRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/surveys/$id': {
@@ -248,12 +267,14 @@ interface AdminRouteChildren {
   AdminNewRoute: typeof AdminNewRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminSurveysIdRoute: typeof AdminSurveysIdRouteWithChildren
+  AdminSurveysIndexRoute: typeof AdminSurveysIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminNewRoute: AdminNewRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminSurveysIdRoute: AdminSurveysIdRouteWithChildren,
+  AdminSurveysIndexRoute: AdminSurveysIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
