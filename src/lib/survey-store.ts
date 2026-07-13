@@ -572,3 +572,111 @@ export function buildCustomerLanguageDump(s: Survey): string {
     ? textAnswers.join("\n")
     : "(아직 주관식 응답이 없습니다.)";
 }
+
+// ---------- Customer store ----------
+
+const CUSTOMERS_KEY = "selah.customers.v1";
+
+function readCustomers(): Customer[] {
+  if (!isClient()) return [];
+  try {
+    return JSON.parse(localStorage.getItem(CUSTOMERS_KEY) ?? "[]") as Customer[];
+  } catch {
+    return [];
+  }
+}
+
+function writeCustomers(list: Customer[]) {
+  if (!isClient()) return;
+  localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(list));
+  window.dispatchEvent(new Event("selah:customers-changed"));
+}
+
+export function listCustomers(): Customer[] {
+  return readCustomers().sort((a, b) => b.updatedAt - a.updatedAt);
+}
+
+export function getCustomer(id: string): Customer | undefined {
+  return readCustomers().find((c) => c.id === id);
+}
+
+export function getCustomerByEmail(email: string): Customer | undefined {
+  const norm = email.trim().toLowerCase();
+  if (!norm) return undefined;
+  return readCustomers().find((c) => c.email === norm);
+}
+
+export function upsertCustomerFromResponse(input: { name: string; email: string }): Customer {
+  const list = readCustomers();
+  const email = input.email.trim().toLowerCase();
+  const name = input.name.trim();
+  const now = Date.now();
+  const i = list.findIndex((c) => c.email === email);
+  if (i >= 0) {
+    list[i] = { ...list[i], name: name || list[i].name, updatedAt: now };
+    writeCustomers(list);
+    return list[i];
+  }
+  const c: Customer = {
+    id: uid("cu"),
+    name,
+    email,
+    createdAt: now,
+    updatedAt: now,
+    inLounge: false,
+    payment_status: "unpaid",
+    paid_at: null,
+  };
+  list.push(c);
+  writeCustomers(list);
+  return c;
+}
+
+export function updateCustomer(id: string, patch: Partial<Customer>) {
+  const list = readCustomers();
+  const i = list.findIndex((c) => c.id === id);
+  if (i < 0) return;
+  list[i] = { ...list[i], ...patch, updatedAt: Date.now() };
+  writeCustomers(list);
+}
+
+export interface ResponseWithSurvey {
+  survey: Survey;
+  response: Response;
+}
+
+export function listAllResponses(): ResponseWithSurvey[] {
+  const out: ResponseWithSurvey[] = [];
+  for (const s of listSurveys()) {
+    for (const r of s.responses) out.push({ survey: s, response: r });
+  }
+  return out.sort((a, b) => b.response.submittedAt - a.response.submittedAt);
+}
+
+export function listResponsesForCustomer(customerId: string): ResponseWithSurvey[] {
+  return listAllResponses().filter((x) => x.response.customerId === customerId);
+}
+
+export function setResponseInLounge(surveyId: string, responseId: string, value: boolean) {
+  const list = readAll();
+  const s = list.find((x) => x.id === surveyId);
+  if (!s) return;
+  const r = s.responses.find((x) => x.id === responseId);
+  if (!r) return;
+  r.inLounge = value;
+  writeAll(list);
+  if (r.customerId) {
+    const hasAny = list.some((sv) =>
+      sv.responses.some((rr) => rr.customerId === r.customerId && rr.inLounge),
+    );
+    updateCustomer(r.customerId, { inLounge: hasAny });
+  }
+}
+
+export function resultTypeForResponse(survey: Survey, response: Response): ResultType | undefined {
+  if (response.resultTypeId && survey.resultTypes) {
+    const found = survey.resultTypes.find((r) => r.id === response.resultTypeId);
+    if (found) return found;
+  }
+  return computeResultType(survey, response.answers);
+}
