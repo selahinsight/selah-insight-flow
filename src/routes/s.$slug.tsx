@@ -68,7 +68,7 @@ function RespondentSurvey() {
   return <Runner survey={survey} design={design} theme={theme} />;
 }
 
-type Phase = "intro" | "questions" | "done";
+type Phase = "intro" | "questions" | "identity" | "done";
 
 function Runner({
   survey,
@@ -83,31 +83,49 @@ function Runner({
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[] | number>>({});
   const [result, setResult] = useState<ResultType | undefined>(undefined);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
 
   const total = survey.questions.length;
   const q = survey.questions[i];
-  const progress = phase === "done" ? 100 : (i / total) * 100;
+  const progress = phase === "done" ? 100 : phase === "identity" ? 100 : (i / total) * 100;
 
   function next() {
     if (i < total - 1) setI(i + 1);
-    else submit();
+    else setPhase("identity");
   }
 
   function submit() {
-    addResponse({
-      id: uid("r"),
-      surveyId: survey.id,
-      submittedAt: Date.now(),
-      answers,
-    });
+    if (submitting) return;
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    if (!trimmedName || !trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
+      toast.error("이름과 이메일을 정확히 입력해주세요.");
+      return;
+    }
+    setSubmitting(true);
+    const customer = upsertCustomerFromResponse({ name: trimmedName, email: trimmedEmail });
     const rt = computeResultType(
       survey,
       answers,
       lastPickRef.current ? [lastPickRef.current] : undefined,
     );
+    addResponse({
+      id: uid("r"),
+      surveyId: survey.id,
+      submittedAt: Date.now(),
+      answers,
+      customerId: customer.id,
+      customerName: trimmedName,
+      customerEmail: trimmedEmail.toLowerCase(),
+      resultTypeId: rt?.id,
+      inLounge: false,
+    });
     setResult(rt);
     setPhase("done");
+    setSubmitting(false);
   }
 
   const btnPrimary = buttonClasses(design.button_style, theme);
