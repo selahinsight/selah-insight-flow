@@ -127,7 +127,7 @@ export const ResultDiagnosisCard = forwardRef<HTMLDivElement, Props>(
                 color: t.text,
                 opacity: 0.75,
                 maxWidth: 860,
-                whiteSpace: "pre-wrap",
+                whiteSpace: "pre-line",
                 fontFamily: bodyFont,
               }}
             >
