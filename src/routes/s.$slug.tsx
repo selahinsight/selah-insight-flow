@@ -42,8 +42,10 @@ export const Route = createFileRoute("/s/$slug")({
 function RespondentSurvey() {
   const { slug } = Route.useParams();
   useSurveys(); // hydrate
+  const isSelahMoneyDiagnosis = slug === "selah-money-diagnosis-olye";
   const [fallbackSurvey, setFallbackSurvey] = useState<Survey | null | undefined>(undefined);
-  const survey = typeof window !== "undefined" ? getSurveyBySlug(slug) ?? fallbackSurvey : undefined;
+  const survey =
+    typeof window !== "undefined" ? getSurveyBySlug(slug) ?? fallbackSurvey : fallbackSurvey;
 
   useEffect(() => {
     let cancelled = false;
@@ -53,7 +55,7 @@ function RespondentSurvey() {
         setFallbackSurvey(undefined);
         return;
       }
-      if (slug !== "selah-money-diagnosis-olye") {
+      if (!isSelahMoneyDiagnosis) {
         setFallbackSurvey(null);
         return;
       }
@@ -78,9 +80,9 @@ function RespondentSurvey() {
     return () => {
       cancelled = true;
     };
-  }, [slug]);
+  }, [isSelahMoneyDiagnosis, slug]);
 
-  if (fallbackSurvey === undefined && typeof window !== "undefined" && !getSurveyBySlug(slug)) {
+  if (!survey && isSelahMoneyDiagnosis && fallbackSurvey !== null) {
     return (
       <Wrap theme={THEMES[DEFAULT_DESIGN.theme]} design={DEFAULT_DESIGN}>
         <p style={{ fontSize: 24 }}>설문을 불러오는 중입니다.</p>
