@@ -220,6 +220,83 @@ function Runner({
     );
   }
 
+  if (phase === "identity") {
+    return (
+      <Wrap theme={theme} design={design}>
+        <div style={{ ...cardStyle, borderRadius: 24, padding: 36 }}>
+          <p style={{ fontSize: 11, letterSpacing: "0.25em", color: theme.accent, textAlign: "center" }}>
+            ALMOST DONE
+          </p>
+          <h1 style={{ marginTop: 14, fontSize: 26, lineHeight: 1.4, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
+            결과를 받아보실 정보를 알려주세요
+          </h1>
+          <p style={{ marginTop: 12, fontSize: 13, color: theme.muted, textAlign: "center" }}>
+            같은 이메일로 다시 참여하면 하나의 히스토리로 정리됩니다.
+          </p>
+          <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="이름"
+              style={{
+                padding: "12px 16px",
+                borderRadius: 14,
+                border: `1px solid ${theme.border}`,
+                backgroundColor: theme.bg,
+                color: theme.text,
+                fontSize: 14,
+                outline: "none",
+              }}
+            />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="이메일"
+              type="email"
+              style={{
+                padding: "12px 16px",
+                borderRadius: 14,
+                border: `1px solid ${theme.border}`,
+                backgroundColor: theme.bg,
+                color: theme.text,
+                fontSize: 14,
+                outline: "none",
+              }}
+            />
+          </div>
+          <div style={{ marginTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <button
+              onClick={() => setPhase("questions")}
+              style={{
+                fontSize: 14,
+                color: theme.muted,
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              이전
+            </button>
+            <button
+              onClick={submit}
+              disabled={submitting}
+              style={{
+                ...btnPrimary,
+                padding: "12px 32px",
+                borderRadius: 999,
+                fontSize: 14,
+                fontWeight: 500,
+                cursor: submitting ? "wait" : "pointer",
+              }}
+            >
+              제출하기
+            </button>
+          </div>
+        </div>
+      </Wrap>
+    );
+  }
+
   if (phase === "done") {
     if (result) {
       return (
