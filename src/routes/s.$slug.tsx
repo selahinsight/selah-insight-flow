@@ -168,6 +168,7 @@ function Runner({
 
           {survey.description && (
             <p
+              className="whitespace-pre-line"
               style={{
                 margin: "20px auto 0",
                 maxWidth: 420,
