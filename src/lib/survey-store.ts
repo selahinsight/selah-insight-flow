@@ -36,6 +36,7 @@ export type QuestionType =
 export interface OptionObject {
   text: string;
   resultType?: string;
+  score?: number;
 }
 export type SurveyOption = string | OptionObject;
 
@@ -57,8 +58,12 @@ export interface Question {
 export interface ResultType {
   id: string;
   title: string;
+  name?: string;
+  group?: string;
+  questionIds?: string[];
   summary?: string;
   description?: string;
+  representative_sentence?: string;
   interpretation?: string;
   flow?: string;
   small_action?: string;
@@ -208,6 +213,25 @@ export function addResponse(r: Response) {
   s.responses.push(r);
   writeAll(list);
 }
+export function updateResponseContact(
+  surveyId: string,
+  responseId: string,
+  input: {
+    customerId: string;
+    customerName: string;
+    customerEmail: string;
+  },
+) {
+  const list = readAll();
+  const s = list.find((x) => x.id === surveyId);
+  if (!s) return;
+  const r = s.responses.find((x) => x.id === responseId);
+  if (!r) return;
+  r.customerId = input.customerId;
+  r.customerName = input.customerName;
+  r.customerEmail = input.customerEmail;
+  writeAll(list);
+}
 export function uid(prefix = "id") {
   return `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
 }
@@ -311,6 +335,7 @@ export function validateSurveyJson(raw: string): ValidationResult {
             normalizedOptions.push({
               text: oo.text as string,
               resultType: typeof oo.resultType === "string" ? oo.resultType : undefined,
+              score: typeof oo.score === "number" ? oo.score : undefined,
             });
           } else {
             badOpt = true;
@@ -351,8 +376,18 @@ export function validateSurveyJson(raw: string): ValidationResult {
       resultTypes!.push({
         id: r.id,
         title: r.title,
+        name: typeof r.name === "string" ? r.name : undefined,
+        group: typeof r.group === "string" ? r.group : undefined,
+        questionIds: Array.isArray(r.questionIds)
+          ? (r.questionIds as unknown[]).filter((x): x is string => typeof x === "string")
+          : undefined,
         summary: typeof r.summary === "string" ? r.summary : undefined,
         description: typeof r.description === "string" ? r.description : undefined,
+        representative_sentence:
+          typeof r.representative_sentence === "string" ? r.representative_sentence : undefined,
+        interpretation: typeof r.interpretation === "string" ? r.interpretation : undefined,
+        flow: typeof r.flow === "string" ? r.flow : undefined,
+        small_action: typeof r.small_action === "string" ? r.small_action : undefined,
         bibleVerse: typeof r.bibleVerse === "string" ? r.bibleVerse : (typeof r.bible_verse === "string" ? r.bible_verse as string : undefined),
       });
     });

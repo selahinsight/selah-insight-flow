@@ -8,8 +8,12 @@ import {
   getSurveyBySlug,
   optionResultType,
   optionText,
+  surveyFromParsed,
   uid,
+  updateResponseContact,
+  upsertSurvey,
   upsertCustomerFromResponse,
+  validateSurveyJson,
   type ResultType,
   type Survey,
 } from "@/lib/survey-store";
@@ -38,7 +42,54 @@ export const Route = createFileRoute("/s/$slug")({
 function RespondentSurvey() {
   const { slug } = Route.useParams();
   useSurveys(); // hydrate
-  const survey = typeof window !== "undefined" ? getSurveyBySlug(slug) : undefined;
+  const [fallbackSurvey, setFallbackSurvey] = useState<Survey | null | undefined>(undefined);
+  const survey = typeof window !== "undefined" ? getSurveyBySlug(slug) ?? fallbackSurvey : undefined;
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadFallback() {
+      if (typeof window === "undefined") return;
+      if (getSurveyBySlug(slug)) {
+        setFallbackSurvey(undefined);
+        return;
+      }
+      if (slug !== "selah-money-diagnosis-olye") {
+        setFallbackSurvey(null);
+        return;
+      }
+      try {
+        const res = await fetch("/selah-money-diagnosis-survey-json.txt", { cache: "no-store" });
+        if (!res.ok) throw new Error("fallback survey json not found");
+        const raw = await res.text();
+        const parsed = validateSurveyJson(raw);
+        if (!parsed.ok || !parsed.data) throw new Error(parsed.errors.join("\n"));
+        const seeded = surveyFromParsed(parsed.data, raw);
+        seeded.slug = slug;
+        seeded.status = "published";
+        upsertSurvey(seeded);
+        if (!cancelled) setFallbackSurvey(seeded);
+      } catch (error) {
+        console.error(error);
+        if (!cancelled) setFallbackSurvey(null);
+      }
+    }
+    setFallbackSurvey(undefined);
+    void loadFallback();
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  if (fallbackSurvey === undefined && typeof window !== "undefined" && !getSurveyBySlug(slug)) {
+    return (
+      <Wrap theme={THEMES[DEFAULT_DESIGN.theme]} design={DEFAULT_DESIGN}>
+        <p style={{ fontSize: 24 }}>설문을 불러오는 중입니다.</p>
+        <p style={{ marginTop: 8, fontSize: 14, opacity: 0.7 }}>
+          잠시만 기다려주세요.
+        </p>
+      </Wrap>
+    );
+  }
 
   if (!survey) {
     return (
@@ -68,7 +119,15 @@ function RespondentSurvey() {
   return <Runner survey={survey} design={design} theme={theme} />;
 }
 
-type Phase = "intro" | "questions" | "identity" | "done";
+type Phase = "intro" | "questions" | "done";
+
+interface SelahMoneyResult {
+  primaryMoneyType?: ResultType;
+  secondaryMoneyType?: ResultType;
+  faithLenses: ResultType[];
+  primaryFaithLens?: ResultType;
+  scores: Record<string, { total: number; average: number }>;
+}
 
 function Runner({
   survey,
@@ -83,21 +142,52 @@ function Runner({
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | string[] | number>>({});
   const [result, setResult] = useState<ResultType | undefined>(undefined);
+  const [selahResult, setSelahResult] = useState<SelahMoneyResult | undefined>(undefined);
+  const [responseId, setResponseId] = useState<string | undefined>(undefined);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [emailSaved, setEmailSaved] = useState(false);
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
 
   const total = survey.questions.length;
   const q = survey.questions[i];
-  const progress = phase === "done" ? 100 : phase === "identity" ? 100 : (i / total) * 100;
+  const progress = phase === "done" ? 100 : (i / total) * 100;
 
   function next() {
+    if (q.required !== false && answers[q.id] === undefined) {
+      toast.error("답을 선택해주세요.");
+      return;
+    }
     if (i < total - 1) setI(i + 1);
-    else setPhase("identity");
+    else completeSurvey();
   }
 
-  function submit() {
+  function completeSurvey() {
+    const selah = computeSelahMoneyResult(survey, answers);
+    const rt =
+      selah?.primaryMoneyType ??
+      computeResultType(
+        survey,
+        answers,
+        lastPickRef.current ? [lastPickRef.current] : undefined,
+      );
+    const id = uid("r");
+    addResponse({
+      id,
+      surveyId: survey.id,
+      submittedAt: Date.now(),
+      answers,
+      resultTypeId: rt?.id,
+      inLounge: false,
+    });
+    setResponseId(id);
+    setResult(rt);
+    setSelahResult(selah);
+    setPhase("done");
+  }
+
+  function submitEmailRequest() {
     if (submitting) return;
     const trimmedName = name.trim();
     const trimmedEmail = email.trim();
@@ -107,25 +197,75 @@ function Runner({
     }
     setSubmitting(true);
     const customer = upsertCustomerFromResponse({ name: trimmedName, email: trimmedEmail });
-    const rt = computeResultType(
-      survey,
-      answers,
-      lastPickRef.current ? [lastPickRef.current] : undefined,
-    );
-    addResponse({
-      id: uid("r"),
-      surveyId: survey.id,
-      submittedAt: Date.now(),
-      answers,
-      customerId: customer.id,
-      customerName: trimmedName,
-      customerEmail: trimmedEmail.toLowerCase(),
-      resultTypeId: rt?.id,
-      inLounge: false,
-    });
-    setResult(rt);
-    setPhase("done");
+    if (responseId) {
+      updateResponseContact(survey.id, responseId, {
+        customerId: customer.id,
+        customerName: trimmedName,
+        customerEmail: trimmedEmail.toLowerCase(),
+      });
+    }
+    setEmailSaved(true);
+    toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
     setSubmitting(false);
+  }
+
+  function computeSelahMoneyResult(
+    currentSurvey: Survey,
+    currentAnswers: Record<string, string | string[] | number>,
+  ): SelahMoneyResult | undefined {
+    const hasSelahTypes = currentSurvey.resultTypes?.some((rt) => rt.id === "organizing_delay");
+    if (!hasSelahTypes) return undefined;
+    const scoreByQuestionIndex = (index: number) => {
+      const question = currentSurvey.questions[index - 1];
+      const answer = question ? currentAnswers[question.id] : undefined;
+      const value = Array.isArray(answer) ? answer[0] : answer;
+      if (typeof value === "number") return value;
+      if (typeof value !== "string") return 0;
+      if (value.includes("거의 그렇지")) return 1;
+      if (value.includes("가끔")) return 2;
+      if (value.includes("자주")) return 3;
+      if (value.includes("거의 늘")) return 4;
+      return 0;
+    };
+    const groups: Record<string, number[]> = {
+      organizing_delay: [1, 5, 9, 13, 17],
+      safety_seeking: [2, 6, 10, 14, 18],
+      gaze_sensitive: [3, 7, 11, 15, 19],
+      emotional_reward: [4, 8, 12, 16, 20],
+      faith_burden: [21, 23, 25, 27, 29],
+      faith_separation: [22, 24, 26, 28, 30],
+    };
+    const scores = Object.fromEntries(
+      Object.entries(groups).map(([id, indexes]) => {
+        const totalScore = indexes.reduce((sum, idx) => sum + scoreByQuestionIndex(idx), 0);
+        return [id, { total: totalScore, average: totalScore / indexes.length }];
+      }),
+    ) as SelahMoneyResult["scores"];
+    const byId = (id: string) => currentSurvey.resultTypes?.find((rt) => rt.id === id);
+    const moneyTypeIds = ["organizing_delay", "safety_seeking", "gaze_sensitive", "emotional_reward"];
+    const rankedMoney = [...moneyTypeIds].sort((a, b) => scores[b].average - scores[a].average);
+    const first = rankedMoney[0];
+    const second = rankedMoney[1];
+    const primaryMoneyType = scores[first].average >= 2.6 ? byId(first) : undefined;
+    const secondaryMoneyType =
+      primaryMoneyType &&
+      scores[second].average >= 2.6 &&
+      scores[first].average - scores[second].average <= 0.4
+        ? byId(second)
+        : undefined;
+    const faithIds = ["faith_burden", "faith_separation"];
+    const faithLenses = faithIds
+      .filter((id) => scores[id].average >= 2.6)
+      .sort((a, b) => scores[b].average - scores[a].average)
+      .map((id) => byId(id))
+      .filter((rt): rt is ResultType => Boolean(rt));
+    return {
+      primaryMoneyType,
+      secondaryMoneyType,
+      faithLenses,
+      primaryFaithLens: faithLenses[0],
+      scores,
+    };
   }
 
   const btnPrimary = buttonClasses(design.button_style, theme);
@@ -221,83 +361,6 @@ function Runner({
     );
   }
 
-  if (phase === "identity") {
-    return (
-      <Wrap theme={theme} design={design}>
-        <div style={{ ...cardStyle, borderRadius: 24, padding: 36 }}>
-          <p style={{ fontSize: 11, letterSpacing: "0.25em", color: theme.accent, textAlign: "center" }}>
-            ALMOST DONE
-          </p>
-          <h1 style={{ marginTop: 14, fontSize: 26, lineHeight: 1.4, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
-            결과를 받아보실 정보를 알려주세요
-          </h1>
-          <p style={{ marginTop: 12, fontSize: 13, color: theme.muted, textAlign: "center" }}>
-            같은 이메일로 다시 참여하면 하나의 히스토리로 정리됩니다.
-          </p>
-          <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="이름"
-              style={{
-                padding: "12px 16px",
-                borderRadius: 14,
-                border: `1px solid ${theme.border}`,
-                backgroundColor: theme.bg,
-                color: theme.text,
-                fontSize: 14,
-                outline: "none",
-              }}
-            />
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="이메일"
-              type="email"
-              style={{
-                padding: "12px 16px",
-                borderRadius: 14,
-                border: `1px solid ${theme.border}`,
-                backgroundColor: theme.bg,
-                color: theme.text,
-                fontSize: 14,
-                outline: "none",
-              }}
-            />
-          </div>
-          <div style={{ marginTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <button
-              onClick={() => setPhase("questions")}
-              style={{
-                fontSize: 14,
-                color: theme.muted,
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              이전
-            </button>
-            <button
-              onClick={submit}
-              disabled={submitting}
-              style={{
-                ...btnPrimary,
-                padding: "12px 32px",
-                borderRadius: 999,
-                fontSize: 14,
-                fontWeight: 500,
-                cursor: submitting ? "wait" : "pointer",
-              }}
-            >
-              제출하기
-            </button>
-          </div>
-        </div>
-      </Wrap>
-    );
-  }
-
   if (phase === "done") {
     if (result) {
       return (
@@ -310,7 +373,7 @@ function Runner({
             }}
           >
             <p style={{ fontSize: 12, letterSpacing: "0.25em", color: theme.accent, textAlign: "center" }}>
-              YOUR RESULT
+              SELAH MONEY DIAGNOSIS
             </p>
             <p style={{ marginTop: 14, fontSize: 13, color: theme.muted, textAlign: "center" }}>
               {survey.title}
@@ -325,9 +388,23 @@ function Runner({
                 fontFamily: headingFont,
               }}
             >
-              당신의 결과는 {result.title}이에요.
+              셀라 머니 진단이 완료되었어요.
             </h1>
 
+            <ResultSectionTitle theme={theme}>나의 주된 돈 반응 유형</ResultSectionTitle>
+            <h2 style={{ marginTop: 10, fontSize: 26, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
+              {result.title}
+            </h2>
+            {selahResult?.secondaryMoneyType && (
+              <p style={{ marginTop: 8, fontSize: 13, color: theme.muted, textAlign: "center" }}>
+                함께 나타나는 유형: {selahResult.secondaryMoneyType.title}
+              </p>
+            )}
+            {result.representative_sentence && (
+              <p style={{ marginTop: 14, fontSize: 15, color: theme.accent, textAlign: "center", fontStyle: "italic" }}>
+                “{result.representative_sentence}”
+              </p>
+            )}
             {result.summary && (
               <p style={{ marginTop: 20, fontSize: 15, lineHeight: 1.65, color: theme.text, opacity: 0.85, textAlign: "center" }}>
                 {result.summary}
@@ -348,15 +425,47 @@ function Runner({
             )}
             {result.flow && (
               <div style={{ marginTop: 16, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
-                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>흐름</p>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>반복되는 마음의 흐름</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
                   {result.flow}
                 </p>
               </div>
             )}
+            {selahResult && (
+              <div style={{ marginTop: 16, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>
+                  돈과 신앙 사이에서 나타나는 렌즈
+                </p>
+                {selahResult.faithLenses.length ? (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                    {selahResult.faithLenses.map((lens) => (
+                      <div key={lens.id}>
+                        <p style={{ fontSize: 15, color: theme.text, textAlign: "center", fontWeight: 500 }}>
+                          {lens.title}
+                        </p>
+                        {lens.description && (
+                          <p className="whitespace-pre-line" style={{ marginTop: 8, fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
+                            {lens.description}
+                          </p>
+                        )}
+                        {lens.interpretation && (
+                          <p className="whitespace-pre-line" style={{ marginTop: 8, fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
+                            {lens.interpretation}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82, textAlign: "center" }}>
+                    현재 돈에 대한 선택을 지나치게 죄책감으로 해석하거나, 신앙과 현실을 크게 분리하는 특징은 두드러지지 않아요.
+                  </p>
+                )}
+              </div>
+            )}
             {result.small_action && (
               <div style={{ marginTop: 16, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
-                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>실천 제안</p>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>이번 주 작은 실천</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
                   {result.small_action}
                 </p>
@@ -385,6 +494,18 @@ function Runner({
             )}
           </div>
 
+          <EmailResultSection
+            name={name}
+            email={email}
+            submitting={submitting}
+            saved={emailSaved}
+            theme={theme}
+            design={design}
+            onNameChange={setName}
+            onEmailChange={setEmail}
+            onSubmit={submitEmailRequest}
+          />
+          <FunnelCtas theme={theme} design={design} />
           <ResultActions survey={survey} result={result} design={design} theme={theme} />
         </Wrap>
       );
@@ -817,6 +938,158 @@ function ShareSection({
       </div>
 
     </>
+  );
+}
+
+function ResultSectionTitle({ children, theme }: { children: React.ReactNode; theme: ThemeColors }) {
+  return (
+    <p
+      style={{
+        marginTop: 24,
+        fontSize: 12,
+        color: theme.accent,
+        fontWeight: 600,
+        letterSpacing: "0.08em",
+        textAlign: "center",
+      }}
+    >
+      {children}
+    </p>
+  );
+}
+
+function EmailResultSection({
+  name,
+  email,
+  submitting,
+  saved,
+  theme,
+  design,
+  onNameChange,
+  onEmailChange,
+  onSubmit,
+}: {
+  name: string;
+  email: string;
+  submitting: boolean;
+  saved: boolean;
+  theme: ThemeColors;
+  design: DesignSettings;
+  onNameChange: (value: string) => void;
+  onEmailChange: (value: string) => void;
+  onSubmit: () => void;
+}) {
+  const btn = buttonClasses(design.button_style, theme);
+  const card = cardClasses(design.card_style, theme);
+  return (
+    <div style={{ ...card, marginTop: 16, borderRadius: 24, padding: 28, textAlign: "center" }}>
+      <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>EMAIL RESULT</p>
+      <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.35, color: theme.text }}>
+        전체 결과를 이메일로 받아보세요
+      </h2>
+      <p className="whitespace-pre-line" style={{ marginTop: 12, fontSize: 14, lineHeight: 1.75, color: theme.text, opacity: 0.78 }}>
+        지금 화면에서는 가장 두드러지는 결과를 먼저 보여드렸어요.{"\n"}이메일로는 내 돈 반응이 실제 생활에서 어떻게 나타나는지, 어떤 말씀과 기준으로 정리하면 좋을지 더 자세히 보내드립니다.
+      </p>
+      <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+        <input
+          value={name}
+          onChange={(e) => onNameChange(e.target.value)}
+          placeholder="이름"
+          style={{
+            padding: "12px 16px",
+            borderRadius: 14,
+            border: `1px solid ${theme.border}`,
+            backgroundColor: theme.bg,
+            color: theme.text,
+            fontSize: 14,
+            textAlign: "center",
+            outline: "none",
+          }}
+        />
+        <input
+          value={email}
+          onChange={(e) => onEmailChange(e.target.value)}
+          placeholder="이메일"
+          type="email"
+          style={{
+            padding: "12px 16px",
+            borderRadius: 14,
+            border: `1px solid ${theme.border}`,
+            backgroundColor: theme.bg,
+            color: theme.text,
+            fontSize: 14,
+            textAlign: "center",
+            outline: "none",
+          }}
+        />
+      </div>
+      <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
+        <label style={{ fontSize: 12, color: theme.muted }}>
+          <input type="checkbox" required style={{ marginRight: 6 }} /> 개인정보 수집에 동의합니다
+        </label>
+        <label style={{ fontSize: 12, color: theme.muted }}>
+          <input type="checkbox" required style={{ marginRight: 6 }} /> 이메일 결과 수신에 동의합니다
+        </label>
+        <label style={{ fontSize: 12, color: theme.muted }}>
+          <input type="checkbox" style={{ marginRight: 6 }} /> 셀라 소식과 자료 안내를 받아봅니다
+        </label>
+      </div>
+      <button
+        onClick={onSubmit}
+        disabled={submitting || saved}
+        style={{
+          ...btn,
+          marginTop: 18,
+          padding: "12px 26px",
+          borderRadius: 999,
+          fontSize: 13,
+          fontWeight: 500,
+          cursor: submitting ? "wait" : "pointer",
+          opacity: saved ? 0.75 : 1,
+        }}
+      >
+        {saved ? "이메일 신청 정보가 저장되었어요" : "내 전체 결과 이메일로 받기"}
+      </button>
+    </div>
+  );
+}
+
+function FunnelCtas({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
+  const btn = buttonClasses(design.button_style, theme);
+  const card = cardClasses(design.card_style, theme);
+  const links = [
+    { label: "셀라 머니 진단 리포트 보기", href: "#" },
+    { label: "셀라 머니 라운지 입장하기", href: "#" },
+    { label: "셀라 유튜브에서 더 알아보기", href: "#" },
+    { label: "셀라 인스타그램에서 더 받아보기", href: "#" },
+  ];
+  return (
+    <div style={{ ...card, marginTop: 16, borderRadius: 24, padding: 28, textAlign: "center" }}>
+      <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>NEXT STEP</p>
+      <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.35, color: theme.text }}>
+        셀라와 함께 이어가기
+      </h2>
+      <div style={{ marginTop: 18, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+        {links.map((link) => (
+          <a
+            key={link.label}
+            href={link.href}
+            style={{
+              ...btn,
+              width: "100%",
+              maxWidth: 320,
+              padding: "12px 20px",
+              borderRadius: 999,
+              fontSize: 13,
+              fontWeight: 500,
+              textDecoration: "none",
+            }}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </div>
   );
 }
 
