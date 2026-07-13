@@ -14,9 +14,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as SSlugRouteImport } from './routes/s.$slug'
 import { Route as AdminSurveysRouteImport } from './routes/admin.surveys'
+import { Route as AdminResponsesRouteImport } from './routes/admin.responses'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
+import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
 import { Route as AdminSurveysIndexRouteImport } from './routes/admin.surveys.index'
 import { Route as AdminSurveysIdRouteImport } from './routes/admin.surveys.$id'
+import { Route as AdminCustomersIdRouteImport } from './routes/admin.customers.$id'
 import { Route as AdminSurveysIdResultRouteImport } from './routes/admin.surveys.$id.result'
 import { Route as AdminSurveysIdPublishRouteImport } from './routes/admin.surveys.$id.publish'
 import { Route as AdminSurveysIdEditRouteImport } from './routes/admin.surveys.$id.edit'
@@ -47,9 +50,19 @@ const AdminSurveysRoute = AdminSurveysRouteImport.update({
   path: '/surveys',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminResponsesRoute = AdminResponsesRouteImport.update({
+  id: '/responses',
+  path: '/responses',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminNewRoute = AdminNewRouteImport.update({
   id: '/new',
   path: '/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCustomersRoute = AdminCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminSurveysIndexRoute = AdminSurveysIndexRouteImport.update({
@@ -61,6 +74,11 @@ const AdminSurveysIdRoute = AdminSurveysIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => AdminSurveysRoute,
+} as any)
+const AdminCustomersIdRoute = AdminCustomersIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminCustomersRoute,
 } as any)
 const AdminSurveysIdResultRoute = AdminSurveysIdResultRouteImport.update({
   id: '/result',
@@ -86,10 +104,13 @@ const AdminSurveysIdAnalyticsRoute = AdminSurveysIdAnalyticsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/new': typeof AdminNewRoute
+  '/admin/responses': typeof AdminResponsesRoute
   '/admin/surveys': typeof AdminSurveysRouteWithChildren
   '/s/$slug': typeof SSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
   '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
@@ -99,9 +120,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/new': typeof AdminNewRoute
+  '/admin/responses': typeof AdminResponsesRoute
   '/s/$slug': typeof SSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
   '/admin/surveys': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
@@ -113,10 +137,13 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/new': typeof AdminNewRoute
+  '/admin/responses': typeof AdminResponsesRoute
   '/admin/surveys': typeof AdminSurveysRouteWithChildren
   '/s/$slug': typeof SSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
   '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
@@ -129,10 +156,13 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/admin/customers'
     | '/admin/new'
+    | '/admin/responses'
     | '/admin/surveys'
     | '/s/$slug'
     | '/admin/'
+    | '/admin/customers/$id'
     | '/admin/surveys/$id'
     | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
@@ -142,9 +172,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin/customers'
     | '/admin/new'
+    | '/admin/responses'
     | '/s/$slug'
     | '/admin'
+    | '/admin/customers/$id'
     | '/admin/surveys/$id'
     | '/admin/surveys'
     | '/admin/surveys/$id/analytics'
@@ -155,10 +188,13 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
+    | '/admin/customers'
     | '/admin/new'
+    | '/admin/responses'
     | '/admin/surveys'
     | '/s/$slug'
     | '/admin/'
+    | '/admin/customers/$id'
     | '/admin/surveys/$id'
     | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
@@ -210,11 +246,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSurveysRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/responses': {
+      id: '/admin/responses'
+      path: '/responses'
+      fullPath: '/admin/responses'
+      preLoaderRoute: typeof AdminResponsesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/new': {
       id: '/admin/new'
       path: '/new'
       fullPath: '/admin/new'
       preLoaderRoute: typeof AdminNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/customers': {
+      id: '/admin/customers'
+      path: '/customers'
+      fullPath: '/admin/customers'
+      preLoaderRoute: typeof AdminCustomersRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/surveys/': {
@@ -230,6 +280,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/surveys/$id'
       preLoaderRoute: typeof AdminSurveysIdRouteImport
       parentRoute: typeof AdminSurveysRoute
+    }
+    '/admin/customers/$id': {
+      id: '/admin/customers/$id'
+      path: '/$id'
+      fullPath: '/admin/customers/$id'
+      preLoaderRoute: typeof AdminCustomersIdRouteImport
+      parentRoute: typeof AdminCustomersRoute
     }
     '/admin/surveys/$id/result': {
       id: '/admin/surveys/$id/result'
@@ -261,6 +318,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AdminCustomersRouteChildren {
+  AdminCustomersIdRoute: typeof AdminCustomersIdRoute
+}
+
+const AdminCustomersRouteChildren: AdminCustomersRouteChildren = {
+  AdminCustomersIdRoute: AdminCustomersIdRoute,
+}
+
+const AdminCustomersRouteWithChildren = AdminCustomersRoute._addFileChildren(
+  AdminCustomersRouteChildren,
+)
 
 interface AdminSurveysIdRouteChildren {
   AdminSurveysIdAnalyticsRoute: typeof AdminSurveysIdAnalyticsRoute
@@ -295,13 +364,17 @@ const AdminSurveysRouteWithChildren = AdminSurveysRoute._addFileChildren(
 )
 
 interface AdminRouteChildren {
+  AdminCustomersRoute: typeof AdminCustomersRouteWithChildren
   AdminNewRoute: typeof AdminNewRoute
+  AdminResponsesRoute: typeof AdminResponsesRoute
   AdminSurveysRoute: typeof AdminSurveysRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminCustomersRoute: AdminCustomersRouteWithChildren,
   AdminNewRoute: AdminNewRoute,
+  AdminResponsesRoute: AdminResponsesRoute,
   AdminSurveysRoute: AdminSurveysRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
 }

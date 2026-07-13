@@ -9,6 +9,7 @@ import {
   optionResultType,
   optionText,
   uid,
+  upsertCustomerFromResponse,
   type ResultType,
   type Survey,
 } from "@/lib/survey-store";
