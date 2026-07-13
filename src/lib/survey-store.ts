@@ -59,6 +59,9 @@ export interface ResultType {
   title: string;
   summary?: string;
   description?: string;
+  interpretation?: string;
+  flow?: string;
+  small_action?: string;
   bibleVerse?: string;
 }
 
