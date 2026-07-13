@@ -130,6 +130,24 @@ export interface Response {
   surveyId: string;
   submittedAt: number;
   answers: Record<string, string | string[] | number>;
+  customerId?: string;
+  customerName?: string;
+  customerEmail?: string;
+  inLounge?: boolean;
+  resultTypeId?: string;
+}
+
+export interface Customer {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: number;
+  updatedAt: number;
+  inLounge: boolean;
+  payment_status: "unpaid" | "paid";
+  payment_provider?: string;
+  payment_id?: string;
+  paid_at?: number | null;
 }
 
 const KEY = "selah.surveys.v3";
