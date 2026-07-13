@@ -615,7 +615,7 @@ function Runner({
             cursor: "pointer",
           }}
         >
-          {i === total - 1 ? "제출하기" : "다음"}
+          {i === total - 1 ? "다음" : "다음"}
         </button>
       </div>
     </Wrap>
