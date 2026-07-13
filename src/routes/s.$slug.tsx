@@ -273,6 +273,8 @@ function Runner({
   const btnPrimary = buttonClasses(design.button_style, theme);
   const cardStyle = cardClasses(design.card_style, theme);
   const headingFont = headingFamilyOf(design.font_mood);
+  const [introSubtitle, ...introBodyParts] = (survey.description ?? "").split(/\n\n+/);
+  const introBody = introBodyParts.join("\n\n");
 
 
   if (phase === "intro") {
@@ -281,49 +283,67 @@ function Runner({
         <div
           style={{
             ...cardStyle,
-            borderRadius: 24,
-            padding: 36,
+            borderRadius: 8,
+            padding: "48px 42px 40px",
             textAlign: "center",
+            border: `1px solid ${theme.border}`,
           }}
         >
           <p
             style={{
               fontSize: 11,
-              letterSpacing: "0.25em",
+              letterSpacing: "0.22em",
               color: theme.accent,
+              textTransform: "uppercase",
             }}
           >
-            SELAH SURVEY ·{" "}
-            {survey.audience_type === "christian" ? "FOR CHRISTIANS" : "GENERAL"}
+            SELAH MONEY DIAGNOSIS
           </p>
           <h1
             style={{
               marginTop: 18,
-              fontSize: 32,
-              lineHeight: 1.3,
+              fontSize: 42,
+              lineHeight: 1.18,
               color: theme.text,
               fontFamily: headingFont,
+              fontWeight: 500,
             }}
           >
             {survey.title}
           </h1>
 
-          {survey.description && (
+          {introSubtitle && (
+            <p
+              style={{
+                margin: "16px auto 0",
+                maxWidth: 480,
+                fontSize: 17,
+                lineHeight: 1.7,
+                color: theme.text,
+                opacity: 0.86,
+              }}
+            >
+              {introSubtitle}
+            </p>
+          )}
+
+          {introBody && (
             <p
               className="whitespace-pre-line"
               style={{
-                margin: "20px auto 0",
-                maxWidth: 420,
-                fontSize: 14,
+                margin: "26px auto 0",
+                maxWidth: 500,
+                fontSize: 15,
+                lineHeight: 1.9,
                 color: theme.text,
-                opacity: 0.75,
+                opacity: 0.72,
               }}
             >
-              {survey.description}
+              {introBody}
             </p>
           )}
-          <p style={{ marginTop: 14, fontSize: 12, color: theme.muted }}>
-            예상 소요 시간 · {survey.estimated_time}
+          <p style={{ marginTop: 22, fontSize: 13, color: theme.muted }}>
+            {survey.estimated_time}
           </p>
           {survey.audience_type === "christian" && survey.bible_verse && (
             <div
@@ -331,7 +351,7 @@ function Runner({
                 margin: "24px auto 0",
                 maxWidth: 420,
                 padding: 16,
-                borderRadius: 16,
+                borderRadius: 8,
                 backgroundColor: theme.bg,
                 fontStyle: "italic",
                 color: theme.accent,
@@ -341,16 +361,16 @@ function Runner({
               “{survey.bible_verse}”
             </div>
           )}
-          <p style={{ marginTop: 26, fontSize: 14, color: theme.text, opacity: 0.75 }}>
+          <p style={{ marginTop: 28, fontSize: 14, color: theme.text, opacity: 0.75 }}>
             정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
           </p>
           <button
             onClick={() => setPhase("questions")}
             style={{
               ...btnPrimary,
-              marginTop: 26,
-              padding: "12px 32px",
-              borderRadius: 999,
+              marginTop: 28,
+              padding: "13px 34px",
+              borderRadius: 8,
               fontSize: 14,
               fontWeight: 500,
               cursor: "pointer",
@@ -370,8 +390,9 @@ function Runner({
           <div
             style={{
               ...cardStyle,
-              borderRadius: 24,
+              borderRadius: 8,
               padding: 36,
+              border: `1px solid ${theme.border}`,
             }}
           >
             <p style={{ fontSize: 12, letterSpacing: "0.25em", color: theme.accent, textAlign: "center" }}>
@@ -418,7 +439,7 @@ function Runner({
               </p>
             )}
             {result.interpretation && (
-              <div style={{ marginTop: 22, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
+              <div style={{ marginTop: 22, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>이 유형의 의미</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
                   {result.interpretation}
@@ -426,7 +447,7 @@ function Runner({
               </div>
             )}
             {result.flow && (
-              <div style={{ marginTop: 16, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
+              <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>반복되는 마음의 흐름</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
                   {result.flow}
@@ -434,7 +455,7 @@ function Runner({
               </div>
             )}
             {selahResult && (
-              <div style={{ marginTop: 16, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
+              <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>
                   돈과 신앙 사이에서 나타나는 렌즈
                 </p>
@@ -466,7 +487,7 @@ function Runner({
               </div>
             )}
             {result.small_action && (
-              <div style={{ marginTop: 16, padding: 16, borderRadius: 14, backgroundColor: theme.bg }}>
+              <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>이번 주 작은 실천</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
                   {result.small_action}
@@ -478,7 +499,7 @@ function Runner({
                 style={{
                   marginTop: 24,
                   padding: 16,
-                  borderRadius: 14,
+                  borderRadius: 8,
                   backgroundColor: theme.bg,
                   borderLeft: `3px solid ${theme.accent}`,
                   fontStyle: "italic",
@@ -518,9 +539,10 @@ function Runner({
         <div
           style={{
             ...cardStyle,
-            borderRadius: 24,
+            borderRadius: 8,
             padding: 36,
             textAlign: "center",
+            border: `1px solid ${theme.border}`,
           }}
         >
           <h1 style={{ fontSize: 28, color: theme.text, fontFamily: headingFont }}>제출이 완료되었습니다</h1>
@@ -541,7 +563,7 @@ function Runner({
                 margin: "24px auto 0",
                 maxWidth: 420,
                 padding: 16,
-                borderRadius: 16,
+                borderRadius: 8,
                 backgroundColor: theme.bg,
                 fontStyle: "italic",
                 color: theme.accent,
@@ -575,7 +597,7 @@ function Runner({
           }}
         >
           <span>
-            {i + 1} / {total}
+            문항 {String(i + 1).padStart(2, "0")} / {total}
           </span>
           <span>{Math.round(progress)}%</span>
         </div>
@@ -598,10 +620,13 @@ function Runner({
         </div>
       </div>
 
-      <div style={{ ...cardStyle, borderRadius: 24, padding: 28 }}>
-        <h2 style={{ fontSize: 24, lineHeight: 1.4, color: theme.text, fontFamily: headingFont }}>{q.text}</h2>
+      <div style={{ ...cardStyle, borderRadius: 8, padding: "34px 30px", border: `1px solid ${theme.border}` }}>
+        <p style={{ marginBottom: 14, fontSize: 11, letterSpacing: "0.18em", color: theme.accent, textAlign: "center" }}>
+          SELAH MONEY CHECK
+        </p>
+        <h2 style={{ fontSize: 25, lineHeight: 1.55, color: theme.text, fontFamily: headingFont, textAlign: "center", fontWeight: 500 }}>{q.text}</h2>
 
-        <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 10 }}>
+        <div style={{ marginTop: 30, display: "flex", flexDirection: "column", gap: 12 }}>
           {q.type === "short_text" && (
             <input
               value={(answers[q.id] as string) ?? ""}
@@ -609,7 +634,7 @@ function Runner({
               style={{
                 width: "100%",
                 padding: "12px 16px",
-                borderRadius: 14,
+                borderRadius: 8,
                 border: `1px solid ${theme.border}`,
                 backgroundColor: theme.bg,
                 color: theme.text,
@@ -627,7 +652,7 @@ function Runner({
               style={{
                 width: "100%",
                 padding: "12px 16px",
-                borderRadius: 14,
+                borderRadius: 8,
                 border: `1px solid ${theme.border}`,
                 backgroundColor: theme.bg,
                 color: theme.text,
@@ -697,12 +722,13 @@ function Runner({
                     alignItems: "center",
                     justifyContent: "space-between",
                     padding: "16px 20px",
-                    borderRadius: 16,
+                    borderRadius: 8,
                     border: `1px solid ${selected ? theme.selected : theme.border}`,
                     backgroundColor: selected ? theme.bg : theme.surface,
                     color: theme.text,
-                    fontSize: 14,
-                    textAlign: "left",
+                    fontSize: 15,
+                    lineHeight: 1.5,
+                    textAlign: "center",
                     cursor: "pointer",
                   }}
                 >
