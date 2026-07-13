@@ -25,7 +25,7 @@ function Home() {
           Selah Studio
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-base text-foreground/75 md:text-lg">
-          설문을 발행하고, 응답을 관리하세요
+          셀라의 설문과 고객을 관리합니다
         </p>
         <p className="mx-auto mt-3 max-w-2xl text-sm text-foreground/60">
         </p>
