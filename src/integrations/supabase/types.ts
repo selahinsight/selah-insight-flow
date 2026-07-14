@@ -14,13 +14,227 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_users: {
+        Row: {
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      customers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          in_lounge: boolean
+          name: string
+          paid_at: string | null
+          payment_id: string | null
+          payment_provider: string | null
+          payment_status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          in_lounge?: boolean
+          name: string
+          paid_at?: string | null
+          payment_id?: string | null
+          payment_provider?: string | null
+          payment_status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          in_lounge?: boolean
+          name?: string
+          paid_at?: string | null
+          payment_id?: string | null
+          payment_provider?: string | null
+          payment_status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      survey_questions: {
+        Row: {
+          created_at: string
+          id: string
+          options: Json | null
+          position: number
+          required: boolean
+          survey_id: string
+          text: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          options?: Json | null
+          position?: number
+          required?: boolean
+          survey_id: string
+          text: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          options?: Json | null
+          position?: number
+          required?: boolean
+          survey_id?: string
+          text?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "survey_questions_survey_id_fkey"
+            columns: ["survey_id"]
+            isOneToOne: false
+            referencedRelation: "surveys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      survey_responses: {
+        Row: {
+          answers: Json
+          created_at: string
+          customer_email: string | null
+          customer_id: string | null
+          customer_name: string | null
+          id: string
+          in_lounge: boolean
+          result_type_id: string | null
+          submitted_at: string
+          survey_id: string
+          updated_at: string
+        }
+        Insert: {
+          answers?: Json
+          created_at?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name?: string | null
+          id?: string
+          in_lounge?: boolean
+          result_type_id?: string | null
+          submitted_at?: string
+          survey_id: string
+          updated_at?: string
+        }
+        Update: {
+          answers?: Json
+          created_at?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name?: string | null
+          id?: string
+          in_lounge?: boolean
+          result_type_id?: string | null
+          submitted_at?: string
+          survey_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "survey_responses_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "survey_responses_survey_id_fkey"
+            columns: ["survey_id"]
+            isOneToOne: false
+            referencedRelation: "surveys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      surveys: {
+        Row: {
+          audience_type: string
+          bible_verse: string | null
+          category: string
+          completion_message: string
+          created_at: string
+          deleted_at: string | null
+          description: string
+          design_settings: Json
+          estimated_time: string
+          id: string
+          result_types: Json
+          share_card: Json
+          slug: string
+          source_json: string | null
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          audience_type?: string
+          bible_verse?: string | null
+          category?: string
+          completion_message?: string
+          created_at?: string
+          deleted_at?: string | null
+          description?: string
+          design_settings?: Json
+          estimated_time?: string
+          id?: string
+          result_types?: Json
+          share_card?: Json
+          slug: string
+          source_json?: string | null
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          audience_type?: string
+          bible_verse?: string | null
+          category?: string
+          completion_message?: string
+          created_at?: string
+          deleted_at?: string | null
+          description?: string
+          design_settings?: Json
+          estimated_time?: string
+          id?: string
+          result_types?: Json
+          share_card?: Json
+          slug?: string
+          source_json?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never
