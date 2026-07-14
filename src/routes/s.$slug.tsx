@@ -259,8 +259,8 @@ function Runner({
       // Backfill the response with email (best-effort).
       if (responseId) {
         try {
-          const { updateResponseContactServer } = await import("@/lib/admin.functions");
           await updateResponseContactServer({
+
             data: {
               surveyId: survey.id,
               responseId,
