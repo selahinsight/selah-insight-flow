@@ -617,9 +617,10 @@ export async function createCustomerContact(input: {
   nickname?: string;
 }): Promise<{ id: string; contact_token: string } | null> {
   const { data, error } = await supabase.rpc("create_customer_contact", {
-    p_name: input.name ?? null,
-    p_nickname: input.nickname ?? null,
+    p_name: input.name ?? undefined,
+    p_nickname: input.nickname ?? undefined,
   });
+
   if (error) {
     console.error("[selah] create_customer_contact failed", error);
     return null;
