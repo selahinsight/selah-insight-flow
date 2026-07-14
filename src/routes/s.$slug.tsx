@@ -5,19 +5,23 @@ import QRCode from "qrcode";
 import {
   addResponse,
   computeResultType,
+  createCustomerContact,
+  ensureSurveyInDatabase,
   getSurveyBySlug,
   optionResultType,
   optionText,
   surveyFromParsed,
   uid,
-  updateResponseContact,
+  updateCustomerContact,
   upsertSurvey,
-  upsertCustomerFromResponse,
   validateSurveyJson,
   type ResultType,
   type Survey,
 } from "@/lib/survey-store";
+import { updateResponseContactServer } from "@/lib/admin.functions";
+
 import { useSurveys } from "@/lib/use-surveys";
+
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 import {
   DEFAULT_DESIGN,
@@ -70,12 +74,16 @@ function RespondentSurvey() {
         seeded.slug = slug;
         seeded.status = "published";
         upsertSurvey(seeded);
+        // Also make sure the survey exists in Supabase (by slug) so anon
+        // response inserts can satisfy the survey_id FK.
+        void ensureSurveyInDatabase(seeded);
         if (!cancelled) setFallbackSurvey(seeded);
       } catch (error) {
         console.error(error);
         if (!cancelled) setFallbackSurvey(null);
       }
     }
+
     setFallbackSurvey(undefined);
     void loadFallback();
     return () => {
@@ -149,13 +157,41 @@ function Runner({
   const [responseId, setResponseId] = useState<string | undefined>(undefined);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
+  const [starting, setStarting] = useState(false);
+  const [customerContact, setCustomerContact] = useState<
+    { id: string; contactToken: string } | null
+  >(null);
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
 
   const total = survey.questions.length;
   const q = survey.questions[i];
   const progress = phase === "done" ? 100 : (i / total) * 100;
+
+  async function startSurvey() {
+    if (starting) return;
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      toast.error("이름 또는 닉네임을 입력해주세요.");
+      return;
+    }
+    setStarting(true);
+    try {
+      // Create a customer record now (no email yet). Only name/nickname.
+      const contact = await createCustomerContact({ name: trimmedName });
+      if (!contact) {
+        toast.error("시작에 실패했어요. 다시 시도해주세요.");
+        return;
+      }
+      setCustomerContact({ id: contact.id, contactToken: contact.contact_token });
+      setPhase("questions");
+    } finally {
+      setStarting(false);
+    }
+  }
 
   function next() {
     if (q.required !== false && answers[q.id] === undefined) {
@@ -176,13 +212,15 @@ function Runner({
         lastPickRef.current ? [lastPickRef.current] : undefined,
       );
     const id = uid("r");
-    addResponse({
+    void addResponse({
       id,
       surveyId: survey.id,
       submittedAt: Date.now(),
       answers,
       resultTypeId: rt?.id,
       inLounge: false,
+      customerId: customerContact?.id,
+      customerName: name.trim() || undefined,
     });
     setResponseId(id);
     setResult(rt);
@@ -190,32 +228,63 @@ function Runner({
     setPhase("done");
   }
 
-  function submitEmailRequest() {
+  async function submitEmailRequest() {
     if (submitting) return;
-    const trimmedName = name.trim();
     const trimmedEmail = email.trim();
-    if (!trimmedName || !trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
-      toast.error("이름과 이메일을 정확히 입력해주세요.");
+    if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
+      toast.error("이메일을 정확히 입력해주세요.");
+      return;
+    }
+    if (!privacyConsent) {
+      toast.error("개인정보 수집 이용에 동의해주세요.");
+      return;
+    }
+    if (!customerContact) {
+      toast.error("세션 정보가 없어 저장할 수 없어요. 처음부터 다시 시도해주세요.");
       return;
     }
     setSubmitting(true);
-    const customer = upsertCustomerFromResponse({ name: trimmedName, email: trimmedEmail });
-    if (responseId) {
-      updateResponseContact(survey.id, responseId, {
-        customerId: customer.id,
-        customerName: trimmedName,
-        customerEmail: trimmedEmail.toLowerCase(),
+    try {
+      const ok = await updateCustomerContact({
+        customerId: customerContact.id,
+        contactToken: customerContact.contactToken,
+        email: trimmedEmail,
+        marketingConsent,
+        privacyConsent: true,
       });
+      if (!ok) {
+        toast.error("이메일 저장에 실패했어요. 다시 시도해주세요.");
+        return;
+      }
+      // Backfill the response with email (best-effort).
+      if (responseId) {
+        try {
+          await updateResponseContactServer({
+
+            data: {
+              surveyId: survey.id,
+              responseId,
+              customerId: customerContact.id,
+              customerName: name.trim(),
+              customerEmail: trimmedEmail.toLowerCase(),
+            },
+          });
+        } catch (err) {
+          console.warn("[selah] response contact backfill failed", err);
+        }
+      }
+      setEmailSaved(true);
+      toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
+    } finally {
+      setSubmitting(false);
     }
-    setEmailSaved(true);
-    toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
-    setSubmitting(false);
   }
 
   function computeSelahMoneyResult(
     currentSurvey: Survey,
     currentAnswers: Record<string, string | string[] | number>,
   ): SelahMoneyResult | undefined {
+
     const hasSelahTypes = currentSurvey.resultTypes?.some((rt) => rt.id === "organizing_delay");
     if (!hasSelahTypes) return undefined;
     const scoreByQuestionIndex = (index: number) => {
@@ -365,24 +434,66 @@ function Runner({
           <p style={{ marginTop: 28, fontSize: 14, color: theme.text, opacity: 0.75 }}>
             정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
           </p>
+          <div style={{ marginTop: 24, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>
+            <label
+              htmlFor="respondent-name"
+              style={{
+                display: "block",
+                fontSize: 12,
+                letterSpacing: "0.14em",
+                color: theme.muted,
+                marginBottom: 8,
+                textAlign: "left",
+                textTransform: "uppercase",
+              }}
+            >
+              이름 또는 닉네임
+            </label>
+            <input
+              id="respondent-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="예: 지영 / 회복중인 사람"
+              autoComplete="off"
+              style={{
+                width: "100%",
+                padding: "12px 16px",
+                borderRadius: 8,
+                border: `1px solid ${theme.border}`,
+                backgroundColor: theme.bg,
+                color: theme.text,
+                fontSize: 14,
+                textAlign: "center",
+                outline: "none",
+              }}
+            />
+            <p style={{ marginTop: 8, fontSize: 12, color: theme.muted, textAlign: "center" }}>
+              이메일은 진단이 끝난 뒤에만 선택적으로 받습니다.
+            </p>
+          </div>
           <button
-            onClick={() => setPhase("questions")}
+            onClick={() => {
+              void startSurvey();
+            }}
+            disabled={starting || !name.trim()}
             style={{
               ...btnPrimary,
-              marginTop: 28,
+              marginTop: 24,
               padding: "13px 34px",
               borderRadius: 8,
               fontSize: 14,
               fontWeight: 500,
-              cursor: "pointer",
+              cursor: starting ? "wait" : "pointer",
+              opacity: !name.trim() ? 0.5 : 1,
             }}
           >
-            시작하기
+            {starting ? "준비 중..." : "시작하기"}
           </button>
         </div>
       </Wrap>
     );
   }
+
 
   if (phase === "done") {
     if (result) {
@@ -521,14 +632,20 @@ function Runner({
           <EmailResultSection
             name={name}
             email={email}
+            privacyConsent={privacyConsent}
+            marketingConsent={marketingConsent}
             submitting={submitting}
             saved={emailSaved}
             theme={theme}
             design={design}
-            onNameChange={setName}
             onEmailChange={setEmail}
-            onSubmit={submitEmailRequest}
+            onPrivacyConsentChange={setPrivacyConsent}
+            onMarketingConsentChange={setMarketingConsent}
+            onSubmit={() => {
+              void submitEmailRequest();
+            }}
           />
+
           <FunnelCtas theme={theme} design={design} />
           <ResultActions survey={survey} result={result} design={design} theme={theme} />
         </Wrap>
@@ -990,22 +1107,28 @@ function ResultSectionTitle({ children, theme }: { children: React.ReactNode; th
 function EmailResultSection({
   name,
   email,
+  privacyConsent,
+  marketingConsent,
   submitting,
   saved,
   theme,
   design,
-  onNameChange,
   onEmailChange,
+  onPrivacyConsentChange,
+  onMarketingConsentChange,
   onSubmit,
 }: {
   name: string;
   email: string;
+  privacyConsent: boolean;
+  marketingConsent: boolean;
   submitting: boolean;
   saved: boolean;
   theme: ThemeColors;
   design: DesignSettings;
-  onNameChange: (value: string) => void;
   onEmailChange: (value: string) => void;
+  onPrivacyConsentChange: (value: boolean) => void;
+  onMarketingConsentChange: (value: boolean) => void;
   onSubmit: () => void;
 }) {
   const btn = buttonClasses(design.button_style, theme);
@@ -1016,30 +1139,30 @@ function EmailResultSection({
       <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.35, color: theme.text }}>
         전체 결과를 이메일로 받아보세요
       </h2>
-      <p className="whitespace-pre-line" style={{ marginTop: 12, fontSize: 14, lineHeight: 1.75, color: theme.text, opacity: 0.78 }}>
+      <p
+        className="whitespace-pre-line"
+        style={{
+          marginTop: 12,
+          fontSize: 14,
+          lineHeight: 1.75,
+          color: theme.text,
+          opacity: 0.78,
+        }}
+      >
         지금 화면에서는 가장 두드러지는 결과를 먼저 보여드렸어요.{"\n"}이메일로는 내 돈 반응이 실제 생활에서 어떻게 나타나는지, 어떤 말씀과 기준으로 정리하면 좋을지 더 자세히 보내드립니다.
       </p>
+      {name && (
+        <p style={{ marginTop: 10, fontSize: 13, color: theme.muted }}>
+          {name}님에게 결과를 보내드릴 이메일을 알려주세요.
+        </p>
+      )}
       <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
-        <input
-          value={name}
-          onChange={(e) => onNameChange(e.target.value)}
-          placeholder="이름"
-          style={{
-            padding: "12px 16px",
-            borderRadius: 14,
-            border: `1px solid ${theme.border}`,
-            backgroundColor: theme.bg,
-            color: theme.text,
-            fontSize: 14,
-            textAlign: "center",
-            outline: "none",
-          }}
-        />
         <input
           value={email}
           onChange={(e) => onEmailChange(e.target.value)}
           placeholder="이메일"
           type="email"
+          autoComplete="email"
           style={{
             padding: "12px 16px",
             borderRadius: 14,
@@ -1052,20 +1175,37 @@ function EmailResultSection({
           }}
         />
       </div>
-      <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
+      <div
+        style={{
+          marginTop: 14,
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+          alignItems: "center",
+        }}
+      >
         <label style={{ fontSize: 12, color: theme.muted }}>
-          <input type="checkbox" required style={{ marginRight: 6 }} /> 개인정보 수집에 동의합니다
+          <input
+            type="checkbox"
+            checked={privacyConsent}
+            onChange={(e) => onPrivacyConsentChange(e.target.checked)}
+            style={{ marginRight: 6 }}
+          />
+          (필수) 개인정보 수집·이용에 동의합니다
         </label>
         <label style={{ fontSize: 12, color: theme.muted }}>
-          <input type="checkbox" required style={{ marginRight: 6 }} /> 이메일 결과 수신에 동의합니다
-        </label>
-        <label style={{ fontSize: 12, color: theme.muted }}>
-          <input type="checkbox" style={{ marginRight: 6 }} /> 셀라 소식과 자료 안내를 받아봅니다
+          <input
+            type="checkbox"
+            checked={marketingConsent}
+            onChange={(e) => onMarketingConsentChange(e.target.checked)}
+            style={{ marginRight: 6 }}
+          />
+          (선택) 셀라 소식과 자료 안내를 이메일로 받아봅니다
         </label>
       </div>
       <button
         onClick={onSubmit}
-        disabled={submitting || saved}
+        disabled={submitting || saved || !privacyConsent || !email.trim()}
         style={{
           ...btn,
           marginTop: 18,
@@ -1074,7 +1214,7 @@ function EmailResultSection({
           fontSize: 13,
           fontWeight: 500,
           cursor: submitting ? "wait" : "pointer",
-          opacity: saved ? 0.75 : 1,
+          opacity: saved ? 0.75 : !privacyConsent || !email.trim() ? 0.5 : 1,
         }}
       >
         {saved ? "이메일 신청 정보가 저장되었어요" : "내 전체 결과 이메일로 받기"}
@@ -1082,6 +1222,7 @@ function EmailResultSection({
     </div>
   );
 }
+
 
 function FunnelCtas({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
   const btn = buttonClasses(design.button_style, theme);
