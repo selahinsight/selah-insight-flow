@@ -432,24 +432,66 @@ function Runner({
           <p style={{ marginTop: 28, fontSize: 14, color: theme.text, opacity: 0.75 }}>
             정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
           </p>
+          <div style={{ marginTop: 24, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>
+            <label
+              htmlFor="respondent-name"
+              style={{
+                display: "block",
+                fontSize: 12,
+                letterSpacing: "0.14em",
+                color: theme.muted,
+                marginBottom: 8,
+                textAlign: "left",
+                textTransform: "uppercase",
+              }}
+            >
+              이름 또는 닉네임
+            </label>
+            <input
+              id="respondent-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="예: 지영 / 회복중인 사람"
+              autoComplete="off"
+              style={{
+                width: "100%",
+                padding: "12px 16px",
+                borderRadius: 8,
+                border: `1px solid ${theme.border}`,
+                backgroundColor: theme.bg,
+                color: theme.text,
+                fontSize: 14,
+                textAlign: "center",
+                outline: "none",
+              }}
+            />
+            <p style={{ marginTop: 8, fontSize: 12, color: theme.muted, textAlign: "center" }}>
+              이메일은 진단이 끝난 뒤에만 선택적으로 받습니다.
+            </p>
+          </div>
           <button
-            onClick={() => setPhase("questions")}
+            onClick={() => {
+              void startSurvey();
+            }}
+            disabled={starting || !name.trim()}
             style={{
               ...btnPrimary,
-              marginTop: 28,
+              marginTop: 24,
               padding: "13px 34px",
               borderRadius: 8,
               fontSize: 14,
               fontWeight: 500,
-              cursor: "pointer",
+              cursor: starting ? "wait" : "pointer",
+              opacity: !name.trim() ? 0.5 : 1,
             }}
           >
-            시작하기
+            {starting ? "준비 중..." : "시작하기"}
           </button>
         </div>
       </Wrap>
     );
   }
+
 
   if (phase === "done") {
     if (result) {
