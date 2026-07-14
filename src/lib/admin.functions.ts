@@ -248,6 +248,114 @@ export const setResponseInLoungeServer = createServerFn({ method: "POST" }).midd
     return { ok: true };
   });
 
+// Delete a single survey response. If the linked customer is a "test"
+// customer (name/nickname includes TestBot/테스트/test) and has no
+// remaining responses, also delete the customer.
+export const deleteSurveyResponseServer = createServerFn({ method: "POST" }).middleware([requireAdmin])
+  .inputValidator((data: unknown) =>
+    z.object({ responseId: z.string(), alsoDeleteOrphanTestCustomer: z.boolean().optional() }).parse(data),
+  )
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: row } = await supabaseAdmin
+      .from("survey_responses")
+      .select("id, customer_id")
+      .eq("id", data.responseId)
+      .maybeSingle();
+    const customerId = row?.customer_id ?? null;
+    const { error } = await supabaseAdmin.from("survey_responses").delete().eq("id", data.responseId);
+    if (error) throw error;
+    let customerDeleted = false;
+    if (data.alsoDeleteOrphanTestCustomer && customerId) {
+      const { data: c } = await supabaseAdmin
+        .from("customers")
+        .select("id, name, nickname")
+        .eq("id", customerId)
+        .maybeSingle();
+      const isTest = c ? matchesTestName(c.name) || matchesTestName(c.nickname) : false;
+      if (isTest) {
+        const { data: remaining } = await supabaseAdmin
+          .from("survey_responses")
+          .select("id")
+          .eq("customer_id", customerId)
+          .limit(1);
+        if (!remaining || remaining.length === 0) {
+          const { error: dErr } = await supabaseAdmin.from("customers").delete().eq("id", customerId);
+          if (!dErr) customerDeleted = true;
+        }
+      }
+    }
+    return { ok: true, customerDeleted };
+  });
+
+const TEST_NAME_RE = /(testbot|테스트|^test$|^test\s|\stest$)/i;
+function matchesTestName(name?: string | null): boolean {
+  if (!name) return false;
+  return TEST_NAME_RE.test(String(name).trim());
+}
+
+// Bulk-delete responses whose customer name/nickname/customer_name is a
+// test-marker. Real customers are never touched.
+export const deleteTestSurveyResponsesServer = createServerFn({ method: "POST" })
+  .middleware([requireAdmin])
+  .inputValidator((data: unknown) =>
+    z.object({ alsoDeleteOrphanTestCustomers: z.boolean().optional() }).parse(data ?? {}),
+  )
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const [respRes, custRes] = await Promise.all([
+      supabaseAdmin.from("survey_responses").select("id, customer_id, customer_name"),
+      supabaseAdmin.from("customers").select("id, name, nickname"),
+    ]);
+    if (respRes.error) throw respRes.error;
+    if (custRes.error) throw custRes.error;
+    const custById = new Map(
+      (custRes.data ?? []).map((c) => [c.id as string, c as { id: string; name: string | null; nickname: string | null }]),
+    );
+    const testResponseIds: string[] = [];
+    const touchedCustomerIds = new Set<string>();
+    for (const r of respRes.data ?? []) {
+      const c = r.customer_id ? custById.get(r.customer_id) : undefined;
+      const isTest =
+        matchesTestName(r.customer_name) ||
+        matchesTestName(c?.name ?? null) ||
+        matchesTestName(c?.nickname ?? null);
+      if (isTest) {
+        testResponseIds.push(r.id as string);
+        if (r.customer_id) touchedCustomerIds.add(r.customer_id);
+      }
+    }
+    let deletedResponses = 0;
+    let deletedCustomers = 0;
+    if (testResponseIds.length) {
+      const { error } = await supabaseAdmin
+        .from("survey_responses")
+        .delete()
+        .in("id", testResponseIds);
+      if (error) throw error;
+      deletedResponses = testResponseIds.length;
+    }
+    if (data.alsoDeleteOrphanTestCustomers && touchedCustomerIds.size) {
+      for (const cid of touchedCustomerIds) {
+        const c = custById.get(cid);
+        const isTest = c ? matchesTestName(c.name) || matchesTestName(c.nickname) : false;
+        if (!isTest) continue;
+        const { data: remaining } = await supabaseAdmin
+          .from("survey_responses")
+          .select("id")
+          .eq("customer_id", cid)
+          .limit(1);
+        if (!remaining || remaining.length === 0) {
+          const { error: dErr } = await supabaseAdmin.from("customers").delete().eq("id", cid);
+          if (!dErr) deletedCustomers++;
+        }
+      }
+    }
+    return { ok: true, deletedResponses, deletedCustomers };
+  });
+
+
+
 // -----------------------------------------------------------------------------
 // Customers (admin-side)
 // -----------------------------------------------------------------------------
