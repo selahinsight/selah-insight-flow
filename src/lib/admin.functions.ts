@@ -1,12 +1,15 @@
 // Admin CRUD server functions for the Selah Studio internal app.
 //
-// TODO(auth): These functions currently use supabaseAdmin (service role) and
-// bypass RLS. The app has no admin login yet — it is operated by a single
-// person. Before opening real customer data, gate every fn in this file with
-// `.middleware([requireSupabaseAuth])` + an is_admin(auth.uid()) check.
+// Every function in this module is gated by `requireAdmin`, which chains on
+// top of `requireSupabaseAuth` and additionally checks `is_admin(auth.uid())`
+// against the `admin_users` table. Callers must be signed in AND registered
+// as admins; anonymous callers and signed-in non-admins are rejected before
+// any supabaseAdmin (service_role) work runs.
 
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireAdmin } from "@/lib/require-admin";
+
 
 const optionSchema = z.union([
   z.string(),
