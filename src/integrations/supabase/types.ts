@@ -263,6 +263,18 @@ export type Database = {
         }[]
       }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      submit_survey_response: {
+        Args: {
+          p_answers: Json
+          p_contact_token: string
+          p_customer_id: string
+          p_in_lounge?: boolean
+          p_response_id: string
+          p_result_type_id?: string
+          p_survey_id: string
+        }
+        Returns: undefined
+      }
       update_customer_contact: {
         Args: {
           p_contact_token: string
