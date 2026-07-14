@@ -1222,7 +1222,7 @@ function EmailResultSection({
           opacity: saved ? 0.75 : !privacyConsent || !email.trim() ? 0.5 : 1,
         }}
       >
-        {saved ? "이메일 신청 정보가 저장되었어요" : "내 전체 결과 이메일로 받기"}
+        {saved ? "이메일 정보가 저장되었습니다" : "이메일 정보 저장하기"}
       </button>
     </div>
   );
