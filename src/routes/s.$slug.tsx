@@ -243,12 +243,16 @@ function Runner({
   async function submitEmailRequest() {
     if (submitting) return;
     const trimmedEmail = email.trim();
-    if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
-      toast.error("이메일을 정확히 입력해주세요.");
+    if (!trimmedEmail) {
+      toast.error("이메일을 입력해주세요.");
+      return;
+    }
+    if (!/.+@.+\..+/.test(trimmedEmail)) {
+      toast.error("이메일 형식을 확인해주세요.");
       return;
     }
     if (!privacyConsent) {
-      toast.error("개인정보 수집 이용에 동의해주세요.");
+      toast.error("결과 발송을 위해 필수 동의가 필요합니다.");
       return;
     }
     if (!customerContact) {
@@ -265,16 +269,17 @@ function Runner({
         privacyConsent: true,
       });
       if (!ok) {
-        toast.error("이메일 저장에 실패했어요. 다시 시도해주세요.");
+        toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        console.error("[selah] update_customer_contact returned false", {
+          customerId: customerContact.id,
+        });
         return;
       }
-      // Contact info now lives on the customer row (updated via the
-      // update_customer_contact RPC above). We intentionally do not mirror
-      // name/email onto survey_responses from the public route — that write
-      // path is admin-only.
-
       setEmailSaved(true);
-      toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
+      toast.success("이메일 정보가 저장되었습니다. 전체 결과 이메일 발송 기능은 준비 중입니다.");
+    } catch (err) {
+      console.error("[selah] submitEmailRequest failed", err);
+      toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
     } finally {
       setSubmitting(false);
     }
@@ -1137,7 +1142,7 @@ function EmailResultSection({
     <div style={{ ...card, marginTop: 16, borderRadius: 24, padding: 28, textAlign: "center" }}>
       <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>EMAIL RESULT</p>
       <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.35, color: theme.text }}>
-        전체 결과를 이메일로 받아보세요
+        전체 결과 이메일 신청
       </h2>
       <p
         className="whitespace-pre-line"
@@ -1149,11 +1154,11 @@ function EmailResultSection({
           opacity: 0.78,
         }}
       >
-        지금 화면에서는 가장 두드러지는 결과를 먼저 보여드렸어요.{"\n"}이메일로는 내 돈 반응이 실제 생활에서 어떻게 나타나는지, 어떤 말씀과 기준으로 정리하면 좋을지 더 자세히 보내드립니다.
+        이메일과 동의 정보를 저장해두면, 이후 전체 결과 이메일이 준비되었을 때 안내드립니다.{"\n"}지금은 저장까지만 진행되며, 실제 이메일 발송 기능은 준비 중입니다.
       </p>
       {name && (
         <p style={{ marginTop: 10, fontSize: 13, color: theme.muted }}>
-          {name}님에게 결과를 보내드릴 이메일을 알려주세요.
+          {name}님의 결과를 저장할 이메일을 알려주세요.
         </p>
       )}
       <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
@@ -1217,7 +1222,7 @@ function EmailResultSection({
           opacity: saved ? 0.75 : !privacyConsent || !email.trim() ? 0.5 : 1,
         }}
       >
-        {saved ? "이메일 신청 정보가 저장되었어요" : "내 전체 결과 이메일로 받기"}
+        {saved ? "이메일 정보가 저장되었습니다" : "이메일 정보 저장하기"}
       </button>
     </div>
   );
