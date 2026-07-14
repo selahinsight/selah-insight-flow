@@ -1150,23 +1150,7 @@ function Wrap({
             marginBottom: 24,
           }}
         >
-          <svg width="22" height="22" viewBox="0 0 40 40">
-            <path
-              d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z"
-              fill="none"
-              stroke={theme.accent}
-              strokeWidth="1.2"
-            />
-          </svg>
-          <span
-            style={{
-              fontSize: 12,
-              letterSpacing: "0.25em",
-              color: theme.accent,
-            }}
-          >
-            SELAH
-          </span>
+          <img src={selahLogo.url} alt="Selah Insight" style={{ height: 28, width: "auto" }} />
         </div>
         {children}
       </div>
