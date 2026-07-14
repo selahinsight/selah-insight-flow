@@ -52,7 +52,7 @@ export type Database = {
           contact_token?: string
           created_at?: string
           email?: string | null
-          id?: string
+          id: string
           in_lounge?: boolean
           marketing_consent?: boolean
           name?: string | null
@@ -97,7 +97,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          id?: string
+          id: string
           options?: Json | null
           position?: number
           required?: boolean
@@ -147,7 +147,7 @@ export type Database = {
           customer_email?: string | null
           customer_id?: string | null
           customer_name?: string | null
-          id?: string
+          id: string
           in_lounge?: boolean
           result_type_id?: string | null
           submitted_at?: string
@@ -214,7 +214,7 @@ export type Database = {
           description?: string
           design_settings?: Json
           estimated_time?: string
-          id?: string
+          id: string
           result_types?: Json
           share_card?: Json
           slug: string
