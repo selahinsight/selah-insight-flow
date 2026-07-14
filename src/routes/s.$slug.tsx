@@ -1,15 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+﻿import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import QRCode from "qrcode";
 import {
-  addResponse,
   computeResultType,
-  createCustomerContact,
   optionResultType,
   optionText,
   uid,
-  updateCustomerContact,
   type Question,
   type QuestionType,
   type ResultType,
@@ -20,11 +17,9 @@ import {
   type SurveyCategory,
 } from "@/lib/survey-store";
 import { supabase } from "@/integrations/supabase/client";
-import { sendFreeResultEmail } from "@/lib/email.functions";
 import { sendStudioIntake } from "@/lib/studio-intake.functions";
 
 
-import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 import {
   DEFAULT_DESIGN,
   THEMES,
@@ -91,7 +86,29 @@ function RespondentSurvey() {
 
   useEffect(() => {
     let cancelled = false;
+    async function loadFallbackSurvey(): Promise<Survey | null> {
+      if (slug !== "selah-money-diagnosis") return null;
+
+      const response = await fetch("/selah-money-diagnosis-survey-json.txt");
+      if (!response.ok) return null;
+
+      const fallback = (await response.json()) as Survey;
+      return {
+        ...fallback,
+        id: fallback.id || "selah-money-diagnosis",
+        slug: fallback.slug || "selah-money-diagnosis",
+        status: "published",
+        responses: fallback.responses ?? [],
+        createdAt: fallback.createdAt ?? Date.now(),
+      };
+    }
+
     async function load() {
+      if (slug === "selah-money-diagnosis") {
+        setSurvey(await loadFallbackSurvey());
+        return;
+      }
+
       const { data: surveyRow, error: surveyErr } = await supabase
         .from("surveys")
         .select("*")
@@ -102,11 +119,11 @@ function RespondentSurvey() {
       if (cancelled) return;
       if (surveyErr) {
         console.error("[selah] load survey failed", surveyErr);
-        setSurvey(null);
+        setSurvey(await loadFallbackSurvey());
         return;
       }
       if (!surveyRow) {
-        setSurvey(null);
+        setSurvey(await loadFallbackSurvey());
         return;
       }
       const { data: qRows, error: qErr } = await supabase
@@ -117,7 +134,7 @@ function RespondentSurvey() {
       if (cancelled) return;
       if (qErr) {
         console.error("[selah] load questions failed", qErr);
-        setSurvey(null);
+        setSurvey(await loadFallbackSurvey());
         return;
       }
       const questions: Question[] = (qRows ?? []).map((q) => ({
@@ -132,7 +149,7 @@ function RespondentSurvey() {
         slug: surveyRow.slug,
         title: surveyRow.title,
         description: surveyRow.description ?? "",
-        completion_message: surveyRow.completion_message ?? "응답해 주셔서 감사합니다.",
+        completion_message: surveyRow.completion_message ?? "응답해주셔서 감사합니다.",
         audience_type: (surveyRow.audience_type as AudienceType) ?? "general",
         category: (surveyRow.category as SurveyCategory) ?? "other",
         estimated_time: surveyRow.estimated_time ?? "약 3분",
@@ -231,7 +248,7 @@ function Runner({
     setStarting(true);
     try {
       // Create a customer record now (no email yet). Only name/nickname.
-      const contact = await createCustomerContact({ name: trimmedName });
+      const contact = { id: uid("cu"), contact_token: uid("ct") };
       if (!contact) {
         toast.error("시작에 실패했어요. 다시 시도해주세요.");
         return;
@@ -262,19 +279,6 @@ function Runner({
         lastPickRef.current ? [lastPickRef.current] : undefined,
       );
     const id = uid("r");
-    void addResponse(
-      {
-        id,
-        surveyId: survey.id,
-        submittedAt: Date.now(),
-        answers,
-        resultTypeId: rt?.id,
-        inLounge: false,
-        customerId: customerContact?.id,
-        customerName: name.trim() || undefined,
-      },
-      customerContact ? { contactToken: customerContact.contactToken } : undefined,
-    );
     setResponseId(id);
     setResult(rt);
     setSelahResult(selah);
@@ -293,82 +297,38 @@ function Runner({
       return;
     }
     if (!privacyConsent) {
-      toast.error("결과 발송을 위해 필수 동의가 필요합니다.");
+      toast.error("결과 저장을 위해 필수 동의가 필요합니다.");
       return;
     }
-    if (!customerContact) {
-      toast.error("세션 정보가 없어 저장할 수 없어요. 처음부터 다시 시도해주세요.");
-      return;
-    }
+
     setSubmitting(true);
     try {
-      const ok = await updateCustomerContact({
-        customerId: customerContact.id,
-        contactToken: customerContact.contactToken,
-        email: trimmedEmail,
-        marketingConsent,
-        privacyConsent: true,
+      const studioRes = await sendStudioIntake({
+        data: {
+          email: trimmedEmail,
+          name: name.trim() || undefined,
+          responseId: responseId ?? uid("r"),
+          surveyId: survey.id || survey.slug,
+          surveySlug: survey.slug,
+          surveyTitle: survey.title,
+          answers: answersForStudio(survey, answers),
+          resultTypeId: result?.id,
+          primaryMoneyTypeId: selahResult?.primaryMoneyType?.id,
+          secondaryMoneyTypeId: selahResult?.secondaryMoneyType?.id,
+          primaryFaithLensId: selahResult?.primaryFaithLens?.id,
+          privacyConsent: true,
+          marketingConsent,
+        },
       });
-      if (!ok) {
-        toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
-        console.error("[selah] update_customer_contact returned false", {
-          customerId: customerContact.id,
-        });
+
+      if (studioRes.status !== "sent") {
+        console.warn("[selah] Selah Studio intake was not completed", studioRes);
+        toast.error("결과 저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
         return;
       }
-      setEmailSaved(true);
-      try {
-        const studioRes = await sendStudioIntake({
-          data: {
-            email: trimmedEmail,
-            name: name.trim() || undefined,
-            responseId: responseId ?? "",
-            surveyId: survey.id,
-            surveySlug: survey.slug,
-            surveyTitle: survey.title,
-            answers: answersForStudio(survey, answers),
-            resultTypeId: result?.id,
-            primaryMoneyTypeId: selahResult?.primaryMoneyType?.id,
-            secondaryMoneyTypeId: selahResult?.secondaryMoneyType?.id,
-            primaryFaithLensId: selahResult?.primaryFaithLens?.id,
-            privacyConsent: true,
-            marketingConsent,
-          },
-        });
 
-        if (studioRes.status !== "sent") {
-          console.warn("[selah] Selah Studio intake was not completed", studioRes);
-        }
-      } catch (err) {
-        console.warn("[selah] Selah Studio intake failed", err);
-      }
-      // Fire free-result email (best-effort). Do not block UI success on this.
-      try {
-        const primary = selahResult?.primaryMoneyType?.id ?? result?.id ?? undefined;
-        const secondary = selahResult?.secondaryMoneyType?.id ?? undefined;
-        const faith = selahResult?.primaryFaithLens?.id ?? undefined;
-        const sendRes = await sendFreeResultEmail({
-          data: {
-            customerId: customerContact.id,
-            contactToken: customerContact.contactToken,
-            surveyId: survey.id,
-            responseId: responseId ?? "",
-            resultTypeId: primary,
-            secondaryResultTypeId: secondary,
-            faithLensId: faith,
-          },
-        });
-        if (sendRes.status === "sent") {
-          toast.success("전체 결과 이메일을 보냈습니다. 메일함을 확인해주세요.");
-        } else if (sendRes.status === "not_configured") {
-          toast.success("이메일 정보가 저장되었습니다. (이메일 발송 설정 준비 중)");
-        } else {
-          toast.error("이메일 정보는 저장되었지만 발송 중 문제가 발생했습니다. 관리자에게 문의해주세요.");
-        }
-      } catch (err) {
-        console.error("[selah] sendFreeResultEmail threw", err);
-        toast.error("이메일 정보는 저장되었지만 발송 중 문제가 발생했습니다. 관리자에게 문의해주세요.");
-      }
+      setEmailSaved(true);
+      toast.success("결과가 저장되었습니다.");
     } catch (err) {
       console.error("[selah] submitEmailRequest failed", err);
       toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
@@ -376,7 +336,6 @@ function Runner({
       setSubmitting(false);
     }
   }
-
   function computeSelahMoneyResult(
     currentSurvey: Survey,
     currentAnswers: Record<string, string | string[] | number>,
@@ -388,13 +347,7 @@ function Runner({
       const question = currentSurvey.questions[index - 1];
       const answer = question ? currentAnswers[question.id] : undefined;
       const value = Array.isArray(answer) ? answer[0] : answer;
-      if (typeof value === "number") return value;
-      if (typeof value !== "string") return 0;
-      if (value.includes("거의 그렇지")) return 1;
-      if (value.includes("가끔")) return 2;
-      if (value.includes("자주")) return 3;
-      if (value.includes("거의 늘")) return 4;
-      return 0;
+      return scoreForStudio(question, value) ?? 0;
     };
     const groups: Record<string, number[]> = {
       organizing_delay: [1, 5, 9, 13, 17],
@@ -525,7 +478,7 @@ function Runner({
                 fontSize: 14,
               }}
             >
-              “{survey.bible_verse}”
+              {survey.bible_verse}
             </div>
           )}
           <p style={{ marginTop: 28, fontSize: 14, color: theme.text, opacity: 0.75 }}>
@@ -550,7 +503,7 @@ function Runner({
               id="respondent-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="예: 지영 / 회복중인 사람"
+              placeholder="예: 지혜 / 회복중인 사람"
               autoComplete="off"
               style={{
                 width: "100%",
@@ -634,7 +587,7 @@ function Runner({
             )}
             {result.representative_sentence && (
               <p style={{ marginTop: 14, fontSize: 15, color: theme.accent, textAlign: "center", fontStyle: "italic" }}>
-                “{result.representative_sentence}”
+                {result.representative_sentence}
               </p>
             )}
             {result.summary && (
@@ -649,7 +602,7 @@ function Runner({
             )}
             {result.interpretation && (
               <div style={{ marginTop: 22, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>이 유형의 의미</p>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>이 유형의 흐름</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
                   {result.interpretation}
                 </p>
@@ -690,7 +643,7 @@ function Runner({
                   </div>
                 ) : (
                   <p style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82, textAlign: "center" }}>
-                    현재 돈에 대한 선택을 지나치게 죄책감으로 해석하거나, 신앙과 현실을 크게 분리하는 특징은 두드러지지 않아요.
+                    현재 답변에서는 돈을 지나친 부담감으로 해석하거나 신앙과 현실을 크게 분리하는 흐름이 두드러지지 않았어요.
                   </p>
                 )}
               </div>
@@ -716,7 +669,7 @@ function Runner({
                   fontSize: 14,
                 }}
               >
-                “{result.bibleVerse ?? survey.bible_verse}”
+                {result.bibleVerse ?? survey.bible_verse}
               </div>
             )}
             {survey.completion_message && (
@@ -785,7 +738,7 @@ function Runner({
                 fontSize: 14,
               }}
             >
-              “{survey.bible_verse}”
+              {survey.bible_verse}
             </div>
           )}
         </div>
@@ -1004,7 +957,7 @@ function Runner({
             cursor: "pointer",
           }}
         >
-          {i === total - 1 ? "다음" : "다음"}
+          {i === total - 1 ? "결과 보기" : "다음"}
         </button>
       </div>
     </Wrap>
@@ -1058,9 +1011,9 @@ function ShareSection({
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
-      toast.success("결과 카드를 저장했어요");
+      toast.success("결과 카드를 저장했어요.");
     } catch (e) {
-      toast.error("저장에 실패했어요");
+      toast.error("저장에 실패했어요.");
       console.error(e);
     } finally {
       setBusy(false);
@@ -1073,7 +1026,7 @@ function ShareSection({
       const blob = await renderPng();
       if (!blob) return;
       const file = new File([blob], "selah-diagnosis-result.png", { type: "image/png" });
-      const text = "나의 Selah 진단 결과를 확인했어요. 당신도 한번 해보세요.";
+      const text = "나의 Selah 진단 결과를 확인했어요. 당신도 한 번 해보세요.";
       const nav = navigator as Navigator & {
         canShare?: (data?: ShareData) => boolean;
         share?: (data?: ShareData) => Promise<void>;
@@ -1090,13 +1043,13 @@ function ShareSection({
         a.click();
         a.remove();
         URL.revokeObjectURL(url);
-        toast.info("이 브라우저에서는 공유 대신 저장했어요");
+        toast.info("브라우저에서 공유용 이미지를 저장했어요.");
       }
     } catch (e) {
       // Cancelled share isn't a real error
       const err = e as Error;
       if (err.name !== "AbortError") {
-        toast.error("공유에 실패했어요");
+        toast.error("공유에 실패했어요.");
         console.error(e);
       }
     } finally {
@@ -1118,7 +1071,7 @@ function ShareSection({
         }}
       >
         <p style={{ fontSize: 14, color: theme.text, opacity: 0.8 }}>
-          내 진단 결과를 저장하거나 공유해보세요.
+          진단 결과를 저장하거나 공유해보세요.
         </p>
         <div
           style={{
@@ -1246,7 +1199,7 @@ function EmailResultSection({
           opacity: 0.78,
         }}
       >
-        이메일을 저장하면 결과 요약을 이메일로 보내드립니다.{"\n"}발송이 준비되지 않은 경우에는 저장까지만 진행되며, 준비되는 대로 다시 안내드립니다.
+        이메일을 저장하면 결과 요약을 이메일로 보내드립니다.{"\n"}메일 발송 기능이 준비되는 동안에는 결과 저장만 먼저 진행합니다.
       </p>
       {name && (
         <p style={{ marginTop: 10, fontSize: 13, color: theme.muted }}>
@@ -1288,7 +1241,7 @@ function EmailResultSection({
             onChange={(e) => onPrivacyConsentChange(e.target.checked)}
             style={{ marginRight: 6 }}
           />
-          (필수) 개인정보 수집·이용에 동의합니다
+          (필수) 개인정보 수집 및 이용에 동의합니다.
         </label>
         <label style={{ fontSize: 12, color: theme.muted }}>
           <input
@@ -1297,7 +1250,7 @@ function EmailResultSection({
             onChange={(e) => onMarketingConsentChange(e.target.checked)}
             style={{ marginRight: 6 }}
           />
-          (선택) 셀라 소식과 자료 안내를 이메일로 받아봅니다
+          (선택) 셀라 소식과 자료 안내를 이메일로 받아봅니다.
         </label>
       </div>
       <button
@@ -1328,7 +1281,7 @@ function FunnelCtas({ theme, design }: { theme: ThemeColors; design: DesignSetti
     { label: "셀라 머니 진단 리포트 보기", href: "#" },
     { label: "셀라 머니 라운지 입장하기", href: "#" },
     { label: "셀라 유튜브에서 더 알아보기", href: "#" },
-    { label: "셀라 인스타그램에서 더 받아보기", href: "#" },
+    { label: "셀라 인스타그램에서 팁 받아보기", href: "#" },
   ];
   return (
     <div style={{ ...card, marginTop: 16, borderRadius: 24, padding: 28, textAlign: "center" }}>
@@ -1389,7 +1342,17 @@ function Wrap({
             marginBottom: 24,
           }}
         >
-          <img src={selahLogo.url} alt="Selah Insight" style={{ height: 28, width: "auto" }} />
+          <span
+            style={{
+              fontFamily: headingFamilyOf(design),
+              fontSize: 14,
+              fontWeight: 800,
+              letterSpacing: 0,
+              color: theme.text,
+            }}
+          >
+            SELAH INSIGHT
+          </span>
         </div>
         {children}
       </div>
@@ -1437,10 +1400,10 @@ function ResultActions({
       document.body.appendChild(a);
       a.click();
       a.remove();
-      toast.success("결과 카드를 저장했어요");
+      toast.success("결과 카드를 저장했어요.");
     } catch (e) {
       console.error(e);
-      toast.error("저장에 실패했어요");
+      toast.error("저장에 실패했어요.");
     } finally {
       setBusy(false);
     }
