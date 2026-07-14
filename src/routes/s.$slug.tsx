@@ -72,12 +72,16 @@ function RespondentSurvey() {
         seeded.slug = slug;
         seeded.status = "published";
         upsertSurvey(seeded);
+        // Also make sure the survey exists in Supabase (by slug) so anon
+        // response inserts can satisfy the survey_id FK.
+        void ensureSurveyInDatabase(seeded);
         if (!cancelled) setFallbackSurvey(seeded);
       } catch (error) {
         console.error(error);
         if (!cancelled) setFallbackSurvey(null);
       }
     }
+
     setFallbackSurvey(undefined);
     void loadFallback();
     return () => {
