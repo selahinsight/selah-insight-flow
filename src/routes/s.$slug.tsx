@@ -72,11 +72,11 @@ function RespondentSurvey() {
         const seeded = surveyFromParsed(parsed.data, raw);
         seeded.slug = slug;
         seeded.status = "published";
-        upsertSurvey(seeded);
-        // Also make sure the survey exists in Supabase (by slug) so anon
-        // response inserts can satisfy the survey_id FK.
-        void ensureSurveyInDatabase(seeded);
+        // Public route: render fallback in-memory only. We intentionally do
+        // NOT seed the survey into the database from this anonymous path —
+        // survey publishing is an admin-only action (see /admin).
         if (!cancelled) setFallbackSurvey(seeded);
+
       } catch (error) {
         console.error(error);
         if (!cancelled) setFallbackSurvey(null);
