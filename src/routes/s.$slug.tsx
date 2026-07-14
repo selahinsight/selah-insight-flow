@@ -221,16 +221,19 @@ function Runner({
         lastPickRef.current ? [lastPickRef.current] : undefined,
       );
     const id = uid("r");
-    void addResponse({
-      id,
-      surveyId: survey.id,
-      submittedAt: Date.now(),
-      answers,
-      resultTypeId: rt?.id,
-      inLounge: false,
-      customerId: customerContact?.id,
-      customerName: name.trim() || undefined,
-    });
+    void addResponse(
+      {
+        id,
+        surveyId: survey.id,
+        submittedAt: Date.now(),
+        answers,
+        resultTypeId: rt?.id,
+        inLounge: false,
+        customerId: customerContact?.id,
+        customerName: name.trim() || undefined,
+      },
+      customerContact ? { contactToken: customerContact.contactToken } : undefined,
+    );
     setResponseId(id);
     setResult(rt);
     setSelahResult(selah);
