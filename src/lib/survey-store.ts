@@ -499,7 +499,7 @@ export async function addResponse(
       p_customer_id: r.customerId,
       p_contact_token: auth.contactToken,
       p_answers: r.answers as never,
-      p_result_type_id: r.resultTypeId ?? null,
+      p_result_type_id: r.resultTypeId ?? undefined,
       p_in_lounge: r.inLounge ?? false,
     });
     if (error) throw error;
