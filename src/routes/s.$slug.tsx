@@ -134,8 +134,8 @@ function RespondentSurvey() {
     );
   }
 
-  const design = survey.design_settings ?? DEFAULT_DESIGN;
-  const theme = THEMES[design.theme];
+  const design: DesignSettings = { ...DEFAULT_DESIGN, ...(survey.design_settings ?? {}) };
+  const theme = THEMES[design.theme] ?? THEMES[DEFAULT_DESIGN.theme];
   return <Runner survey={survey} design={design} theme={theme} />;
 }
 
