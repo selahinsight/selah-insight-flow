@@ -6,21 +6,20 @@ import {
   addResponse,
   computeResultType,
   createCustomerContact,
-  ensureSurveyInDatabase,
   getSurveyBySlug,
   optionResultType,
   optionText,
   surveyFromParsed,
   uid,
   updateCustomerContact,
-  upsertSurvey,
   validateSurveyJson,
   type ResultType,
   type Survey,
 } from "@/lib/survey-store";
-import { updateResponseContactServer } from "@/lib/admin.functions";
+
 
 import { useSurveys } from "@/lib/use-surveys";
+
 
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 import {
@@ -73,11 +72,11 @@ function RespondentSurvey() {
         const seeded = surveyFromParsed(parsed.data, raw);
         seeded.slug = slug;
         seeded.status = "published";
-        upsertSurvey(seeded);
-        // Also make sure the survey exists in Supabase (by slug) so anon
-        // response inserts can satisfy the survey_id FK.
-        void ensureSurveyInDatabase(seeded);
+        // Public route: render fallback in-memory only. We intentionally do
+        // NOT seed the survey into the database from this anonymous path —
+        // survey publishing is an admin-only action (see /admin).
         if (!cancelled) setFallbackSurvey(seeded);
+
       } catch (error) {
         console.error(error);
         if (!cancelled) setFallbackSurvey(null);
@@ -256,23 +255,11 @@ function Runner({
         toast.error("이메일 저장에 실패했어요. 다시 시도해주세요.");
         return;
       }
-      // Backfill the response with email (best-effort).
-      if (responseId) {
-        try {
-          await updateResponseContactServer({
+      // Contact info now lives on the customer row (updated via the
+      // update_customer_contact RPC above). We intentionally do not mirror
+      // name/email onto survey_responses from the public route — that write
+      // path is admin-only.
 
-            data: {
-              surveyId: survey.id,
-              responseId,
-              customerId: customerContact.id,
-              customerName: name.trim(),
-              customerEmail: trimmedEmail.toLowerCase(),
-            },
-          });
-        } catch (err) {
-          console.warn("[selah] response contact backfill failed", err);
-        }
-      }
       setEmailSaved(true);
       toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
     } finally {

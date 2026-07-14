@@ -1,12 +1,15 @@
 // Admin CRUD server functions for the Selah Studio internal app.
 //
-// TODO(auth): These functions currently use supabaseAdmin (service role) and
-// bypass RLS. The app has no admin login yet — it is operated by a single
-// person. Before opening real customer data, gate every fn in this file with
-// `.middleware([requireSupabaseAuth])` + an is_admin(auth.uid()) check.
+// Every function in this module is gated by `requireAdmin`, which chains on
+// top of `requireSupabaseAuth` and additionally checks `is_admin(auth.uid())`
+// against the `admin_users` table. Callers must be signed in AND registered
+// as admins; anonymous callers and signed-in non-admins are rejected before
+// any supabaseAdmin (service_role) work runs.
 
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireAdmin } from "@/lib/require-admin";
+
 
 const optionSchema = z.union([
   z.string(),
@@ -76,7 +79,7 @@ const customerSchema = z.object({
 // Reads
 // -----------------------------------------------------------------------------
 
-export const fetchAllData = createServerFn({ method: "GET" }).handler(async () => {
+export const fetchAllData = createServerFn({ method: "GET" }).middleware([requireAdmin]).handler(async () => {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const [surveysRes, questionsRes, responsesRes, customersRes] = await Promise.all([
     supabaseAdmin.from("surveys").select("*"),
@@ -100,7 +103,7 @@ export const fetchAllData = createServerFn({ method: "GET" }).handler(async () =
 // Surveys
 // -----------------------------------------------------------------------------
 
-export const upsertSurveyAndQuestions = createServerFn({ method: "POST" })
+export const upsertSurveyAndQuestions = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) => surveySchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -141,7 +144,7 @@ export const upsertSurveyAndQuestions = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-export const softDeleteSurveyServer = createServerFn({ method: "POST" })
+export const softDeleteSurveyServer = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) => z.object({ id: z.string() }).parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -153,7 +156,7 @@ export const softDeleteSurveyServer = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-export const hardDeleteSurveyServer = createServerFn({ method: "POST" })
+export const hardDeleteSurveyServer = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) => z.object({ id: z.string() }).parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -166,7 +169,7 @@ export const hardDeleteSurveyServer = createServerFn({ method: "POST" })
 // Responses
 // -----------------------------------------------------------------------------
 
-export const insertResponseServer = createServerFn({ method: "POST" })
+export const insertResponseServer = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) => responseSchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
@@ -186,7 +189,7 @@ export const insertResponseServer = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-export const updateResponseContactServer = createServerFn({ method: "POST" })
+export const updateResponseContactServer = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) =>
     z
       .object({
@@ -213,7 +216,7 @@ export const updateResponseContactServer = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-export const setResponseInLoungeServer = createServerFn({ method: "POST" })
+export const setResponseInLoungeServer = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) =>
     z
       .object({
@@ -249,7 +252,7 @@ export const setResponseInLoungeServer = createServerFn({ method: "POST" })
 // Customers (admin-side)
 // -----------------------------------------------------------------------------
 
-export const updateCustomerServer = createServerFn({ method: "POST" })
+export const updateCustomerServer = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) =>
     z
       .object({
@@ -289,7 +292,7 @@ export const updateCustomerServer = createServerFn({ method: "POST" })
   });
 
 
-export const upsertCustomerFromResponseServer = createServerFn({ method: "POST" })
+export const upsertCustomerFromResponseServer = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) =>
     z
       .object({
@@ -324,7 +327,7 @@ export const upsertCustomerFromResponseServer = createServerFn({ method: "POST" 
 // localStorage migration (idempotent)
 // -----------------------------------------------------------------------------
 
-export const migrateLocalData = createServerFn({ method: "POST" })
+export const migrateLocalData = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) =>
     z
       .object({
@@ -425,7 +428,7 @@ export const migrateLocalData = createServerFn({ method: "POST" })
 // Seed a survey if it does not already exist. Used by /s/:slug to publish the
 // built-in Selah money-diagnosis fallback survey to the database once, so
 // anonymous respondents can submit responses that satisfy the survey_id FK.
-export const ensureFallbackSurvey = createServerFn({ method: "POST" })
+export const ensureFallbackSurvey = createServerFn({ method: "POST" }).middleware([requireAdmin])
   .inputValidator((data: unknown) => surveySchema.parse(data))
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
