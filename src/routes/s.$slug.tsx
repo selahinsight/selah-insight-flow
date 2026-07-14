@@ -243,12 +243,16 @@ function Runner({
   async function submitEmailRequest() {
     if (submitting) return;
     const trimmedEmail = email.trim();
-    if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
-      toast.error("이메일을 정확히 입력해주세요.");
+    if (!trimmedEmail) {
+      toast.error("이메일을 입력해주세요.");
+      return;
+    }
+    if (!/.+@.+\..+/.test(trimmedEmail)) {
+      toast.error("이메일 형식을 확인해주세요.");
       return;
     }
     if (!privacyConsent) {
-      toast.error("개인정보 수집 이용에 동의해주세요.");
+      toast.error("결과 발송을 위해 필수 동의가 필요합니다.");
       return;
     }
     if (!customerContact) {
@@ -265,16 +269,17 @@ function Runner({
         privacyConsent: true,
       });
       if (!ok) {
-        toast.error("이메일 저장에 실패했어요. 다시 시도해주세요.");
+        toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        console.error("[selah] update_customer_contact returned false", {
+          customerId: customerContact.id,
+        });
         return;
       }
-      // Contact info now lives on the customer row (updated via the
-      // update_customer_contact RPC above). We intentionally do not mirror
-      // name/email onto survey_responses from the public route — that write
-      // path is admin-only.
-
       setEmailSaved(true);
-      toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
+      toast.success("이메일 정보가 저장되었습니다. 전체 결과 이메일 발송 기능은 준비 중입니다.");
+    } catch (err) {
+      console.error("[selah] submitEmailRequest failed", err);
+      toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
     } finally {
       setSubmitting(false);
     }
