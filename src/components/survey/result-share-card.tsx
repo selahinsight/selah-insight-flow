@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 import type { Survey } from "@/lib/survey-store";
 import {
   THEMES,
