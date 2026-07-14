@@ -1105,22 +1105,28 @@ function ResultSectionTitle({ children, theme }: { children: React.ReactNode; th
 function EmailResultSection({
   name,
   email,
+  privacyConsent,
+  marketingConsent,
   submitting,
   saved,
   theme,
   design,
-  onNameChange,
   onEmailChange,
+  onPrivacyConsentChange,
+  onMarketingConsentChange,
   onSubmit,
 }: {
   name: string;
   email: string;
+  privacyConsent: boolean;
+  marketingConsent: boolean;
   submitting: boolean;
   saved: boolean;
   theme: ThemeColors;
   design: DesignSettings;
-  onNameChange: (value: string) => void;
   onEmailChange: (value: string) => void;
+  onPrivacyConsentChange: (value: boolean) => void;
+  onMarketingConsentChange: (value: boolean) => void;
   onSubmit: () => void;
 }) {
   const btn = buttonClasses(design.button_style, theme);
@@ -1131,30 +1137,30 @@ function EmailResultSection({
       <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.35, color: theme.text }}>
         전체 결과를 이메일로 받아보세요
       </h2>
-      <p className="whitespace-pre-line" style={{ marginTop: 12, fontSize: 14, lineHeight: 1.75, color: theme.text, opacity: 0.78 }}>
+      <p
+        className="whitespace-pre-line"
+        style={{
+          marginTop: 12,
+          fontSize: 14,
+          lineHeight: 1.75,
+          color: theme.text,
+          opacity: 0.78,
+        }}
+      >
         지금 화면에서는 가장 두드러지는 결과를 먼저 보여드렸어요.{"\n"}이메일로는 내 돈 반응이 실제 생활에서 어떻게 나타나는지, 어떤 말씀과 기준으로 정리하면 좋을지 더 자세히 보내드립니다.
       </p>
+      {name && (
+        <p style={{ marginTop: 10, fontSize: 13, color: theme.muted }}>
+          {name}님에게 결과를 보내드릴 이메일을 알려주세요.
+        </p>
+      )}
       <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
-        <input
-          value={name}
-          onChange={(e) => onNameChange(e.target.value)}
-          placeholder="이름"
-          style={{
-            padding: "12px 16px",
-            borderRadius: 14,
-            border: `1px solid ${theme.border}`,
-            backgroundColor: theme.bg,
-            color: theme.text,
-            fontSize: 14,
-            textAlign: "center",
-            outline: "none",
-          }}
-        />
         <input
           value={email}
           onChange={(e) => onEmailChange(e.target.value)}
           placeholder="이메일"
           type="email"
+          autoComplete="email"
           style={{
             padding: "12px 16px",
             borderRadius: 14,
@@ -1167,20 +1173,37 @@ function EmailResultSection({
           }}
         />
       </div>
-      <div style={{ marginTop: 14, display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
+      <div
+        style={{
+          marginTop: 14,
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+          alignItems: "center",
+        }}
+      >
         <label style={{ fontSize: 12, color: theme.muted }}>
-          <input type="checkbox" required style={{ marginRight: 6 }} /> 개인정보 수집에 동의합니다
+          <input
+            type="checkbox"
+            checked={privacyConsent}
+            onChange={(e) => onPrivacyConsentChange(e.target.checked)}
+            style={{ marginRight: 6 }}
+          />
+          (필수) 개인정보 수집·이용에 동의합니다
         </label>
         <label style={{ fontSize: 12, color: theme.muted }}>
-          <input type="checkbox" required style={{ marginRight: 6 }} /> 이메일 결과 수신에 동의합니다
-        </label>
-        <label style={{ fontSize: 12, color: theme.muted }}>
-          <input type="checkbox" style={{ marginRight: 6 }} /> 셀라 소식과 자료 안내를 받아봅니다
+          <input
+            type="checkbox"
+            checked={marketingConsent}
+            onChange={(e) => onMarketingConsentChange(e.target.checked)}
+            style={{ marginRight: 6 }}
+          />
+          (선택) 셀라 소식과 자료 안내를 이메일로 받아봅니다
         </label>
       </div>
       <button
         onClick={onSubmit}
-        disabled={submitting || saved}
+        disabled={submitting || saved || !privacyConsent || !email.trim()}
         style={{
           ...btn,
           marginTop: 18,
@@ -1189,7 +1212,7 @@ function EmailResultSection({
           fontSize: 13,
           fontWeight: 500,
           cursor: submitting ? "wait" : "pointer",
-          opacity: saved ? 0.75 : 1,
+          opacity: saved ? 0.75 : !privacyConsent || !email.trim() ? 0.5 : 1,
         }}
       >
         {saved ? "이메일 신청 정보가 저장되었어요" : "내 전체 결과 이메일로 받기"}
@@ -1197,6 +1220,7 @@ function EmailResultSection({
     </div>
   );
 }
+
 
 function FunnelCtas({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
   const btn = buttonClasses(design.button_style, theme);
