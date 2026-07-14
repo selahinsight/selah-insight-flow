@@ -6,7 +6,6 @@ import {
   addResponse,
   computeResultType,
   createCustomerContact,
-  ensureSurveyInDatabase,
   getSurveyBySlug,
   optionResultType,
   optionText,
@@ -18,9 +17,9 @@ import {
   type ResultType,
   type Survey,
 } from "@/lib/survey-store";
-import { updateResponseContactServer } from "@/lib/admin.functions";
 
 import { useSurveys } from "@/lib/use-surveys";
+
 
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 import {
