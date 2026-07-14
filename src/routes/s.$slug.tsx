@@ -20,6 +20,7 @@ import {
   type SurveyCategory,
 } from "@/lib/survey-store";
 import { supabase } from "@/integrations/supabase/client";
+import { sendFreeResultEmail } from "@/lib/email.functions";
 
 
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
@@ -276,7 +277,33 @@ function Runner({
         return;
       }
       setEmailSaved(true);
-      toast.success("이메일 정보가 저장되었습니다. 전체 결과 이메일 발송 기능은 준비 중입니다.");
+      // Fire free-result email (best-effort). Do not block UI success on this.
+      try {
+        const primary = selahResult?.primaryMoneyType?.id ?? result?.id ?? undefined;
+        const secondary = selahResult?.secondaryMoneyType?.id ?? undefined;
+        const faith = selahResult?.primaryFaithLens?.id ?? undefined;
+        const sendRes = await sendFreeResultEmail({
+          data: {
+            customerId: customerContact.id,
+            contactToken: customerContact.contactToken,
+            surveyId: survey.id,
+            responseId: responseId ?? "",
+            resultTypeId: primary,
+            secondaryResultTypeId: secondary,
+            faithLensId: faith,
+          },
+        });
+        if (sendRes.status === "sent") {
+          toast.success("전체 결과 이메일을 보냈습니다. 메일함을 확인해주세요.");
+        } else if (sendRes.status === "not_configured") {
+          toast.success("이메일 정보가 저장되었습니다. (이메일 발송 설정 준비 중)");
+        } else {
+          toast.error("이메일 정보는 저장되었지만 발송 중 문제가 발생했습니다. 관리자에게 문의해주세요.");
+        }
+      } catch (err) {
+        console.error("[selah] sendFreeResultEmail threw", err);
+        toast.error("이메일 정보는 저장되었지만 발송 중 문제가 발생했습니다. 관리자에게 문의해주세요.");
+      }
     } catch (err) {
       console.error("[selah] submitEmailRequest failed", err);
       toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
@@ -1154,7 +1181,7 @@ function EmailResultSection({
           opacity: 0.78,
         }}
       >
-        이메일과 동의 정보를 저장해두면, 이후 전체 결과 이메일이 준비되었을 때 안내드립니다.{"\n"}지금은 저장까지만 진행되며, 실제 이메일 발송 기능은 준비 중입니다.
+        이메일을 저장하면 결과 요약을 이메일로 보내드립니다.{"\n"}발송이 준비되지 않은 경우에는 저장까지만 진행되며, 준비되는 대로 다시 안내드립니다.
       </p>
       {name && (
         <p style={{ marginTop: 10, fontSize: 13, color: theme.muted }}>

@@ -8,7 +8,11 @@ import {
   resultTypeForResponse,
   setResponseInLounge,
 } from "@/lib/survey-store";
-import { RefreshCw } from "lucide-react";
+import {
+  deleteSurveyResponseServer,
+  deleteTestSurveyResponsesServer,
+} from "@/lib/admin.functions";
+import { RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/responses")({
@@ -27,8 +31,11 @@ function ResponsesPage() {
   const [surveyId, setSurveyId] = useState<string>("all");
   const [hideTest, setHideTest] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [confirmBulk, setConfirmBulk] = useState(false);
+  const [bulkRunning, setBulkRunning] = useState(false);
 
-  // depend on surveys/customers so this re-derives on change
   const rows = useMemo(() => {
     void surveys;
     void customers;
@@ -58,6 +65,46 @@ function ResponsesPage() {
       toast.error("불러오기에 실패했어요");
     } finally {
       setRefreshing(false);
+    }
+  }
+
+  async function handleDelete(responseId: string) {
+    if (deletingId) return;
+    setDeletingId(responseId);
+    try {
+      const res = await deleteSurveyResponseServer({
+        data: { responseId, alsoDeleteOrphanTestCustomer: true },
+      });
+      toast.success(
+        res.customerDeleted ? "응답과 테스트 고객을 삭제했어요" : "응답을 삭제했어요",
+      );
+      await refreshStore();
+    } catch (err) {
+      console.error("[selah] deleteSurveyResponse failed", err);
+      toast.error("삭제 중 오류가 발생했어요");
+    } finally {
+      setDeletingId(null);
+      setConfirmDeleteId(null);
+    }
+  }
+
+  async function handleBulkDeleteTest() {
+    if (bulkRunning) return;
+    setBulkRunning(true);
+    try {
+      const res = await deleteTestSurveyResponsesServer({
+        data: { alsoDeleteOrphanTestCustomers: true },
+      });
+      toast.success(
+        `테스트 응답 ${res.deletedResponses}건 · 테스트 고객 ${res.deletedCustomers}명 삭제`,
+      );
+      await refreshStore();
+    } catch (err) {
+      console.error("[selah] deleteTestSurveyResponses failed", err);
+      toast.error("일괄 삭제 중 오류가 발생했어요");
+    } finally {
+      setBulkRunning(false);
+      setConfirmBulk(false);
     }
   }
 
@@ -94,6 +141,14 @@ function ResponsesPage() {
           <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />
           {refreshing ? "새로고침 중..." : "새로고침"}
         </button>
+        <button
+          onClick={() => setConfirmBulk(true)}
+          disabled={bulkRunning}
+          className="inline-flex items-center gap-1.5 rounded-full border border-red-200 bg-red-50 px-3 py-1.5 text-xs text-red-700 hover:bg-red-100 disabled:opacity-60"
+        >
+          <Trash2 className="h-3.5 w-3.5" />
+          테스트 데이터 삭제
+        </button>
         <span className="ml-auto text-xs text-muted-foreground">{rows.length}개의 응답</span>
       </div>
 
@@ -110,12 +165,13 @@ function ResponsesPage() {
                 <th className="px-4 py-3">제출 시간</th>
                 <th className="px-4 py-3 text-center">라운지</th>
                 <th className="px-4 py-3 text-right">고객</th>
+                <th className="px-4 py-3 text-right">삭제</th>
               </tr>
             </thead>
             <tbody>
               {rows.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-4 py-10 text-center text-muted-foreground">
+                  <td colSpan={9} className="px-4 py-10 text-center text-muted-foreground">
                     응답이 없습니다.
                   </td>
                 </tr>
@@ -188,6 +244,16 @@ function ResponsesPage() {
                           <span className="text-xs text-muted-foreground">—</span>
                         )}
                       </td>
+                      <td className="px-4 py-3 text-right">
+                        <button
+                          onClick={() => setConfirmDeleteId(response.id)}
+                          disabled={deletingId === response.id}
+                          className="inline-flex items-center gap-1 rounded-full border border-red-200 bg-white px-2.5 py-1 text-[11px] text-red-700 hover:bg-red-50 disabled:opacity-60"
+                        >
+                          <Trash2 className="h-3 w-3" />
+                          삭제
+                        </button>
+                      </td>
                     </tr>
                   );
                 })
@@ -196,6 +262,67 @@ function ResponsesPage() {
           </table>
         </div>
       </div>
+
+      {confirmDeleteId && (
+        <ConfirmModal
+          title="응답 삭제"
+          message="이 응답을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+          confirmLabel={deletingId ? "삭제 중..." : "삭제"}
+          confirmDisabled={!!deletingId}
+          onCancel={() => setConfirmDeleteId(null)}
+          onConfirm={() => void handleDelete(confirmDeleteId)}
+        />
+      )}
+      {confirmBulk && (
+        <ConfirmModal
+          title="테스트 응답 삭제"
+          message="테스트 응답만 삭제합니다. 실제 고객 응답은 삭제하지 않습니다. 진행할까요?"
+          confirmLabel={bulkRunning ? "삭제 중..." : "삭제"}
+          confirmDisabled={bulkRunning}
+          onCancel={() => setConfirmBulk(false)}
+          onConfirm={() => void handleBulkDeleteTest()}
+        />
+      )}
     </AdminShell>
+  );
+}
+
+function ConfirmModal({
+  title,
+  message,
+  confirmLabel,
+  confirmDisabled,
+  onCancel,
+  onConfirm,
+}: {
+  title: string;
+  message: string;
+  confirmLabel: string;
+  confirmDisabled?: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center bg-black/40 p-4">
+      <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl">
+        <h3 className="text-base font-medium text-foreground">{title}</h3>
+        <p className="mt-2 text-sm text-foreground/70">{message}</p>
+        <div className="mt-5 flex justify-end gap-2">
+          <button
+            onClick={onCancel}
+            className="rounded-full border border-border/60 bg-white px-3 py-1.5 text-xs text-foreground/70 hover:bg-[var(--sand)]/40"
+          >
+            취소
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={confirmDisabled}
+            className="rounded-full bg-red-600 px-3 py-1.5 text-xs text-white hover:bg-red-700 disabled:opacity-60"
+          >
+            {confirmLabel}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

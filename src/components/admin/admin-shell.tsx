@@ -1,6 +1,6 @@
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { ArrowLeft, BarChart3, Home, LayoutDashboard, ListChecks, MessageSquare, Settings2, Users } from "lucide-react";
+import { ArrowLeft, BarChart3, Home, LayoutDashboard, ListChecks, Mail, MessageSquare, Settings2, Users } from "lucide-react";
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 
 const nav = [
@@ -9,6 +9,7 @@ const nav = [
   { to: "/admin/surveys", label: "설문지 관리", icon: ListChecks },
   { to: "/admin/responses", label: "응답 관리", icon: MessageSquare },
   { to: "/admin/customers", label: "고객 관리", icon: Users },
+  { to: "/admin/email-logs", label: "이메일 로그", icon: Mail },
 ];
 
 export function AdminShell({
