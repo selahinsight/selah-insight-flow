@@ -256,23 +256,11 @@ function Runner({
         toast.error("이메일 저장에 실패했어요. 다시 시도해주세요.");
         return;
       }
-      // Backfill the response with email (best-effort).
-      if (responseId) {
-        try {
-          await updateResponseContactServer({
+      // Contact info now lives on the customer row (updated via the
+      // update_customer_contact RPC above). We intentionally do not mirror
+      // name/email onto survey_responses from the public route — that write
+      // path is admin-only.
 
-            data: {
-              surveyId: survey.id,
-              responseId,
-              customerId: customerContact.id,
-              customerName: name.trim(),
-              customerEmail: trimmedEmail.toLowerCase(),
-            },
-          });
-        } catch (err) {
-          console.warn("[selah] response contact backfill failed", err);
-        }
-      }
       setEmailSaved(true);
       toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
     } finally {
