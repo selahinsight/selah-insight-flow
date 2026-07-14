@@ -261,14 +261,25 @@ export const updateCustomerServer = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const p = data.patch;
-    const update: Record<string, unknown> = {};
-    if (p.name !== undefined) update.name = p.name;
-    if (p.nickname !== undefined) update.nickname = p.nickname;
-    if (p.email !== undefined) update.email = p.email;
-    if (p.inLounge !== undefined) update.in_lounge = p.inLounge;
-    if (p.payment_status !== undefined) update.payment_status = p.payment_status;
-    if (p.payment_provider !== undefined) update.payment_provider = p.payment_provider;
-    if (p.payment_id !== undefined) update.payment_id = p.payment_id;
+    const update: {
+      name?: string | null;
+      nickname?: string | null;
+      email?: string | null;
+      in_lounge?: boolean;
+      payment_status?: "unpaid" | "paid";
+      payment_provider?: string | null;
+      payment_id?: string | null;
+      paid_at?: string | null;
+    } = {};
+    if (p.name !== undefined) update.name = p.name as string | null;
+    if (p.nickname !== undefined) update.nickname = p.nickname as string | null;
+    if (p.email !== undefined) update.email = p.email as string | null;
+    if (p.inLounge !== undefined) update.in_lounge = p.inLounge as boolean;
+    if (p.payment_status !== undefined)
+      update.payment_status = p.payment_status as "unpaid" | "paid";
+    if (p.payment_provider !== undefined)
+      update.payment_provider = p.payment_provider as string | null;
+    if (p.payment_id !== undefined) update.payment_id = p.payment_id as string | null;
     if (p.paid_at !== undefined)
       update.paid_at = p.paid_at ? new Date(p.paid_at as number).toISOString() : null;
     if (!Object.keys(update).length) return { ok: true };
@@ -276,6 +287,7 @@ export const updateCustomerServer = createServerFn({ method: "POST" })
     if (error) throw error;
     return { ok: true };
   });
+
 
 export const upsertCustomerFromResponseServer = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) =>
