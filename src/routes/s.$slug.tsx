@@ -20,6 +20,7 @@ import {
   type SurveyCategory,
 } from "@/lib/survey-store";
 import { supabase } from "@/integrations/supabase/client";
+import { sendFreeResultEmail } from "@/lib/email.functions";
 
 
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";

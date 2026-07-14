@@ -17,6 +17,7 @@ import { Route as SSlugRouteImport } from './routes/s.$slug'
 import { Route as AdminSurveysRouteImport } from './routes/admin.surveys'
 import { Route as AdminResponsesRouteImport } from './routes/admin.responses'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
+import { Route as AdminEmailLogsRouteImport } from './routes/admin.email-logs'
 import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
 import { Route as AdminSurveysIndexRouteImport } from './routes/admin.surveys.index'
 import { Route as AdminSurveysIdRouteImport } from './routes/admin.surveys.$id'
@@ -66,6 +67,11 @@ const AdminNewRoute = AdminNewRouteImport.update({
   path: '/new',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminEmailLogsRoute = AdminEmailLogsRouteImport.update({
+  id: '/email-logs',
+  path: '/email-logs',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminCustomersRoute = AdminCustomersRouteImport.update({
   id: '/customers',
   path: '/customers',
@@ -112,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
+  '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/responses': typeof AdminResponsesRoute
   '/admin/surveys': typeof AdminSurveysRouteWithChildren
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
+  '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/responses': typeof AdminResponsesRoute
   '/s/$slug': typeof SSlugRoute
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
+  '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/responses': typeof AdminResponsesRoute
   '/admin/surveys': typeof AdminSurveysRouteWithChildren
@@ -167,6 +176,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/admin/customers'
+    | '/admin/email-logs'
     | '/admin/new'
     | '/admin/responses'
     | '/admin/surveys'
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/admin/customers'
+    | '/admin/email-logs'
     | '/admin/new'
     | '/admin/responses'
     | '/s/$slug'
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/admin/customers'
+    | '/admin/email-logs'
     | '/admin/new'
     | '/admin/responses'
     | '/admin/surveys'
@@ -278,6 +290,13 @@ declare module '@tanstack/react-router' {
       path: '/new'
       fullPath: '/admin/new'
       preLoaderRoute: typeof AdminNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/email-logs': {
+      id: '/admin/email-logs'
+      path: '/email-logs'
+      fullPath: '/admin/email-logs'
+      preLoaderRoute: typeof AdminEmailLogsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/customers': {
@@ -385,6 +404,7 @@ const AdminSurveysRouteWithChildren = AdminSurveysRoute._addFileChildren(
 
 interface AdminRouteChildren {
   AdminCustomersRoute: typeof AdminCustomersRouteWithChildren
+  AdminEmailLogsRoute: typeof AdminEmailLogsRoute
   AdminNewRoute: typeof AdminNewRoute
   AdminResponsesRoute: typeof AdminResponsesRoute
   AdminSurveysRoute: typeof AdminSurveysRouteWithChildren
@@ -393,6 +413,7 @@ interface AdminRouteChildren {
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminCustomersRoute: AdminCustomersRouteWithChildren,
+  AdminEmailLogsRoute: AdminEmailLogsRoute,
   AdminNewRoute: AdminNewRoute,
   AdminResponsesRoute: AdminResponsesRoute,
   AdminSurveysRoute: AdminSurveysRouteWithChildren,
