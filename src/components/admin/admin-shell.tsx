@@ -30,15 +30,10 @@ export function AdminShell({
     <div className="flex min-h-screen w-full bg-[var(--ivory)] text-foreground">
       <aside className="hidden w-64 shrink-0 border-r border-border/60 bg-[var(--cream)] px-5 py-8 md:flex md:flex-col">
         <Link to="/" className="flex items-center gap-2">
-          <svg width="28" height="28" viewBox="0 0 40 40" className="text-[var(--clay)]">
-            <path
-              d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z"
-              fill="none" stroke="currentColor" strokeWidth="1.2"
-            />
-          </svg>
-          <span className="font-serif text-lg tracking-[0.25em] text-[var(--clay)]">SELAH</span>
+          <img src={selahLogo.url} alt="Selah Insight" className="h-9 w-auto" />
         </Link>
-        <p className="mt-1 text-[11px] text-muted-foreground">Studio</p>
+
+
 
         <nav className="mt-10 flex flex-col gap-1">
           {nav.map((n) => {
