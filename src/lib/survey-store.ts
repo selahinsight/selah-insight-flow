@@ -418,6 +418,15 @@ export function hydrateStore(): Promise<void> {
   return hydratePromise;
 }
 
+/** Force a fresh reload from Supabase, bypassing the in-memory cache. */
+export async function refreshStore(): Promise<void> {
+  try {
+    await refreshFromServer();
+  } catch (err) {
+    console.error("[selah] refreshStore failed", err);
+  }
+}
+
 export function isStoreHydrated() {
   return state.hydrated;
 }
