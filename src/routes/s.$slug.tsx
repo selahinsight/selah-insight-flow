@@ -46,7 +46,7 @@ export const Route = createFileRoute("/s/$slug")({
 function RespondentSurvey() {
   const { slug } = Route.useParams();
   useSurveys(); // hydrate
-  const isSelahMoneyDiagnosis = slug === "selah-money-diagnosis-olye";
+  const isSelahMoneyDiagnosis = slug === "selah-money-diagnosis";
   const [fallbackSurvey, setFallbackSurvey] = useState<Survey | null | undefined>(undefined);
   const survey =
     typeof window !== "undefined" ? getSurveyBySlug(slug) ?? fallbackSurvey : fallbackSurvey;
