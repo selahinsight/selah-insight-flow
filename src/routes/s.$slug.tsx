@@ -21,6 +21,7 @@ import {
 } from "@/lib/survey-store";
 import { supabase } from "@/integrations/supabase/client";
 import { sendFreeResultEmail } from "@/lib/email.functions";
+import { sendStudioIntake } from "@/lib/studio-intake.functions";
 
 
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
@@ -44,6 +45,45 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/s/$slug")({
   component: RespondentSurvey,
 });
+
+function scoreForStudio(question: Question, answer: string | string[] | number | undefined): number | undefined {
+  const value = Array.isArray(answer) ? answer[0] : answer;
+
+  if (typeof value === "number") return value;
+  if (typeof value !== "string") return undefined;
+
+  const numeric = value.match(/[1-4]/)?.[0];
+  if (numeric) return Number(numeric);
+
+  const option = question.options?.find((candidate) => optionText(candidate) === value);
+  if (typeof option === "object" && option !== null && typeof option.score === "number") {
+    return option.score;
+  }
+
+  return undefined;
+}
+
+function answersForStudio(
+  survey: Survey,
+  answers: Record<string, string | string[] | number>,
+): Record<string, unknown> {
+  return Object.fromEntries(
+    survey.questions.map((question) => {
+      const answer = answers[question.id];
+      const score = scoreForStudio(question, answer);
+
+      return [
+        question.id,
+        score === undefined
+          ? answer
+          : {
+              answer,
+              score,
+            },
+      ];
+    }),
+  );
+}
 
 function RespondentSurvey() {
   const { slug } = Route.useParams();
@@ -277,6 +317,31 @@ function Runner({
         return;
       }
       setEmailSaved(true);
+      try {
+        const studioRes = await sendStudioIntake({
+          data: {
+            email: trimmedEmail,
+            name: name.trim() || undefined,
+            responseId: responseId ?? "",
+            surveyId: survey.id,
+            surveySlug: survey.slug,
+            surveyTitle: survey.title,
+            answers: answersForStudio(survey, answers),
+            resultTypeId: result?.id,
+            primaryMoneyTypeId: selahResult?.primaryMoneyType?.id,
+            secondaryMoneyTypeId: selahResult?.secondaryMoneyType?.id,
+            primaryFaithLensId: selahResult?.primaryFaithLens?.id,
+            privacyConsent: true,
+            marketingConsent,
+          },
+        });
+
+        if (studioRes.status !== "sent") {
+          console.warn("[selah] Selah Studio intake was not completed", studioRes);
+        }
+      } catch (err) {
+        console.warn("[selah] Selah Studio intake failed", err);
+      }
       // Fire free-result email (best-effort). Do not block UI success on this.
       try {
         const primary = selahResult?.primaryMoneyType?.id ?? result?.id ?? undefined;
