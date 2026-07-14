@@ -155,13 +155,41 @@ function Runner({
   const [responseId, setResponseId] = useState<string | undefined>(undefined);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
+  const [starting, setStarting] = useState(false);
+  const [customerContact, setCustomerContact] = useState<
+    { id: string; contactToken: string } | null
+  >(null);
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
 
   const total = survey.questions.length;
   const q = survey.questions[i];
   const progress = phase === "done" ? 100 : (i / total) * 100;
+
+  async function startSurvey() {
+    if (starting) return;
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      toast.error("이름 또는 닉네임을 입력해주세요.");
+      return;
+    }
+    setStarting(true);
+    try {
+      // Create a customer record now (no email yet). Only name/nickname.
+      const contact = await createCustomerContact({ name: trimmedName });
+      if (!contact) {
+        toast.error("시작에 실패했어요. 다시 시도해주세요.");
+        return;
+      }
+      setCustomerContact({ id: contact.id, contactToken: contact.contact_token });
+      setPhase("questions");
+    } finally {
+      setStarting(false);
+    }
+  }
 
   function next() {
     if (q.required !== false && answers[q.id] === undefined) {
@@ -182,13 +210,15 @@ function Runner({
         lastPickRef.current ? [lastPickRef.current] : undefined,
       );
     const id = uid("r");
-    addResponse({
+    void addResponse({
       id,
       surveyId: survey.id,
       submittedAt: Date.now(),
       answers,
       resultTypeId: rt?.id,
       inLounge: false,
+      customerId: customerContact?.id,
+      customerName: name.trim() || undefined,
     });
     setResponseId(id);
     setResult(rt);
@@ -196,32 +226,63 @@ function Runner({
     setPhase("done");
   }
 
-  function submitEmailRequest() {
+  async function submitEmailRequest() {
     if (submitting) return;
-    const trimmedName = name.trim();
     const trimmedEmail = email.trim();
-    if (!trimmedName || !trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
-      toast.error("이름과 이메일을 정확히 입력해주세요.");
+    if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
+      toast.error("이메일을 정확히 입력해주세요.");
+      return;
+    }
+    if (!privacyConsent) {
+      toast.error("개인정보 수집 이용에 동의해주세요.");
+      return;
+    }
+    if (!customerContact) {
+      toast.error("세션 정보가 없어 저장할 수 없어요. 처음부터 다시 시도해주세요.");
       return;
     }
     setSubmitting(true);
-    const customer = upsertCustomerFromResponse({ name: trimmedName, email: trimmedEmail });
-    if (responseId) {
-      updateResponseContact(survey.id, responseId, {
-        customerId: customer.id,
-        customerName: trimmedName,
-        customerEmail: trimmedEmail.toLowerCase(),
+    try {
+      const ok = await updateCustomerContact({
+        customerId: customerContact.id,
+        contactToken: customerContact.contactToken,
+        email: trimmedEmail,
+        marketingConsent,
+        privacyConsent: true,
       });
+      if (!ok) {
+        toast.error("이메일 저장에 실패했어요. 다시 시도해주세요.");
+        return;
+      }
+      // Backfill the response with email (best-effort).
+      if (responseId) {
+        try {
+          const { updateResponseContactServer } = await import("@/lib/admin.functions");
+          await updateResponseContactServer({
+            data: {
+              surveyId: survey.id,
+              responseId,
+              customerId: customerContact.id,
+              customerName: name.trim(),
+              customerEmail: trimmedEmail.toLowerCase(),
+            },
+          });
+        } catch (err) {
+          console.warn("[selah] response contact backfill failed", err);
+        }
+      }
+      setEmailSaved(true);
+      toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
+    } finally {
+      setSubmitting(false);
     }
-    setEmailSaved(true);
-    toast.success("전체 결과를 이메일로 받을 정보가 저장되었어요.");
-    setSubmitting(false);
   }
 
   function computeSelahMoneyResult(
     currentSurvey: Survey,
     currentAnswers: Record<string, string | string[] | number>,
   ): SelahMoneyResult | undefined {
+
     const hasSelahTypes = currentSurvey.resultTypes?.some((rt) => rt.id === "organizing_delay");
     if (!hasSelahTypes) return undefined;
     const scoreByQuestionIndex = (index: number) => {
