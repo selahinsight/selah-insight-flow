@@ -11,10 +11,7 @@ function Home() {
     <div className="min-h-screen bg-[var(--ivory)] text-foreground">
       <header className="mx-auto flex max-w-6xl items-center justify-start px-6 py-6 md:px-10">
         <Link to="/" className="flex items-center gap-2">
-          <svg width="28" height="28" viewBox="0 0 40 40" className="text-[var(--clay)]">
-            <path d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z" fill="none" stroke="currentColor" strokeWidth="1.2" />
-          </svg>
-          <span className="font-serif text-base tracking-[0.28em] text-[var(--clay)]">SELAH</span>
+          <img src={selahLogo.url} alt="Selah Insight" className="h-8 w-auto" />
         </Link>
       </header>
 
