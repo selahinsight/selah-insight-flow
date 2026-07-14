@@ -1,6 +1,7 @@
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { ArrowLeft, BarChart3, Home, LayoutDashboard, ListChecks, MessageSquare, Settings2, Users } from "lucide-react";
+import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 
 const nav = [
   { to: "/", label: "메인", icon: Home, exact: true },
