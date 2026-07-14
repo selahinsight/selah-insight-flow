@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Home,
