@@ -480,23 +480,27 @@ export function deleteSurvey(id: string) {
 // addResponse is used by /s/:slug in an anon browser context. We insert via
 // the anon Supabase client (RLS: INSERT allowed when survey is published) and
 // optimistically update the cache. Returns a promise so /s/:slug can await it.
-export async function addResponse(r: Response): Promise<void> {
+export async function addResponse(
+  r: Response,
+  auth?: { contactToken: string },
+): Promise<void> {
   const s = state.surveys.find((x) => x.id === r.surveyId);
   if (s) {
     s.responses.push(r);
     emitSurveys();
   }
   try {
-    const { error } = await supabase.from("survey_responses").insert({
-      id: r.id,
-      survey_id: r.surveyId,
-      customer_id: r.customerId ?? null,
-      customer_name: r.customerName ?? null,
-      customer_email: r.customerEmail ?? null,
-      answers: r.answers,
-      result_type_id: r.resultTypeId ?? null,
-      in_lounge: r.inLounge ?? false,
-      submitted_at: new Date(r.submittedAt).toISOString(),
+    if (!r.customerId || !auth?.contactToken) {
+      throw new Error("customerId and contactToken are required to submit a response");
+    }
+    const { error } = await supabase.rpc("submit_survey_response", {
+      p_response_id: r.id,
+      p_survey_id: r.surveyId,
+      p_customer_id: r.customerId,
+      p_contact_token: auth.contactToken,
+      p_answers: r.answers as never,
+      p_result_type_id: r.resultTypeId ?? undefined,
+      p_in_lounge: r.inLounge ?? false,
     });
     if (error) throw error;
   } catch (err) {
