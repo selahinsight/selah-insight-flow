@@ -5,18 +5,20 @@ import QRCode from "qrcode";
 import {
   addResponse,
   computeResultType,
+  createCustomerContact,
+  ensureSurveyInDatabase,
   getSurveyBySlug,
   optionResultType,
   optionText,
   surveyFromParsed,
   uid,
-  updateResponseContact,
+  updateCustomerContact,
   upsertSurvey,
-  upsertCustomerFromResponse,
   validateSurveyJson,
   type ResultType,
   type Survey,
 } from "@/lib/survey-store";
+
 import { useSurveys } from "@/lib/use-surveys";
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 import {
