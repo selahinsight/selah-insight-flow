@@ -17,15 +17,21 @@ export type Database = {
       admin_users: {
         Row: {
           created_at: string
-          user_id: string
+          email: string | null
+          id: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
-          user_id: string
+          email?: string | null
+          id?: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
-          user_id?: string
+          email?: string | null
+          id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
