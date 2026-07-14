@@ -31,39 +31,54 @@ export type Database = {
       }
       customers: {
         Row: {
+          consent_at: string | null
+          contact_token: string
           created_at: string
-          email: string
+          email: string | null
           id: string
           in_lounge: boolean
-          name: string
+          marketing_consent: boolean
+          name: string | null
+          nickname: string | null
           paid_at: string | null
           payment_id: string | null
           payment_provider: string | null
           payment_status: string
+          privacy_consent: boolean
           updated_at: string
         }
         Insert: {
+          consent_at?: string | null
+          contact_token?: string
           created_at?: string
-          email: string
+          email?: string | null
           id?: string
           in_lounge?: boolean
-          name: string
+          marketing_consent?: boolean
+          name?: string | null
+          nickname?: string | null
           paid_at?: string | null
           payment_id?: string | null
           payment_provider?: string | null
           payment_status?: string
+          privacy_consent?: boolean
           updated_at?: string
         }
         Update: {
+          consent_at?: string | null
+          contact_token?: string
           created_at?: string
-          email?: string
+          email?: string | null
           id?: string
           in_lounge?: boolean
-          name?: string
+          marketing_consent?: boolean
+          name?: string | null
+          nickname?: string | null
           paid_at?: string | null
           payment_id?: string | null
           payment_provider?: string | null
           payment_status?: string
+          privacy_consent?: boolean
           updated_at?: string
         }
         Relationships: []
@@ -234,7 +249,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_customer_contact: {
+        Args: { p_name?: string; p_nickname?: string }
+        Returns: {
+          contact_token: string
+          id: string
+        }[]
+      }
       is_admin: { Args: { _user_id: string }; Returns: boolean }
+      update_customer_contact: {
+        Args: {
+          p_contact_token: string
+          p_customer_id: string
+          p_email: string
+          p_marketing_consent?: boolean
+          p_privacy_consent?: boolean
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
