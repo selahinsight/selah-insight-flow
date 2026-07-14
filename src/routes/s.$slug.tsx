@@ -630,14 +630,20 @@ function Runner({
           <EmailResultSection
             name={name}
             email={email}
+            privacyConsent={privacyConsent}
+            marketingConsent={marketingConsent}
             submitting={submitting}
             saved={emailSaved}
             theme={theme}
             design={design}
-            onNameChange={setName}
             onEmailChange={setEmail}
-            onSubmit={submitEmailRequest}
+            onPrivacyConsentChange={setPrivacyConsent}
+            onMarketingConsentChange={setMarketingConsent}
+            onSubmit={() => {
+              void submitEmailRequest();
+            }}
           />
+
           <FunnelCtas theme={theme} design={design} />
           <ResultActions survey={survey} result={result} design={design} theme={theme} />
         </Wrap>
