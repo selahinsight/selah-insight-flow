@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 import type { Survey } from "@/lib/survey-store";
 import {
   THEMES,
@@ -79,24 +80,7 @@ export const ResultShareCard = forwardRef<HTMLDivElement, Props>(
 
         {/* Brand */}
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <svg width="36" height="36" viewBox="0 0 40 40">
-            <path
-              d="M20 4 C 30 8, 36 16, 32 26 C 28 34, 16 36, 10 30 C 4 24, 6 12, 14 8 C 18 6, 22 4, 20 4 Z"
-              fill="none"
-              stroke={t.accent}
-              strokeWidth="1.4"
-            />
-          </svg>
-          <span
-            style={{
-              fontSize: 18,
-              letterSpacing: "0.42em",
-              color: t.accent,
-              fontWeight: 500,
-            }}
-          >
-            SELAH
-          </span>
+          <img src={selahLogo.url} alt="Selah Insight" crossOrigin="anonymous" style={{ height: 56, width: "auto" }} />
         </div>
 
         <div
