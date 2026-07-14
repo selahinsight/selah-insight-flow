@@ -6,19 +6,20 @@ import {
   addResponse,
   computeResultType,
   createCustomerContact,
-  getSurveyBySlug,
   optionResultType,
   optionText,
-  surveyFromParsed,
   uid,
   updateCustomerContact,
-  validateSurveyJson,
+  type Question,
+  type QuestionType,
   type ResultType,
+  type ShareCardConfig,
   type Survey,
+  type SurveyOption,
+  type AudienceType,
+  type SurveyCategory,
 } from "@/lib/survey-store";
-
-
-import { useSurveys } from "@/lib/use-surveys";
+import { supabase } from "@/integrations/supabase/client";
 
 
 import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
@@ -45,63 +46,84 @@ export const Route = createFileRoute("/s/$slug")({
 
 function RespondentSurvey() {
   const { slug } = Route.useParams();
-  useSurveys(); // hydrate
-  const isSelahMoneyDiagnosis = slug === "selah-money-diagnosis";
-  const [fallbackSurvey, setFallbackSurvey] = useState<Survey | null | undefined>(undefined);
-  const survey =
-    typeof window !== "undefined" ? getSurveyBySlug(slug) ?? fallbackSurvey : fallbackSurvey;
+  const [survey, setSurvey] = useState<Survey | null | undefined>(undefined);
 
   useEffect(() => {
     let cancelled = false;
-    async function loadFallback() {
-      if (typeof window === "undefined") return;
-      if (getSurveyBySlug(slug)) {
-        setFallbackSurvey(undefined);
+    async function load() {
+      const { data: surveyRow, error: surveyErr } = await supabase
+        .from("surveys")
+        .select("*")
+        .eq("slug", slug)
+        .eq("status", "published")
+        .is("deleted_at", null)
+        .maybeSingle();
+      if (cancelled) return;
+      if (surveyErr) {
+        console.error("[selah] load survey failed", surveyErr);
+        setSurvey(null);
         return;
       }
-      if (!isSelahMoneyDiagnosis) {
-        setFallbackSurvey(null);
+      if (!surveyRow) {
+        setSurvey(null);
         return;
       }
-      try {
-        const res = await fetch("/selah-money-diagnosis-survey-json.txt", { cache: "no-store" });
-        if (!res.ok) throw new Error("fallback survey json not found");
-        const raw = await res.text();
-        const parsed = validateSurveyJson(raw);
-        if (!parsed.ok || !parsed.data) throw new Error(parsed.errors.join("\n"));
-        const seeded = surveyFromParsed(parsed.data, raw);
-        seeded.slug = slug;
-        seeded.status = "published";
-        // Public route: render fallback in-memory only. We intentionally do
-        // NOT seed the survey into the database from this anonymous path —
-        // survey publishing is an admin-only action (see /admin).
-        if (!cancelled) setFallbackSurvey(seeded);
-
-      } catch (error) {
-        console.error(error);
-        if (!cancelled) setFallbackSurvey(null);
+      const { data: qRows, error: qErr } = await supabase
+        .from("survey_questions")
+        .select("*")
+        .eq("survey_id", surveyRow.id)
+        .order("position", { ascending: true });
+      if (cancelled) return;
+      if (qErr) {
+        console.error("[selah] load questions failed", qErr);
+        setSurvey(null);
+        return;
       }
+      const questions: Question[] = (qRows ?? []).map((q) => ({
+        id: q.id,
+        type: q.type as QuestionType,
+        text: q.text,
+        required: q.required,
+        options: (q.options as SurveyOption[] | null) ?? undefined,
+      }));
+      const s: Survey = {
+        id: surveyRow.id,
+        slug: surveyRow.slug,
+        title: surveyRow.title,
+        description: surveyRow.description ?? "",
+        completion_message: surveyRow.completion_message ?? "응답해 주셔서 감사합니다.",
+        audience_type: (surveyRow.audience_type as AudienceType) ?? "general",
+        category: (surveyRow.category as SurveyCategory) ?? "other",
+        estimated_time: surveyRow.estimated_time ?? "약 3분",
+        bible_verse: surveyRow.bible_verse ?? undefined,
+        questions,
+        resultTypes: (surveyRow.result_types as ResultType[] | null) ?? undefined,
+        status: surveyRow.status as Survey["status"],
+        createdAt: surveyRow.created_at ? new Date(surveyRow.created_at).getTime() : Date.now(),
+        deletedAt: null,
+        responses: [],
+        design_settings: (surveyRow.design_settings as DesignSettings | null) ?? undefined,
+        share_card: (surveyRow.share_card as ShareCardConfig | null) ?? undefined,
+        sourceJson: surveyRow.source_json ?? undefined,
+      };
+      setSurvey(s);
     }
-
-    setFallbackSurvey(undefined);
-    void loadFallback();
+    void load();
     return () => {
       cancelled = true;
     };
-  }, [isSelahMoneyDiagnosis, slug]);
+  }, [slug]);
 
-  if (!survey && isSelahMoneyDiagnosis && fallbackSurvey !== null) {
+  if (survey === undefined) {
     return (
       <Wrap theme={THEMES[DEFAULT_DESIGN.theme]} design={DEFAULT_DESIGN}>
-        <p style={{ fontSize: 24 }}>설문을 불러오는 중입니다.</p>
-        <p style={{ marginTop: 8, fontSize: 14, opacity: 0.7 }}>
-          잠시만 기다려주세요.
-        </p>
+        <p style={{ fontSize: 20 }}>설문을 불러오는 중입니다.</p>
+        <p style={{ marginTop: 8, fontSize: 14, opacity: 0.7 }}>잠시만 기다려주세요.</p>
       </Wrap>
     );
   }
 
-  if (!survey) {
+  if (survey === null) {
     return (
       <Wrap theme={THEMES[DEFAULT_DESIGN.theme]} design={DEFAULT_DESIGN}>
         <p style={{ fontSize: 24 }}>설문을 찾을 수 없습니다.</p>
@@ -111,21 +133,9 @@ function RespondentSurvey() {
       </Wrap>
     );
   }
+
   const design = survey.design_settings ?? DEFAULT_DESIGN;
   const theme = THEMES[design.theme];
-
-  if (survey.status !== "published") {
-    return (
-      <Wrap theme={theme} design={design}>
-        <p style={{ fontSize: 24 }}>
-          {survey.status === "closed"
-            ? "이 설문은 종료되었습니다."
-            : "이 설문은 아직 공개되지 않았습니다."}
-        </p>
-      </Wrap>
-    );
-  }
-
   return <Runner survey={survey} design={design} theme={theme} />;
 }
 
