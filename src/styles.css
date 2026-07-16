@@ -134,6 +134,7 @@
 
 .money-diagnosis-label {
   font-family: "Cormorant Garamond", ui-serif, Georgia, serif;
+  font-style: italic;
   font-weight: 600 !important;
   letter-spacing: 0.05em !important;
 }
@@ -148,8 +149,10 @@
 }
 
 .money-loading {
+  position: fixed;
+  inset: 0;
   display: flex;
-  min-height: 100vh;
+  min-height: 100svh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -162,7 +165,7 @@
 }
 
 .money-loading img {
-  width: clamp(150px, 48vw, 220px);
+  width: clamp(130px, 42vw, 190px);
   height: auto;
 }
 
@@ -185,7 +188,7 @@
   }
 
   .money-brand-header img {
-    width: 138px !important;
+    width: 92px !important;
   }
 
   .money-intro-card {
@@ -204,9 +207,13 @@
   }
 
   .money-intro-description {
-    margin-top: 14px !important;
+    margin-top: 12px !important;
     font-size: 13px !important;
-    line-height: 1.62 !important;
+    line-height: 1.58 !important;
+  }
+
+  .money-intro-description + .money-intro-description {
+    margin-top: 10px !important;
   }
 
   .money-intro-guidance {
@@ -216,7 +223,11 @@
   }
 
   .money-name-field {
-    margin-top: 14px !important;
+    margin-top: 12px !important;
+  }
+
+  .money-name-field label {
+    letter-spacing: 0 !important;
   }
 
   .money-name-field input {
@@ -224,12 +235,14 @@
   }
 
   .money-start-button {
-    margin-top: 14px !important;
-    padding: 11px 30px !important;
+    margin-top: 12px !important;
+    padding: 9px 24px !important;
+    font-size: 16px !important;
   }
 
   .money-duration {
-    margin-top: 8px !important;
+    margin-top: 6px !important;
+    font-size: 10px !important;
   }
 
   .money-intro-line {
@@ -243,7 +256,7 @@
   }
 
   .money-brand-header img {
-    width: 122px !important;
+    width: 82px !important;
   }
 
   .money-intro-card {

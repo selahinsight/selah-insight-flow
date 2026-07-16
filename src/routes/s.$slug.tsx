@@ -487,29 +487,30 @@ function Runner({
             {isMoneyDiagnosis ? (
               <>
                 <span className="money-intro-line">나는 돈을</span>{" "}
-                <span className="money-intro-line">어떤 마음과 기준으로</span>{" "}
-                <span className="money-intro-line">다루고 있을까요?</span>
+                <span className="money-intro-line">어떻게 다루고 있을까요?</span>
               </>
             ) : survey.title}
           </h1>
 
           {isMoneyDiagnosis ? (
-            <p
-              className="money-intro-description money-intro-sans"
-              style={{
-                margin: "24px auto 0",
-                maxWidth: 540,
-                fontSize: 16,
-                lineHeight: 1.8,
-                color: theme.text,
-                opacity: 0.78,
-              }}
-            >
-              <span className="money-intro-line">이 진단지는 돈에 대한 나의 생각과</span>{" "}
-              <span className="money-intro-line">반복되는 행동을 분석하고,</span>{" "}
-              <span className="money-intro-line">그 안에 담긴 나의 마음과 기준을</span>{" "}
-              <span className="money-intro-line">살펴봅니다.</span>
-            </p>
+            <>
+              <p
+                className="money-intro-description"
+                style={{ margin: "24px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
+              >
+                <span className="money-intro-line">내가 돈을 다루는 방식에는</span>{" "}
+                <span className="money-intro-line">나도 미처 알지 못했던 마음과 기준이 숨어 있습니다.</span>
+              </p>
+              <p
+                className="money-intro-description"
+                style={{ margin: "16px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
+              >
+                <span className="money-intro-line">30개의 질문을 통해</span>{" "}
+                <span className="money-intro-line">반복되는 행동 뒤의 마음과 기준을 발견하고,</span>{" "}
+                <span className="money-intro-line">돈을 더 평안하게 다루기 위한</span>{" "}
+                <span className="money-intro-line">출발점을 찾아보세요.</span>
+              </p>
+            </>
           ) : (
             <>
               {introSubtitle && <p style={{ margin: "16px auto 0", maxWidth: 480 }}>{introSubtitle}</p>}
@@ -549,7 +550,7 @@ function Runner({
               style={{
                 display: "block",
                 fontSize: 12,
-                letterSpacing: "0.14em",
+                letterSpacing: isMoneyDiagnosis ? 0 : "0.14em",
                 color: theme.muted,
                 marginBottom: 8,
                 textAlign: isMoneyDiagnosis ? "center" : "left",
@@ -562,7 +563,7 @@ function Runner({
               id="respondent-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="예: 지혜 / 회복중인 사람"
+              placeholder={isMoneyDiagnosis ? "예: 김다윗 / 하나님의 자녀" : "예: 지혜 / 회복중인 사람"}
               autoComplete="off"
               style={{
                 width: "100%",
