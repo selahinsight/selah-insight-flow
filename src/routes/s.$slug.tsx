@@ -33,7 +33,7 @@ import {
 } from "@/lib/survey-themes";
 import { ResultShareCard } from "@/components/survey/result-share-card";
 import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
-import { Download, Share2 } from "lucide-react";
+import { CircleDollarSign, Download, GitBranch, Heart, ScanSearch, Share2, Sprout } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -856,10 +856,11 @@ function Runner({
 
             <ResultSectionTitle theme={theme}>나의 주된 돈 반응 유형</ResultSectionTitle>
             <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 21, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
-              {result.title}
+              <CircleDollarSign size={20} strokeWidth={1.6} aria-hidden="true" />
+              <span>{result.title}</span>
             </h2>
             {selahResult?.secondaryMoneyType && (
-              <p style={{ marginTop: 8, fontSize: 13, color: theme.muted, textAlign: "center" }}>
+              <p className="money-secondary-type" style={{ marginTop: 12, fontSize: 17, color: theme.muted, textAlign: "center", fontWeight: 600 }}>
                 함께 나타나는 유형: {selahResult.secondaryMoneyType.title}
               </p>
             )}
@@ -880,28 +881,46 @@ function Runner({
             )}
             {result.interpretation && (
               <div style={{ marginTop: 22, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 14, color: theme.accent, fontWeight: 600, marginBottom: 8 }}>이 유형의 특징</p>
-                <p className="whitespace-pre-line" style={{ fontSize: 16, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
-                  {result.interpretation}
+                <p className="money-result-box-title" style={{ color: theme.accent }}>
+                  <ScanSearch size={21} strokeWidth={1.7} aria-hidden="true" />
+                  <span>이 유형의 특징</span>
                 </p>
+                <div className="money-result-paragraphs">
+                  {result.interpretation.split(/\n\n+/).map((paragraph, index) => (
+                    <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.84, fontWeight: index === 0 ? 600 : 400 }}>
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
             )}
             {result.flow && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 14, color: theme.accent, fontWeight: 600, marginBottom: 8, textAlign: "left" }}>반복되는 마음의 흐름</p>
-                <p className="whitespace-pre-line" style={{ fontSize: 16, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
+                <p className="money-result-box-title" style={{ color: theme.accent }}>
+                  <GitBranch size={21} strokeWidth={1.7} aria-hidden="true" />
+                  <span>반복되는 마음의 흐름</span>
+                </p>
+                <div className="money-flow-steps">
                   {result.flow
                     .split("\n")
                     .map((line) => line.trim())
                     .filter((line) => line && line !== "→" && line !== "↓")
-                    .join("\n↓\n")}
-                </p>
+                    .map((step, index, steps) => (
+                      <div key={step}>
+                        <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border }}>
+                          {step}
+                        </div>
+                        {index < steps.length - 1 && <div className="money-flow-arrow" style={{ color: theme.accent }}>↓</div>}
+                      </div>
+                    ))}
+                </div>
               </div>
             )}
             {selahResult && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 14, color: theme.accent, fontWeight: 600, marginBottom: 8, textAlign: "left" }}>
-                  돈과 신앙 사이에서 나타나는 마음
+                <p className="money-result-box-title" style={{ color: theme.accent }}>
+                  <Heart size={21} strokeWidth={1.7} aria-hidden="true" />
+                  <span>돈과 신앙 사이에서 나타나는 마음</span>
                 </p>
                 {selahResult.faithLenses.length ? (
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -932,10 +951,18 @@ function Runner({
             )}
             {result.small_action && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 14, color: theme.accent, fontWeight: 600, marginBottom: 8, textAlign: "left" }}>이번 주 작은 실천</p>
-                <p className="whitespace-pre-line" style={{ fontSize: 16, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
-                  {result.small_action}
+                <p className="money-result-box-title" style={{ color: theme.accent }}>
+                  <Sprout size={21} strokeWidth={1.7} aria-hidden="true" />
+                  <span>이번 주 작은 실천</span>
                 </p>
+                <div className="money-action-list">
+                  {result.small_action.split(/\n\n+/).map((action) => (
+                    <div className="money-action-item" key={action} style={{ color: theme.text, borderColor: theme.border }}>
+                      <span aria-hidden="true">✓</span>
+                      <p>{action}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             {(result.bibleVerse || (survey.audience_type === "christian" && survey.bible_verse)) && (
@@ -1438,11 +1465,11 @@ function ResultSectionTitle({ children, theme }: { children: React.ReactNode; th
   return (
     <p
       style={{
-        marginTop: 24,
-        fontSize: 12,
+        marginTop: 46,
+        fontSize: 19,
         color: theme.accent,
-        fontWeight: 600,
-        letterSpacing: "0.08em",
+        fontWeight: 700,
+        letterSpacing: "-0.01em",
         textAlign: "center",
       }}
     >

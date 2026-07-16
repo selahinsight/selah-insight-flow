@@ -180,6 +180,84 @@
   box-shadow: 0 3px 10px rgba(85, 67, 56, 0.05);
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.money-secondary-type {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 8px 14px;
+  border-top: 1px solid rgba(122, 103, 90, 0.14);
+  border-bottom: 1px solid rgba(122, 103, 90, 0.14);
+}
+
+.money-result-box-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 15px;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.money-result-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.money-flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.money-flow-step {
+  padding: 12px 14px;
+  border: 1px solid;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.44);
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.money-flow-arrow {
+  height: 25px;
+  font-size: 18px;
+  line-height: 25px;
+  text-align: center;
+}
+
+.money-action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.money-action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.44);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.money-action-item > span {
+  flex: 0 0 auto;
+  font-weight: 700;
 }
 
 .money-result-bubble {
@@ -331,6 +409,10 @@
     min-width: 140px;
     padding: 9px 22px;
     font-size: 20px !important;
+  }
+
+  .money-result-box-title {
+    font-size: 17px;
   }
 
   .money-diagnosis-label {
