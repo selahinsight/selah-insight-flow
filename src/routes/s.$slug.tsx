@@ -35,6 +35,7 @@ import { ResultShareCard } from "@/components/survey/result-share-card";
 import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { Download, Share2 } from "lucide-react";
 import { toast } from "sonner";
+import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 
 
 export const Route = createFileRoute("/s/$slug")({
@@ -432,9 +433,9 @@ function Runner({
   const btnPrimary = buttonClasses(design.button_style, theme);
   const cardStyle = cardClasses(design.card_style, theme);
   const headingFont = headingFamilyOf(design.font_mood);
+  const isMoneyDiagnosis = survey.slug === "selah-money-diagnosis";
   const [introSubtitle, ...introBodyParts] = (survey.description ?? "").split(/\n\n+/);
   const introBody = introBodyParts.join("\n\n");
-
 
   if (phase === "intro") {
     return (
@@ -448,10 +449,19 @@ function Runner({
             border: `1px solid ${theme.border}`,
           }}
         >
+          {isMoneyDiagnosis && (
+            <img
+              src={selahLogo.url}
+              alt="Selah Insight"
+              style={{ display: "block", width: "auto", height: 42, margin: "0 auto 30px" }}
+            />
+          )}
           <p
             style={{
-              fontSize: 11,
-              letterSpacing: "0.22em",
+              margin: 0,
+              fontSize: 15,
+              fontWeight: 700,
+              letterSpacing: "0.18em",
               color: theme.accent,
               textTransform: "uppercase",
             }}
@@ -461,49 +471,41 @@ function Runner({
           <h1
             style={{
               marginTop: 18,
-              fontSize: 42,
-              lineHeight: 1.18,
+              maxWidth: 620,
+              marginLeft: "auto",
+              marginRight: "auto",
+              fontSize: "clamp(30px, 6vw, 44px)",
+              lineHeight: 1.28,
               color: theme.text,
               fontFamily: headingFont,
-              fontWeight: 500,
+              fontWeight: 700,
             }}
           >
-            {survey.title}
+            {isMoneyDiagnosis ? "나는 돈을 어떤 마음과 기준으로 다루고 있을까요?" : survey.title}
           </h1>
 
-          {introSubtitle && (
+          {isMoneyDiagnosis ? (
             <p
               style={{
-                margin: "16px auto 0",
-                maxWidth: 480,
-                fontSize: 17,
-                lineHeight: 1.7,
+                margin: "24px auto 0",
+                maxWidth: 540,
+                fontSize: 16,
+                lineHeight: 1.8,
                 color: theme.text,
-                opacity: 0.86,
+                opacity: 0.78,
               }}
             >
-              {introSubtitle}
+              이 진단지는 돈에 대한 나의 생각과 반복되는 행동을 통해,
+              <br />
+              그 안에 담긴 마음과 기준을 살펴봅니다.
             </p>
+          ) : (
+            <>
+              {introSubtitle && <p style={{ margin: "16px auto 0", maxWidth: 480 }}>{introSubtitle}</p>}
+              {introBody && <p className="whitespace-pre-line" style={{ margin: "26px auto 0", maxWidth: 500 }}>{introBody}</p>}
+              <p style={{ marginTop: 22, fontSize: 13, color: theme.muted }}>{survey.estimated_time}</p>
+            </>
           )}
-
-          {introBody && (
-            <p
-              className="whitespace-pre-line"
-              style={{
-                margin: "26px auto 0",
-                maxWidth: 500,
-                fontSize: 15,
-                lineHeight: 1.9,
-                color: theme.text,
-                opacity: 0.72,
-              }}
-            >
-              {introBody}
-            </p>
-          )}
-          <p style={{ marginTop: 22, fontSize: 13, color: theme.muted }}>
-            {survey.estimated_time}
-          </p>
           {survey.audience_type === "christian" && survey.bible_verse && (
             <div
               style={{
@@ -520,9 +522,17 @@ function Runner({
               {survey.bible_verse}
             </div>
           )}
-          <p style={{ marginTop: 28, fontSize: 14, color: theme.text, opacity: 0.75 }}>
-            정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
-          </p>
+          {isMoneyDiagnosis ? (
+            <p style={{ marginTop: 28, fontSize: 15, lineHeight: 1.75, color: theme.text, opacity: 0.82 }}>
+              최근 3개월의 나를 떠올리며,
+              <br />
+              실제 내 모습에 가깝게 답해주세요.
+            </p>
+          ) : (
+            <p style={{ marginTop: 28, fontSize: 14, color: theme.text, opacity: 0.75 }}>
+              정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
+            </p>
+          )}
           <div style={{ marginTop: 24, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>
             <label
               htmlFor="respondent-name"
@@ -556,9 +566,11 @@ function Runner({
                 outline: "none",
               }}
             />
-            <p style={{ marginTop: 8, fontSize: 12, color: theme.muted, textAlign: "center" }}>
-              이메일은 진단이 끝난 뒤에만 선택적으로 받습니다.
-            </p>
+            {!isMoneyDiagnosis && (
+              <p style={{ marginTop: 8, fontSize: 12, color: theme.muted, textAlign: "center" }}>
+                이메일은 진단이 끝난 뒤에만 선택적으로 받습니다.
+              </p>
+            )}
           </div>
           <button
             onClick={() => {
@@ -576,8 +588,13 @@ function Runner({
               opacity: !name.trim() ? 0.5 : 1,
             }}
           >
-            {starting ? "준비 중..." : "시작하기"}
+            {starting ? "준비 중..." : isMoneyDiagnosis ? "진단 시작하기" : "시작하기"}
           </button>
+          {isMoneyDiagnosis && (
+            <p style={{ marginTop: 12, fontSize: 13, color: theme.muted, textAlign: "center" }}>
+              총 30문항 · 약 3~4분 소요
+            </p>
+          )}
         </div>
       </Wrap>
     );
