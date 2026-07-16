@@ -624,11 +624,15 @@ function Runner({
           <h1 style={{ fontSize: 30, lineHeight: 1.35, color: theme.text, fontWeight: 700 }}>
             더 정확한 결과를 위해
           </h1>
-          <p style={{ marginTop: 22, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
-            이 진단지는 가볍게 유형만 나누는 테스트가 아닙니다.
+          <p className="money-prep-subtitle" style={{ marginTop: 22, fontSize: 22, lineHeight: 1.6, color: theme.text, fontWeight: 700 }}>
+            <span className="money-prep-line">이 진단지는</span>{" "}
+            <span className="money-prep-line">가볍게 유형만 나누는 테스트가 아닙니다</span>
           </p>
-          <p style={{ marginTop: 14, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
-            돈에 대한 태도와 재무불안, 반복되는 재무행동을 분석한 국내외 연구와 크리스천의 돈·헌금·신앙 인식을 다룬 통계자료를 바탕으로 셀라가 구성한 연구 기반 자기점검입니다.
+          <p className="money-prep-research" style={{ marginTop: 18, fontSize: 14, lineHeight: 1.9, color: theme.text, opacity: 0.78 }}>
+            <span className="money-prep-line">돈에 대한 태도와 재무불안,</span>{" "}
+            <span className="money-prep-line">반복되는 재무행동을 분석한 국내외 연구와</span>{" "}
+            <span className="money-prep-line">크리스천의 돈·헌금·신앙 인식을 다룬 통계자료를 바탕으로,</span>{" "}
+            <span className="money-prep-line">셀라가 구성한 연구 기반 자기점검입니다.</span>
           </p>
           <h2 style={{ marginTop: 28, fontSize: 20, lineHeight: 1.4, color: theme.text, fontWeight: 700 }}>
             답할 때 꼭 기억해주세요
@@ -637,20 +641,23 @@ function Runner({
             최근 3개월 동안의 나를 떠올려주세요.
           </p>
           <p style={{ marginTop: 14, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
-            되고 싶은 모습이나 좋아 보이는 답보다, 돈을 벌고 쓰고 모으고 투자할 때 실제로 자주 반복된 모습에 답해주세요.
+            <span className="money-prep-line">돈을 사용할 때</span>{" "}
+            <span className="money-prep-line">실제로 자주 반복하는 모습에 답해 주세요.</span>
           </p>
-          <p style={{ marginTop: 14, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
-            솔직하게 답할수록 결과가 지금의 내 마음과 행동에 더 가까워집니다.
+          <p className="money-prep-final" style={{ marginTop: 20, fontSize: 19, lineHeight: 1.7, color: theme.text, fontWeight: 700 }}>
+            <span className="money-prep-line">솔직하게 답할수록</span>{" "}
+            <span className="money-prep-line">더 정확한 나의 마음을 알 수 있습니다.</span>
           </p>
           <button
+            className="money-start-button"
             onClick={() => setPhase("questions")}
             style={{
               ...btnPrimary,
-              marginTop: 28,
-              padding: "11px 28px",
+              marginTop: 24,
+              padding: "13px 34px",
               borderRadius: 8,
-              fontSize: 15,
-              fontWeight: 600,
+              fontSize: 14,
+              fontWeight: 500,
               cursor: "pointer",
             }}
           >
@@ -822,7 +829,6 @@ function Runner({
     return (
       <Wrap theme={theme} design={design}>
         <div
-          className={introMode ? "money-brand-header" : undefined}
           style={{
             ...cardStyle,
             borderRadius: 8,
@@ -1435,13 +1441,11 @@ function Wrap({
   children,
   theme,
   design,
-  useImageLogo = false,
   introMode = false,
 }: {
   children: React.ReactNode;
   theme: ThemeColors;
   design: DesignSettings;
-  useImageLogo?: boolean;
   introMode?: boolean;
 }) {
   return (
@@ -1456,35 +1460,6 @@ function Wrap({
       }}
     >
       <div style={{ maxWidth: 560, margin: "0 auto" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 8,
-            marginBottom: 24,
-          }}
-        >
-          {useImageLogo ? (
-            <img
-              src="/selah-insight-logo-transparent.png"
-              alt="Selah Insight"
-              style={{ display: "block", width: "clamp(150px, 45vw, 210px)", height: "auto" }}
-            />
-          ) : (
-            <span
-              style={{
-                fontFamily: headingFamilyOf(design),
-                fontSize: 14,
-                fontWeight: 800,
-                letterSpacing: 0,
-                color: theme.text,
-              }}
-            >
-              SELAH INSIGHT
-            </span>
-          )}
-        </div>
         {children}
       </div>
     </div>
