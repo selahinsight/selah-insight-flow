@@ -525,7 +525,7 @@ function Runner({
                 <span className="money-intro-line">숨어 있습니다.</span>
               </p>
               <p
-                className="money-intro-description money-intro-flow"
+                className="money-intro-description money-intro-flow money-intro-body"
                 style={{ margin: "16px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
                 진단지를 통해 돈에 대한 마음과 기준을 발견하고, 돈을 더 평안하고 지혜롭게 다루기 위한 여정을 시작하세요.
@@ -641,7 +641,7 @@ function Runner({
           }}
         >
           <p className="money-prep-intro" style={{ fontSize: 14, lineHeight: 1.8, color: theme.text, fontWeight: 400 }}>
-            더 정확한 결과를 위해
+            더 정확한 결과를 위해,
           </p>
           <p className="money-prep-subtitle" style={{ marginTop: 22, fontSize: 22, lineHeight: 1.6, color: theme.text, fontWeight: 700 }}>
             <span className="money-prep-line">이 진단지는</span>{" "}
@@ -654,7 +654,8 @@ function Runner({
             답할 때 꼭 기억해주세요
           </h2>
           <p className="money-prep-period" style={{ marginTop: 4, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
-            최근 3개월 동안의 나를 떠올려주세요.
+            <span className="money-prep-line">최근 3개월 동안의 나를 떠올려주세요.</span>
+            <span className="money-prep-line">좋아 보이는 답보다, 실제로 자주 반복된 모습으로 답해주세요.</span>
           </p>
           <p className="money-prep-final" style={{ marginTop: 20, fontSize: 19, lineHeight: 1.7, color: theme.text, fontWeight: 700 }}>
             <span className="money-prep-line">솔직하게 답할수록</span>{" "}
