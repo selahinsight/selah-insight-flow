@@ -1,5 +1,5 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { toPng } from "html-to-image";
 import QRCode from "qrcode";
 import {
@@ -252,6 +252,53 @@ interface SelahMoneyResult {
   faithLenses: ResultType[];
   primaryFaithLens?: ResultType;
   scores: Record<string, { total: number; average: number }>;
+}
+
+const MONEY_QUESTION_BREAKS: Record<number, string[]> = {
+  1: ["금액을", "하면서도"],
+  2: ["돈 쓰기가"],
+  3: ["뒤처진 것처럼"],
+  4: ["무언가를"],
+  5: ["보려고 하면", "무겁고"],
+  6: ["생기면", "마음이 더 크게"],
+  7: ["선택할 때", "어떻게 보일지가"],
+  8: ["해줘도 돼", "계획보다 많이"],
+  9: ["할부 내역을", "알면서도"],
+  10: ["될 것"],
+  12: ["받으면", "쓰는 돈이"],
+  13: ["세우려고 하면", "복잡해져"],
+  14: ["내역을", "자주"],
+  15: ["능력과", "보여준다고"],
+  17: ["덮어두면", "시간이 지나면", "불안이"],
+  18: ["준비하고 있어도"],
+  19: ["필요해서라기보다", "괜찮아 보이고 싶어서"],
+  20: ["위로가 되지만", "시간이 지나면 다시"],
+  22: ["투자는"],
+  23: ["데도", "마음이 불편할"],
+  24: ["믿는 가치와", "연결해야 할지"],
+  25: ["회복하는 데"],
+  26: ["중요하게 여기는", "불안이나 주변"],
+  27: ["늘리는 데", "세속적인 것"],
+  28: ["기도해도", "따로 결정할"],
+  29: ["하나님", "사람처럼"],
+  30: ["연결해", "어색하게"],
+};
+
+function renderMoneyQuestion(text: string, questionNumber: number): ReactNode {
+  const markers = MONEY_QUESTION_BREAKS[questionNumber];
+  if (!markers?.length) return text;
+
+  const output: ReactNode[] = [];
+  let rest = text;
+  for (const marker of markers) {
+    const markerIndex = rest.indexOf(marker);
+    if (markerIndex < 0) continue;
+    const end = markerIndex + marker.length;
+    output.push(rest.slice(0, end), <br key={`${questionNumber}-${marker}`} />);
+    rest = rest.slice(end).trimStart();
+  }
+  output.push(rest);
+  return output;
 }
 
 function Runner({
@@ -938,7 +985,7 @@ function Runner({
           className={isMoneyDiagnosis ? "money-question-title" : undefined}
           style={{ fontSize: 25, lineHeight: 1.55, color: theme.text, fontFamily: headingFont, textAlign: "center", fontWeight: 500 }}
         >
-          {q.text}
+          {isMoneyDiagnosis ? renderMoneyQuestion(q.text, i + 1) : q.text}
         </h2>
 
         <div
