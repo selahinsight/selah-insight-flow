@@ -808,8 +808,9 @@ function Runner({
   if (phase === "done") {
     if (result) {
       return (
-        <Wrap theme={theme} design={design}>
+        <Wrap theme={theme} design={design} introMode>
           <div
+            className="money-result-card"
             style={{
               ...cardStyle,
               borderRadius: 8,
@@ -830,15 +831,16 @@ function Runner({
                 관리자 결과 미리보기 · 데이터가 저장되지 않습니다
               </p>
             )}
-            <p style={{ fontSize: 12, letterSpacing: "0.25em", color: theme.accent, textAlign: "center" }}>
+            <p
+              className="money-diagnosis-label"
+              style={{ fontSize: 15, letterSpacing: "0.05em", color: theme.accent, textAlign: "center" }}
+            >
               SELAH MONEY DIAGNOSIS
             </p>
-            <p style={{ marginTop: 14, fontSize: 13, color: theme.muted, textAlign: "center" }}>
-              {survey.title}
-            </p>
             <h1
+              className="money-result-complete-title"
               style={{
-                marginTop: 8,
+                marginTop: 18,
                 fontSize: 32,
                 lineHeight: 1.3,
                 color: theme.text,
@@ -846,8 +848,11 @@ function Runner({
                 fontFamily: headingFont,
               }}
             >
-              셀라 머니 진단이 완료되었어요.
+              진단이 완료되었습니다.
             </h1>
+            <p className="money-result-complete-subtitle" style={{ marginTop: 10, fontSize: 17, lineHeight: 1.6, color: theme.text, textAlign: "center" }}>
+              이제 돈 앞에서 나의 모습을 살펴볼게요.
+            </p>
 
             <ResultSectionTitle theme={theme}>나의 주된 돈 반응 유형</ResultSectionTitle>
             <h2 style={{ marginTop: 10, fontSize: 26, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
@@ -859,7 +864,7 @@ function Runner({
               </p>
             )}
             {result.representative_sentence && (
-              <p style={{ marginTop: 14, fontSize: 15, color: theme.accent, textAlign: "center", fontStyle: "italic" }}>
+              <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
                 {result.representative_sentence}
               </p>
             )}
