@@ -281,6 +281,11 @@ function Runner({
   >(null);
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
 
+  useEffect(() => {
+    if (phase === "intro" || typeof window === "undefined") return;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [phase]);
+
   const total = survey.questions.length;
   const q = survey.questions[i];
   const progress = phase === "done" ? 100 : (i / total) * 100;
@@ -621,7 +626,7 @@ function Runner({
             border: `1px solid ${theme.border}`,
           }}
         >
-          <h1 style={{ fontSize: 30, lineHeight: 1.35, color: theme.text, fontWeight: 700 }}>
+          <h1 style={{ fontSize: 24, lineHeight: 1.4, color: theme.text, fontWeight: 700 }}>
             더 정확한 결과를 위해
           </h1>
           <p className="money-prep-subtitle" style={{ marginTop: 22, fontSize: 22, lineHeight: 1.6, color: theme.text, fontWeight: 700 }}>
@@ -629,20 +634,16 @@ function Runner({
             <span className="money-prep-line">가볍게 유형만 나누는 테스트가 아닙니다</span>
           </p>
           <p className="money-prep-research" style={{ marginTop: 18, fontSize: 14, lineHeight: 1.9, color: theme.text, opacity: 0.78 }}>
-            <span className="money-prep-line">돈에 대한 태도와 재무불안,</span>{" "}
-            <span className="money-prep-line">반복되는 재무행동을 분석한 국내외 연구와</span>{" "}
-            <span className="money-prep-line">크리스천의 돈·헌금·신앙 인식을 다룬 통계자료를 바탕으로,</span>{" "}
-            <span className="money-prep-line">셀라가 구성한 연구 기반 자기점검입니다.</span>
+            <span className="money-prep-line">돈에 대한 태도를 분석한 국내외 연구와</span>
+            <span className="money-prep-line">크리스천의 돈, 신앙 인식을 다룬</span>
+            <span className="money-prep-line">통계자료를 바탕으로</span>
+            <span className="money-prep-line">셀라가 구성한 연구 기반 점검지입니다</span>
           </p>
-          <h2 style={{ marginTop: 28, fontSize: 20, lineHeight: 1.4, color: theme.text, fontWeight: 700 }}>
+          <h2 style={{ marginTop: 28, fontSize: 17, lineHeight: 1.5, color: theme.text, fontWeight: 700 }}>
             답할 때 꼭 기억해주세요
           </h2>
           <p style={{ marginTop: 18, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
             최근 3개월 동안의 나를 떠올려주세요.
-          </p>
-          <p style={{ marginTop: 14, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
-            <span className="money-prep-line">돈을 사용할 때</span>{" "}
-            <span className="money-prep-line">실제로 자주 반복하는 모습에 답해 주세요.</span>
           </p>
           <p className="money-prep-final" style={{ marginTop: 20, fontSize: 19, lineHeight: 1.7, color: theme.text, fontWeight: 700 }}>
             <span className="money-prep-line">솔직하게 답할수록</span>{" "}
