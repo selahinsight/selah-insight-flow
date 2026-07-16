@@ -257,10 +257,16 @@ type Phase = "intro" | "prep" | "questions" | "done";
 
 interface SelahMoneyResult {
   primaryMoneyType?: ResultType;
+  primaryMoneyTypes: ResultType[];
   secondaryMoneyType?: ResultType;
   faithLenses: ResultType[];
   primaryFaithLens?: ResultType;
   scores: Record<string, { total: number; average: number }>;
+}
+
+function quoteRepresentativeSentence(sentence: string): string {
+  const trimmed = sentence.trim().replace(/^[‘’'“”"]+|[‘’'“”"]+$/g, "");
+  return `‘${trimmed}’`;
 }
 
 const MONEY_QUESTION_BREAKS: Record<number, string[]> = {
@@ -377,16 +383,24 @@ function Runner({
       }
 
       const byId = (id: string | null) => survey.resultTypes?.find((item) => item.id === id);
-      const primary = byId(params.get("primary") ?? params.get("type") ?? "organizing_delay");
+      const primaryMoneyTypes = (params.get("primary") ?? params.get("type") ?? "organizing_delay")
+        .split(",")
+        .map((id) => byId(id.trim()))
+        .filter((item): item is ResultType => Boolean(item));
+      const primary = primaryMoneyTypes[0];
       if (!primary) return;
 
-      const faith = byId(params.get("faith"));
-      const faithLenses = faith ? [faith] : [];
+      const faithLenses = (params.get("faith") ?? "")
+        .split(",")
+        .map((id) => byId(id.trim()))
+        .filter((item): item is ResultType => Boolean(item));
+      const faith = faithLenses[0];
 
       setName("김다윗");
       setResult(primary);
       setSelahResult({
         primaryMoneyType: primary,
+        primaryMoneyTypes,
         secondaryMoneyType: undefined,
         faithLenses,
         primaryFaithLens: faith,
@@ -556,16 +570,23 @@ function Runner({
     const moneyTypeIds = ["organizing_delay", "safety_seeking", "gaze_sensitive", "emotional_reward"];
     const rankedMoney = [...moneyTypeIds].sort((a, b) => scores[b].average - scores[a].average);
     const first = rankedMoney[0];
-    const primaryMoneyType = byId(first);
+    const highestMoneyScore = scores[first].average;
+    const primaryMoneyTypes = moneyTypeIds
+      .filter((id) => scores[id].average === highestMoneyScore)
+      .map((id) => byId(id))
+      .filter((rt): rt is ResultType => Boolean(rt));
+    const primaryMoneyType = primaryMoneyTypes[0];
     const secondaryMoneyType = undefined;
     const faithIds = ["faith_burden", "faith_separation"];
-    const primaryFaithLens = [...faithIds]
-      .sort((a, b) => scores[b].average - scores[a].average)
+    const highestFaithScore = Math.max(...faithIds.map((id) => scores[id].average));
+    const faithLenses = faithIds
+      .filter((id) => scores[id].average === highestFaithScore)
       .map((id) => byId(id))
-      .find((rt): rt is ResultType => Boolean(rt));
-    const faithLenses = primaryFaithLens ? [primaryFaithLens] : [];
+      .filter((rt): rt is ResultType => Boolean(rt));
+    const primaryFaithLens = faithLenses[0];
     return {
       primaryMoneyType,
+      primaryMoneyTypes,
       secondaryMoneyType,
       faithLenses,
       primaryFaithLens,
@@ -851,11 +872,14 @@ function Runner({
             <ResultSectionTitle theme={theme}>나의 주된 돈 반응 유형</ResultSectionTitle>
             <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
               <CircleDollarSign size={20} strokeWidth={1.6} aria-hidden="true" />
-              <span>{result.title}</span>
+              <span>{(selahResult?.primaryMoneyTypes.length ?? 0) > 1 ? "돈 반응 복합형" : result.title}</span>
             </h2>
+            {(selahResult?.primaryMoneyTypes.length ?? 0) > 1 && (
+              <h3 className="money-composite-member-title" style={{ color: theme.text }}>{result.title}</h3>
+            )}
             {result.representative_sentence && (
               <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
-                {result.representative_sentence}
+                {quoteRepresentativeSentence(result.representative_sentence)}
               </p>
             )}
             {result.summary && (
@@ -905,30 +929,65 @@ function Runner({
                 </div>
               </div>
             )}
+            {selahResult?.primaryMoneyTypes.slice(1).map((moneyType) => (
+              <div className="money-composite-member" key={moneyType.id} style={{ borderColor: theme.border }}>
+                <h3 className="money-composite-member-title" style={{ color: theme.text }}>{moneyType.title}</h3>
+                {moneyType.representative_sentence && (
+                  <p className="money-result-bubble" style={{ marginTop: 16, fontSize: 15, color: theme.accent, textAlign: "center" }}>
+                    {quoteRepresentativeSentence(moneyType.representative_sentence)}
+                  </p>
+                )}
+                {moneyType.description && (
+                  <p style={{ marginTop: 18, fontSize: 16, lineHeight: 1.7, color: theme.text, opacity: 0.84, textAlign: "center" }}>
+                    {moneyType.description}
+                  </p>
+                )}
+                {moneyType.interpretation && (
+                  <div style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
+                    <p className="money-result-box-title" style={{ color: theme.accent }}>
+                      <ScanSearch size={21} strokeWidth={1.7} aria-hidden="true" />
+                      <span>이 유형의 특징</span>
+                    </p>
+                    <div className="money-result-paragraphs">
+                      {moneyType.interpretation.split(/\n\n+/).map((paragraph, index) => (
+                        <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.84, fontWeight: index === 0 ? 600 : 400 }}>
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
             {selahResult?.primaryFaithLens && (
               <>
                 <div className="money-result-section-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
                 <ResultSectionTitle theme={theme}>돈과 신앙 사이의 마음 유형</ResultSectionTitle>
                 <h2 className="money-result-type-box money-faith-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
                   <Heart size={20} strokeWidth={1.6} aria-hidden="true" />
-                  <span>{selahResult.primaryFaithLens.title}</span>
+                  <span>{selahResult.faithLenses.length > 1 ? "돈과 신앙 사이의 마음 복합형" : selahResult.primaryFaithLens.title}</span>
                 </h2>
-                <div className="money-faith-detail" style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                  {selahResult.primaryFaithLens.description && (
-                    <p style={{ fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.86, textAlign: "center", fontWeight: 600 }}>
-                      {selahResult.primaryFaithLens.description}
-                    </p>
-                  )}
-                  {selahResult.primaryFaithLens.interpretation && (
-                    <div className="money-result-paragraphs" style={{ marginTop: 16 }}>
-                      {selahResult.primaryFaithLens.interpretation.split(/\n\n+/).map((paragraph) => (
-                        <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.82 }}>
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                {selahResult.faithLenses.map((lens) => (
+                  <div className="money-faith-detail" key={lens.id} style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
+                    {selahResult.faithLenses.length > 1 && (
+                      <h3 className="money-composite-member-title" style={{ color: theme.text }}>{lens.title}</h3>
+                    )}
+                    {lens.description && (
+                      <p style={{ marginTop: selahResult.faithLenses.length > 1 ? 12 : 0, maxWidth: 440, marginLeft: "auto", marginRight: "auto", fontSize: 16, lineHeight: 1.58, color: theme.text, opacity: 0.86, textAlign: "center", fontWeight: 600 }}>
+                        {lens.description}
+                      </p>
+                    )}
+                    {lens.interpretation && (
+                      <div className="money-faith-paragraphs" style={{ marginTop: 13 }}>
+                        {lens.interpretation.split(/\n\n+/).map((paragraph) => (
+                          <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.58, color: theme.text, opacity: 0.82 }}>
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </>
             )}
             {result.small_action && (
@@ -1446,6 +1505,7 @@ function ShareSection({
 function ResultSectionTitle({ children, theme }: { children: React.ReactNode; theme: ThemeColors }) {
   return (
     <p
+      className="money-result-section-title"
       style={{
         marginTop: 30,
         fontSize: 16,
