@@ -175,6 +175,13 @@
   opacity: 0.78;
 }
 
+.money-result-section-divider {
+  width: 100%;
+  height: 1px;
+  margin: 34px 0 0;
+  opacity: 0.78;
+}
+
 .money-result-type-box {
   width: fit-content;
   min-width: 150px;
@@ -191,6 +198,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
+}
+
+.money-faith-type-box {
+  background: #f2ebe7;
+  border-color: rgba(134, 99, 92, 0.2);
 }
 
 .money-secondary-type {
@@ -408,14 +420,14 @@
   }
 
   .money-result-complete-subtitle {
-    font-size: 17px !important;
+    font-size: 14px !important;
     line-height: 1.4 !important;
   }
 
   .money-result-type-box {
     min-width: 140px;
     padding: 9px 22px;
-    font-size: 20px !important;
+    font-size: 18px !important;
   }
 
   .money-result-box-title {

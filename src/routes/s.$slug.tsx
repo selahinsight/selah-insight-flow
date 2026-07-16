@@ -380,7 +380,6 @@ function Runner({
       const primary = byId(params.get("primary") ?? params.get("type") ?? "organizing_delay");
       if (!primary) return;
 
-      const secondary = byId(params.get("secondary"));
       const faith = byId(params.get("faith"));
       const faithLenses = faith ? [faith] : [];
 
@@ -388,7 +387,7 @@ function Runner({
       setResult(primary);
       setSelahResult({
         primaryMoneyType: primary,
-        secondaryMoneyType: secondary,
+        secondaryMoneyType: undefined,
         faithLenses,
         primaryFaithLens: faith,
         scores: {},
@@ -557,25 +556,19 @@ function Runner({
     const moneyTypeIds = ["organizing_delay", "safety_seeking", "gaze_sensitive", "emotional_reward"];
     const rankedMoney = [...moneyTypeIds].sort((a, b) => scores[b].average - scores[a].average);
     const first = rankedMoney[0];
-    const second = rankedMoney[1];
-    const primaryMoneyType = scores[first].average >= 2.6 ? byId(first) : undefined;
-    const secondaryMoneyType =
-      primaryMoneyType &&
-      scores[second].average >= 2.6 &&
-      scores[first].average - scores[second].average <= 0.4
-        ? byId(second)
-        : undefined;
+    const primaryMoneyType = byId(first);
+    const secondaryMoneyType = undefined;
     const faithIds = ["faith_burden", "faith_separation"];
-    const faithLenses = faithIds
-      .filter((id) => scores[id].average >= 2.6)
+    const primaryFaithLens = [...faithIds]
       .sort((a, b) => scores[b].average - scores[a].average)
       .map((id) => byId(id))
-      .filter((rt): rt is ResultType => Boolean(rt));
+      .find((rt): rt is ResultType => Boolean(rt));
+    const faithLenses = primaryFaithLens ? [primaryFaithLens] : [];
     return {
       primaryMoneyType,
       secondaryMoneyType,
       faithLenses,
-      primaryFaithLens: faithLenses[0],
+      primaryFaithLens,
       scores,
     };
   }
@@ -850,21 +843,16 @@ function Runner({
             >
               진단이 완료되었습니다.
             </h1>
-            <p className="money-result-complete-subtitle" style={{ marginTop: 2, fontSize: 18, lineHeight: 1.45, color: theme.text, textAlign: "center" }}>
+            <p className="money-result-complete-subtitle" style={{ marginTop: 2, fontSize: 15, lineHeight: 1.45, color: theme.text, textAlign: "center", whiteSpace: "nowrap" }}>
               이제 나의 돈 반응 유형을 살펴볼게요.
             </p>
             <div className="money-result-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
 
             <ResultSectionTitle theme={theme}>나의 주된 돈 반응 유형</ResultSectionTitle>
-            <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 21, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
+            <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
               <CircleDollarSign size={20} strokeWidth={1.6} aria-hidden="true" />
               <span>{result.title}</span>
             </h2>
-            {selahResult?.secondaryMoneyType && (
-              <p className="money-secondary-type" style={{ marginTop: 12, fontSize: 17, color: theme.muted, textAlign: "center", fontWeight: 600 }}>
-                함께 나타나는 유형: {selahResult.secondaryMoneyType.title}
-              </p>
-            )}
             {result.representative_sentence && (
               <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
                 {result.representative_sentence}
@@ -876,7 +864,7 @@ function Runner({
               </p>
             )}
             {result.description && (
-              <p className="whitespace-pre-line" style={{ marginTop: 18, fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.8 }}>
+              <p className="whitespace-pre-line" style={{ marginTop: 18, maxWidth: 440, marginLeft: "auto", marginRight: "auto", fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.8, textAlign: "center" }}>
                 {result.description}
               </p>
             )}
@@ -917,38 +905,31 @@ function Runner({
                 </div>
               </div>
             )}
-            {selahResult && (
-              <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p className="money-result-box-title" style={{ color: theme.accent }}>
-                  <Heart size={21} strokeWidth={1.7} aria-hidden="true" />
-                  <span>돈과 신앙 사이의 마음</span>
-                </p>
-                {selahResult.faithLenses.length ? (
-                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                    {selahResult.faithLenses.map((lens) => (
-                      <div key={lens.id}>
-                        <p style={{ fontSize: 19, color: theme.text, textAlign: "left", fontWeight: 700 }}>
-                          {lens.title}
+            {selahResult?.primaryFaithLens && (
+              <>
+                <div className="money-result-section-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
+                <ResultSectionTitle theme={theme}>돈과 신앙 사이의 마음 유형</ResultSectionTitle>
+                <h2 className="money-result-type-box money-faith-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
+                  <Heart size={20} strokeWidth={1.6} aria-hidden="true" />
+                  <span>{selahResult.primaryFaithLens.title}</span>
+                </h2>
+                <div className="money-faith-detail" style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
+                  {selahResult.primaryFaithLens.description && (
+                    <p style={{ fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.86, textAlign: "center", fontWeight: 600 }}>
+                      {selahResult.primaryFaithLens.description}
+                    </p>
+                  )}
+                  {selahResult.primaryFaithLens.interpretation && (
+                    <div className="money-result-paragraphs" style={{ marginTop: 16 }}>
+                      {selahResult.primaryFaithLens.interpretation.split(/\n\n+/).map((paragraph) => (
+                        <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.82 }}>
+                          {paragraph}
                         </p>
-                        {lens.description && (
-                          <p className="whitespace-pre-line" style={{ marginTop: 8, fontSize: 16, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
-                            {lens.description}
-                          </p>
-                        )}
-                        {lens.interpretation && (
-                          <p className="whitespace-pre-line" style={{ marginTop: 8, fontSize: 16, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
-                            {lens.interpretation}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p style={{ fontSize: 16, lineHeight: 1.7, color: theme.text, opacity: 0.82, textAlign: "center" }}>
-                    현재 답변에서는 돈을 지나친 부담감으로 해석하거나 신앙과 현실을 크게 분리하는 흐름이 두드러지지 않았어요.
-                  </p>
-                )}
-              </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </>
             )}
             {result.small_action && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
@@ -1467,7 +1448,7 @@ function ResultSectionTitle({ children, theme }: { children: React.ReactNode; th
     <p
       style={{
         marginTop: 30,
-        fontSize: 19,
+        fontSize: 16,
         color: theme.accent,
         fontWeight: 700,
         letterSpacing: "-0.01em",
