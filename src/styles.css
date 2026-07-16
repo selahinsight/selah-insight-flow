@@ -122,3 +122,46 @@
   .shadow-card { box-shadow: var(--shadow-card); }
   .vertical-text { writing-mode: vertical-rl; text-orientation: mixed; }
 }
+
+.money-intro-card,
+.money-intro-sans {
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+}
+
+.money-intro-title {
+  font-family: "Gowun Batang", ui-serif, Georgia, serif;
+}
+
+.money-intro-line {
+  display: inline;
+}
+
+@media (max-width: 639px) {
+  .money-intro-wrap {
+    padding: 20px 14px 28px !important;
+  }
+
+  .money-intro-card {
+    padding: 32px 18px 30px !important;
+  }
+
+  .money-diagnosis-label {
+    white-space: nowrap;
+    font-size: 11px !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .money-intro-title {
+    font-size: clamp(27px, 8.1vw, 34px) !important;
+    line-height: 1.42 !important;
+  }
+
+  .money-intro-description {
+    font-size: 14px !important;
+    line-height: 1.8 !important;
+  }
+
+  .money-intro-line {
+    display: block;
+  }
+}

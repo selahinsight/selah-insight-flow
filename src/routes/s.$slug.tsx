@@ -35,7 +35,6 @@ import { ResultShareCard } from "@/components/survey/result-share-card";
 import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { Download, Share2 } from "lucide-react";
 import { toast } from "sonner";
-import selahLogo from "@/assets/selah-insight-logo.png.asset.json";
 
 
 export const Route = createFileRoute("/s/$slug")({
@@ -439,8 +438,9 @@ function Runner({
 
   if (phase === "intro") {
     return (
-      <Wrap theme={theme} design={design}>
+      <Wrap theme={theme} design={design} useImageLogo={isMoneyDiagnosis} introMode={isMoneyDiagnosis}>
         <div
+          className={isMoneyDiagnosis ? "money-intro-card" : undefined}
           style={{
             ...cardStyle,
             borderRadius: 8,
@@ -449,14 +449,8 @@ function Runner({
             border: `1px solid ${theme.border}`,
           }}
         >
-          {isMoneyDiagnosis && (
-            <img
-              src={selahLogo.url}
-              alt="Selah Insight"
-              style={{ display: "block", width: "auto", height: 42, margin: "0 auto 30px" }}
-            />
-          )}
           <p
+            className={isMoneyDiagnosis ? "money-diagnosis-label money-intro-sans" : undefined}
             style={{
               margin: 0,
               fontSize: 15,
@@ -469,6 +463,7 @@ function Runner({
             SELAH MONEY DIAGNOSIS
           </p>
           <h1
+            className={isMoneyDiagnosis ? "money-intro-title" : undefined}
             style={{
               marginTop: 18,
               maxWidth: 620,
@@ -477,15 +472,22 @@ function Runner({
               fontSize: "clamp(30px, 6vw, 44px)",
               lineHeight: 1.28,
               color: theme.text,
-              fontFamily: headingFont,
+              fontFamily: isMoneyDiagnosis ? undefined : headingFont,
               fontWeight: 700,
             }}
           >
-            {isMoneyDiagnosis ? "나는 돈을 어떤 마음과 기준으로 다루고 있을까요?" : survey.title}
+            {isMoneyDiagnosis ? (
+              <>
+                <span className="money-intro-line">나는 돈을</span>{" "}
+                <span className="money-intro-line">어떤 마음과 기준으로</span>{" "}
+                <span className="money-intro-line">다루고 있을까요?</span>
+              </>
+            ) : survey.title}
           </h1>
 
           {isMoneyDiagnosis ? (
             <p
+              className="money-intro-description money-intro-sans"
               style={{
                 margin: "24px auto 0",
                 maxWidth: 540,
@@ -495,9 +497,10 @@ function Runner({
                 opacity: 0.78,
               }}
             >
-              이 진단지는 돈에 대한 나의 생각과 반복되는 행동을 통해,
-              <br />
-              그 안에 담긴 마음과 기준을 살펴봅니다.
+              <span className="money-intro-line">이 진단지는 돈에 대한 나의 생각과</span>{" "}
+              <span className="money-intro-line">반복되는 행동을 분석하고,</span>{" "}
+              <span className="money-intro-line">그 안에 담긴 나의 마음과 기준을</span>{" "}
+              <span className="money-intro-line">살펴봅니다.</span>
             </p>
           ) : (
             <>
@@ -523,10 +526,9 @@ function Runner({
             </div>
           )}
           {isMoneyDiagnosis ? (
-            <p style={{ marginTop: 28, fontSize: 15, lineHeight: 1.75, color: theme.text, opacity: 0.82 }}>
-              최근 3개월의 나를 떠올리며,
-              <br />
-              실제 내 모습에 가깝게 답해주세요.
+            <p className="money-intro-sans" style={{ marginTop: 28, fontSize: 15, lineHeight: 1.75, color: theme.text, opacity: 0.82 }}>
+              <span className="money-intro-line">최근 3개월의 나를 떠올리며,</span>{" "}
+              <span className="money-intro-line">실제 내 모습에 가깝게 답해주세요.</span>
             </p>
           ) : (
             <p style={{ marginTop: 28, fontSize: 14, color: theme.text, opacity: 0.75 }}>
@@ -1373,13 +1375,18 @@ function Wrap({
   children,
   theme,
   design,
+  useImageLogo = false,
+  introMode = false,
 }: {
   children: React.ReactNode;
   theme: ThemeColors;
   design: DesignSettings;
+  useImageLogo?: boolean;
+  introMode?: boolean;
 }) {
   return (
     <div
+      className={introMode ? "money-intro-wrap" : undefined}
       style={{
         minHeight: "100vh",
         backgroundColor: theme.bg,
@@ -1398,17 +1405,25 @@ function Wrap({
             marginBottom: 24,
           }}
         >
-          <span
-            style={{
-              fontFamily: headingFamilyOf(design),
-              fontSize: 14,
-              fontWeight: 800,
-              letterSpacing: 0,
-              color: theme.text,
-            }}
-          >
-            SELAH INSIGHT
-          </span>
+          {useImageLogo ? (
+            <img
+              src="/selah-insight-logo-transparent.png"
+              alt="Selah Insight"
+              style={{ display: "block", width: "clamp(150px, 45vw, 210px)", height: "auto" }}
+            />
+          ) : (
+            <span
+              style={{
+                fontFamily: headingFamilyOf(design),
+                fontSize: 14,
+                fontWeight: 800,
+                letterSpacing: 0,
+                color: theme.text,
+              }}
+            >
+              SELAH INSIGHT
+            </span>
+          )}
         </div>
         {children}
       </div>
