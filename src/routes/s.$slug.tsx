@@ -350,10 +350,52 @@ function Runner({
   const [submitting, setSubmitting] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
   const [starting, setStarting] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
   const [customerContact, setCustomerContact] = useState<
     { id: string; contactToken: string } | null
   >(null);
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
+
+  useEffect(() => {
+    if (survey.slug !== "selah-money-diagnosis" || typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("preview") !== "result") return;
+
+    let cancelled = false;
+    void (async () => {
+      const { data: userResult } = await supabase.auth.getUser();
+      const user = userResult.user;
+      if (!user || cancelled) return;
+
+      const { data: isAdmin, error } = await supabase.rpc("is_admin", { _user_id: user.id });
+      if (error || !isAdmin || cancelled) return;
+
+      const byId = (id: string | null) => survey.resultTypes?.find((item) => item.id === id);
+      const primary = byId(params.get("primary") ?? params.get("type") ?? "organizing_delay");
+      if (!primary) return;
+
+      const secondary = byId(params.get("secondary"));
+      const faith = byId(params.get("faith"));
+      const faithLenses = faith ? [faith] : [];
+
+      setName("김다윗");
+      setResult(primary);
+      setSelahResult({
+        primaryMoneyType: primary,
+        secondaryMoneyType: secondary,
+        faithLenses,
+        primaryFaithLens: faith,
+        scores: {},
+      });
+      setPreviewMode(true);
+      setPhase("done");
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [survey]);
 
   useEffect(() => {
     if (phase === "intro" || typeof window === "undefined") return;
@@ -770,6 +812,19 @@ function Runner({
               border: `1px solid ${theme.border}`,
             }}
           >
+            {previewMode && (
+              <p
+                style={{
+                  marginBottom: 14,
+                  fontSize: 12,
+                  color: theme.accent,
+                  textAlign: "center",
+                  fontWeight: 700,
+                }}
+              >
+                관리자 결과 미리보기 · 데이터가 저장되지 않습니다
+              </p>
+            )}
             <p style={{ fontSize: 12, letterSpacing: "0.25em", color: theme.accent, textAlign: "center" }}>
               SELAH MONEY DIAGNOSIS
             </p>
@@ -905,6 +960,10 @@ function Runner({
             onPrivacyConsentChange={setPrivacyConsent}
             onMarketingConsentChange={setMarketingConsent}
             onSubmit={() => {
+              if (previewMode) {
+                toast.info("미리보기에서는 데이터를 저장하지 않습니다.");
+                return;
+              }
               void submitEmailRequest();
             }}
           />
