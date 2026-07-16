@@ -528,10 +528,7 @@ function Runner({
                 className="money-intro-description money-intro-flow"
                 style={{ margin: "16px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
-                <span className="money-intro-line">진단지를 통해</span>{" "}
-                <span className="money-intro-line">나도 몰랐던 마음과 기준을 발견하고,</span>{" "}
-                <span className="money-intro-line">돈을 더 평안하게 다루기 위한</span>{" "}
-                <span className="money-intro-line">출발점을 찾아 보세요.</span>
+                진단지를 통해 돈에 대한 마음과 기준을 발견하고, 돈을 더 평안하고 지혜롭게 다루기 위한 여정을 시작하세요.
               </p>
             </>
           ) : (
@@ -650,11 +647,8 @@ function Runner({
             <span className="money-prep-line">이 진단지는</span>{" "}
             <span className="money-prep-line">가볍게 유형만 나누는 테스트가 아닙니다</span>
           </p>
-          <p className="money-prep-research" style={{ marginTop: 18, fontSize: 14, lineHeight: 1.9, color: theme.text, opacity: 0.78 }}>
-            <span className="money-prep-line">돈에 대한 태도를 분석한 국내외 연구와</span>
-            <span className="money-prep-line">크리스천의 돈, 신앙 인식을 다룬</span>
-            <span className="money-prep-line">통계자료를 바탕으로</span>
-            <span className="money-prep-line">셀라가 구성한 연구 기반 점검지입니다</span>
+          <p className="money-prep-research" style={{ marginTop: 18, fontSize: 14, lineHeight: 1.9, color: theme.text, opacity: 0.78, textAlign: "left" }}>
+            돈에 대한 태도를 분석한 국내외 연구와 크리스천의 돈, 신앙 인식을 다룬 통계자료를 바탕으로 셀라가 구성한 연구 기반 점검지입니다.
           </p>
           <h2 className="money-prep-reminder" style={{ marginTop: 28, fontSize: 17, lineHeight: 1.5, color: theme.text, fontWeight: 600 }}>
             답할 때 꼭 기억해주세요

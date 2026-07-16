@@ -209,6 +209,7 @@
 }
 
 .money-prep-final {
+  font-family: "Gowun Batang", ui-serif, Georgia, serif !important;
   font-weight: 500 !important;
 }
 
@@ -318,7 +319,7 @@
   }
 
   .money-prep-subtitle {
-    font-size: 19px !important;
+    font-size: 20px !important;
     line-height: 1.65 !important;
   }
 
@@ -342,11 +343,11 @@
   }
 
   .money-prep-period {
-    margin-top: 0 !important;
+    margin-top: 5px !important;
   }
 
   .money-prep-final + .money-start-button {
-    margin-top: 28px !important;
+    margin-top: 18px !important;
   }
 
 }
