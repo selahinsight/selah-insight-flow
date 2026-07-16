@@ -86,6 +86,43 @@ function RespondentSurvey() {
 
   useEffect(() => {
     let cancelled = false;
+    async function loadPublishedStudioSurvey(): Promise<Survey | null> {
+      if (slug !== "selah-money-diagnosis") return null;
+
+      // Selah Studio의 반영 완료 버전을 공개 설문의 단일 기준 데이터로 사용합니다.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase as any)
+        .from("studio_surveys")
+        .select("*")
+        .eq("slug", slug)
+        .eq("status", "published")
+        .not("published_version", "is", null)
+        .maybeSingle();
+      if (error || !data) return null;
+
+      const content = data.content && typeof data.content === "object" ? data.content : {};
+      const start = content.start && typeof content.start === "object" ? content.start : {};
+      const completion = content.completion && typeof content.completion === "object" ? content.completion : {};
+      return {
+        id: data.id,
+        slug: data.slug,
+        title: data.title,
+        description: data.description || start.description || "",
+        completion_message: completion.description || "응답해주셔서 감사합니다.",
+        audience_type: "christian",
+        category: "pre_diagnosis",
+        estimated_time: start.estimatedTime || "약 3~4분",
+        bible_verse: undefined,
+        questions: Array.isArray(content.questions) ? content.questions : [],
+        resultTypes: Array.isArray(content.results) ? content.results : [],
+        status: "published",
+        createdAt: data.created_at ? new Date(data.created_at).getTime() : Date.now(),
+        deletedAt: null,
+        responses: [],
+        design_settings: data.theme || undefined,
+      } as Survey;
+    }
+
     async function loadFallbackSurvey(): Promise<Survey | null> {
       if (slug !== "selah-money-diagnosis") return null;
 
@@ -105,7 +142,9 @@ function RespondentSurvey() {
 
     async function load() {
       if (slug === "selah-money-diagnosis") {
-        setSurvey(await loadFallbackSurvey());
+        const published = await loadPublishedStudioSurvey();
+        if (cancelled) return;
+        setSurvey(published || (await loadFallbackSurvey()));
         return;
       }
 
