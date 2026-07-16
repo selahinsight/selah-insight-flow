@@ -309,6 +309,10 @@
     display: inline;
   }
 
+  .money-intro-mobile-break {
+    display: block;
+  }
+
   .money-prep-card {
     padding: 34px 22px 28px !important;
   }
@@ -323,8 +327,8 @@
   }
 
   .money-prep-subtitle {
-    font-size: 22px !important;
-    line-height: 1.65 !important;
+    font-size: 27px !important;
+    line-height: 1.48 !important;
   }
 
   .money-prep-research {
