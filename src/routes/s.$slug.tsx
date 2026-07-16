@@ -927,13 +927,24 @@ function Runner({
         </div>
       </div>
 
-      <div style={{ ...cardStyle, borderRadius: 8, padding: "34px 30px", border: `1px solid ${theme.border}` }}>
+      <div
+        className={isMoneyDiagnosis && i === 0 ? "money-first-question-card" : undefined}
+        style={{ ...cardStyle, borderRadius: 8, padding: "34px 30px", border: `1px solid ${theme.border}` }}
+      >
         <p style={{ marginBottom: 14, fontSize: 11, letterSpacing: "0.18em", color: theme.accent, textAlign: "center" }}>
           SELAH MONEY CHECK
         </p>
-        <h2 style={{ fontSize: 25, lineHeight: 1.55, color: theme.text, fontFamily: headingFont, textAlign: "center", fontWeight: 500 }}>{q.text}</h2>
+        <h2
+          className={isMoneyDiagnosis && i === 0 ? "money-first-question-title" : undefined}
+          style={{ fontSize: 25, lineHeight: 1.55, color: theme.text, fontFamily: headingFont, textAlign: "center", fontWeight: 500 }}
+        >
+          {q.text}
+        </h2>
 
-        <div style={{ marginTop: 30, display: "flex", flexDirection: "column", gap: 12 }}>
+        <div
+          className={isMoneyDiagnosis && i === 0 ? "money-first-question-options" : undefined}
+          style={{ marginTop: 30, display: "flex", flexDirection: "column", gap: 12 }}
+        >
           {q.type === "short_text" && (
             <input
               value={(answers[q.id] as string) ?? ""}
