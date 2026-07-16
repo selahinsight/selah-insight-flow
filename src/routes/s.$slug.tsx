@@ -648,7 +648,7 @@ function Runner({
             <span className="money-prep-line">이 진단지는</span>{" "}
             <span className="money-prep-line">가볍게 유형만 나누는 테스트가 아닙니다</span>
           </p>
-          <p className="money-prep-research" style={{ marginTop: 18, fontSize: 14, lineHeight: 1.9, color: theme.text, opacity: 0.78, textAlign: "left" }}>
+          <p className="money-prep-research" style={{ marginTop: 18, fontSize: 14, lineHeight: 1.9, color: theme.text, opacity: 0.78, textAlign: "center" }}>
             돈에 대한 태도를 분석한 국내외 연구와 크리스천의 돈, 신앙 인식을 다룬 통계자료를 바탕으로 셀라가 구성한 연구 기반 점검지입니다.
           </p>
           <h2 className="money-prep-reminder" style={{ marginTop: 28, fontSize: 17, lineHeight: 1.5, color: theme.text, fontWeight: 600 }}>
