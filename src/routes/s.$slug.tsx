@@ -853,6 +853,7 @@ function Runner({
             <p className="money-result-complete-subtitle" style={{ marginTop: 2, fontSize: 18, lineHeight: 1.45, color: theme.text, textAlign: "center" }}>
               이제 나의 돈 반응 유형을 살펴볼게요.
             </p>
+            <div className="money-result-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
 
             <ResultSectionTitle theme={theme}>나의 주된 돈 반응 유형</ResultSectionTitle>
             <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 21, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
@@ -903,8 +904,8 @@ function Runner({
                 <div className="money-flow-steps">
                   {result.flow
                     .split("\n")
-                    .map((line) => line.trim())
-                    .filter((line) => line && line !== "→" && line !== "↓")
+                    .map((line) => line.replace(/^[→>↓\s]+/, "").replace(/[→>↓\s]+$/, "").trim())
+                    .filter(Boolean)
                     .map((step, index, steps) => (
                       <div key={step}>
                         <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border }}>
@@ -920,7 +921,7 @@ function Runner({
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p className="money-result-box-title" style={{ color: theme.accent }}>
                   <Heart size={21} strokeWidth={1.7} aria-hidden="true" />
-                  <span>돈과 신앙 사이에서 나타나는 마음</span>
+                  <span>돈과 신앙 사이의 마음</span>
                 </p>
                 {selahResult.faithLenses.length ? (
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -1465,7 +1466,7 @@ function ResultSectionTitle({ children, theme }: { children: React.ReactNode; th
   return (
     <p
       style={{
-        marginTop: 46,
+        marginTop: 30,
         fontSize: 19,
         color: theme.accent,
         fontWeight: 700,

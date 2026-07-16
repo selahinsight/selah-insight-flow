@@ -165,7 +165,14 @@
 
 .money-result-complete-title,
 .money-result-complete-subtitle {
-  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-family: "Gowun Batang", ui-serif, Georgia, serif;
+}
+
+.money-result-divider {
+  width: min(220px, 64%);
+  height: 1px;
+  margin: 30px auto 0;
+  opacity: 0.78;
 }
 
 .money-result-type-box {
@@ -180,7 +187,7 @@
   box-shadow: 0 3px 10px rgba(85, 67, 56, 0.05);
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
   font-weight: 700;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
