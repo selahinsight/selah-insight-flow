@@ -320,6 +320,9 @@ function Runner({
         return;
       }
       setCustomerContact({ id: contact.id, contactToken: contact.contact_token });
+      if (survey.slug === "selah-money-diagnosis" && typeof window !== "undefined") {
+        await new Promise((resolve) => window.setTimeout(resolve, 300));
+      }
       setPhase(survey.slug === "selah-money-diagnosis" ? "prep" : "questions");
     } finally {
       setStarting(false);
@@ -522,7 +525,7 @@ function Runner({
                 <span className="money-intro-line">숨어 있습니다.</span>
               </p>
               <p
-                className="money-intro-description"
+                className="money-intro-description money-intro-flow"
                 style={{ margin: "16px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
                 <span className="money-intro-line">진단지를 통해</span>{" "}

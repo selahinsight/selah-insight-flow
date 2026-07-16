@@ -217,6 +217,12 @@
   font-weight: 600 !important;
 }
 
+.money-prep-intro {
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
 .money-prep-line {
   display: block;
 }
@@ -294,6 +300,10 @@
     display: block;
   }
 
+  .money-intro-flow .money-intro-line {
+    display: inline;
+  }
+
   .money-prep-card {
     padding: 34px 22px 28px !important;
   }
@@ -327,8 +337,16 @@
     font-weight: 400 !important;
   }
 
+  .money-prep-reminder {
+    margin-bottom: 0 !important;
+  }
+
   .money-prep-period {
-    margin-top: 4px !important;
+    margin-top: 0 !important;
+  }
+
+  .money-prep-final + .money-start-button {
+    margin-top: 28px !important;
   }
 
 }
