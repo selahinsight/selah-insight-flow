@@ -143,6 +143,11 @@
   font-family: "Gowun Batang", ui-serif, Georgia, serif;
 }
 
+.money-intro-lead {
+  font-size: 18px !important;
+  line-height: 1.75 !important;
+}
+
 .money-intro-card {
   border-radius: 1px !important;
   box-shadow: 0 18px 48px rgba(85, 67, 56, 0.14), 0 4px 14px rgba(85, 67, 56, 0.08) !important;
@@ -178,6 +183,23 @@
   display: inline;
 }
 
+.money-prep-card {
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  border-radius: 1px !important;
+  box-shadow: 0 18px 48px rgba(85, 67, 56, 0.14), 0 4px 14px rgba(85, 67, 56, 0.08) !important;
+}
+
+.money-prep-card h1,
+.money-prep-card h2 {
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+}
+
+.money-prep-card p {
+  max-width: 480px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 @media (max-width: 639px) {
   .money-intro-wrap {
     padding: 12px 12px 16px !important;
@@ -210,6 +232,11 @@
     margin-top: 12px !important;
     font-size: 13px !important;
     line-height: 1.58 !important;
+  }
+
+  .money-intro-lead {
+    font-size: 15px !important;
+    line-height: 1.68 !important;
   }
 
   .money-intro-description + .money-intro-description {
@@ -247,6 +274,19 @@
 
   .money-intro-line {
     display: block;
+  }
+
+  .money-prep-card {
+    padding: 28px 20px 24px !important;
+  }
+
+  .money-prep-card h1 {
+    font-size: 25px !important;
+  }
+
+  .money-prep-card p {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
   }
 }
 

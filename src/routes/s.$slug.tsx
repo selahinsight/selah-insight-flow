@@ -244,7 +244,7 @@ function RespondentSurvey() {
   return <Runner survey={survey} design={design} theme={theme} />;
 }
 
-type Phase = "intro" | "questions" | "done";
+type Phase = "intro" | "prep" | "questions" | "done";
 
 interface SelahMoneyResult {
   primaryMoneyType?: ResultType;
@@ -301,7 +301,7 @@ function Runner({
         return;
       }
       setCustomerContact({ id: contact.id, contactToken: contact.contact_token });
-      setPhase("questions");
+      setPhase(survey.slug === "selah-money-diagnosis" ? "prep" : "questions");
     } finally {
       setStarting(false);
     }
@@ -446,7 +446,7 @@ function Runner({
 
   if (phase === "intro") {
     return (
-      <Wrap theme={theme} design={design} useImageLogo={isMoneyDiagnosis} introMode={isMoneyDiagnosis}>
+      <Wrap theme={theme} design={design} introMode={isMoneyDiagnosis}>
         <div
           className={isMoneyDiagnosis ? "money-intro-card" : undefined}
           style={{
@@ -495,20 +495,21 @@ function Runner({
           {isMoneyDiagnosis ? (
             <>
               <p
-                className="money-intro-description"
+                className="money-intro-description money-intro-lead"
                 style={{ margin: "24px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
                 <span className="money-intro-line">내가 돈을 다루는 방식에는</span>{" "}
-                <span className="money-intro-line">나도 미처 알지 못했던 마음과 기준이 숨어 있습니다.</span>
+                <span className="money-intro-line">나도 미처 알지 못했던 마음과 기준이</span>{" "}
+                <span className="money-intro-line">숨어 있습니다.</span>
               </p>
               <p
                 className="money-intro-description"
                 style={{ margin: "16px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
-                <span className="money-intro-line">30개의 질문을 통해</span>{" "}
-                <span className="money-intro-line">반복되는 행동 뒤의 마음과 기준을 발견하고,</span>{" "}
+                <span className="money-intro-line">진단지를 통해</span>{" "}
+                <span className="money-intro-line">나도 몰랐던 마음과 기준을 발견하고,</span>{" "}
                 <span className="money-intro-line">돈을 더 평안하게 다루기 위한</span>{" "}
-                <span className="money-intro-line">출발점을 찾아보세요.</span>
+                <span className="money-intro-line">출발점을 찾아 보세요.</span>
               </p>
             </>
           ) : (
@@ -534,12 +535,7 @@ function Runner({
               {survey.bible_verse}
             </div>
           )}
-          {isMoneyDiagnosis ? (
-            <p className="money-intro-guidance money-intro-sans" style={{ marginTop: 28, fontSize: 15, lineHeight: 1.75, color: theme.text, opacity: 0.82 }}>
-              <span className="money-intro-line">최근 3개월의 나를 떠올리며,</span>{" "}
-              <span className="money-intro-line">실제 내 모습에 가깝게 답해주세요.</span>
-            </p>
-          ) : (
+          {!isMoneyDiagnosis && (
             <p style={{ marginTop: 28, fontSize: 14, color: theme.text, opacity: 0.75 }}>
               정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
             </p>
@@ -607,6 +603,59 @@ function Runner({
               총 30문항 · 약 3~4분 소요
             </p>
           )}
+        </div>
+      </Wrap>
+    );
+  }
+
+  if (phase === "prep") {
+    return (
+      <Wrap theme={theme} design={design} introMode>
+        <div
+          className="money-prep-card"
+          style={{
+            ...cardStyle,
+            borderRadius: 8,
+            padding: "42px 36px 34px",
+            textAlign: "center",
+            border: `1px solid ${theme.border}`,
+          }}
+        >
+          <h1 style={{ fontSize: 30, lineHeight: 1.35, color: theme.text, fontWeight: 700 }}>
+            더 정확한 결과를 위해
+          </h1>
+          <p style={{ marginTop: 22, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
+            이 진단지는 가볍게 유형만 나누는 테스트가 아닙니다.
+          </p>
+          <p style={{ marginTop: 14, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
+            돈에 대한 태도와 재무불안, 반복되는 재무행동을 분석한 국내외 연구와 크리스천의 돈·헌금·신앙 인식을 다룬 통계자료를 바탕으로 셀라가 구성한 연구 기반 자기점검입니다.
+          </p>
+          <h2 style={{ marginTop: 28, fontSize: 20, lineHeight: 1.4, color: theme.text, fontWeight: 700 }}>
+            답할 때 꼭 기억해주세요
+          </h2>
+          <p style={{ marginTop: 18, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
+            최근 3개월 동안의 나를 떠올려주세요.
+          </p>
+          <p style={{ marginTop: 14, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
+            되고 싶은 모습이나 좋아 보이는 답보다, 돈을 벌고 쓰고 모으고 투자할 때 실제로 자주 반복된 모습에 답해주세요.
+          </p>
+          <p style={{ marginTop: 14, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
+            솔직하게 답할수록 결과가 지금의 내 마음과 행동에 더 가까워집니다.
+          </p>
+          <button
+            onClick={() => setPhase("questions")}
+            style={{
+              ...btnPrimary,
+              marginTop: 28,
+              padding: "11px 28px",
+              borderRadius: 8,
+              fontSize: 15,
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            준비됐어요, 시작할게요
+          </button>
         </div>
       </Wrap>
     );
