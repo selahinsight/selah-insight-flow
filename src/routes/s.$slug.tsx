@@ -841,8 +841,8 @@ function Runner({
               className="money-result-complete-title"
               style={{
                 marginTop: 18,
-                fontSize: 32,
-                lineHeight: 1.3,
+                fontSize: 18,
+                lineHeight: 1.45,
                 color: theme.text,
                 textAlign: "center",
                 fontFamily: headingFont,
@@ -850,12 +850,12 @@ function Runner({
             >
               진단이 완료되었습니다.
             </h1>
-            <p className="money-result-complete-subtitle" style={{ marginTop: 10, fontSize: 17, lineHeight: 1.6, color: theme.text, textAlign: "center" }}>
+            <p className="money-result-complete-subtitle" style={{ marginTop: 2, fontSize: 18, lineHeight: 1.45, color: theme.text, textAlign: "center" }}>
               이제 돈 앞에서 나의 모습을 살펴볼게요.
             </p>
 
             <ResultSectionTitle theme={theme}>나의 주된 돈 반응 유형</ResultSectionTitle>
-            <h2 style={{ marginTop: 10, fontSize: 26, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
+            <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 26, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
               {result.title}
             </h2>
             {selahResult?.secondaryMoneyType && (
@@ -880,7 +880,7 @@ function Runner({
             )}
             {result.interpretation && (
               <div style={{ marginTop: 22, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>이 유형의 흐름</p>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8 }}>이 유형의 특징</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
                   {result.interpretation}
                 </p>
@@ -888,22 +888,26 @@ function Runner({
             )}
             {result.flow && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>반복되는 마음의 흐름</p>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "left" }}>반복되는 마음의 흐름</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
-                  {result.flow}
+                  {result.flow
+                    .split("\n")
+                    .map((line) => line.trim())
+                    .filter((line) => line && line !== "→" && line !== "↓")
+                    .join("\n↓\n")}
                 </p>
               </div>
             )}
             {selahResult && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>
-                  돈과 신앙 사이에서 나타나는 렌즈
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "left" }}>
+                  돈과 신앙 사이에서 나타나는 마음
                 </p>
                 {selahResult.faithLenses.length ? (
                   <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                     {selahResult.faithLenses.map((lens) => (
                       <div key={lens.id}>
-                        <p style={{ fontSize: 15, color: theme.text, textAlign: "center", fontWeight: 500 }}>
+                        <p style={{ fontSize: 19, color: theme.text, textAlign: "left", fontWeight: 700 }}>
                           {lens.title}
                         </p>
                         {lens.description && (
@@ -928,7 +932,7 @@ function Runner({
             )}
             {result.small_action && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "center" }}>이번 주 작은 실천</p>
+                <p style={{ fontSize: 12, color: theme.accent, fontWeight: 500, marginBottom: 8, textAlign: "left" }}>이번 주 작은 실천</p>
                 <p className="whitespace-pre-line" style={{ fontSize: 14, lineHeight: 1.7, color: theme.text, opacity: 0.82 }}>
                   {result.small_action}
                 </p>
@@ -950,7 +954,7 @@ function Runner({
                 {result.bibleVerse ?? survey.bible_verse}
               </div>
             )}
-            {survey.completion_message && (
+            {!isMoneyDiagnosis && survey.completion_message && (
               <p className="whitespace-pre-line" style={{ marginTop: 22, fontSize: 13, color: theme.muted, textAlign: "center" }}>
                 {survey.completion_message}
               </p>

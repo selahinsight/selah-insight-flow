@@ -168,6 +168,20 @@
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
 }
 
+.money-result-type-box {
+  width: fit-content;
+  min-width: 180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 14px 28px;
+  border: 1px solid rgba(122, 103, 90, 0.24);
+  border-radius: 1px;
+  background: #fbf8f3;
+  box-shadow: 0 8px 22px rgba(85, 67, 56, 0.1);
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
+  font-weight: 700;
+}
+
 .money-result-bubble {
   position: relative;
   width: fit-content;
@@ -303,12 +317,19 @@
   }
 
   .money-result-complete-title {
-    font-size: 27px !important;
-    line-height: 1.35 !important;
+    font-size: 17px !important;
+    line-height: 1.4 !important;
   }
 
   .money-result-complete-subtitle {
-    font-size: 15px !important;
+    font-size: 17px !important;
+    line-height: 1.4 !important;
+  }
+
+  .money-result-type-box {
+    min-width: 160px;
+    padding: 12px 24px;
+    font-size: 24px !important;
   }
 
   .money-diagnosis-label {
