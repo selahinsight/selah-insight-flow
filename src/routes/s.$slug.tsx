@@ -283,7 +283,18 @@ function Runner({
 
   useEffect(() => {
     if (phase === "intro" || typeof window === "undefined") return;
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const resetViewport = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+    resetViewport();
+    const frameId = window.requestAnimationFrame(resetViewport);
+    const timeoutId = window.setTimeout(resetViewport, 120);
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.clearTimeout(timeoutId);
+    };
   }, [phase]);
 
   const total = survey.questions.length;
@@ -299,6 +310,9 @@ function Runner({
     }
     setStarting(true);
     try {
+      if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
       // Create a customer record now (no email yet). Only name/nickname.
       const contact = { id: uid("cu"), contact_token: uid("ct") };
       if (!contact) {
@@ -534,7 +548,7 @@ function Runner({
                 backgroundColor: theme.bg,
                 fontStyle: "italic",
                 color: theme.accent,
-                fontSize: 14,
+                fontSize: isMoneyDiagnosis ? 16 : 14,
               }}
             >
               {survey.bible_verse}
@@ -626,9 +640,9 @@ function Runner({
             border: `1px solid ${theme.border}`,
           }}
         >
-          <h1 style={{ fontSize: 24, lineHeight: 1.4, color: theme.text, fontWeight: 700 }}>
+          <p className="money-prep-intro" style={{ fontSize: 14, lineHeight: 1.8, color: theme.text, fontWeight: 400 }}>
             더 정확한 결과를 위해
-          </h1>
+          </p>
           <p className="money-prep-subtitle" style={{ marginTop: 22, fontSize: 22, lineHeight: 1.6, color: theme.text, fontWeight: 700 }}>
             <span className="money-prep-line">이 진단지는</span>{" "}
             <span className="money-prep-line">가볍게 유형만 나누는 테스트가 아닙니다</span>
@@ -639,10 +653,10 @@ function Runner({
             <span className="money-prep-line">통계자료를 바탕으로</span>
             <span className="money-prep-line">셀라가 구성한 연구 기반 점검지입니다</span>
           </p>
-          <h2 style={{ marginTop: 28, fontSize: 17, lineHeight: 1.5, color: theme.text, fontWeight: 700 }}>
+          <h2 className="money-prep-reminder" style={{ marginTop: 28, fontSize: 17, lineHeight: 1.5, color: theme.text, fontWeight: 600 }}>
             답할 때 꼭 기억해주세요
           </h2>
-          <p style={{ marginTop: 18, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
+          <p className="money-prep-period" style={{ marginTop: 4, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
             최근 3개월 동안의 나를 떠올려주세요.
           </p>
           <p className="money-prep-final" style={{ marginTop: 20, fontSize: 19, lineHeight: 1.7, color: theme.text, fontWeight: 700 }}>

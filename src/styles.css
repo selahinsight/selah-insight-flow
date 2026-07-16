@@ -193,11 +193,6 @@
   box-shadow: 0 18px 48px rgba(85, 67, 56, 0.14), 0 4px 14px rgba(85, 67, 56, 0.08) !important;
 }
 
-.money-prep-card h1,
-.money-prep-card h2 {
-  font-family: "Gowun Batang", ui-serif, Georgia, serif;
-}
-
 .money-prep-card p {
   max-width: 480px;
   margin-right: auto;
@@ -206,7 +201,20 @@
 
 .money-prep-subtitle,
 .money-prep-final {
-  font-family: "Gowun Batang", ui-serif, Georgia, serif;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+}
+
+.money-prep-subtitle {
+  font-weight: 600 !important;
+}
+
+.money-prep-final {
+  font-weight: 500 !important;
+}
+
+.money-prep-reminder {
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600 !important;
 }
 
 .money-prep-line {
@@ -268,6 +276,7 @@
 
   .money-name-field input {
     padding: 10px 14px !important;
+    font-size: 16px !important;
   }
 
   .money-start-button {
@@ -287,10 +296,6 @@
 
   .money-prep-card {
     padding: 34px 22px 28px !important;
-  }
-
-  .money-prep-card h1 {
-    font-size: 22px !important;
   }
 
   .money-prep-card h2 {
@@ -315,6 +320,15 @@
   .money-prep-final {
     font-size: 17px !important;
     line-height: 1.7 !important;
+  }
+
+  .money-prep-intro {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+  }
+
+  .money-prep-period {
+    margin-top: 4px !important;
   }
 
 }
