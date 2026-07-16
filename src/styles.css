@@ -233,16 +233,16 @@
 }
 
 @media (max-width: 639px) {
-  .money-first-question-card {
+  .money-question-card {
     padding: 24px 20px !important;
   }
 
-  .money-first-question-title {
+  .money-question-title {
     font-size: 19px !important;
     line-height: 1.42 !important;
   }
 
-  .money-first-question-options {
+  .money-question-options {
     margin-top: 22px !important;
     gap: 10px !important;
   }
