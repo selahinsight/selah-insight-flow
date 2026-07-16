@@ -212,6 +212,14 @@ function RespondentSurvey() {
   }, [slug]);
 
   if (survey === undefined) {
+    if (slug === "selah-money-diagnosis") {
+      return (
+        <div className="money-loading">
+          <img src="/selah-insight-logo-transparent.png" alt="Selah Insight" />
+          <p>설문을 불러오는 중입니다.</p>
+        </div>
+      );
+    }
     return (
       <Wrap theme={THEMES[DEFAULT_DESIGN.theme]} design={DEFAULT_DESIGN}>
         <p style={{ fontSize: 20 }}>설문을 불러오는 중입니다.</p>
@@ -526,7 +534,7 @@ function Runner({
             </div>
           )}
           {isMoneyDiagnosis ? (
-            <p className="money-intro-sans" style={{ marginTop: 28, fontSize: 15, lineHeight: 1.75, color: theme.text, opacity: 0.82 }}>
+            <p className="money-intro-guidance money-intro-sans" style={{ marginTop: 28, fontSize: 15, lineHeight: 1.75, color: theme.text, opacity: 0.82 }}>
               <span className="money-intro-line">최근 3개월의 나를 떠올리며,</span>{" "}
               <span className="money-intro-line">실제 내 모습에 가깝게 답해주세요.</span>
             </p>
@@ -535,7 +543,7 @@ function Runner({
               정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
             </p>
           )}
-          <div style={{ marginTop: 24, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>
+          <div className={isMoneyDiagnosis ? "money-name-field" : undefined} style={{ marginTop: 24, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>
             <label
               htmlFor="respondent-name"
               style={{
@@ -544,7 +552,7 @@ function Runner({
                 letterSpacing: "0.14em",
                 color: theme.muted,
                 marginBottom: 8,
-                textAlign: "left",
+                textAlign: isMoneyDiagnosis ? "center" : "left",
                 textTransform: "uppercase",
               }}
             >
@@ -575,6 +583,7 @@ function Runner({
             )}
           </div>
           <button
+            className={isMoneyDiagnosis ? "money-start-button" : undefined}
             onClick={() => {
               void startSurvey();
             }}
@@ -593,7 +602,7 @@ function Runner({
             {starting ? "준비 중..." : isMoneyDiagnosis ? "진단 시작하기" : "시작하기"}
           </button>
           {isMoneyDiagnosis && (
-            <p style={{ marginTop: 12, fontSize: 13, color: theme.muted, textAlign: "center" }}>
+            <p className="money-duration" style={{ marginTop: 12, fontSize: 13, color: theme.muted, textAlign: "center" }}>
               총 30문항 · 약 3~4분 소요
             </p>
           )}
@@ -763,6 +772,7 @@ function Runner({
     return (
       <Wrap theme={theme} design={design}>
         <div
+          className={introMode ? "money-brand-header" : undefined}
           style={{
             ...cardStyle,
             borderRadius: 8,
