@@ -93,6 +93,9 @@ export interface ResultType {
   flow?: string;
   small_action?: string;
   bibleVerse?: string;
+  componentIds?: string[];
+  email_result?: string;
+  paid_result?: string;
 }
 
 export type AudienceType = "general" | "christian";

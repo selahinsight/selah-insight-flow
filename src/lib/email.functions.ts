@@ -9,6 +9,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/require-admin";
+import { allSelahMoneyResults } from "@/lib/selah-money-results";
 
 // ---------- Public: free result email ----------
 
@@ -31,6 +32,8 @@ type ResultType = {
   practice?: string;
   suggested_practice?: string;
   scripture?: string;
+  small_action?: string;
+  email_result?: string;
 };
 
 function pickResultType(all: unknown, id?: string | null): ResultType | undefined {
@@ -53,15 +56,15 @@ function buildEmailHtml(args: {
 }): { subject: string; html: string; text: string } {
   const { displayName, surveyTitle, primary, secondary, faithLens } = args;
   const primaryTitle = primary?.title ?? "결과 유형";
-  const primaryDesc = primary?.description ?? primary?.interpretation ?? "";
-  const practice = primary?.practice ?? primary?.suggested_practice ?? "";
+  const primaryDesc = primary?.email_result ?? primary?.description ?? primary?.interpretation ?? "";
+  const practice = primary?.small_action ?? primary?.practice ?? primary?.suggested_practice ?? "";
   const secondaryLine = secondary?.title
     ? `함께 나타나는 유형: ${secondary.title}`
     : "";
   const faithLine = faithLens?.title
     ? `신앙 렌즈: ${faithLens.title}`
     : "";
-  const faithDesc = faithLens?.description ?? "";
+  const faithDesc = faithLens?.email_result ?? faithLens?.description ?? "";
 
   const subject = `${displayName}님의 ${surveyTitle} 결과 안내`;
 
@@ -202,12 +205,15 @@ async function sendFreeResultEmailImpl(input: z.infer<typeof sendInput>): Promis
   }
 
   const displayName = customer.name?.trim() || customer.nickname?.trim() || "고객";
+  const completeResultTypes = allSelahMoneyResults(
+    Array.isArray(survey.result_types) ? survey.result_types as ResultType[] : [],
+  );
   const primary = pickResultType(
-    survey.result_types,
+    completeResultTypes,
     input.resultTypeId ?? response.result_type_id ?? undefined,
   );
-  const secondary = pickResultType(survey.result_types, input.secondaryResultTypeId);
-  const faithLens = pickResultType(survey.result_types, input.faithLensId);
+  const secondary = pickResultType(completeResultTypes, input.secondaryResultTypeId);
+  const faithLens = pickResultType(completeResultTypes, input.faithLensId);
 
   const email = buildEmailHtml({
     displayName,

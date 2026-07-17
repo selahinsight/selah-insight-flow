@@ -18,6 +18,7 @@ import {
 } from "@/lib/survey-store";
 import { supabase } from "@/integrations/supabase/client";
 import { sendStudioIntake } from "@/lib/studio-intake.functions";
+import { allSelahMoneyResults, classifySelahMoneyDiagnosis } from "@/lib/selah-money-results";
 
 
 import {
@@ -119,7 +120,7 @@ function RespondentSurvey() {
               text: MONEY_QUESTION_TEXT_OVERRIDES[index + 1] ?? question.text,
             }))
           : [],
-        resultTypes: Array.isArray(content.results) ? content.results : [],
+        resultTypes: allSelahMoneyResults(Array.isArray(content.results) ? content.results : []),
         status: "published",
         createdAt: data.created_at ? new Date(data.created_at).getTime() : Date.now(),
         deletedAt: null,
@@ -143,6 +144,7 @@ function RespondentSurvey() {
           ...question,
           text: MONEY_QUESTION_TEXT_OVERRIDES[index + 1] ?? question.text,
         })),
+        resultTypes: allSelahMoneyResults(fallback.resultTypes ?? []),
         status: "published",
         responses: fallback.responses ?? [],
         createdAt: fallback.createdAt ?? Date.now(),
@@ -262,6 +264,8 @@ interface SelahMoneyResult {
   faithLenses: ResultType[];
   primaryFaithLens?: ResultType;
   scores: Record<string, { total: number; average: number }>;
+  includedMoneyTypeIds?: string[];
+  hasMoneyTie?: boolean;
 }
 
 function quoteRepresentativeSentence(sentence: string): string {
@@ -514,7 +518,19 @@ function Runner({
           surveyId: survey.id || survey.slug,
           surveySlug: survey.slug,
           surveyTitle: survey.title,
-          answers: answersForStudio(survey, answers),
+          answers: {
+            ...answersForStudio(survey, answers),
+            ...(selahResult ? {
+              __diagnosis_result: {
+                scoringVersion: "2026-07-17",
+                scores: selahResult.scores,
+                moneyResultCode: result?.id,
+                faithResultCode: selahResult.primaryFaithLens?.id,
+                includedMoneyTypeIds: selahResult.includedMoneyTypeIds ?? [],
+                hasMoneyTie: selahResult.hasMoneyTie ?? false,
+              },
+            } : {}),
+          },
           resultTypeId: result?.id,
           primaryMoneyTypeId: selahResult?.primaryMoneyType?.id,
           secondaryMoneyTypeId: selahResult?.secondaryMoneyType?.id,
@@ -560,37 +576,22 @@ function Runner({
       faith_burden: [21, 23, 25, 27, 29],
       faith_separation: [22, 24, 26, 28, 30],
     };
-    const scores = Object.fromEntries(
+    const totals = Object.fromEntries(
       Object.entries(groups).map(([id, indexes]) => {
         const totalScore = indexes.reduce((sum, idx) => sum + scoreByQuestionIndex(idx), 0);
-        return [id, { total: totalScore, average: totalScore / indexes.length }];
+        return [id, totalScore];
       }),
-    ) as SelahMoneyResult["scores"];
-    const byId = (id: string) => currentSurvey.resultTypes?.find((rt) => rt.id === id);
-    const moneyTypeIds = ["organizing_delay", "safety_seeking", "gaze_sensitive", "emotional_reward"];
-    const rankedMoney = [...moneyTypeIds].sort((a, b) => scores[b].average - scores[a].average);
-    const first = rankedMoney[0];
-    const highestMoneyScore = scores[first].average;
-    const primaryMoneyTypes = moneyTypeIds
-      .filter((id) => scores[id].average === highestMoneyScore)
-      .map((id) => byId(id))
-      .filter((rt): rt is ResultType => Boolean(rt));
-    const primaryMoneyType = primaryMoneyTypes[0];
-    const secondaryMoneyType = undefined;
-    const faithIds = ["faith_burden", "faith_separation"];
-    const highestFaithScore = Math.max(...faithIds.map((id) => scores[id].average));
-    const faithLenses = faithIds
-      .filter((id) => scores[id].average === highestFaithScore)
-      .map((id) => byId(id))
-      .filter((rt): rt is ResultType => Boolean(rt));
-    const primaryFaithLens = faithLenses[0];
+    ) as Record<"organizing_delay" | "safety_seeking" | "gaze_sensitive" | "emotional_reward" | "faith_burden" | "faith_separation", number>;
+    const classified = classifySelahMoneyDiagnosis(totals, currentSurvey.resultTypes ?? []);
     return {
-      primaryMoneyType,
-      primaryMoneyTypes,
-      secondaryMoneyType,
-      faithLenses,
-      primaryFaithLens,
-      scores,
+      primaryMoneyType: classified.moneyResult,
+      primaryMoneyTypes: [classified.moneyResult],
+      secondaryMoneyType: undefined,
+      faithLenses: [classified.faithResult],
+      primaryFaithLens: classified.faithResult,
+      scores: classified.scores,
+      includedMoneyTypeIds: classified.includedMoneyTypeIds,
+      hasMoneyTie: classified.hasMoneyTie,
     };
   }
 
