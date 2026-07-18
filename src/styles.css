@@ -455,6 +455,7 @@
 
   .money-result-card {
     padding: 34px 22px 30px !important;
+    letter-spacing: -0.015em;
   }
 
   .money-result-complete-title {

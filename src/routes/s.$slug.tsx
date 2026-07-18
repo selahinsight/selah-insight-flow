@@ -883,7 +883,7 @@ function Runner({
                 {result.id === "organizing_delay" ? (
                   <>
                     <span className="money-desktop-copy">{quoteRepresentativeSentence(result.representative_sentence)}</span>
-                    <span className="money-mobile-copy">“지금 확인하면 더 불안해질<br />것 같아.”</span>
+                    <span className="money-mobile-copy">“지금 확인하면<br />더 불안해질 것 같아.”</span>
                   </>
                 ) : quoteRepresentativeSentence(result.representative_sentence)}
               </p>
@@ -898,7 +898,7 @@ function Runner({
                 {result.id === "organizing_delay" ? (
                   <>
                     <span className="money-desktop-copy">{result.description}</span>
-                    <span className="money-mobile-copy">돈을 정확히 마주하는 순간 마음이<br />무거워져 확인과 정리를 뒤로<br />미루는 유형이에요.</span>
+                    <span className="money-mobile-copy">돈을 정확히 마주하는 순간<br />마음이 무거워져 확인과 정리를<br />뒤로 미루는 유형이에요.</span>
                   </>
                 ) : result.description}
               </p>

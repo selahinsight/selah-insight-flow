@@ -44,8 +44,12 @@ assert.equal(
 );
 assert.equal(classify([17, 14, 10, 8]).moneyResult.id, "organizing_delay", "최고점과 3점 차이");
 
-assert.equal(classify([13, 8, 8, 8], [8, 7]).faithResult.id, "faith_low", "신앙 렌즈 낮음");
-assert.equal(customerFaithResultTitle("faith_low"), "신앙기준형", "낮음 고객 유형명");
+assert.equal(classify([13, 8, 8, 8], [8, 7]).faithResult.id, "faith_combo_low", "낮은 신앙 조합형");
+assert.equal(classify([13, 8, 8, 8], [9, 5]).faithResult.id, "faith_burden_low", "낮은 신앙부담형");
+assert.equal(classify([13, 8, 8, 8], [5, 9]).faithResult.id, "faith_separation_low", "낮은 신앙분리형");
+assert.equal(customerFaithResultTitle("faith_combo_low"), "신앙 조합형", "조합형 낮음 단계 숨김");
+assert.equal(customerFaithResultTitle("faith_burden_low"), "신앙부담형", "부담형 낮음 단계 숨김");
+assert.equal(customerFaithResultTitle("faith_separation_low"), "신앙분리형", "분리형 낮음 단계 숨김");
 assert.equal(customerFaithResultTitle("faith_burden_mid"), "신앙부담형", "중간 단계 숨김");
 assert.equal(customerFaithResultTitle("faith_burden_high"), "신앙부담형", "높은 단계 숨김");
 assert.equal(customerFaithResultTitle("faith_separation_mid"), "신앙분리형", "분리형 단계 숨김");
