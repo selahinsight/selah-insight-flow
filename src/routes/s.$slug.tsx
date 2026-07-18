@@ -888,6 +888,11 @@ function Runner({
                     <span className="money-desktop-copy">{quoteRepresentativeSentence(result.representative_sentence)}</span>
                     <span className="money-mobile-copy">“지금 확인하면<br />더 불안해질 것 같아.”</span>
                   </>
+                ) : result.id === "safety_seeking" ? (
+                  <>
+                    <span className="money-desktop-copy">{quoteRepresentativeSentence(result.representative_sentence)}</span>
+                    <span className="money-mobile-copy">“미래를 생각하면<br />계속 긴장하고, 돈을 꼼꼼히<br />관리하는 데서<br />안정감을 느껴.”</span>
+                  </>
                 ) : quoteRepresentativeSentence(result.representative_sentence)}
               </p>
             )}
@@ -1018,6 +1023,35 @@ function Runner({
                           ))}
                         </div>
                       </>
+                    ) : lens.id === "faith_burden_mid" ? (
+                      <>
+                        <div className="money-mobile-copy money-faith-low-summary">
+                          <section>
+                            <h3>핵심 진단</h3>
+                            <p className="money-faith-low-core">하나님 앞에서 돈을 바르게 다루고 싶은<br />마음이 분명합니다.</p>
+                          </section>
+                          <section>
+                            <h3>현재 모습</h3>
+                            <p>돈을 벌고 쓰고 누리는 선택에서<br />신앙적으로 바르게 하고 싶은<br />마음이 크며, 상황에 따라 부담과<br />죄책감이 올라옵니다.</p>
+                          </section>
+                          <section className="money-faith-low-standards">
+                            <h3>이제 세워갈 기준</h3>
+                            <ul>
+                              <li>지출에 담긴 목적</li>
+                              <li>필요·회복·성장·관계·나눔의 구분</li>
+                              <li>감사와 평안으로 선택하는 기준</li>
+                            </ul>
+                          </section>
+                          <p className="money-faith-low-direction">돈의 목적을 먼저 정하면<br />신앙적 성찰이 부담에서<br />지혜로운 기준으로 이동합니다.</p>
+                        </div>
+                        <div className="money-desktop-copy money-faith-paragraphs" style={{ maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
+                          {lens.description?.split(/\n\n+/).map((paragraph, index) => (
+                            <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.58, color: theme.text, opacity: index === 0 ? 0.86 : 0.82, textAlign: "center", fontWeight: index === 0 ? 600 : 400 }}>
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                      </>
                     ) : lens.description && (
                       <div className="money-faith-paragraphs" style={{ marginTop: selahResult.faithLenses.length > 1 ? 12 : 0, maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
                         {lens.description.split(/\n\n+/).map((paragraph, index) => (
@@ -1062,6 +1096,18 @@ function Runner({
                       <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
                         <span aria-hidden="true">✓</span>
                         <p>이번 주 한 번, 돈을 쓰기 전에 “이 선택은 내가 세운 믿음의 기준과 연결되는가?”를 점검해 보세요.</p>
+                      </div>
+                    </>
+                  )}
+                  {selahResult?.primaryFaithLens?.id === "faith_burden_mid" && (
+                    <>
+                      <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
+                        <span aria-hidden="true">✓</span>
+                        <p>이번 주 지출 하나를 골라, 하나님 앞에서 그 선택에 담긴 목적과 감사할 점을 한 문장씩 적어보세요.</p>
+                      </div>
+                      <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
+                        <span aria-hidden="true">✓</span>
+                        <p>돈을 사용한 뒤 죄책감이 올라오면, 선택의 목적·필요·기준을 차분히 확인해 보세요.</p>
                       </div>
                     </>
                   )}
