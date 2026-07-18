@@ -37,7 +37,7 @@ const baseResultOverrides: Record<string, Partial<ResultType>> = {
 };
 
 export function customerFaithResultTitle(resultId: string, fallback = "신앙 유형"): string {
-  if (resultId === "faith_low") return "신앙 조합형";
+  if (resultId === "faith_low") return "신앙 렌즈 낮음";
   if (resultId.startsWith("faith_burden_")) return "신앙부담형";
   if (resultId.startsWith("faith_separation_")) return "신앙분리형";
   if (resultId.startsWith("faith_combo_")) return "신앙 조합형";
@@ -106,17 +106,14 @@ export function classifySelahMoneyDiagnosis(
   const burden = totals.faith_burden;
   const separation = totals.faith_separation;
   let faithResultId: string;
-  if (Math.abs(burden - separation) <= 2) {
-    faithResultId = Math.max(burden, separation) <= 9
-      ? "faith_combo_low"
-      : burden + separation <= 25
-        ? "faith_combo_mid"
-        : "faith_combo_high";
+  if (burden <= 9 && separation <= 9) {
+    faithResultId = "faith_low";
+  } else if (burden >= 10 && separation >= 10 && Math.abs(burden - separation) <= 2) {
+    faithResultId = burden + separation <= 25 ? "faith_combo_mid" : "faith_combo_high";
   } else {
     const winningLens = burden >= separation ? "burden" : "separation";
     const winningTotal = Math.max(burden, separation);
-    const winningIntensity = winningTotal <= 9 ? "low" : winningTotal <= 12 ? "mid" : "high";
-    faithResultId = `faith_${winningLens}_${winningIntensity}`;
+    faithResultId = `faith_${winningLens}_${winningTotal <= 12 ? "mid" : "high"}`;
   }
 
   const highestIncludedTotal = includedMoneyTypeIds.length
