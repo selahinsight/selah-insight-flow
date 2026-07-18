@@ -870,7 +870,10 @@ function Runner({
             </p>
             <div className="money-result-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
 
-            <ResultSectionTitle theme={theme}>나의 주된 돈 반응 유형</ResultSectionTitle>
+            <ResultSectionTitle theme={theme}>
+              <span className="money-desktop-copy">나의 주된 돈 반응 유형</span>
+              <span className="money-mobile-copy">{name.trim()}님의 주된 돈 반응 유형</span>
+            </ResultSectionTitle>
             <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
               <CircleDollarSign size={20} strokeWidth={1.6} aria-hidden="true" />
               <span>{(selahResult?.primaryMoneyTypes.length ?? 0) > 1 ? "돈 반응 복합형" : result.title}</span>
@@ -909,7 +912,7 @@ function Runner({
                   <ScanSearch size={21} strokeWidth={1.7} aria-hidden="true" />
                   <span>이 유형의 특징</span>
                 </p>
-                <div className="money-result-paragraphs">
+                <div className="money-result-paragraphs money-result-interpretation-paragraphs">
                   {result.interpretation.split(/\n\n+/).map((paragraph, index) => (
                     <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.84, fontWeight: index === 0 ? 600 : 400 }}>
                       {paragraph}
@@ -983,7 +986,36 @@ function Runner({
                     {selahResult.faithLenses.length > 1 && (
                       <h3 className="money-composite-member-title" style={{ color: theme.text }}>{lens.title}</h3>
                     )}
-                    {lens.description && (
+                    {lens.id === "faith_low" ? (
+                      <>
+                        <div className="money-mobile-copy money-faith-low-summary">
+                          <section>
+                            <h3>핵심 진단</h3>
+                            <p className="money-faith-low-core">돈과 신앙의 관계를<br />비교적 편안하게 받아들이고 있습니다.</p>
+                          </section>
+                          <section>
+                            <h3>현재 모습</h3>
+                            <p>돈을 벌고 쓰고 모으고 누리는 과정에서<br />신앙적 부담과 내적 갈등이 적게 나타납니다.</p>
+                          </section>
+                          <section>
+                            <h3>이제 세워갈 기준</h3>
+                            <ul>
+                              <li>소비에 담고 싶은 믿음</li>
+                              <li>저축과 투자의 목적</li>
+                              <li>나눔을 선택하는 기준</li>
+                            </ul>
+                          </section>
+                          <p className="money-faith-low-direction">나만의 기준을 구체화할수록 하나님이 맡기신 돈을 지혜롭고 일관되게 관리할 수 있습니다.</p>
+                        </div>
+                        <div className="money-desktop-copy money-faith-paragraphs" style={{ maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
+                          {lens.description?.split(/\n\n+/).map((paragraph, index) => (
+                            <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.58, color: theme.text, opacity: index === 0 ? 0.86 : 0.82, textAlign: "center", fontWeight: index === 0 ? 600 : 400 }}>
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
+                      </>
+                    ) : lens.description && (
                       <div className="money-faith-paragraphs" style={{ marginTop: selahResult.faithLenses.length > 1 ? 12 : 0, maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
                         {lens.description.split(/\n\n+/).map((paragraph, index) => (
                           <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.58, color: theme.text, opacity: index === 0 ? 0.86 : 0.82, textAlign: "center", fontWeight: index === 0 ? 600 : 400 }}>

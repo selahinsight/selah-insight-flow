@@ -256,6 +256,77 @@
   gap: 10px;
 }
 
+.money-faith-low-summary {
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  color: inherit;
+}
+
+.money-faith-low-summary section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.money-faith-low-summary h3 {
+  color: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+}
+
+.money-faith-low-summary p,
+.money-faith-low-summary li {
+  font-size: 16px;
+  line-height: 1.58;
+  opacity: 0.84;
+}
+
+.money-faith-low-summary .money-faith-low-core {
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.money-faith-low-summary ul {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.money-faith-low-summary li::before {
+  content: "✓";
+  margin-right: 9px;
+  font-weight: 700;
+}
+
+.money-faith-low-summary .money-faith-low-direction {
+  padding-top: 15px;
+  border-top: 1px solid rgba(122, 103, 90, 0.14);
+}
+
+@media (max-width: 640px) {
+  .money-mobile-copy.money-faith-low-summary {
+    display: flex;
+  }
+
+  .money-desktop-copy.money-faith-paragraphs {
+    display: none;
+  }
+
+  .money-result-interpretation-paragraphs {
+    gap: 8px;
+  }
+
+  .money-result-interpretation-paragraphs p {
+    line-height: 1.6 !important;
+  }
+}
+
 .money-composite-member {
   margin-top: 28px;
   padding-top: 26px;
