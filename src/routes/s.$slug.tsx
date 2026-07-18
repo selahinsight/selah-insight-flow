@@ -18,7 +18,7 @@ import {
 } from "@/lib/survey-store";
 import { supabase } from "@/integrations/supabase/client";
 import { sendStudioIntake } from "@/lib/studio-intake.functions";
-import { allSelahMoneyResults, classifySelahMoneyDiagnosis } from "@/lib/selah-money-results";
+import { allSelahMoneyResults, classifySelahMoneyDiagnosis, customerFaithResultTitle } from "@/lib/selah-money-results";
 
 
 import {
@@ -880,7 +880,12 @@ function Runner({
             )}
             {result.representative_sentence && (
               <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
-                {quoteRepresentativeSentence(result.representative_sentence)}
+                {result.id === "organizing_delay" ? (
+                  <>
+                    <span className="money-desktop-copy">{quoteRepresentativeSentence(result.representative_sentence)}</span>
+                    <span className="money-mobile-copy">“지금 확인하면 더 불안해질<br />것 같아.”</span>
+                  </>
+                ) : quoteRepresentativeSentence(result.representative_sentence)}
               </p>
             )}
             {result.summary && (
@@ -890,7 +895,12 @@ function Runner({
             )}
             {result.description && (
               <p className="whitespace-pre-line" style={{ marginTop: 18, maxWidth: 440, marginLeft: "auto", marginRight: "auto", fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.8, textAlign: "center" }}>
-                {result.description}
+                {result.id === "organizing_delay" ? (
+                  <>
+                    <span className="money-desktop-copy">{result.description}</span>
+                    <span className="money-mobile-copy">돈을 정확히 마주하는 순간 마음이<br />무거워져 확인과 정리를 뒤로<br />미루는 유형이에요.</span>
+                  </>
+                ) : result.description}
               </p>
             )}
             {result.interpretation && (
@@ -966,7 +976,7 @@ function Runner({
                 <ResultSectionTitle theme={theme}>돈과 신앙 사이의 마음 유형</ResultSectionTitle>
                 <h2 className="money-result-type-box money-faith-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
                   <Heart size={20} strokeWidth={1.6} aria-hidden="true" />
-                  <span>{selahResult.faithLenses.length > 1 ? "돈과 신앙 사이의 마음 복합형" : selahResult.primaryFaithLens.title}</span>
+                  <span>{customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)}</span>
                 </h2>
                 {selahResult.faithLenses.map((lens) => (
                   <div className="money-faith-detail" key={lens.id} style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>

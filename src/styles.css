@@ -2,6 +2,20 @@
 @source "../src";
 @import "tw-animate-css";
 
+.money-mobile-copy {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .money-desktop-copy {
+    display: none;
+  }
+
+  .money-mobile-copy {
+    display: inline;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

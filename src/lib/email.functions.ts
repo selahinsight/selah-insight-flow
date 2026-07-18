@@ -9,7 +9,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/require-admin";
-import { allSelahMoneyResults } from "@/lib/selah-money-results";
+import { allSelahMoneyResults, customerFaithResultTitle } from "@/lib/selah-money-results";
 
 // ---------- Public: free result email ----------
 
@@ -61,8 +61,11 @@ function buildEmailHtml(args: {
   const secondaryLine = secondary?.title
     ? `함께 나타나는 유형: ${secondary.title}`
     : "";
+  const faithTitle = faithLens
+    ? customerFaithResultTitle(faithLens.id, faithLens.title ?? "신앙 유형")
+    : "";
   const faithLine = faithLens?.title
-    ? `신앙 렌즈: ${faithLens.title}`
+    ? `신앙 유형: ${faithTitle}`
     : "";
   const faithDesc = faithLens?.email_result ?? faithLens?.description ?? "";
 
@@ -105,7 +108,7 @@ function buildEmailHtml(args: {
 
   ${faithLine ? `<div style="border:1px solid #ece3d6;border-radius:14px;padding:20px;margin:0 0 18px;">
     <p style="font-size:11px;letter-spacing:0.18em;color:#a1856b;margin:0 0 6px;">신앙 렌즈</p>
-    <h3 style="font-size:16px;margin:0 0 8px;color:#2b2320;">${stripTags(faithLens?.title ?? "")}</h3>
+    <h3 style="font-size:16px;margin:0 0 8px;color:#2b2320;">${stripTags(faithTitle)}</h3>
     ${faithDesc ? `<p style="font-size:13.5px;line-height:1.75;margin:0;color:#4a3f37;">${stripTags(faithDesc)}</p>` : ""}
   </div>` : ""}
 

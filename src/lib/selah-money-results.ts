@@ -29,6 +29,21 @@ const moneyCombinations = resultLibrary.moneyCombinationResults as ResultType[];
 const faithResults = resultLibrary.faithResults as ResultType[];
 const noClearMoneyResult = resultLibrary.noClearMoneyResult as ResultType;
 
+const baseResultOverrides: Record<string, Partial<ResultType>> = {
+  organizing_delay: {
+    interpretation: "정리미룸형은 돈을 마주할 때 부담을 크게 느끼는 편입니다.\n\n통장 잔액, 카드값, 구독, 할부 내역을 확인해야 한다는 걸 알지만, 막상 보려고 하면 머리가 복잡해지고 마음이 무거워질 수 있어요.",
+    flow: "돈을 확인하는 게 부담스러움\n→ 확인과 정리를 미룸\n→ 잠시 마음이 편해짐\n→ 돈의 흐름이 흐릿해짐\n→ 불안과 부담이 커짐",
+  },
+};
+
+export function customerFaithResultTitle(resultId: string, fallback = "신앙 유형"): string {
+  if (resultId === "faith_low") return "신앙기준형";
+  if (resultId.startsWith("faith_burden_")) return "신앙부담형";
+  if (resultId.startsWith("faith_separation_")) return "신앙분리형";
+  if (resultId.startsWith("faith_combo_")) return "신앙 조합형";
+  return fallback;
+}
+
 const combinationIdByMembers: Record<string, string> = Object.fromEntries(
   moneyCombinations.map((result) => [(result.componentIds ?? []).join("|"), result.id]),
 );
@@ -47,7 +62,7 @@ export function allSelahMoneyResults(baseResults: ResultType[] = []): ResultType
     ...moneyCombinations,
     ...faithResults,
   ]) {
-    byId.set(result.id, result);
+    byId.set(result.id, { ...result, ...baseResultOverrides[result.id] });
   }
   return [...byId.values()];
 }
