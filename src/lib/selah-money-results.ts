@@ -37,7 +37,7 @@ const baseResultOverrides: Record<string, Partial<ResultType>> = {
 };
 
 export function customerFaithResultTitle(resultId: string, fallback = "신앙 유형"): string {
-  if (resultId === "faith_low") return "신앙 렌즈 낮음";
+  if (resultId === "faith_low") return "편안한 신앙 연결형";
   if (resultId.startsWith("faith_burden_")) return "신앙부담형";
   if (resultId.startsWith("faith_separation_")) return "신앙분리형";
   if (resultId.startsWith("faith_combo_")) return "신앙 조합형";

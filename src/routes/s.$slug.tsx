@@ -984,9 +984,13 @@ function Runner({
                       <h3 className="money-composite-member-title" style={{ color: theme.text }}>{lens.title}</h3>
                     )}
                     {lens.description && (
-                      <p style={{ marginTop: selahResult.faithLenses.length > 1 ? 12 : 0, maxWidth: 440, marginLeft: "auto", marginRight: "auto", fontSize: 16, lineHeight: 1.58, color: theme.text, opacity: 0.86, textAlign: "center", fontWeight: 600 }}>
-                        {lens.description}
-                      </p>
+                      <div className="money-faith-paragraphs" style={{ marginTop: selahResult.faithLenses.length > 1 ? 12 : 0, maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
+                        {lens.description.split(/\n\n+/).map((paragraph, index) => (
+                          <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.58, color: theme.text, opacity: index === 0 ? 0.86 : 0.82, textAlign: "center", fontWeight: index === 0 ? 600 : 400 }}>
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
                     )}
                     {lens.interpretation && (
                       <div className="money-faith-paragraphs" style={{ marginTop: 13 }}>
