@@ -888,11 +888,6 @@ function Runner({
                     <span className="money-desktop-copy">{quoteRepresentativeSentence(result.representative_sentence)}</span>
                     <span className="money-mobile-copy">“지금 확인하면<br />더 불안해질 것 같아.”</span>
                   </>
-                ) : result.id === "safety_seeking" ? (
-                  <>
-                    <span className="money-desktop-copy">{quoteRepresentativeSentence(result.representative_sentence)}</span>
-                    <span className="money-mobile-copy">“미래를 생각하면<br />계속 긴장하고, 돈을 꼼꼼히<br />관리하는 데서<br />안정감을 느껴.”</span>
-                  </>
                 ) : quoteRepresentativeSentence(result.representative_sentence)}
               </p>
             )}
@@ -907,6 +902,11 @@ function Runner({
                   <>
                     <span className="money-desktop-copy">{result.description}</span>
                     <span className="money-mobile-copy">돈을 정확히 마주하는 순간<br />마음이 무거워져 확인과 정리를<br />뒤로 미루는 유형이에요.</span>
+                  </>
+                ) : result.id === "safety_seeking" ? (
+                  <>
+                    <span className="money-desktop-copy">{result.description}</span>
+                    <span className="money-mobile-copy">현재 자금 여유가 있어도 미래의 위험을 생각하면<br />계속 긴장하고, 돈을 아끼고 관리하는 데서<br />안정감을 느끼는 유형이에요.</span>
                   </>
                 ) : result.description}
               </p>
@@ -1028,7 +1028,7 @@ function Runner({
                         <div className="money-mobile-copy money-faith-low-summary">
                           <section>
                             <h3>핵심 진단</h3>
-                            <p className="money-faith-low-core">하나님 앞에서 돈을 바르게 다루고 싶은<br />마음이 분명합니다.</p>
+                            <p className="money-faith-low-core">하나님 앞에서 돈을 바르게 다루고<br />싶은 마음이 분명합니다.</p>
                           </section>
                           <section>
                             <h3>현재 모습</h3>
@@ -1042,7 +1042,7 @@ function Runner({
                               <li>감사와 평안으로 선택하는 기준</li>
                             </ul>
                           </section>
-                          <p className="money-faith-low-direction">돈의 목적을 먼저 정하면<br />신앙적 성찰이 부담에서<br />지혜로운 기준으로 이동합니다.</p>
+                          <p className="money-faith-low-direction">돈의 목적을 먼저 정하면 신앙적<br />성찰이 부담에서 지혜로운<br />기준으로 이동합니다.</p>
                         </div>
                         <div className="money-desktop-copy money-faith-paragraphs" style={{ maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
                           {lens.description?.split(/\n\n+/).map((paragraph, index) => (
