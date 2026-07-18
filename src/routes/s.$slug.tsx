@@ -976,7 +976,10 @@ function Runner({
             {selahResult?.primaryFaithLens && (
               <>
                 <div className="money-result-section-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
-                <ResultSectionTitle theme={theme}>돈과 신앙 사이의 마음 유형</ResultSectionTitle>
+                <ResultSectionTitle theme={theme}>
+                  <span className="money-desktop-copy">돈과 신앙 사이의 마음 유형</span>
+                  <span className="money-mobile-copy">{name.trim()}님의 돈을 대하는 신앙 유형</span>
+                </ResultSectionTitle>
                 <h2 className="money-result-type-box money-faith-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
                   <Heart size={20} strokeWidth={1.6} aria-hidden="true" />
                   <span>{customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)}</span>
@@ -995,7 +998,7 @@ function Runner({
                           </section>
                           <section>
                             <h3>현재 모습</h3>
-                            <p>돈을 벌고 쓰고 모으고 누리는 과정에서<br />신앙적 부담과 내적 갈등이<br />적게 나타납니다.</p>
+                            <p>돈을 벌고 쓰고 모으고 누리는 과정<br />에서 신앙적 부담과 내적 갈등이<br />적게 나타납니다.</p>
                           </section>
                           <section className="money-faith-low-standards">
                             <h3>이제 세워갈 기준</h3>
