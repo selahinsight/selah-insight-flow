@@ -273,6 +273,10 @@
   gap: 4px;
 }
 
+.money-faith-low-summary .money-faith-low-standards li {
+  line-height: 1.4;
+}
+
 .money-faith-low-summary h3 {
   color: inherit;
   font-size: 14px;
@@ -332,6 +336,10 @@
 
   .money-result-interpretation-paragraphs {
     gap: 8px;
+  }
+
+  .money-result-description {
+    line-height: 1.5 !important;
   }
 
   .money-result-interpretation-paragraphs p {

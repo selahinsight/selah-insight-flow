@@ -897,7 +897,7 @@ function Runner({
               </p>
             )}
             {result.description && (
-              <p className="whitespace-pre-line" style={{ marginTop: 18, maxWidth: 440, marginLeft: "auto", marginRight: "auto", fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.8, textAlign: "center" }}>
+              <p className="whitespace-pre-line money-result-description" style={{ marginTop: 18, maxWidth: 440, marginLeft: "auto", marginRight: "auto", fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.8, textAlign: "center" }}>
                 {result.id === "organizing_delay" ? (
                   <>
                     <span className="money-desktop-copy">{result.description}</span>
@@ -995,7 +995,7 @@ function Runner({
                           </section>
                           <section>
                             <h3>현재 모습</h3>
-                            <p>돈을 벌고 쓰고 모으고 누리는 과정<br />에서 신앙적 부담과 내적 갈등이 적게<br />나타납니다.</p>
+                            <p>돈을 벌고 쓰고 모으고 누리는 과정에서<br />신앙적 부담과 내적 갈등이<br />적게 나타납니다.</p>
                           </section>
                           <section className="money-faith-low-standards">
                             <h3>이제 세워갈 기준</h3>
@@ -1005,7 +1005,7 @@ function Runner({
                               <li>나눔을 선택하는 기준</li>
                             </ul>
                           </section>
-                          <p className="money-faith-low-direction">소비·저축·투자·나눔에 담고 싶은<br />믿음과 삶의 목적을 구체적으로 세우면<br />하나님이 맡기신 돈을<br />지혜롭고 일관되게 관리할 수 있습니다.</p>
+                          <p className="money-faith-low-direction">소비·저축·투자·나눔에 담고 싶은<br />믿음과 삶의 목적을 구체적으로 세우<br />면 하나님이 맡기신 돈을 지혜롭고<br />일관되게 관리할 수 있습니다.</p>
                         </div>
                         <div className="money-desktop-copy money-faith-paragraphs" style={{ maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
                           {lens.description?.split(/\n\n+/).map((paragraph, index) => (
@@ -1054,7 +1054,7 @@ function Runner({
                     <>
                       <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
                         <span aria-hidden="true">✓</span>
-                        <p>소비·저축·투자·나눔 중 한 영역을 골라, 그 안에 담고 싶은 믿음의 목적을 한 문장으로 적어보세요.</p>
+                        <p>소비·저축·투자·나눔 중 한 영역을 골라, 그 선택에서 하나님 앞에 지키고 싶은 기준을 한 문장으로 적어보세요.</p>
                       </div>
                       <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
                         <span aria-hidden="true">✓</span>
