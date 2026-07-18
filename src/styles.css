@@ -269,6 +269,10 @@
   gap: 8px;
 }
 
+.money-faith-low-summary .money-faith-low-standards {
+  gap: 4px;
+}
+
 .money-faith-low-summary h3 {
   color: inherit;
   font-size: 14px;
@@ -309,6 +313,10 @@
   border-top: 1px solid rgba(122, 103, 90, 0.14);
 }
 
+.money-faith-action-item {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .money-mobile-copy.money-faith-low-summary {
     display: flex;
@@ -316,6 +324,10 @@
 
   .money-desktop-copy.money-faith-paragraphs {
     display: none;
+  }
+
+  .money-action-item.money-faith-action-item {
+    display: flex;
   }
 
   .money-result-interpretation-paragraphs {
