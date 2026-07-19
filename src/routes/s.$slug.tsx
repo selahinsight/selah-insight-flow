@@ -906,7 +906,7 @@ function Runner({
                 ) : result.id === "safety_seeking" ? (
                   <>
                     <span className="money-desktop-copy">{result.description}</span>
-                    <span className="money-mobile-copy">현재 자금 여유가 있어도 미래의 위험을 생각하면<br />계속 긴장하고, 돈을 아끼고 관리하는 데서<br />안정감을 느끼는 유형이에요.</span>
+                    <span className="money-mobile-copy">현재 자금 여유가 있어도 미래의 위험을&nbsp;생각하면<br />계속 긴장하고, 돈을 아끼고 관리하는&nbsp;데서<br />안정감을 느끼는 유형이에요.</span>
                   </>
                 ) : result.description}
               </p>
@@ -1032,7 +1032,7 @@ function Runner({
                           </section>
                           <section>
                             <h3>현재 모습</h3>
-                            <p>돈을 벌고 쓰고 누리는 선택에서<br />신앙적으로 바르게 하고 싶은<br />마음이 크며, 상황에 따라 부담과<br />죄책감이 올라옵니다.</p>
+                            <p>돈을 벌고 쓰고 누리는 선택에서<br />신앙적으로 바르게 하고 싶은<br />마음이&nbsp;크며, 상황에 따라 부담과<br />죄책감이&nbsp;올라옵니다.</p>
                           </section>
                           <section className="money-faith-low-standards">
                             <h3>이제 세워갈 기준</h3>
@@ -1042,7 +1042,7 @@ function Runner({
                               <li>감사와 평안으로 선택하는 기준</li>
                             </ul>
                           </section>
-                          <p className="money-faith-low-direction">돈의 목적을 먼저 정하면 신앙적<br />성찰이 부담에서 지혜로운<br />기준으로 이동합니다.</p>
+                          <p className="money-faith-low-direction">돈의 목적을 먼저 정하면 신앙적<br />성찰이 부담에서 지혜로운<br />기준으로&nbsp;이동합니다.</p>
                         </div>
                         <div className="money-desktop-copy money-faith-paragraphs" style={{ maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
                           {lens.description?.split(/\n\n+/).map((paragraph, index) => (
