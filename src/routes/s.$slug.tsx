@@ -906,7 +906,7 @@ function Runner({
                 ) : result.id === "safety_seeking" ? (
                   <>
                     <span className="money-desktop-copy">{result.description}</span>
-                    <span className="money-mobile-copy">현재 자금 여유가 있어도 미래의 위험을&nbsp;생각하면<br />계속 긴장하고, 돈을 아끼고 관리하는&nbsp;데서<br />안정감을 느끼는 유형이에요.</span>
+                    <span className="money-mobile-copy">현재 자금 여유가 있어도 <span style={{ whiteSpace: "nowrap" }}>미래의 위험을 생각하면</span><br />계속 긴장하고, 돈을 아끼고 <span style={{ whiteSpace: "nowrap" }}>관리하는 데서</span><br />안정감을 느끼는 유형이에요.</span>
                   </>
                 ) : result.description}
               </p>
