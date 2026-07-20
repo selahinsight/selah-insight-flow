@@ -1078,39 +1078,18 @@ function Runner({
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p className="money-result-box-title" style={{ color: theme.accent }}>
                   <Sprout size={21} strokeWidth={1.7} aria-hidden="true" />
-                  <span>이번 주 작은 실천</span>
+                  <span>오늘의 작은 실천</span>
                 </p>
                 <div className="money-action-list">
-                  {result.small_action.split(/\n\n+/).map((action) => (
+                  {(result.id === "safety_seeking"
+                    ? ["이번 주에 편안하게 사용할 누림 예산을 정하고, 그 돈에 담고 싶은 목적을 한 문장으로 적어보세요."]
+                    : result.small_action.split(/\n\n+/).slice(0, 1)
+                  ).map((action) => (
                     <div className="money-action-item" key={action} style={{ color: theme.text, borderColor: theme.border }}>
                       <span aria-hidden="true">✓</span>
                       <p>{action}</p>
                     </div>
                   ))}
-                  {selahResult?.primaryFaithLens?.id === "faith_low" && (
-                    <>
-                      <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
-                        <span aria-hidden="true">✓</span>
-                        <p>소비·저축·투자·나눔 중 한 영역을 골라, 그 선택에서 하나님 앞에 지키고 싶은 기준을 한 문장으로 적어보세요.</p>
-                      </div>
-                      <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
-                        <span aria-hidden="true">✓</span>
-                        <p>이번 주 한 번, 돈을 쓰기 전에 “이 선택은 내가 세운 믿음의 기준과 연결되는가?”를 점검해 보세요.</p>
-                      </div>
-                    </>
-                  )}
-                  {selahResult?.primaryFaithLens?.id === "faith_burden_mid" && (
-                    <>
-                      <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
-                        <span aria-hidden="true">✓</span>
-                        <p>이번 주 지출 하나를 골라, 하나님 앞에서 그 선택에 담긴 목적과 감사할 점을 한 문장씩 적어보세요.</p>
-                      </div>
-                      <div className="money-action-item money-faith-action-item" style={{ color: theme.text, borderColor: theme.border }}>
-                        <span aria-hidden="true">✓</span>
-                        <p>돈을 사용한 뒤 죄책감이 올라오면, 선택의 목적·필요·기준을 차분히 확인해 보세요.</p>
-                      </div>
-                    </>
-                  )}
                 </div>
               </div>
             )}
@@ -1138,6 +1117,7 @@ function Runner({
           </div>
 
           <EmailResultSection
+            isMoneyDiagnosis={isMoneyDiagnosis}
             name={name}
             email={email}
             privacyConsent={privacyConsent}
@@ -1629,6 +1609,7 @@ function ResultSectionTitle({ children, theme }: { children: React.ReactNode; th
 }
 
 function EmailResultSection({
+  isMoneyDiagnosis,
   name,
   email,
   privacyConsent,
@@ -1642,6 +1623,7 @@ function EmailResultSection({
   onMarketingConsentChange,
   onSubmit,
 }: {
+  isMoneyDiagnosis: boolean;
   name: string;
   email: string;
   privacyConsent: boolean;
@@ -1661,20 +1643,31 @@ function EmailResultSection({
     <div style={{ ...card, marginTop: 16, borderRadius: 24, padding: 28, textAlign: "center" }}>
       <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>EMAIL RESULT</p>
       <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.35, color: theme.text }}>
-        전체 결과 이메일 신청
+        {isMoneyDiagnosis ? "내 성향에 맞는 돈 관리법 받아보기" : "전체 결과 이메일 신청"}
       </h2>
-      <p
-        className="whitespace-pre-line"
-        style={{
-          marginTop: 12,
-          fontSize: 14,
-          lineHeight: 1.75,
-          color: theme.text,
-          opacity: 0.78,
-        }}
-      >
-        이메일을 저장하면 결과 요약을 이메일로 보내드립니다.{"\n"}메일 발송 기능이 준비되는 동안에는 결과 저장만 먼저 진행합니다.
-      </p>
+      {isMoneyDiagnosis ? (
+        <div style={{ marginTop: 14, color: theme.text, opacity: 0.82 }}>
+          <p style={{ fontSize: 14, lineHeight: 1.7 }}>전체 결과지에서 이어서 확인할 수 있어요.</p>
+          <ul style={{ margin: "12px auto 0", maxWidth: 360, paddingLeft: 20, textAlign: "left", fontSize: 14, lineHeight: 1.85 }}>
+            <li>소비·저축·투자에서 나타나는 나의 패턴</li>
+            <li>불안을 낮추는 충분함의 기준</li>
+            <li>신앙과 현실을 함께 세우는 맞춤 돈 관리법</li>
+          </ul>
+        </div>
+      ) : (
+        <p
+          className="whitespace-pre-line"
+          style={{
+            marginTop: 12,
+            fontSize: 14,
+            lineHeight: 1.75,
+            color: theme.text,
+            opacity: 0.78,
+          }}
+        >
+          이메일을 저장하면 결과 요약을 이메일로 보내드립니다.
+        </p>
+      )}
       {name && (
         <p style={{ marginTop: 10, fontSize: 13, color: theme.muted }}>
           {name}님의 결과를 저장할 이메일을 알려주세요.
@@ -1741,7 +1734,9 @@ function EmailResultSection({
           opacity: saved ? 0.75 : !privacyConsent || !email.trim() ? 0.5 : 1,
         }}
       >
-        {saved ? "이메일 정보가 저장되었습니다" : "이메일 정보 저장하기"}
+        {saved
+          ? isMoneyDiagnosis ? "전체 결과 이메일 신청 완료" : "이메일 정보가 저장되었습니다"
+          : isMoneyDiagnosis ? "전체 결과 이메일로 받기" : "이메일 정보 저장하기"}
       </button>
     </div>
   );
