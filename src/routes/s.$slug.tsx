@@ -904,10 +904,7 @@ function Runner({
                     <span className="money-mobile-copy">돈을 정확히 마주하는 순간<br />마음이 무거워져 확인과 정리를<br />뒤로 미루는 유형이에요.</span>
                   </>
                 ) : result.id === "safety_seeking" ? (
-                  <>
-                    <span className="money-desktop-copy">{result.description}</span>
-                    <span className="money-mobile-copy"><span style={{ whiteSpace: "nowrap" }}>현재 자금 여유가 있어도 미래의 위험을</span><br /><span style={{ whiteSpace: "nowrap" }}>생각하면 계속 긴장하고, 돈을</span><br /><span style={{ whiteSpace: "nowrap" }}>아끼고 관리하는 데서 안정감을 느끼는</span><br />유형이에요.</span>
-                  </>
+                  <span><span style={{ whiteSpace: "nowrap" }}>현재 자금 여유가 있어도 미래의 위험을</span><br /><span style={{ whiteSpace: "nowrap" }}>생각하면 계속 긴장하고, 돈을 아끼고</span><br /><span style={{ whiteSpace: "nowrap" }}>관리하는 데서 안정감을 느끼는</span><br />유형이에요.</span>
                 ) : result.description}
               </p>
             )}
@@ -1017,7 +1014,7 @@ function Runner({
                             <p>돈을 벌고 쓰고 모으고 누리는 과정<br />에서 신앙적 부담과 내적 갈등이<br />적게 나타납니다.</p>
                           </section>
                           <section className="money-faith-low-standards">
-                            <h3>이제 세워갈 기준</h3>
+                            <h3>돈을 다루는 기준</h3>
                             <ul>
                               <li>소비에 담고 싶은 믿음</li>
                               <li>저축과 투자의 목적</li>
@@ -1046,14 +1043,17 @@ function Runner({
                             <p><span style={{ whiteSpace: "nowrap" }}>돈을 벌고 쓰고 누리는 선택에서</span><br /><span style={{ whiteSpace: "nowrap" }}>신앙적으로 바르게 하고 싶은 마음이</span><br /><span style={{ whiteSpace: "nowrap" }}>크며, 상황에 따라 부담과 죄책감이</span><br />올라옵니다.</p>
                           </section>
                           <section className="money-faith-low-standards">
-                            <h3>이제 세워갈 기준</h3>
+                            <h3>돈을 다루는 기준</h3>
                             <ul>
                               <li>지출에 담긴 목적</li>
                               <li>필요·회복·성장·관계·나눔의 구분</li>
                               <li>감사와 평안으로 선택하는 기준</li>
                             </ul>
                           </section>
-                          <p className="money-faith-low-direction">돈의 목적을 먼저 정하면 신앙적<br /><span style={{ whiteSpace: "nowrap" }}>성찰이 부담에서 지혜로운 기준으로</span><br />이동합니다.</p>
+                          <section className="money-faith-low-direction">
+                            <h3>세워갈 방향</h3>
+                            <p>돈의 목적을 먼저 정하면 신앙적<br /><span style={{ whiteSpace: "nowrap" }}>성찰이 부담에서 지혜로운 기준으로</span><br />이동합니다.</p>
+                          </section>
                         </div>
                         <div className="money-desktop-copy money-faith-paragraphs" style={{ maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
                           {lens.description?.split(/\n\n+/).map((paragraph, index) => (
