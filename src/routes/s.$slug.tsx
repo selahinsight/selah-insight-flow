@@ -948,6 +948,17 @@ function Runner({
                 </div>
               </div>
             )}
+            {result.id === "safety_seeking" && (
+              <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
+                <p className="money-result-box-title" style={{ color: theme.accent }}>
+                  <Sprout size={21} strokeWidth={1.7} aria-hidden="true" />
+                  <span>이 유형의 핵심 전환점</span>
+                </p>
+                <p style={{ marginTop: 13, fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.84 }}>
+                  안전추구형의 마음을 편안하게 만드는 핵심은 ‘충분함의 기준’입니다. 비상자금, 목적저축, 누림 예산의 목표를 숫자로 정하면 미래를 준비하는 힘이 현재의 평안으로 이어집니다.
+                </p>
+              </div>
+            )}
             {selahResult?.primaryMoneyTypes.slice(1).map((moneyType) => (
               <div className="money-composite-member" key={moneyType.id} style={{ borderColor: theme.border }}>
                 <h3 className="money-composite-member-title" style={{ color: theme.text }}>{moneyType.title}</h3>
