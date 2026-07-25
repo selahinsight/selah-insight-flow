@@ -373,11 +373,14 @@ function Runner({
     if (survey.slug !== "selah-money-diagnosis" || typeof window === "undefined") return;
 
     const params = new URLSearchParams(window.location.search);
-    if (params.get("preview") !== "result") return;
+    const isShortResultPreview =
+      window.location.pathname.replace(/\/+$/, "").endsWith("/s/selah-money-d");
+    if (!isShortResultPreview && params.get("preview") !== "result") return;
 
     let cancelled = false;
     void (async () => {
       const hasPrivatePreviewKey =
+        isShortResultPreview ||
         params.get("previewKey") === "7e1b5a62-3c94-4f87-a6d2-91b84c57ef30";
 
       if (!hasPrivatePreviewKey) {
@@ -390,7 +393,11 @@ function Runner({
       }
 
       const byId = (id: string | null) => survey.resultTypes?.find((item) => item.id === id);
-      const primaryMoneyTypes = (params.get("primary") ?? params.get("type") ?? "organizing_delay")
+      const primaryMoneyTypes = (
+        params.get("primary") ??
+        params.get("type") ??
+        (isShortResultPreview ? "money_no_clear_pattern" : "organizing_delay")
+      )
         .split(",")
         .map((id) => byId(id.trim()))
         .filter((item): item is ResultType => Boolean(item));
