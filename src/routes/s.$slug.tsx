@@ -404,7 +404,7 @@ function Runner({
       const primary = primaryMoneyTypes[0];
       if (!primary) return;
 
-      const faithLenses = (params.get("faith") ?? "")
+      const faithLenses = (params.get("faith") ?? (isShortResultPreview ? "faith_low" : ""))
         .split(",")
         .map((id) => byId(id.trim()))
         .filter((item): item is ResultType => Boolean(item));
