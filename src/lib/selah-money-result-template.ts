@@ -13,7 +13,7 @@ export interface SelahMoneyResultTemplateContent {
 export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResultTemplateContent> = {
   organizing_delay: {
     title: "정리미룸형",
-    representativeHeart: ["지금 통장 잔액과 카드값을 확인하면", "더 불안해질 것 같아."],
+    representativeHeart: ["지금 통장 잔액과 카드값을 확인", "하면 더 불안해질 것 같아."],
     flow: [
       "돈을 확인해야 한다고 느낌",
       "숫자를 마주할 생각에\n마음이 무거워짐",
@@ -98,8 +98,8 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     checklist: [
       "돈을 쓰기 전에 무엇을 위해 사용하는지 한 문장으로 적어보세요.",
-      "월초에 생활비와 저축을 정한 뒤, 이번 달에 나를 위해 사용할 금액도 함께 정해보세요.",
-      "돈을 사용한 뒤, 그 지출로 해결된 필요나 좋아진 점을 한 가지 적어보세요.",
+      "월초에 생활비와 저축을 정한 뒤, 나를 위해 사용할 금액도 함께 정해보세요.",
+      "돈을 사용한 뒤 좋아진 점을 한 가지 적어보세요.",
     ],
   },
 };
