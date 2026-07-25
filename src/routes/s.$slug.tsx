@@ -883,10 +883,10 @@ function Runner({
             {(selahResult?.primaryMoneyTypes.length ?? 0) > 1 && (
               <h3 className="money-composite-member-title" style={{ color: theme.text }}>{result.title}</h3>
             )}
-            {result.id === "safety_seeking" && (
-              <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT.safety_seeking} theme={theme} />
+            {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && (
+              <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]} theme={theme} />
             )}
-            {result.id !== "safety_seeking" && result.representative_sentence && (
+            {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && result.representative_sentence && (
               <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
                 {result.id === "organizing_delay" ? (
                   <>
@@ -896,12 +896,12 @@ function Runner({
                 ) : quoteRepresentativeSentence(result.representative_sentence)}
               </p>
             )}
-            {result.id !== "safety_seeking" && result.summary && (
+            {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && result.summary && (
               <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.7, color: theme.text, opacity: 0.85, textAlign: "center" }}>
                 {result.summary}
               </p>
             )}
-            {result.id !== "safety_seeking" && result.description && (
+            {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && result.description && (
               <p className="whitespace-pre-line money-result-description" style={{ marginTop: 18, maxWidth: 440, marginLeft: "auto", marginRight: "auto", fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.8, textAlign: "center" }}>
                 {result.id === "organizing_delay" ? (
                   <>
@@ -911,7 +911,7 @@ function Runner({
                 ) : result.description}
               </p>
             )}
-            {result.id !== "safety_seeking" && result.interpretation && (
+            {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && result.interpretation && (
               <div style={{ marginTop: 22, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p className="money-result-box-title" style={{ color: theme.accent }}>
                   <ScanSearch size={21} strokeWidth={1.7} aria-hidden="true" />
@@ -926,7 +926,7 @@ function Runner({
                 </div>
               </div>
             )}
-            {result.id !== "safety_seeking" && result.flow && (
+            {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && result.flow && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p className="money-result-box-title" style={{ color: theme.accent }}>
                   <GitBranch size={21} strokeWidth={1.7} aria-hidden="true" />
@@ -989,11 +989,11 @@ function Runner({
                   <Heart size={20} strokeWidth={1.6} aria-hidden="true" />
                   <span>{customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)}</span>
                 </h2>
-                {selahResult.primaryFaithLens.id === "faith_burden_mid" && (
-                  <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT.faith_burden_mid} theme={theme} />
+                {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[selahResult.primaryFaithLens.id] && (
+                  <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[selahResult.primaryFaithLens.id]} theme={theme} />
                 )}
                 {selahResult.faithLenses.map((lens) => (
-                  lens.id === "faith_burden_mid" ? null : (
+                  SELAH_MONEY_RESULT_TEMPLATE_CONTENT[lens.id] ? null : (
                   <div className="money-faith-detail" key={lens.id} style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                     {selahResult.faithLenses.length > 1 && (
                       <h3 className="money-composite-member-title" style={{ color: theme.text }}>{lens.title}</h3>
