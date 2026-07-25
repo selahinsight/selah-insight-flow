@@ -177,7 +177,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     flow: [
       "돈과 관련된 결정이 생김",
       "신앙과 관계없는\n현실 문제라고 생각함",
-      "가격·수익·당장의 이익을 살펴봄",
+      "가격·수익·당장의 이익을\n살펴봄",
       "익숙한 방식으로 결정함",
       "신앙과 돈 관리가\n분리되어 움직임",
     ],
