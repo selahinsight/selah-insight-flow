@@ -34,6 +34,8 @@ import {
 } from "@/lib/survey-themes";
 import { ResultShareCard } from "@/components/survey/result-share-card";
 import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
+import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
+import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
 import { CircleDollarSign, Download, GitBranch, Heart, ScanSearch, Share2, Sprout } from "lucide-react";
 import { toast } from "sonner";
 
@@ -882,45 +884,7 @@ function Runner({
               <h3 className="money-composite-member-title" style={{ color: theme.text }}>{result.title}</h3>
             )}
             {result.id === "safety_seeking" && (
-              <>
-                <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
-                  “아무리 준비해도 부족할까 봐<br />마음을 놓기가 어려워.”
-                </p>
-                <div style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <div className="money-unified-summary">
-                  <section>
-                    <h3>이 유형의 마음을 살펴보면,</h3>
-                    <div className="money-flow-steps">
-                      {[
-                        "미래에 돈이 부족할까 걱정함",
-                        "돈을 아끼고 꼼꼼히 관리함",
-                        "잠시 마음이 놓임",
-                        "새로운 지출과 위험이 떠오름",
-                        "다시 돈을 단단히 붙들게 됨",
-                      ].map((step, index, steps) => (
-                        <div key={step}>
-                          <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border, whiteSpace: "pre-line" }}>{step}</div>
-                          {index < steps.length - 1 && <div className="money-flow-arrow" style={{ color: theme.accent }}>↓</div>}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="money-unified-reading">
-                      <p>안전추구형의 불안은 앞으로 어떤 일이 생길지 알 수 없다는 마음에서 커집니다.</p>
-                      <p>이미 준비하고 있어도 ‘혹시 더 필요하면 어떡하지?’라는 생각이 떠오르고, 돈을 쓰는 순간 나를 지켜줄 안전이 줄어드는 것처럼 느껴집니다.</p>
-                      <p>그래서 꾸준히 모으고 관리하면서도 충분히 안심하기 어렵고, 자신을 위한 지출과 누림 앞에서 자주 망설입니다.</p>
-                    </div>
-                  </section>
-                  <section className="money-unified-checklist">
-                    <h3>지금 확인해보세요</h3>
-                    <ul>
-                      <li>비상시에 필요한 금액을 미리 적고 준비해보세요.</li>
-                      <li>앞으로 꼭 하고 싶은 일에 필요한 금액과 날짜를 정해 돈을 준비해보세요.</li>
-                      <li>이번 달에 마음 편히 사용할 금액을 미리 정하고 그 범위 안에서 사용해보세요.</li>
-                    </ul>
-                  </section>
-                </div>
-                </div>
-              </>
+              <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT.safety_seeking} theme={theme} />
             )}
             {result.id !== "safety_seeking" && result.representative_sentence && (
               <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
@@ -1026,11 +990,10 @@ function Runner({
                   <span>{customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)}</span>
                 </h2>
                 {selahResult.primaryFaithLens.id === "faith_burden_mid" && (
-                  <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
-                    “나를 위해 돈을 쓰고 누리면<br />하나님 앞에서 욕심처럼 보일까 봐<br />마음이 불편해.”
-                  </p>
+                  <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT.faith_burden_mid} theme={theme} />
                 )}
                 {selahResult.faithLenses.map((lens) => (
+                  lens.id === "faith_burden_mid" ? null : (
                   <div className="money-faith-detail" key={lens.id} style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                     {selahResult.faithLenses.length > 1 && (
                       <h3 className="money-composite-member-title" style={{ color: theme.text }}>{lens.title}</h3>
@@ -1064,39 +1027,6 @@ function Runner({
                           ))}
                         </div>
                       </>
-                    ) : lens.id === "faith_burden_mid" ? (
-                      <div className="money-unified-summary">
-                        <section>
-                          <h3>이 유형의 마음을 살펴보면,</h3>
-                          <div className="money-flow-steps">
-                            {[
-                              "돈을 쓰거나 누릴 일이 생김",
-                              "신앙적으로 바른 선택인지\n점검함",
-                              "필요와 목적을 여러 번 확인함",
-                              "부담과 죄책감이 올라옴",
-                              "돈을 쓰고 누리는 선택이\n조심스러워짐",
-                            ].map((step, index, steps) => (
-                              <div key={step}>
-                                <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border, whiteSpace: "pre-line" }}>{step}</div>
-                                {index < steps.length - 1 && <div className="money-flow-arrow" style={{ color: theme.accent }}>↓</div>}
-                              </div>
-                            ))}
-                          </div>
-                          <div className="money-unified-reading">
-                            <p>신앙부담형은 돈을 쓸 때 이 선택이 하나님 앞에서 바른지 세심하게 살핍니다.</p>
-                            <p>필요한 지출에서도 ‘내 욕심은 아닐까?’, ‘이렇게 누려도 괜찮을까?’라는 생각이 따라옵니다.</p>
-                            <p>감사하게 사용하고 싶은 마음과 조심해야 한다는 마음이 함께 움직여, 돈을 쓴 뒤에도 자신의 선택을 다시 점검하고 죄책감을 느끼기도 합니다.</p>
-                          </div>
-                        </section>
-                        <section className="money-unified-checklist">
-                          <h3>지금 확인해보세요</h3>
-                          <ul>
-                            <li>돈을 사용할 때 목적을 한 문장으로 적어보세요.</li>
-                            <li>이번 달 나를 위해 편안하게 사용할 금액을 미리 정해보세요.</li>
-                            <li>돈을 사용한 뒤 감사한 점 한 가지를 적어보세요.</li>
-                          </ul>
-                        </section>
-                      </div>
                     ) : lens.description && (
                       <div className="money-faith-paragraphs" style={{ marginTop: selahResult.faithLenses.length > 1 ? 12 : 0, maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
                         {lens.description.split(/\n\n+/).map((paragraph, index) => (
@@ -1116,6 +1046,7 @@ function Runner({
                       </div>
                     )}
                   </div>
+                  )
                 ))}
               </>
             )}
