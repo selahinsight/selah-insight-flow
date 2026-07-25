@@ -878,7 +878,7 @@ function Runner({
             </ResultSectionTitle>
             <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
               <CircleDollarSign size={20} strokeWidth={1.6} aria-hidden="true" />
-              <span>{(selahResult?.primaryMoneyTypes.length ?? 0) > 1 ? "돈 반응 복합형" : result.title}</span>
+              <span>{(selahResult?.primaryMoneyTypes.length ?? 0) > 1 ? "돈 반응 복합형" : (SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]?.title ?? result.title)}</span>
             </h2>
             {(selahResult?.primaryMoneyTypes.length ?? 0) > 1 && (
               <h3 className="money-composite-member-title" style={{ color: theme.text }}>{result.title}</h3>
