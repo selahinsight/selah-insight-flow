@@ -952,7 +952,7 @@ function Runner({
                   <span>이 유형의 핵심 전환점</span>
                 </p>
                 <p style={{ marginTop: 13, fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.84 }}>
-                  안전추구형의 마음을 편안하게 만드는 핵심은 ‘충분함의 기준’입니다. 비상자금, 목적저축, 누림 예산의 목표를 숫자로 정하면 미래를 준비하는 힘이 현재의 평안으로 이어집니다.
+                  안전추구형은 미래를 위해 얼마를 준비하면 마음이 놓일지 구체적인 기준을 세우는 것이 중요합니다. 비상자금은 생활비 몇 개월치, 목적저축은 목표 금액과 날짜, 누림 예산은 매달 편안하게 쓸 금액을 정해보세요. 준비의 목표가 분명해지면 미래를 든든하게 챙기면서 오늘의 돈도 편안하게 사용할 수 있습니다.
                 </p>
               </div>
             )}
@@ -1040,19 +1040,19 @@ function Runner({
                           </section>
                           <section>
                             <h3>현재 모습</h3>
-                            <p><span style={{ whiteSpace: "nowrap" }}>돈을 벌고 쓰고 누리는 선택에서</span><br /><span style={{ whiteSpace: "nowrap" }}>신앙적으로 바르게 하고 싶은 마음이</span><br /><span style={{ whiteSpace: "nowrap" }}>크며, 상황에 따라 부담과 죄책감이</span><br />올라옵니다.</p>
+                            <p><span style={{ whiteSpace: "nowrap" }}>돈을 벌고 쓰고 누리는 선택에서</span><br /><span style={{ whiteSpace: "nowrap" }}>신앙적으로 바르게 하고 싶은 마음이</span><br /><span style={{ whiteSpace: "nowrap" }}>크며, 상황에 따라 부담과 죄책감이</span><br />올라올 수 있습니다.</p>
                           </section>
                           <section className="money-faith-low-standards">
-                            <h3>돈을 다루는 기준</h3>
+                            <h3>돈을 쓸 때 확인할 기준</h3>
                             <ul>
-                              <li>지출에 담긴 목적</li>
-                              <li>필요·회복·성장·관계·나눔의 구분</li>
-                              <li>감사와 평안으로 선택하는 기준</li>
+                              <li>지금 이 돈을 쓰는 목적은 무엇인지</li>
+                              <li>생활·회복·성장·관계·나눔 중 어디에 해당하는지</li>
+                              <li>이 선택을 감사와 평안으로 받아들일 수 있는지</li>
                             </ul>
                           </section>
                           <section className="money-faith-low-direction">
-                            <h3>세워갈 방향</h3>
-                            <p>돈의 목적을 먼저 정하면 신앙적<br /><span style={{ whiteSpace: "nowrap" }}>성찰이 부담에서 지혜로운 기준으로</span><br />이동합니다.</p>
+                            <h3>이렇게 시작해보세요</h3>
+                            <p>돈을 쓰기 전에 이 돈의 목적을 한 문장으로 적어보세요. 목적과 필요가 분명한 지출은 감사로 받아들이고, 정한 범위 안에서 편안하게 누려보세요.</p>
                           </section>
                         </div>
                         <div className="money-desktop-copy money-faith-paragraphs" style={{ maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
