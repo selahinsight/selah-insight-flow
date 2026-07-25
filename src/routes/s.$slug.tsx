@@ -85,19 +85,20 @@ function answersForStudio(
 
 function RespondentSurvey() {
   const { slug } = Route.useParams();
+  const isSelahMoneyDiagnosis = slug === "selah-money-diagnosis" || slug === "selah-money-d";
   const [survey, setSurvey] = useState<Survey | null | undefined>(undefined);
 
   useEffect(() => {
     let cancelled = false;
     async function loadPublishedStudioSurvey(): Promise<Survey | null> {
-      if (slug !== "selah-money-diagnosis") return null;
+      if (!isSelahMoneyDiagnosis) return null;
 
       // Selah Studio의 반영 완료 버전을 공개 설문의 단일 기준 데이터로 사용합니다.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await (supabase as any)
         .from("studio_surveys")
         .select("*")
-        .eq("slug", slug)
+        .eq("slug", "selah-money-diagnosis")
         .eq("status", "published")
         .not("published_version", "is", null)
         .maybeSingle();
@@ -132,7 +133,7 @@ function RespondentSurvey() {
     }
 
     async function loadFallbackSurvey(): Promise<Survey | null> {
-      if (slug !== "selah-money-diagnosis") return null;
+      if (!isSelahMoneyDiagnosis) return null;
 
       const response = await fetch("/selah-money-diagnosis-survey-json.txt");
       if (!response.ok) return null;
@@ -154,7 +155,7 @@ function RespondentSurvey() {
     }
 
     async function load() {
-      if (slug === "selah-money-diagnosis") {
+      if (isSelahMoneyDiagnosis) {
         const published = await loadPublishedStudioSurvey();
         if (cancelled) return;
         setSurvey(published || (await loadFallbackSurvey()));
@@ -222,10 +223,10 @@ function RespondentSurvey() {
     return () => {
       cancelled = true;
     };
-  }, [slug]);
+  }, [isSelahMoneyDiagnosis, slug]);
 
   if (survey === undefined) {
-    if (slug === "selah-money-diagnosis") {
+    if (isSelahMoneyDiagnosis) {
       return (
         <div className="money-loading">
           <img src="/selah-insight-logo-transparent.png" alt="Selah Insight" />
