@@ -882,20 +882,33 @@ function Runner({
               <h3 className="money-composite-member-title" style={{ color: theme.text }}>{result.title}</h3>
             )}
             {result.id === "safety_seeking" && (
-              <div style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
+              <>
+                <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
+                  “아무리 준비해도 부족할까 봐 마음을 놓기가 어려워.”
+                </p>
+                <div style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <div className="money-unified-summary">
                   <section>
-                    <h3>핵심 진단</h3>
-                    <p className="money-unified-core">미래를 든든하게 준비하려는 마음이 크고, 돈을 꼼꼼히 관리할 때 안정감을 느낍니다.</p>
-                  </section>
-                  <section>
-                    <h3>대표 마음</h3>
-                    <p className="money-result-bubble">“아무리 준비해도 부족할까 봐 마음을 놓기가 어려워.”</p>
-                  </section>
-                  <section>
                     <h3>이 유형의 마음을 살펴보면</h3>
-                    <p>안전추구형은 예상하지 못한 지출과 미래의 변화를 미리 준비하려는 마음이 큽니다. 저축하고 돈의 흐름을 꼼꼼히 관리하면서 안정감을 찾습니다.</p>
-                    <p>준비한 금액이 있어도 새로운 위험이 떠오르면 다시 긴장하고, 현재 필요한 소비와 누림에도 조심스러운 마음이 이어집니다. 마음이 편안해지려면 준비의 목표와 끝을 구체적인 숫자로 정하는 과정이 필요합니다.</p>
+                    <div className="money-flow-steps">
+                      {[
+                        "미래에 돈이 부족할까 걱정함",
+                        "돈을 아끼고 꼼꼼히 관리함",
+                        "잠시 마음이 놓임",
+                        "새로운 지출과 위험이 떠오름",
+                        "다시 돈을 단단히 붙들게 됨",
+                      ].map((step, index, steps) => (
+                        <div key={step}>
+                          <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border }}>{step}</div>
+                          {index < steps.length - 1 && <div className="money-flow-arrow" style={{ color: theme.accent }}>↓</div>}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="money-unified-reading">
+                      <p>안전추구형의 불안은 앞으로 어떤 일이 생길지 알 수 없다는 마음에서 커집니다.</p>
+                      <p>이미 준비하고 있어도 ‘혹시 더 필요하면 어떡하지?’라는 생각이 떠오르고, 돈을 쓰는 순간 나를 지켜줄 안전이 줄어드는 것처럼 느껴집니다.</p>
+                      <p>그래서 꾸준히 모으고 관리하면서도 충분히 안심하기 어렵고, 자신을 위한 지출과 누림 앞에서 자주 망설입니다.</p>
+                    </div>
                   </section>
                   <section className="money-unified-checklist">
                     <h3>지금 확인해보세요</h3>
@@ -904,10 +917,10 @@ function Runner({
                       <li>앞으로 꼭 준비하고 싶은 일과 필요한 금액, 날짜를 정해보세요.</li>
                       <li>이번 달에 마음 편히 사용할 수 있는 금액을 정해보세요.</li>
                     </ul>
-                    <p className="money-unified-closing">준비해야 할 금액과 사용할 수 있는 금액이 분명해지면 미래를 챙기면서 오늘의 돈도 편안하게 사용할 수 있습니다.</p>
                   </section>
                 </div>
-              </div>
+                </div>
+              </>
             )}
             {result.id !== "safety_seeking" && result.representative_sentence && (
               <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
@@ -1012,6 +1025,11 @@ function Runner({
                   <Heart size={20} strokeWidth={1.6} aria-hidden="true" />
                   <span>{customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)}</span>
                 </h2>
+                {selahResult.primaryFaithLens.id === "faith_burden_mid" && (
+                  <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
+                    “나를 위해 돈을 쓰고 누리면 하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해.”
+                  </p>
+                )}
                 {selahResult.faithLenses.map((lens) => (
                   <div className="money-faith-detail" key={lens.id} style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                     {selahResult.faithLenses.length > 1 && (
@@ -1049,17 +1067,26 @@ function Runner({
                     ) : lens.id === "faith_burden_mid" ? (
                       <div className="money-unified-summary">
                         <section>
-                          <h3>핵심 진단</h3>
-                          <p className="money-unified-core">돈을 벌고 쓰고 누리는 선택을 하나님 앞에서 바르게 하고 싶은 마음이 큽니다.</p>
-                        </section>
-                        <section>
-                          <h3>대표 마음</h3>
-                          <p className="money-result-bubble">“나를 위해 돈을 쓰고 누리면 하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해.”</p>
-                        </section>
-                        <section>
                           <h3>이 유형의 마음을 살펴보면</h3>
-                          <p>중간 신앙부담형은 소비·저축·투자·누림의 선택마다 자신의 믿음과 잘 연결되는지 신중하게 살핍니다. 돈을 하나님 앞에서 바르게 사용하고 싶은 마음이 분명합니다.</p>
-                          <p>목적과 필요가 분명한 지출에서도 상황에 따라 부담과 죄책감이 올라올 수 있습니다. 하나님이 맡기신 돈은 생활을 돌보고, 회복과 성장을 돕고, 관계와 나눔을 세우는 도구라는 기준이 필요합니다.</p>
+                          <div className="money-flow-steps">
+                            {[
+                              "돈을 쓰거나 누릴 일이 생김",
+                              "신앙적으로 바른 선택인지 점검함",
+                              "필요와 목적을 여러 번 확인함",
+                              "부담과 죄책감이 올라옴",
+                              "돈을 쓰고 누리는 선택이 조심스러워짐",
+                            ].map((step, index, steps) => (
+                              <div key={step}>
+                                <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border }}>{step}</div>
+                                {index < steps.length - 1 && <div className="money-flow-arrow" style={{ color: theme.accent }}>↓</div>}
+                              </div>
+                            ))}
+                          </div>
+                          <div className="money-unified-reading">
+                            <p>중간 신앙부담형은 돈을 쓸 때 이 선택이 하나님 앞에서 바른지 세심하게 살핍니다.</p>
+                            <p>필요한 지출에서도 ‘내 욕심은 아닐까?’, ‘이렇게 누려도 괜찮을까?’라는 생각이 따라옵니다.</p>
+                            <p>감사하게 사용하고 싶은 마음과 조심해야 한다는 마음이 함께 움직여, 돈을 쓴 뒤에도 자신의 선택을 다시 점검하고 죄책감을 느끼기도 합니다.</p>
+                          </div>
                         </section>
                         <section className="money-unified-checklist">
                           <h3>지금 확인해보세요</h3>
@@ -1068,7 +1095,6 @@ function Runner({
                             <li>내 삶과 가정의 필요·회복·성장에 도움이 되는지 살펴보세요.</li>
                             <li>미리 정한 범위 안에서 감사함으로 사용할 수 있는지 확인해보세요.</li>
                           </ul>
-                          <p className="money-unified-closing">목적과 범위가 분명한 돈은 하나님이 맡기신 자원으로 감사하게 사용하고 누릴 수 있습니다.</p>
                         </section>
                       </div>
                     ) : lens.description && (

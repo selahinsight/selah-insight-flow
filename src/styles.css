@@ -387,6 +387,13 @@
   margin-top: 7px;
 }
 
+.money-unified-reading {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
 .money-faith-action-item {
   display: none;
 }
