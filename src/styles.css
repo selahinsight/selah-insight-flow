@@ -317,6 +317,76 @@
   border-top: 1px solid rgba(122, 103, 90, 0.14);
 }
 
+.money-unified-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  color: inherit;
+}
+
+.money-unified-summary section {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.money-unified-summary h3 {
+  color: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  opacity: 0.72;
+}
+
+.money-unified-summary p,
+.money-unified-summary li {
+  font-size: 16px;
+  line-height: 1.62;
+  opacity: 0.84;
+}
+
+.money-unified-summary .money-unified-core {
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+.money-unified-summary .money-result-bubble {
+  margin-top: 2px;
+  color: inherit;
+  text-align: center;
+  opacity: 1;
+}
+
+.money-unified-summary ul {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.money-unified-summary li {
+  display: flex;
+  align-items: flex-start;
+}
+
+.money-unified-summary li::before {
+  content: "✓";
+  margin-right: 9px;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+.money-unified-summary .money-unified-checklist {
+  padding-top: 16px;
+  border-top: 1px solid rgba(122, 103, 90, 0.14);
+}
+
+.money-unified-summary .money-unified-closing {
+  margin-top: 7px;
+}
+
 .money-faith-action-item {
   display: none;
 }

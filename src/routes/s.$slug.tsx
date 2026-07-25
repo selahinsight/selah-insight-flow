@@ -881,7 +881,35 @@ function Runner({
             {(selahResult?.primaryMoneyTypes.length ?? 0) > 1 && (
               <h3 className="money-composite-member-title" style={{ color: theme.text }}>{result.title}</h3>
             )}
-            {result.representative_sentence && (
+            {result.id === "safety_seeking" && (
+              <div style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
+                <div className="money-unified-summary">
+                  <section>
+                    <h3>핵심 진단</h3>
+                    <p className="money-unified-core">미래를 든든하게 준비하려는 마음이 크고, 돈을 꼼꼼히 관리할 때 안정감을 느낍니다.</p>
+                  </section>
+                  <section>
+                    <h3>대표 마음</h3>
+                    <p className="money-result-bubble">“아무리 준비해도 부족할까 봐 마음을 놓기가 어려워.”</p>
+                  </section>
+                  <section>
+                    <h3>이 유형의 마음을 살펴보면</h3>
+                    <p>안전추구형은 예상하지 못한 지출과 미래의 변화를 미리 준비하려는 마음이 큽니다. 저축하고 돈의 흐름을 꼼꼼히 관리하면서 안정감을 찾습니다.</p>
+                    <p>준비한 금액이 있어도 새로운 위험이 떠오르면 다시 긴장하고, 현재 필요한 소비와 누림에도 조심스러운 마음이 이어집니다. 마음이 편안해지려면 준비의 목표와 끝을 구체적인 숫자로 정하는 과정이 필요합니다.</p>
+                  </section>
+                  <section className="money-unified-checklist">
+                    <h3>지금 확인해보세요</h3>
+                    <ul>
+                      <li>갑작스러운 일이 생겼을 때 필요한 금액을 적어보세요.</li>
+                      <li>앞으로 꼭 준비하고 싶은 일과 필요한 금액, 날짜를 정해보세요.</li>
+                      <li>이번 달에 마음 편히 사용할 수 있는 금액을 정해보세요.</li>
+                    </ul>
+                    <p className="money-unified-closing">준비해야 할 금액과 사용할 수 있는 금액이 분명해지면 미래를 챙기면서 오늘의 돈도 편안하게 사용할 수 있습니다.</p>
+                  </section>
+                </div>
+              </div>
+            )}
+            {result.id !== "safety_seeking" && result.representative_sentence && (
               <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
                 {result.id === "organizing_delay" ? (
                   <>
@@ -891,24 +919,22 @@ function Runner({
                 ) : quoteRepresentativeSentence(result.representative_sentence)}
               </p>
             )}
-            {result.summary && (
+            {result.id !== "safety_seeking" && result.summary && (
               <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.7, color: theme.text, opacity: 0.85, textAlign: "center" }}>
                 {result.summary}
               </p>
             )}
-            {result.description && (
+            {result.id !== "safety_seeking" && result.description && (
               <p className="whitespace-pre-line money-result-description" style={{ marginTop: 18, maxWidth: 440, marginLeft: "auto", marginRight: "auto", fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.8, textAlign: "center" }}>
                 {result.id === "organizing_delay" ? (
                   <>
                     <span className="money-desktop-copy">{result.description}</span>
                     <span className="money-mobile-copy">돈을 정확히 마주하는 순간<br />마음이 무거워져 확인과 정리를<br />뒤로 미루는 유형이에요.</span>
                   </>
-                ) : result.id === "safety_seeking" ? (
-                  <span><span style={{ whiteSpace: "nowrap" }}>현재 자금 여유가 있어도 미래의 위험을</span><br /><span style={{ whiteSpace: "nowrap" }}>생각하면 계속 긴장하고, 돈을 아끼고</span><br /><span style={{ whiteSpace: "nowrap" }}>관리하는 데서 안정감을 느끼는</span><br />유형이에요.</span>
                 ) : result.description}
               </p>
             )}
-            {result.interpretation && (
+            {result.id !== "safety_seeking" && result.interpretation && (
               <div style={{ marginTop: 22, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p className="money-result-box-title" style={{ color: theme.accent }}>
                   <ScanSearch size={21} strokeWidth={1.7} aria-hidden="true" />
@@ -923,7 +949,7 @@ function Runner({
                 </div>
               </div>
             )}
-            {result.flow && (
+            {result.id !== "safety_seeking" && result.flow && (
               <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <p className="money-result-box-title" style={{ color: theme.accent }}>
                   <GitBranch size={21} strokeWidth={1.7} aria-hidden="true" />
@@ -943,17 +969,6 @@ function Runner({
                       </div>
                     ))}
                 </div>
-              </div>
-            )}
-            {result.id === "safety_seeking" && (
-              <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p className="money-result-box-title" style={{ color: theme.accent }}>
-                  <Sprout size={21} strokeWidth={1.7} aria-hidden="true" />
-                  <span>이 유형의 핵심 전환점</span>
-                </p>
-                <p style={{ marginTop: 13, fontSize: 16, lineHeight: 1.75, color: theme.text, opacity: 0.84 }}>
-                  안전추구형은 미래를 위해 얼마를 준비하면 마음이 놓일지 구체적인 기준을 세우는 것이 중요합니다. 비상자금은 생활비 몇 개월치, 목적저축은 목표 금액과 날짜, 누림 예산은 매달 편안하게 쓸 금액을 정해보세요. 준비의 목표가 분명해지면 미래를 든든하게 챙기면서 오늘의 돈도 편안하게 사용할 수 있습니다.
-                </p>
               </div>
             )}
             {selahResult?.primaryMoneyTypes.slice(1).map((moneyType) => (
@@ -1032,37 +1047,30 @@ function Runner({
                         </div>
                       </>
                     ) : lens.id === "faith_burden_mid" ? (
-                      <>
-                        <div className="money-mobile-copy money-faith-low-summary">
-                          <section>
-                            <h3>핵심 진단</h3>
-                            <p className="money-faith-low-core">하나님 앞에서 돈을 바르게 다루고<br />싶은 마음이 분명합니다.</p>
-                          </section>
-                          <section>
-                            <h3>현재 모습</h3>
-                            <p><span style={{ whiteSpace: "nowrap" }}>돈을 벌고 쓰고 누리는 선택에서</span><br /><span style={{ whiteSpace: "nowrap" }}>신앙적으로 바르게 하고 싶은 마음이</span><br /><span style={{ whiteSpace: "nowrap" }}>크며, 상황에 따라 부담과 죄책감이</span><br />올라올 수 있습니다.</p>
-                          </section>
-                          <section className="money-faith-low-standards">
-                            <h3>돈을 쓸 때 확인할 기준</h3>
-                            <ul>
-                              <li>지금 이 돈을 쓰는 목적은 무엇인지</li>
-                              <li>생활·회복·성장·관계·나눔 중 어디에 해당하는지</li>
-                              <li>이 선택을 감사와 평안으로 받아들일 수 있는지</li>
-                            </ul>
-                          </section>
-                          <section className="money-faith-low-direction">
-                            <h3>이렇게 시작해보세요</h3>
-                            <p>돈을 쓰기 전에 이 돈의 목적을 한 문장으로 적어보세요. 목적과 필요가 분명한 지출은 감사로 받아들이고, 정한 범위 안에서 편안하게 누려보세요.</p>
-                          </section>
-                        </div>
-                        <div className="money-desktop-copy money-faith-paragraphs" style={{ maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
-                          {lens.description?.split(/\n\n+/).map((paragraph, index) => (
-                            <p key={paragraph} style={{ fontSize: 16, lineHeight: 1.58, color: theme.text, opacity: index === 0 ? 0.86 : 0.82, textAlign: "center", fontWeight: index === 0 ? 600 : 400 }}>
-                              {paragraph}
-                            </p>
-                          ))}
-                        </div>
-                      </>
+                      <div className="money-unified-summary">
+                        <section>
+                          <h3>핵심 진단</h3>
+                          <p className="money-unified-core">돈을 벌고 쓰고 누리는 선택을 하나님 앞에서 바르게 하고 싶은 마음이 큽니다.</p>
+                        </section>
+                        <section>
+                          <h3>대표 마음</h3>
+                          <p className="money-result-bubble">“나를 위해 돈을 쓰고 누리면 하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해.”</p>
+                        </section>
+                        <section>
+                          <h3>이 유형의 마음을 살펴보면</h3>
+                          <p>중간 신앙부담형은 소비·저축·투자·누림의 선택마다 자신의 믿음과 잘 연결되는지 신중하게 살핍니다. 돈을 하나님 앞에서 바르게 사용하고 싶은 마음이 분명합니다.</p>
+                          <p>목적과 필요가 분명한 지출에서도 상황에 따라 부담과 죄책감이 올라올 수 있습니다. 하나님이 맡기신 돈은 생활을 돌보고, 회복과 성장을 돕고, 관계와 나눔을 세우는 도구라는 기준이 필요합니다.</p>
+                        </section>
+                        <section className="money-unified-checklist">
+                          <h3>지금 확인해보세요</h3>
+                          <ul>
+                            <li>이 돈을 사용하는 목적을 한 문장으로 적어보세요.</li>
+                            <li>내 삶과 가정의 필요·회복·성장에 도움이 되는지 살펴보세요.</li>
+                            <li>미리 정한 범위 안에서 감사함으로 사용할 수 있는지 확인해보세요.</li>
+                          </ul>
+                          <p className="money-unified-closing">목적과 범위가 분명한 돈은 하나님이 맡기신 자원으로 감사하게 사용하고 누릴 수 있습니다.</p>
+                        </section>
+                      </div>
                     ) : lens.description && (
                       <div className="money-faith-paragraphs" style={{ marginTop: selahResult.faithLenses.length > 1 ? 12 : 0, maxWidth: 440, marginLeft: "auto", marginRight: "auto" }}>
                         {lens.description.split(/\n\n+/).map((paragraph, index) => (
@@ -1084,25 +1092,6 @@ function Runner({
                   </div>
                 ))}
               </>
-            )}
-            {result.small_action && (
-              <div style={{ marginTop: 16, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
-                <p className="money-result-box-title" style={{ color: theme.accent }}>
-                  <Sprout size={21} strokeWidth={1.7} aria-hidden="true" />
-                  <span>오늘의 작은 실천</span>
-                </p>
-                <div className="money-action-list">
-                  {(result.id === "safety_seeking"
-                    ? ["이번 주에 편안하게 사용할 누림 예산을 정하고, 그 돈에 담고 싶은 목적을 한 문장으로 적어보세요."]
-                    : result.small_action.split(/\n\n+/).slice(0, 1)
-                  ).map((action) => (
-                    <div className="money-action-item" key={action} style={{ color: theme.text, borderColor: theme.border }}>
-                      <span aria-hidden="true">✓</span>
-                      <p>{action}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
             )}
             {(result.bibleVerse || (survey.audience_type === "christian" && survey.bible_verse)) && (
               <div
