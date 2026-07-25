@@ -884,12 +884,12 @@ function Runner({
             {result.id === "safety_seeking" && (
               <>
                 <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
-                  “아무리 준비해도 부족할까 봐 마음을 놓기가 어려워.”
+                  “아무리 준비해도 부족할까 봐<br />마음을 놓기가 어려워.”
                 </p>
                 <div style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                 <div className="money-unified-summary">
                   <section>
-                    <h3>이 유형의 마음을 살펴보면</h3>
+                    <h3>이 유형의 마음을 살펴보면,</h3>
                     <div className="money-flow-steps">
                       {[
                         "미래에 돈이 부족할까 걱정함",
@@ -899,7 +899,7 @@ function Runner({
                         "다시 돈을 단단히 붙들게 됨",
                       ].map((step, index, steps) => (
                         <div key={step}>
-                          <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border }}>{step}</div>
+                          <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border, whiteSpace: "pre-line" }}>{step}</div>
                           {index < steps.length - 1 && <div className="money-flow-arrow" style={{ color: theme.accent }}>↓</div>}
                         </div>
                       ))}
@@ -913,9 +913,9 @@ function Runner({
                   <section className="money-unified-checklist">
                     <h3>지금 확인해보세요</h3>
                     <ul>
-                      <li>갑작스러운 일이 생겼을 때 필요한 금액을 적어보세요.</li>
-                      <li>앞으로 꼭 준비하고 싶은 일과 필요한 금액, 날짜를 정해보세요.</li>
-                      <li>이번 달에 마음 편히 사용할 수 있는 금액을 정해보세요.</li>
+                      <li>비상시에 필요한 금액을 미리 적고 준비해보세요.</li>
+                      <li>앞으로 꼭 하고 싶은 일에 필요한 금액과 날짜를 정해 돈을 준비해보세요.</li>
+                      <li>이번 달에 마음 편히 사용할 금액을 미리 정하고 그 범위 안에서 사용해보세요.</li>
                     </ul>
                   </section>
                 </div>
@@ -1027,7 +1027,7 @@ function Runner({
                 </h2>
                 {selahResult.primaryFaithLens.id === "faith_burden_mid" && (
                   <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
-                    “나를 위해 돈을 쓰고 누리면 하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해.”
+                    “나를 위해 돈을 쓰고 누리면<br />하나님 앞에서 욕심처럼 보일까 봐<br />마음이 불편해.”
                   </p>
                 )}
                 {selahResult.faithLenses.map((lens) => (
@@ -1067,17 +1067,17 @@ function Runner({
                     ) : lens.id === "faith_burden_mid" ? (
                       <div className="money-unified-summary">
                         <section>
-                          <h3>이 유형의 마음을 살펴보면</h3>
+                          <h3>이 유형의 마음을 살펴보면,</h3>
                           <div className="money-flow-steps">
                             {[
                               "돈을 쓰거나 누릴 일이 생김",
-                              "신앙적으로 바른 선택인지 점검함",
+                              "신앙적으로 바른 선택인지\n점검함",
                               "필요와 목적을 여러 번 확인함",
                               "부담과 죄책감이 올라옴",
-                              "돈을 쓰고 누리는 선택이 조심스러워짐",
+                              "돈을 쓰고 누리는 선택이\n조심스러워짐",
                             ].map((step, index, steps) => (
                               <div key={step}>
-                                <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border }}>{step}</div>
+                                <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border, whiteSpace: "pre-line" }}>{step}</div>
                                 {index < steps.length - 1 && <div className="money-flow-arrow" style={{ color: theme.accent }}>↓</div>}
                               </div>
                             ))}
@@ -1091,9 +1091,9 @@ function Runner({
                         <section className="money-unified-checklist">
                           <h3>지금 확인해보세요</h3>
                           <ul>
-                            <li>이 돈을 사용하는 목적을 한 문장으로 적어보세요.</li>
-                            <li>내 삶과 가정의 필요·회복·성장에 도움이 되는지 살펴보세요.</li>
-                            <li>미리 정한 범위 안에서 감사함으로 사용할 수 있는지 확인해보세요.</li>
+                            <li>돈을 사용할 때 목적을 한 문장으로 적어보세요.</li>
+                            <li>이번 달 나를 위해 편안하게 사용할 금액을 미리 정해보세요.</li>
+                            <li>돈을 사용한 뒤 감사한 점 한 가지를 적어보세요.</li>
                           </ul>
                         </section>
                       </div>
