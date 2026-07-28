@@ -50,7 +50,7 @@ assert.equal(customerFaithResultTitle("faith_low"), "편안한 신앙 연결형"
 assert.equal(customerFaithResultTitle("faith_burden_mid"), "신앙부담형", "중간 단계 숨김");
 assert.equal(customerFaithResultTitle("faith_burden_high"), "신앙부담형", "높은 단계 숨김");
 assert.equal(customerFaithResultTitle("faith_separation_mid"), "신앙분리형", "분리형 단계 숨김");
-assert.equal(customerFaithResultTitle("faith_combo_high"), "신앙기준 탐색형", "조합형 단계 숨김");
+assert.equal(customerFaithResultTitle("faith_combo_high"), "신앙·현실 갈등형", "조합형 단계 숨김");
 assert.equal(
   classify([13, 8, 8, 8], [12, 8]).faithResult.id,
   "faith_burden_mid",
