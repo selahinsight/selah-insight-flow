@@ -404,7 +404,12 @@ function Runner({
       const primary = primaryMoneyTypes[0];
       if (!primary) return;
 
-      const faithLenses = (params.get("faith") ?? (isShortResultPreview ? "faith_combo_mid" : ""))
+      const faithLenses = (
+        params.get("faith") ??
+        (isShortResultPreview
+          ? "faith_combo_mid,faith_low,faith_burden_mid,faith_burden_high,faith_separation_mid,faith_separation_high"
+          : "")
+      )
         .split(",")
         .map((id) => byId(id.trim()))
         .filter((item): item is ResultType => Boolean(item));
@@ -1003,7 +1008,21 @@ function Runner({
                 {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[selahResult.primaryFaithLens.id] && (
                   <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[selahResult.primaryFaithLens.id]} theme={theme} />
                 )}
-                {selahResult.faithLenses.map((lens) => (
+                {selahResult.faithLenses.slice(1).map((lens) => {
+                  const template = SELAH_MONEY_RESULT_TEMPLATE_CONTENT[lens.id];
+                  if (!template) return null;
+                  return (
+                    <div key={lens.id} style={{ marginTop: 36 }}>
+                      <div className="money-result-section-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
+                      <h2 className="money-result-type-box money-faith-type-box" style={{ marginTop: 20, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
+                        <Heart size={20} strokeWidth={1.6} aria-hidden="true" />
+                        <span>{customerFaithResultTitle(lens.id, lens.title)}</span>
+                      </h2>
+                      <SelahMoneyResultTemplate content={template} theme={theme} />
+                    </div>
+                  );
+                })}
+                {selahResult.faithLenses.slice(1).map((lens) => (
                   SELAH_MONEY_RESULT_TEMPLATE_CONTENT[lens.id] ? null : (
                   <div className="money-faith-detail" key={lens.id} style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                     {selahResult.faithLenses.length > 1 && (
