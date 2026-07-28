@@ -236,7 +236,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
   },
   faith_combo_mid: {
-    title: "신앙 조합형",
+    title: "신앙기준 탐색형",
     representativeHeart: [
       "돈을 하나님 앞에서 바르게",
       "다루고 싶은데, 실제로는 어떤",
@@ -250,7 +250,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "상황에 따라 다른 기준으로\n결정하게 됨",
     ],
     reading: [
-      "신앙 조합형은 돈을 하나님 앞에서 바르게 다루고 싶은 마음과 현실에서 지혜롭게 결정하고 싶은 마음이 함께 움직입니다.",
+      "신앙기준 탐색형은 돈을 하나님 앞에서 바르게 다루고 싶은 마음과 현실에서 지혜롭게 결정하고 싶은 마음이 함께 움직입니다.",
       "소비·저축·투자를 결정할 때 말씀의 가치와 현실적인 정보, 현재의 형편을 모두 살펴봅니다. 이 기준들을 구체적인 금액과 행동으로 연결하는 과정에서 막막함을 느끼고, 상황에 따라 익숙한 기준을 선택하기도 합니다.",
       "하나님이 중요하게 여기시는 가치와 지금 맡은 책임을 먼저 정한 뒤 목적·금액·행동을 차례로 세우면 믿음과 현실을 한 방향으로 연결할 수 있습니다.",
     ],

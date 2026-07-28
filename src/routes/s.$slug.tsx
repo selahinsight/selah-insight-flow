@@ -396,7 +396,7 @@ function Runner({
       const primaryMoneyTypes = (
         params.get("primary") ??
         params.get("type") ??
-        (isShortResultPreview ? "money_no_clear_pattern" : "organizing_delay")
+        (isShortResultPreview ? "organizing_delay,safety_seeking" : "organizing_delay")
       )
         .split(",")
         .map((id) => byId(id.trim()))
@@ -959,17 +959,20 @@ function Runner({
             {selahResult?.primaryMoneyTypes.slice(1).map((moneyType) => (
               <div className="money-composite-member" key={moneyType.id} style={{ borderColor: theme.border }}>
                 <h3 className="money-composite-member-title" style={{ color: theme.text }}>{moneyType.title}</h3>
-                {moneyType.representative_sentence && (
+                {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[moneyType.id] && (
+                  <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[moneyType.id]} theme={theme} />
+                )}
+                {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[moneyType.id] && moneyType.representative_sentence && (
                   <p className="money-result-bubble" style={{ marginTop: 16, fontSize: 15, color: theme.accent, textAlign: "center" }}>
                     {quoteRepresentativeSentence(moneyType.representative_sentence)}
                   </p>
                 )}
-                {moneyType.description && (
+                {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[moneyType.id] && moneyType.description && (
                   <p style={{ marginTop: 18, fontSize: 16, lineHeight: 1.7, color: theme.text, opacity: 0.84, textAlign: "center" }}>
                     {moneyType.description}
                   </p>
                 )}
-                {moneyType.interpretation && (
+                {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[moneyType.id] && moneyType.interpretation && (
                   <div style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
                     <p className="money-result-box-title" style={{ color: theme.accent }}>
                       <ScanSearch size={21} strokeWidth={1.7} aria-hidden="true" />
