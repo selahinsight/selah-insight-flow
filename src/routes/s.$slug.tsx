@@ -1061,7 +1061,7 @@ function Runner({
                 ))}
               </>
             )}
-            {(result.bibleVerse || (survey.audience_type === "christian" && survey.bible_verse)) && (
+            {!isMoneyDiagnosis && (result.bibleVerse || (survey.audience_type === "christian" && survey.bible_verse)) && (
               <div
                 style={{
                   marginTop: 24,
