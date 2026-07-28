@@ -11,6 +11,31 @@ export interface SelahMoneyResultTemplateContent {
 // 고객 화면에는 강도(mid/high) 같은 내부 판정값을 노출하지 않습니다.
 // 모든 돈 반응 유형과 신앙 유형은 이 데이터 구조를 사용합니다.
 export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResultTemplateContent> = {
+  money_combo_organize_safety: {
+    title: "확인긴장형",
+    representativeHeart: [
+      "확인해야 마음이 놓일 텐데,",
+      "지금 숫자를 보면 더 불안해질 것 같아.",
+    ],
+    flow: [
+      "미래의 부족함을 걱정함",
+      "돈을 확인해야 한다는\n압박을 느낌",
+      "숫자와 함께 미래의 걱정이\n떠오름",
+      "확인과 정리를 미룸",
+      "돈의 흐름이 흐릿해짐",
+      "미래에 대한 불안이 커짐",
+    ],
+    reading: [
+      "확인긴장형은 미래를 안정적으로 준비하려는 책임감과 현재 돈의 상태를 마주할 때 올라오는 긴장이 함께 움직입니다.",
+      "통장 잔액이나 카드 결제액을 확인하면 앞으로 필요한 돈과 조정할 항목까지 한꺼번에 떠오릅니다. 긴장이 커지면서 확인을 뒤로 미루고, 흐릿해진 돈의 흐름은 다시 미래 걱정을 키웁니다.",
+      "확인 범위를 작게 나누고 안전의 기준을 구체적인 금액으로 세우면 책임감과 계획성이 안정적인 돈 관리로 연결됩니다.",
+    ],
+    checklist: [
+      "오늘 확인할 숫자 하나를 정해보세요.",
+      "그 숫자와 함께 떠오르는 미래 걱정을 한 문장으로 적어보세요.",
+      "이번 달 안전을 위해 준비할 금액과 오늘 실행할 관리 행동을 하나씩 정해보세요.",
+    ],
+  },
   money_no_clear_pattern: {
     title: "돈 기준 탐색형",
     representativeHeart: ["돈을 어떤 기준으로 관리해야", "할지 아직 잘 모르겠어."],

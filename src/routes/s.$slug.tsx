@@ -396,7 +396,7 @@ function Runner({
       const primaryMoneyTypes = (
         params.get("primary") ??
         params.get("type") ??
-        (isShortResultPreview ? "organizing_delay,safety_seeking" : "organizing_delay")
+        (isShortResultPreview ? "money_combo_organize_safety" : "organizing_delay")
       )
         .split(",")
         .map((id) => byId(id.trim()))
