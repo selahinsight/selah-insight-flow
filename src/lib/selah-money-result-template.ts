@@ -14,8 +14,8 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   money_combo_organize_safety: {
     title: "확인긴장형",
     representativeHeart: [
-      "확인해야 마음이 놓일 텐데,",
-      "지금 숫자를 보면 더 불안해질 것 같아.",
+      "카드값이 생각보다 많이 나왔을까 봐 확인하기가 겁나.",
+      "그래도 확인하지 않으면 더 불안해.",
     ],
     flow: [
       "미래의 부족함을 걱정함",
