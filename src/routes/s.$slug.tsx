@@ -888,7 +888,7 @@ function Runner({
             {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]?.sceneHook && (
               <div
                 style={{
-                  margin: "28px auto 14px",
+                  margin: "28px auto 30px",
                   maxWidth: 440,
                   padding: "22px 22px 24px",
                   borderRadius: 0,
@@ -919,7 +919,7 @@ function Runner({
                     fontSize: 17,
                     lineHeight: 1.65,
                     color: theme.text,
-                    fontWeight: 700,
+                    fontWeight: 600,
                     fontFamily: fontFamilyOf(design.font_mood),
                   }}
                 >
@@ -1850,26 +1850,27 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
       <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>다음 단계는</p>
         <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
-          돈 앞에서 마음이 흔들리면,
+          “돈 앞에서 마음이 흔들리면,
           <br />
-          돈 관리도 어렵게 느껴져요.
+          돈 관리도 어렵게 느껴져요.”
         </h2>
-        <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
-          이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다. 이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지, 그리고 말씀
-          <br />
-          안에서 나에게 맞는 기준을 어떻게 세울지는
-          <br />
-          셀라 머니 워크북에서 직접 다뤄드립니다.
-        </p>
+        <div className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
+          <p>이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다.</p>
+          <p>
+            이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지, 그리고 말씀 안에서 나에게 맞는 기준을 어떻게 세울지는
+            <strong> 셀라 머니 워크북에서 직접 다뤄드립니다.</strong>
+          </p>
+        </div>
       </div>
 
       <div
         className="money-result-card money-funnel-card money-workbook-card"
         style={{
           ...card,
-          marginTop: 32,
+          marginTop: 14,
           textAlign: "center",
           border: `1px solid ${theme.accent}55`,
+          borderTop: "none",
           borderRadius: 0,
           backgroundColor: theme.bg,
         }}
