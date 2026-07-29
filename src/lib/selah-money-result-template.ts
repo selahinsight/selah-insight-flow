@@ -380,13 +380,13 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   emotional_reward: {
     title: "마음보상형",
-    representativeHeart: ["이걸 사면 지친 마음이", "조금 괜찮아질 것 같아."],
+    representativeHeart: ["이걸 사면 지친 마음이 조금 괜찮아질 것 같아."],
     flow: [
       "피곤하고 허전한 마음이 올라옴",
-      "돈을 쓰면 나아질 것처럼\n느껴짐",
+      "돈을 쓰면 나아질 것처럼 느껴짐",
       "물건을 사거나 소비함",
       "잠시 기분이 좋아짐",
-      "마음의 피로가 남아\n다시 소비를 찾게 됨",
+      "마음의 피로가 남아 다시 소비를 찾게 됨",
     ],
     reading: [
       "마음보상형은 지치고 허전하거나 답답할 때 소비로 마음을 달래고 싶어집니다. 물건을 사거나 음식을 주문하면 고생한 나를 보상하는 느낌이 들고, 답답했던 마음도 잠시 가벼워집니다.",
@@ -484,16 +484,13 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_separation_high: {
     title: "신앙분리형",
-    representativeHeart: [
-      "돈은 현실 문제니까",
-      "신앙과는 따로 생각해야 할 것 같아.",
-    ],
+    representativeHeart: ["돈은 현실 문제니까 신앙과는 따로 생각해야 할 것 같아."],
     flow: [
       "돈과 관련된 결정이 생김",
-      "신앙과 관계없는\n현실 문제라고 생각함",
-      "가격·수익·당장의 이익을\n살펴봄",
+      "신앙과 관계없는 현실 문제라고 생각함",
+      "가격·수익·당장의 이익을 살펴봄",
       "익숙한 방식으로 결정함",
-      "신앙과 돈 관리가\n분리되어 움직임",
+      "신앙과 돈 관리가 분리되어 움직임",
     ],
     reading: [
       "신앙분리형은 하나님을 믿는 일과 돈을 관리하는 일을 서로 다른 영역으로 생각합니다. 소비·저축·투자·수입은 정보와 경험, 가격과 수익을 중심으로 결정합니다.",
