@@ -888,7 +888,7 @@ function Runner({
             {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]?.sceneHook && (
               <div
                 style={{
-                  margin: "28px auto 0",
+                  margin: "28px auto 14px",
                   maxWidth: 440,
                   padding: "22px 22px 24px",
                   borderRadius: 0,
@@ -915,11 +915,11 @@ function Runner({
                 </p>
                 <p
                   style={{
-                    marginTop: 20,
+                    marginTop: 16,
                     fontSize: 17,
                     lineHeight: 1.65,
                     color: theme.text,
-                    fontWeight: 400,
+                    fontWeight: 700,
                     fontFamily: '"Gowun Batang", ui-serif, Georgia, serif',
                   }}
                 >
@@ -1864,8 +1864,11 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
         </h2>
         <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
           이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다.
+          <br />
           이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지,
+          <br />
           그리고 말씀 안에서 나에게 맞는 기준을 어떻게 세울지는
+          <br />
           셀라 머니 워크북에서 직접 다뤄드립니다.
         </p>
       </div>
