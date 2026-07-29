@@ -885,6 +885,22 @@ function Runner({
             </p>
             <div className="money-result-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
 
+            {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]?.sceneHook && (
+              <p
+                style={{
+                  margin: "28px auto 0",
+                  maxWidth: 440,
+                  fontSize: 16,
+                  lineHeight: 1.75,
+                  color: theme.text,
+                  textAlign: "center",
+                  fontWeight: 600,
+                }}
+              >
+                {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
+              </p>
+            )}
+
             <ResultSectionTitle theme={theme}>
               <span className="money-desktop-copy">나의 주된 돈 반응 유형</span>
               <span className="money-mobile-copy">{name.trim()}님의 주된 돈 반응 유형</span>
@@ -1105,30 +1121,34 @@ function Runner({
 
           {isMoneyDiagnosis && <MoneyWorkbookSection theme={theme} design={design} />}
 
-          <EmailResultSection
-            isMoneyDiagnosis={isMoneyDiagnosis}
-            name={name}
-            email={email}
-            privacyConsent={privacyConsent}
-            marketingConsent={marketingConsent}
-            submitting={submitting}
-            saved={emailSaved}
-            theme={theme}
-            design={design}
-            onEmailChange={setEmail}
-            onPrivacyConsentChange={setPrivacyConsent}
-            onMarketingConsentChange={setMarketingConsent}
-            onSubmit={() => {
-              if (previewMode) {
-                toast.info("미리보기에서는 데이터를 저장하지 않습니다.");
-                return;
-              }
-              void submitEmailRequest();
-            }}
-          />
+          {!(result.id === "money_no_clear_pattern" && selahResult?.primaryFaithLens?.id === "faith_low") && (
+            <>
+              <EmailResultSection
+                isMoneyDiagnosis={isMoneyDiagnosis}
+                name={name}
+                email={email}
+                privacyConsent={privacyConsent}
+                marketingConsent={marketingConsent}
+                submitting={submitting}
+                saved={emailSaved}
+                theme={theme}
+                design={design}
+                onEmailChange={setEmail}
+                onPrivacyConsentChange={setPrivacyConsent}
+                onMarketingConsentChange={setMarketingConsent}
+                onSubmit={() => {
+                  if (previewMode) {
+                    toast.info("미리보기에서는 데이터를 저장하지 않습니다.");
+                    return;
+                  }
+                  void submitEmailRequest();
+                }}
+              />
 
-          <FunnelCtas theme={theme} design={design} isMoneyDiagnosis={isMoneyDiagnosis} />
-          <ResultActions survey={survey} result={result} design={design} theme={theme} />
+              <FunnelCtas theme={theme} design={design} isMoneyDiagnosis={isMoneyDiagnosis} />
+              <ResultActions survey={survey} result={result} design={design} theme={theme} />
+            </>
+          )}
         </Wrap>
       );
     }
