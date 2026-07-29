@@ -1759,27 +1759,34 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
 
   return (
     <section className="money-funnel-section" style={{ marginTop: 34 }}>
-      <div className="money-funnel-intro" style={{ textAlign: "center" }}>
-        <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>YOUR NEXT STEP</p>
-        <h2 className="money-funnel-title" style={{ color: theme.text }}>
-          나에게 맞는 돈 관리 기준을 세워보세요
-        </h2>
-        <p className="money-funnel-body" style={{ color: theme.text, opacity: 0.82 }}>
-          돈 앞에서 마음이 자꾸 흔들리면, 돈을 다룰 때마다 불편하고 어렵게 느껴져요.
-        </p>
-        <p className="money-funnel-body" style={{ color: theme.text, opacity: 0.82 }}>
-          셀라 머니 워크북은 진단 결과를 깊이 해석하고, 말씀 안에서 나에게 맞게 돈을 관리하는 기준을 직접 세우도록 도와드립니다.
-        </p>
-      </div>
-
       <div
-        className="money-result-card money-funnel-card"
+        className="money-result-card money-funnel-card money-workbook-card"
         style={{
           ...card,
           textAlign: "center",
           border: `1px solid ${theme.accent}55`,
         }}
       >
+      <div className="money-funnel-intro" style={{ textAlign: "center" }}>
+        <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>YOUR NEXT STEP</p>
+        <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
+          나에게 맞는 돈 관리 기준을 세워보세요
+        </h2>
+        <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
+          돈 앞에서 마음이 자꾸 흔들리면
+          <br />
+          돈을 다룰 때마다 불편하고 어렵게 느껴져요.
+        </p>
+        <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
+          셀라 머니 워크북은 진단 결과를 깊이 해석하고
+          <br />
+          말씀 안에서 나에게 맞게 돈을 관리하는 기준을
+          <br />
+          직접 세우도록 도와드립니다.
+        </p>
+      </div>
+
+        <div className="money-workbook-divider" style={{ backgroundColor: theme.border }} />
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>SELAH MONEY WORKBOOK</p>
         <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 워크북</h2>
         <p className="money-funnel-body" style={{ color: theme.text, opacity: 0.84 }}>
