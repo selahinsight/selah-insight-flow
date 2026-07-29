@@ -898,22 +898,20 @@ function Runner({
                   textAlign: "center",
                 }}
               >
-                <ScanSearch
-                  size={23}
-                  strokeWidth={1.7}
-                  color={theme.accent}
-                  aria-hidden="true"
-                />
                 <p
                   style={{
-                    marginTop: 9,
                     fontSize: 16,
                     letterSpacing: "-0.01em",
                     color: theme.accent,
                     fontWeight: 700,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 7,
                   }}
                 >
-                  혹시 이런 모습이 익숙한가요?
+                  <ScanSearch size={20} strokeWidth={1.7} aria-hidden="true" />
+                  <span>혹시 이런 모습이 익숙한가요?</span>
                 </p>
                 <p
                   style={{
@@ -1067,7 +1065,9 @@ function Runner({
                     <br />
                     이런 돈 앞의 마음은
                     <br />
-                    <span style={{ color: theme.accent }}>하나님과의 관계에서는</span> 어떻게 나타날까요?
+                    <span style={{ color: theme.accent }}>하나님과의 관계에서는</span>
+                    <br />
+                    어떻게 나타날까요?
                   </p>
                   <p
                     aria-hidden="true"
@@ -1858,13 +1858,10 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
       <div className="money-funnel-intro" style={{ textAlign: "center" }}>
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>다음 단계는</p>
         <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
-          나에게 맞는 돈 관리 기준을 세워보세요
-        </h2>
-        <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
           돈 앞에서 마음이 자꾸 흔들리면
           <br />
           돈을 다룰 때마다 불편하고 어렵게 느껴져요.
-        </p>
+        </h2>
         <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
           이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다.
           이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지,
