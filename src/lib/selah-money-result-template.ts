@@ -328,7 +328,10 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   safety_seeking: {
     title: "안전추구형",
-    representativeHeart: ["아무리 준비해도 부족할까 봐 마음을 놓기가 어려워."],
+    representativeHeart: [
+      "아무리 준비해도 부족할까 봐",
+      "마음을 놓기가 어려워.",
+    ],
     flow: [
       "미래에 돈이 부족할까 걱정함",
       "돈을 아끼고 꼼꼼히 관리함",
