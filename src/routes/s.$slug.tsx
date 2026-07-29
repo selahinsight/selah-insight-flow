@@ -1103,6 +1103,8 @@ function Runner({
             )}
           </div>
 
+          {isMoneyDiagnosis && <MoneyWorkbookSection theme={theme} design={design} />}
+
           <EmailResultSection
             isMoneyDiagnosis={isMoneyDiagnosis}
             name={name}
@@ -1125,7 +1127,7 @@ function Runner({
             }}
           />
 
-          <FunnelCtas theme={theme} design={design} />
+          <FunnelCtas theme={theme} design={design} isMoneyDiagnosis={isMoneyDiagnosis} />
           <ResultActions survey={survey} result={result} design={design} theme={theme} />
         </Wrap>
       );
@@ -1628,17 +1630,29 @@ function EmailResultSection({
   const card = cardClasses(design.card_style, theme);
   return (
     <div style={{ ...card, marginTop: 16, borderRadius: 24, padding: 28, textAlign: "center" }}>
-      <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>EMAIL RESULT</p>
+      <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>
+        {isMoneyDiagnosis ? "SAVE MY RESULT" : "EMAIL RESULT"}
+      </p>
       <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.35, color: theme.text }}>
-        {isMoneyDiagnosis ? "내 성향에 맞는 돈 관리법 받아보기" : "전체 결과 이메일 신청"}
+        {isMoneyDiagnosis ? (
+          <>
+            지금 확인한 결과를
+            <br />
+            이메일에 저장해두세요
+          </>
+        ) : "전체 결과 이메일 신청"}
       </h2>
       {isMoneyDiagnosis ? (
         <div style={{ marginTop: 14, color: theme.text, opacity: 0.82 }}>
-          <p style={{ fontSize: 14, lineHeight: 1.7 }}>전체 결과지에서 이어서 확인할 수 있어요.</p>
+          <p style={{ fontSize: 14, lineHeight: 1.75 }}>
+            내 재정 유형과 신앙 유형의 핵심 내용을 다시 확인하고,
+            <br />
+            셀라 머니 워크북의 실제 구성도 미리 살펴볼 수 있어요.
+          </p>
           <ul style={{ margin: "12px auto 0", maxWidth: 360, paddingLeft: 20, textAlign: "left", fontSize: 14, lineHeight: 1.85 }}>
-            <li>소비·저축·투자에서 나타나는 나의 패턴</li>
-            <li>불안을 낮추는 충분함의 기준</li>
-            <li>신앙과 현실을 함께 세우는 맞춤 돈 관리법</li>
+            <li>지금 확인한 진단 결과 요약</li>
+            <li>내 돈에 관한 마음을 돌아보는 질문 3개</li>
+            <li>셀라 머니 워크북 미리보기</li>
           </ul>
         </div>
       ) : (
@@ -1657,7 +1671,9 @@ function EmailResultSection({
       )}
       {name && (
         <p style={{ marginTop: 10, fontSize: 13, color: theme.muted }}>
-          {name}님의 결과를 저장할 이메일을 알려주세요.
+          {isMoneyDiagnosis
+            ? `${name}님의 결과를 받을 이메일 주소를 입력해주세요.`
+            : `${name}님의 결과를 저장할 이메일을 알려주세요.`}
         </p>
       )}
       <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
@@ -1704,7 +1720,9 @@ function EmailResultSection({
             onChange={(e) => onMarketingConsentChange(e.target.checked)}
             style={{ marginRight: 6 }}
           />
-          (선택) 셀라 소식과 자료 안내를 이메일로 받아봅니다.
+          {isMoneyDiagnosis
+            ? "(선택) 돈에 관한 마음과 기준을 정리하는 데 도움이 되는 자료를 가끔 이메일로 받아봅니다."
+            : "(선택) 셀라 소식과 자료 안내를 이메일로 받아봅니다."}
         </label>
       </div>
       <button
@@ -1722,17 +1740,201 @@ function EmailResultSection({
         }}
       >
         {saved
-          ? isMoneyDiagnosis ? "전체 결과 이메일 신청 완료" : "이메일 정보가 저장되었습니다"
-          : isMoneyDiagnosis ? "전체 결과 이메일로 받기" : "이메일 정보 저장하기"}
+          ? isMoneyDiagnosis ? "결과를 저장했어요. 이메일에서 확인해주세요." : "이메일 정보가 저장되었습니다"
+          : isMoneyDiagnosis ? "내 결과 이메일로 저장하기" : "이메일 정보 저장하기"}
       </button>
     </div>
   );
 }
 
-
-function FunnelCtas({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
+function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
   const btn = buttonClasses(design.button_style, theme);
   const card = cardClasses(design.card_style, theme);
+  const insights = [
+    "돈 앞에서 반복되는 나의 마음과 반응",
+    "재정 유형과 신앙 유형이 함께 움직이는 흐름",
+    "소비·저축·투자에서 마음이 흔들리는 이유",
+    "내 유형이 가진 강점과 약점, 성장 방향",
+    "내 유형과 연결되는 말씀과 적용 질문",
+  ];
+  const standards = [
+    "돈을 쓸 때 지킬 나만의 기준",
+    "불안·비교·감정에 흔들릴 때 확인할 질문",
+    "말씀 안에서 내 삶에 맞게 돈을 관리하는 원칙",
+  ];
+
+  return (
+    <section style={{ marginTop: 34 }}>
+      <div style={{ padding: "10px 10px 22px", textAlign: "center" }}>
+        <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>YOUR NEXT STEP</p>
+        <h2 style={{ marginTop: 10, fontSize: 26, lineHeight: 1.38, color: theme.text }}>
+          나에게 맞는 돈 관리 기준을 세워보세요
+        </h2>
+        <p style={{ margin: "14px auto 0", maxWidth: 430, fontSize: 15, lineHeight: 1.78, color: theme.text, opacity: 0.82 }}>
+          돈 앞에서 마음이 자꾸 흔들리면,
+          <br />
+          돈을 다룰 때마다 불편하고 어렵게 느껴져요.
+        </p>
+        <p style={{ margin: "12px auto 0", maxWidth: 450, fontSize: 15, lineHeight: 1.78, color: theme.text, opacity: 0.82 }}>
+          셀라 머니 워크북은 진단 결과를 깊이 해석하고, 말씀 안에서 나에게 맞게 돈을 관리하는 기준을 직접 세우도록 도와드립니다.
+        </p>
+      </div>
+
+      <div
+        style={{
+          ...card,
+          borderRadius: 24,
+          padding: 28,
+          textAlign: "center",
+          border: `1px solid ${theme.accent}55`,
+        }}
+      >
+        <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>SELAH MONEY WORKBOOK</p>
+        <h2 style={{ marginTop: 10, fontSize: 28, lineHeight: 1.35, color: theme.text }}>셀라 머니 워크북</h2>
+        <p style={{ margin: "13px auto 0", maxWidth: 430, fontSize: 15, lineHeight: 1.75, color: theme.text, opacity: 0.84 }}>
+          돈에 관한 나의 마음과 태도를 깊이 이해하고,
+          <br />
+          말씀의 기준을 실제 돈 결정에 연결해보세요.
+        </p>
+
+        <div style={{ marginTop: 22, textAlign: "left" }}>
+          <h3 style={{ fontSize: 15, color: theme.text }}>워크북에서 깊이 이해하는 내용</h3>
+          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+            {insights.map((item) => (
+              <div
+                key={item}
+                style={{
+                  padding: "11px 14px",
+                  borderRadius: 14,
+                  backgroundColor: theme.bg,
+                  color: theme.text,
+                  fontSize: 14,
+                  lineHeight: 1.55,
+                }}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ marginTop: 20, textAlign: "left" }}>
+          <h3 style={{ fontSize: 15, color: theme.text }}>워크북에서 직접 세우는 기준</h3>
+          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+            {standards.map((item) => (
+              <div
+                key={item}
+                style={{
+                  padding: "11px 14px",
+                  borderRadius: 14,
+                  backgroundColor: theme.bg,
+                  color: theme.text,
+                  fontSize: 14,
+                  lineHeight: 1.55,
+                }}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <p style={{ marginTop: 20, fontSize: 13, lineHeight: 1.7, color: theme.muted }}>
+          개인 맞춤 진단 해석 · 말씀 적용 질문
+          <br />
+          돈 관리 기준 작성 · 월간 점검표
+        </p>
+        <p style={{ marginTop: 15, fontSize: 28, fontWeight: 600, color: theme.text }}>39,000원</p>
+        <button
+          type="button"
+          onClick={() => toast.info("셀라 머니 워크북 상세 페이지를 준비 중입니다.")}
+          style={{
+            ...btn,
+            width: "100%",
+            maxWidth: 340,
+            marginTop: 16,
+            padding: "13px 22px",
+            borderRadius: 999,
+            fontSize: 14,
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
+        >
+          셀라 머니 워크북 자세히 보기
+        </button>
+        <p style={{ marginTop: 10, fontSize: 12.5, lineHeight: 1.65, color: theme.muted }}>
+          실제 워크북 내용과 작성 화면을 먼저 확인할 수 있어요.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+
+function FunnelCtas({
+  theme,
+  design,
+  isMoneyDiagnosis,
+}: {
+  theme: ThemeColors;
+  design: DesignSettings;
+  isMoneyDiagnosis: boolean;
+}) {
+  const btn = buttonClasses(design.button_style, theme);
+  const card = cardClasses(design.card_style, theme);
+  if (isMoneyDiagnosis) {
+    return (
+      <>
+        <div style={{ ...card, marginTop: 16, borderRadius: 24, padding: 28, textAlign: "center" }}>
+          <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>SELAH MONEY LOUNGE</p>
+          <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.4, color: theme.text }}>
+            돈에 관한 마음과 기준을
+            <br />
+            셀라와 함께 정리해보세요
+          </h2>
+          <p style={{ margin: "13px auto 0", maxWidth: 430, fontSize: 14, lineHeight: 1.75, color: theme.text, opacity: 0.8 }}>
+            셀라 머니 라운지에서 내 돈과 마음을 점검하는 질문, 일상에 바로 활용하는 무료 자료와 셀라의 새로운 소식을 받아보세요.
+          </p>
+          <button
+            type="button"
+            onClick={() => toast.info("셀라 머니 라운지 연결을 준비 중입니다.")}
+            style={{ ...btn, width: "100%", maxWidth: 320, marginTop: 17, padding: "12px 20px", borderRadius: 999, fontSize: 13 }}
+          >
+            무료 머니 라운지 입장하기
+          </button>
+        </div>
+
+        <div style={{ ...card, marginTop: 16, borderRadius: 24, padding: 28, textAlign: "center" }}>
+          <p style={{ fontSize: 12, letterSpacing: "0.18em", color: theme.accent }}>SELAH CONTENT</p>
+          <h2 style={{ marginTop: 10, fontSize: 24, lineHeight: 1.4, color: theme.text }}>
+            돈과 신앙에 관한 셀라의 이야기를
+            <br />
+            계속 만나보세요
+          </h2>
+          <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ padding: 16, borderRadius: 16, backgroundColor: theme.bg }}>
+              <h3 style={{ fontSize: 15, color: theme.text }}>유튜브</h3>
+              <p style={{ marginTop: 7, fontSize: 13.5, lineHeight: 1.65, color: theme.text, opacity: 0.78 }}>
+                돈·소비·저축·투자·신앙을 일상의 선택과 연결하는 콘텐츠를 만나보세요.
+              </p>
+              <button type="button" onClick={() => toast.info("유튜브 연결을 준비 중입니다.")} style={{ ...btn, marginTop: 12, padding: "10px 18px", borderRadius: 999, fontSize: 12.5 }}>
+                유튜브에서 더 알아보기
+              </button>
+            </div>
+            <div style={{ padding: 16, borderRadius: 16, backgroundColor: theme.bg }}>
+              <h3 style={{ fontSize: 15, color: theme.text }}>인스타그램</h3>
+              <p style={{ marginTop: 7, fontSize: 13.5, lineHeight: 1.65, color: theme.text, opacity: 0.78 }}>
+                크리스천의 돈 관리 기준을 짧고 쉽게 정리한 글과 카드 콘텐츠를 받아보세요.
+              </p>
+              <button type="button" onClick={() => toast.info("인스타그램 연결을 준비 중입니다.")} style={{ ...btn, marginTop: 12, padding: "10px 18px", borderRadius: 999, fontSize: 12.5 }}>
+                인스타그램에서 받아보기
+              </button>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
   const links = [
     { label: "셀라 머니 진단 리포트 보기", href: "#" },
     { label: "셀라 머니 라운지 입장하기", href: "#" },
