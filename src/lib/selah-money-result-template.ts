@@ -209,7 +209,11 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_safety_gaze_reward: {
     title: "부족보상형",
-    representativeHeart: ["미래도 잘 준비하고 싶고, 다른 사람들에게도 괜찮아 보이고 싶고, 지친 내 마음도 달래고 싶어."],
+    representativeHeart: [
+      "미래도 잘 준비하고 싶고,",
+      "다른 사람들에게도 괜찮아 보이고 싶고,",
+      "지친 내 마음도 달래고 싶어.",
+    ],
     flow: [
       "미래에 돈이 부족할까 걱정함",
       "주변 사람의 소비와 생활을 살핌",
@@ -405,7 +409,10 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_burden_mid: {
     title: "신앙부담형",
-    representativeHeart: ["나를 위해 돈을 쓰고 누리면 하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해."],
+    representativeHeart: [
+      "나를 위해 돈을 쓰고 누리면 하나님 앞에서",
+      "욕심처럼 보일까 봐 마음이 불편해.",
+    ],
     flow: [
       "돈을 쓰거나 누릴 일이 생김",
       "신앙적으로 바른 선택인지 점검함",
