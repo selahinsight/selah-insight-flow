@@ -177,6 +177,51 @@
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
 }
 
+.money-funnel-section,
+.money-funnel-card {
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+}
+
+.money-funnel-intro {
+  padding: 4px 22px 26px;
+}
+
+.money-funnel-card {
+  padding: 34px 28px 30px !important;
+  border-radius: 1px !important;
+}
+
+.money-funnel-label {
+  margin: 0;
+  font-size: 14px !important;
+  line-height: 1.35;
+}
+
+.money-funnel-title {
+  margin-top: 12px;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 18px !important;
+  font-weight: 700;
+  line-height: 1.55 !important;
+  letter-spacing: -0.02em;
+}
+
+.money-funnel-product-title {
+  font-size: 20px !important;
+}
+
+.money-funnel-body {
+  max-width: 460px;
+  margin: 13px auto 0;
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  letter-spacing: -0.015em;
+}
+
+.money-funnel-item {
+  border-radius: 1px !important;
+}
+
 .money-result-complete-title,
 .money-result-complete-subtitle {
   font-family: "Gowun Batang", ui-serif, Georgia, serif;
@@ -599,6 +644,27 @@
 }
 
 @media (max-width: 639px) {
+  .money-funnel-intro {
+    padding: 2px 22px 24px;
+  }
+
+  .money-funnel-card {
+    padding: 34px 22px 30px !important;
+  }
+
+  .money-funnel-title {
+    font-size: 17px !important;
+    line-height: 1.55 !important;
+  }
+
+  .money-funnel-product-title {
+    font-size: 18px !important;
+  }
+
+  .money-funnel-body {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+  }
   .money-question-card {
     padding: 24px 20px !important;
   }
