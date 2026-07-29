@@ -133,7 +133,8 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     title: "인정위로형",
     representativeHeart: [
       "다른 사람들에게 괜찮아 보이고 싶고,",
-      "지친 내 마음도 달래고 싶어서 자꾸 돈을 쓰게 돼.",
+      "지친 내 마음도 달래고 싶어서 자꾸",
+      "돈을 쓰게 돼.",
     ],
     flow: [
       "다른 사람의 소비와 모습을 살핌",
