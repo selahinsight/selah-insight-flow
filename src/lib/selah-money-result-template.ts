@@ -328,7 +328,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   safety_seeking: {
     title: "안전추구형",
-    representativeHeart: ["아무리 준비해도 부족할까 봐", "마음을 놓기가 어려워."],
+    representativeHeart: ["아무리 준비해도 부족할까 봐 마음을 놓기가 어려워."],
     flow: [
       "미래에 돈이 부족할까 걱정함",
       "돈을 아끼고 꼼꼼히 관리함",
@@ -450,15 +450,11 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_separation_mid: {
     title: "신앙분리형",
-    representativeHeart: [
-      "하나님은 믿지만,",
-      "돈 문제는 현실적으로",
-      "따로 판단해야 할 것 같아.",
-    ],
+    representativeHeart: ["하나님은 믿지만, 돈 문제는 현실적으로 따로 판단해야 할 것 같아."],
     flow: [
       "돈과 관련된 결정이 생김",
-      "신앙과 관계없는\n현실 문제라고 생각함",
-      "세상의 기준과 주변 시선,\n상황을 중심으로 판단함",
+      "신앙과 관계없는 현실 문제라고 생각함",
+      "세상의 기준과 주변 시선, 상황을 중심으로 판단함",
       "기도하거나 믿음의 기준을\n연결하지 않음",
       "신앙과 돈 관리가\n분리된 채 반복됨",
     ],
