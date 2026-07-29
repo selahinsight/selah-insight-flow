@@ -920,7 +920,7 @@ function Runner({
                     lineHeight: 1.65,
                     color: theme.text,
                     fontWeight: 700,
-                    fontFamily: '"Gowun Batang", ui-serif, Georgia, serif',
+                    fontFamily: fontFamilyOf(design.font_mood),
                   }}
                 >
                   {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
@@ -1847,15 +1847,7 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
 
   return (
     <section className="money-funnel-section" style={{ marginTop: 34 }}>
-      <div
-        className="money-result-card money-funnel-card money-workbook-card"
-        style={{
-          ...card,
-          textAlign: "center",
-          border: `1px solid ${theme.accent}55`,
-        }}
-      >
-      <div className="money-funnel-intro" style={{ textAlign: "center" }}>
+      <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>다음 단계는</p>
         <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
           돈 앞에서 마음이 흔들리면,
@@ -1863,17 +1855,25 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
           돈 관리도 어렵게 느껴져요.
         </h2>
         <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
-          이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다.
+          이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다. 이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지, 그리고 말씀
           <br />
-          이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지,
-          <br />
-          그리고 말씀 안에서 나에게 맞는 기준을 어떻게 세울지는
+          안에서 나에게 맞는 기준을 어떻게 세울지는
           <br />
           셀라 머니 워크북에서 직접 다뤄드립니다.
         </p>
       </div>
 
-        <div className="money-workbook-divider" style={{ backgroundColor: theme.border }} />
+      <div
+        className="money-result-card money-funnel-card money-workbook-card"
+        style={{
+          ...card,
+          marginTop: 32,
+          textAlign: "center",
+          border: `1px solid ${theme.accent}55`,
+          borderRadius: 0,
+          backgroundColor: theme.bg,
+        }}
+      >
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>SELAH MONEY WORKBOOK</p>
         <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 워크북</h2>
         <p className="money-funnel-body" style={{ color: theme.text, opacity: 0.84 }}>
