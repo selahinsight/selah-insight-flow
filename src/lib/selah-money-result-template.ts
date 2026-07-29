@@ -67,8 +67,8 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     title: "평가불안형",
     representativeHeart: [
       "앞으로 돈이 부족할까 걱정되고",
-      "주변 사람보다 뒤처지는 것도 싫은데,",
-      "막상 내 돈을 확인하려니 두려워.",
+      "주변 사람보다 뒤처지는 것도 싫은",
+      "데, 막상 내 돈을 확인하려니 두려워.",
     ],
     flow: [
       "미래에 돈이 부족할까 걱정함",
