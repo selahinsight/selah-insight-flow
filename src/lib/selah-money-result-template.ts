@@ -41,9 +41,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   money_combo_organize_gaze: {
     title: "평가부담형",
     representativeHeart: [
-      "다른 사람에게 뒤처져 보이기 싫어",
-      "돈을 쓰고 나면,",
-      "카드값 보기가 싫어.",
+      "다른 사람에게 뒤처져 보이기",
+      "싫어서 돈을 쓰고 나면,",
+      "카드값 보기가 두려워.",
     ],
     flow: [
       "다른 사람의 소비를 봄",
@@ -282,9 +282,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   faith_combo_mid: {
     title: "신앙·현실 갈등형",
     representativeHeart: [
-      "돈을 생각하면 괜히 마음이 불편한데,",
-      "막상 돈에 관한 결정을 할 때는",
-      "신앙과 따로 생각하게 돼.",
+      "돈을 생각하면 괜히 마음이",
+      "불편한데, 막상 돈에 관한 결정을",
+      "할 때는 신앙과 따로 생각하게 돼.",
     ],
     flow: [
       "돈과 관련된 결정이 생김",
@@ -295,7 +295,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     reading: [
       "신앙·현실 갈등형은 돈을 하나님 앞에서 바르게 다루고 싶은 마음과 돈 문제는 현실적으로 판단해야 한다는 생각이 함께 강하게 나타납니다.",
-      "돈을 쓸 때는 죄책감을 느끼면서도 실제 결정에서는 가격·수익·주변 상황을 먼저 따릅니다. 돈을 사용하는 목적과 금액을 미리 정하고, 그 선택에서 지킬 신앙의 가치를 한 가지 연결하면 두 기준을 함께 세울 수 있습니다.",
+      "돈을 하나님 앞에서 바르게 다루고 싶은 마음은 있지만, 실제 결정에서는 세상의 기준과 다른 사람의 시선, 주변 상황을 먼저 따릅니다. 돈을 사용하는 목적과 금액을 미리 정하고, 그 선택에서 지킬 신앙의 가치를 한 가지 연결하면 두 기준을 함께 세울 수 있습니다.",
     ],
     checklist: [
       "이번 주 돈 결정 한 가지의 목적과 금액을 적어보세요.",
