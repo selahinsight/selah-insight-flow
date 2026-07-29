@@ -59,16 +59,13 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_reward: {
     title: "회피위로형",
-    representativeHeart: [
-      "지금은 마음부터 챙기고 싶어.",
-      "돈 문제는 나중에 볼래.",
-    ],
+    representativeHeart: ["지금은 마음부터 챙기고 싶어. 돈 문제는 나중에 볼래."],
     flow: [
-      "돈을 확인할 생각에\n마음이 무거워짐",
+      "돈을 확인할 생각에 마음이 무거워짐",
       "확인과 정리를 미룸",
       "답답하고 지친 마음이 커짐",
       "소비로 마음을 달램",
-      "지출 내역 확인이\n다시 무거워짐",
+      "지출 내역 확인이 다시 무거워짐",
       "확인과 정리를 다시 미룸",
     ],
     reading: [
