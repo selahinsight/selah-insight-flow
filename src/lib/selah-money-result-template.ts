@@ -261,11 +261,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_all: {
     title: "전반적 복합반응형",
-    representativeHeart: [
-      "돈을 잘 관리하고 싶은데,",
-      "걱정도 많고 마음도 자꾸 흔들려서",
-      "어디서부터 시작해야 할지 모르겠어.",
-    ],
+    representativeHeart: ["돈을 잘 관리하고 싶은데, 걱정도 많고 마음도 자꾸 흔들려서 어디서부터 시작해야 할지 모르겠어."],
     flow: [
       "미래에 돈이 부족할까 걱정함",
       "주변 사람의 소비와 생활을 살핌",
