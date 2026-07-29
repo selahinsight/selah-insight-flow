@@ -915,12 +915,12 @@ function Runner({
                 </p>
                 <p
                   style={{
-                    marginTop: 12,
+                    marginTop: 20,
                     fontSize: 17,
                     lineHeight: 1.65,
                     color: theme.text,
                     fontWeight: 400,
-                    fontFamily: fontFamilyOf(design.font_mood),
+                    fontFamily: '"Gowun Batang", ui-serif, Georgia, serif',
                   }}
                 >
                   {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
@@ -1858,9 +1858,9 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
       <div className="money-funnel-intro" style={{ textAlign: "center" }}>
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>다음 단계는</p>
         <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
-          돈 앞에서 마음이 자꾸 흔들리면
+          돈 앞에서 마음이 흔들리면,
           <br />
-          돈을 다룰 때마다 불편하고 어렵게 느껴져요.
+          돈 관리도 어렵게 느껴져요.
         </h2>
         <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
           이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다.
