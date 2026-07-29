@@ -13,16 +13,11 @@ export interface SelahMoneyResultTemplateContent {
 export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResultTemplateContent> = {
   money_combo_organize_safety: {
     title: "확인긴장형",
-    representativeHeart: [
-      "카드값이 많이 나왔을까 봐",
-      "확인하기가 겁나.",
-      "그래도 확인하지 않으면",
-      "더 불안해.",
-    ],
+    representativeHeart: ["카드값이 많이 나왔을까 봐 확인하기가 겁나. 그래도 확인하지 않으면 더 불안해."],
     flow: [
       "미래의 부족함을 걱정함",
-      "돈을 확인해야 한다는\n압박을 느낌",
-      "숫자와 함께 미래의 걱정이\n떠오름",
+      "돈을 확인해야 한다는 압박을 느낌",
+      "숫자와 함께 미래의 걱정이 떠오름",
       "확인과 정리를 미룸",
       "돈의 흐름이 흐릿해짐",
       "미래에 대한 불안이 커짐",
@@ -503,17 +498,13 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_combo_mid: {
     title: "신앙·현실 갈등형",
-    representativeHeart: [
-      "돈을 생각하면 괜히 마음이",
-      "불편한데, 막상 돈에 관한 결정을",
-      "할 때는 신앙과 따로 생각하게 돼.",
-    ],
+    representativeHeart: ["돈을 생각하면 괜히 마음이 불편한데, 막상 돈에 관한 결정을 할 때는 신앙과 따로 생각하게 돼."],
     flow: [
       "돈과 관련된 결정이 생김",
-      "하나님 앞에서 바른 선택인지\n걱정함",
-      "세상의 기준과 주변 시선,\n상황을 중심으로 판단함",
-      "신앙과 현실의 기준이\n마음속에서 부딪힘",
-      "결정한 뒤에도 마음이\n편하지 않음",
+      "하나님 앞에서 바른 선택인지 걱정함",
+      "세상의 기준과 주변 시선, 상황을 중심으로 판단함",
+      "신앙과 현실의 기준이 마음속에서 부딪힘",
+      "결정한 뒤에도 마음이 편하지 않음",
     ],
     reading: [
       "신앙·현실 갈등형은 돈을 하나님 앞에서 바르게 다루고 싶은 마음과 돈 문제는 현실적으로 판단해야 한다는 생각이 함께 강하게 나타납니다.",
