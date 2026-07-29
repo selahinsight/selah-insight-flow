@@ -317,7 +317,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   organizing_delay: {
     title: "정리미룸형",
-    representativeHeart: ["지금 통장 잔액과 카드값을 확인하면 더 불안해질 것 같아."],
+    representativeHeart: ["지금 통장 잔액과 카드값을 확인하면", "더 불안해질 것 같아."],
     flow: [
       "돈을 확인해야 한다고 느낌",
       "숫자를 마주할 생각에 마음이 무거워짐",
@@ -442,10 +442,10 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_burden_high: {
     title: "신앙부담형",
-    representativeHeart: ["돈을 자꾸 생각하는 것 자체가 신앙적으로 좋지 않은 것 같아."],
+    representativeHeart: ["돈을 자꾸 생각하는 것 자체가 신앙적으로", "좋지 않은 것 같아."],
     flow: [
       "돈과 관련된 선택이 생김",
-      "하나님 앞에서 바른 선택인지 강하게 점검함",
+      "하나님 앞에서 바른 선택인지 강하게\n점검함",
       "욕심이나 사치는 아닌지 여러 번 의심함",
       "부담과 죄책감이 커짐",
       "필요한 소비와 성장의 선택도 조심스러워짐",
