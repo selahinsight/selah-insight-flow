@@ -498,7 +498,11 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_combo_mid: {
     title: "신앙·현실 갈등형",
-    representativeHeart: ["돈을 생각하면 괜히 마음이 불편한데, 막상 돈에 관한 결정을 할 때는 신앙과 따로 생각하게 돼."],
+    representativeHeart: [
+      "돈을 생각하면 괜히 마음이 불편한데",
+      "막상 돈에 관한 결정을 할 때는 신앙과 따로",
+      "생각하게 돼.",
+    ],
     flow: [
       "돈과 관련된 결정이 생김",
       "하나님 앞에서 바른 선택인지 걱정함",
