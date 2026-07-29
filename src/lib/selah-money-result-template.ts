@@ -235,11 +235,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_safety_gaze: {
     title: "평가불안형",
-    representativeHeart: [
-      "앞으로 돈이 부족할까 걱정되고",
-      "주변 사람보다 뒤처지는 것도 싫은",
-      "데, 막상 내 돈을 확인하려니 두려워.",
-    ],
+    representativeHeart: ["앞으로 돈이 부족할까 걱정되고 주변 사람보다 뒤처지는 것도 싫은데, 막상 내 돈을 확인하려니 두려워."],
     flow: [
       "미래에 돈이 부족할까 걱정함",
       "주변 사람의 삶과 소비를 살핌",
@@ -515,18 +511,13 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_combo_high: {
     title: "신앙·현실 갈등형",
-    representativeHeart: [
-      "돈을 생각할수록 하나님 앞에서",
-      "마음이 무거워지는데, 막상 결정할",
-      "때는 세상의 기준과 주변 상황을",
-      "따라가게 돼.",
-    ],
+    representativeHeart: ["돈을 생각할수록 하나님 앞에서 마음이 무거워지는데, 막상 결정할 때는 세상의 기준과 주변 상황을 따라가게 돼."],
     flow: [
       "돈과 관련된 결정이 생김",
-      "하나님 앞에서 바른 선택인지\n걱정함",
-      "욕심이나 믿음의 부족함을\n의심함",
-      "세상의 기준과 주변 상황을\n따름",
-      "신앙과 현실의 기준이\n마음속에서 부딪힘",
+      "하나님 앞에서 바른 선택인지 걱정함",
+      "욕심이나 믿음의 부족함을 의심함",
+      "세상의 기준과 주변 상황을 따름",
+      "신앙과 현실의 기준이 마음속에서 부딪힘",
       "결정한 뒤에도 마음이 무거움",
     ],
     reading: [
