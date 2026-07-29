@@ -891,12 +891,11 @@ function Runner({
                   margin: "28px auto 0",
                   maxWidth: 440,
                   padding: "22px 20px",
-                  borderRadius: 14,
+                  borderRadius: 8,
                   backgroundColor: theme.bg,
                   border: `1px solid ${theme.accent}66`,
                   color: theme.text,
                   textAlign: "center",
-                  boxShadow: `0 10px 28px ${theme.accent}14`,
                 }}
               >
                 <p
@@ -912,10 +911,10 @@ function Runner({
                 <p
                   style={{
                     marginTop: 11,
-                    fontSize: 17,
-                    lineHeight: 1.78,
+                    fontSize: 15,
+                    lineHeight: 1.45,
                     color: theme.text,
-                    fontWeight: 650,
+                    fontWeight: 400,
                   }}
                 >
                   {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
@@ -1037,7 +1036,7 @@ function Runner({
                 <div className="money-result-section-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
                 <div
                   style={{
-                    margin: "28px auto 2px",
+                    margin: "48px auto 34px",
                     maxWidth: 420,
                     textAlign: "center",
                   }}
@@ -1057,6 +1056,18 @@ function Runner({
                     이런 돈 앞의 마음은
                     <br />
                     <span style={{ color: theme.accent }}>하나님과의 관계에서는</span> 어떻게 나타날까요?
+                  </p>
+                  <p
+                    aria-hidden="true"
+                    style={{
+                      marginTop: 22,
+                      fontSize: 22,
+                      lineHeight: 1,
+                      color: theme.accent,
+                      fontWeight: 400,
+                    }}
+                  >
+                    ↓
                   </p>
                 </div>
                 <ResultSectionTitle theme={theme}>
