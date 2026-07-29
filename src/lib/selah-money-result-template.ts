@@ -352,10 +352,10 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   gaze_sensitive: {
     title: "시선민감형",
-    representativeHeart: ["나도 이 정도는", "갖춰야 하지 않을까?"],
+    representativeHeart: ["나도 이 정도는 갖춰야 하지 않을까?"],
     flow: [
       "다른 사람의 삶과 소비를 봄",
-      "내 삶이 부족하거나\n뒤처진 것처럼 느껴짐",
+      "내 삶이 부족하거나 뒤처진 것처럼 느껴짐",
       "돈을 써서 차이를 줄이려 함",
       "잠시 괜찮아진 느낌을 받음",
       "새로운 비교 대상이 나타남",
