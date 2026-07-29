@@ -83,17 +83,13 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_safety_gaze: {
     title: "기준압박형",
-    representativeHeart: [
-      "미래를 잘 준비하고 싶고,",
-      "주변 사람들에게도 괜찮아 보이고",
-      "싶어서 돈의 기준이 자꾸 높아져.",
-    ],
+    representativeHeart: ["미래를 잘 준비하고 싶고, 주변 사람들에게도 괜찮아 보이고 싶어서 돈의 기준이 자꾸 높아져."],
     flow: [
-      "미래를 잘 준비하고\n싶어함",
+      "미래를 잘 준비하고 싶어함",
       "주변 사람들의 소비와 생활을 살핌",
       "내 준비와 생활 수준을 비교함",
-      "저축과 소비 기준을 함께\n높임",
-      "현재 가진 돈으로 충분하다고\n느끼기 어려워짐",
+      "저축과 소비 기준을 함께 높임",
+      "현재 가진 돈으로 충분하다고 느끼기 어려워짐",
       "더 많이 모으면서 잘 갖추고도 싶어짐",
     ],
     reading: [
