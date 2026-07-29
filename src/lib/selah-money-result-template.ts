@@ -99,7 +99,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "주변 사람들의 소비와 생활을 살핌",
       "내 준비와 생활 수준을 비교함",
       "저축과 소비 기준을 함께\n높임",
-      "현재 가진 돈으로 충분하다고 느끼기\n어려워짐",
+      "현재 가진 돈으로 충분하다고\n느끼기 어려워짐",
       "더 많이 모으면서 잘 갖추고도 싶어짐",
     ],
     reading: [
