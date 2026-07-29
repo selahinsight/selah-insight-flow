@@ -942,7 +942,11 @@ function Runner({
               <h3 className="money-composite-member-title" style={{ color: theme.text }}>{result.title}</h3>
             )}
             {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && (
-              <SelahMoneyResultTemplate content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]} theme={theme} />
+              <SelahMoneyResultTemplate
+                content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]}
+                theme={theme}
+                showInterpretationGap
+              />
             )}
             {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && result.representative_sentence && (
               <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
