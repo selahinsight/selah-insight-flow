@@ -405,14 +405,10 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_burden_mid: {
     title: "신앙부담형",
-    representativeHeart: [
-      "나를 위해 돈을 쓰고 누리면",
-      "하나님 앞에서 욕심처럼 보일까 봐",
-      "마음이 불편해.",
-    ],
+    representativeHeart: ["나를 위해 돈을 쓰고 누리면 하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해."],
     flow: [
       "돈을 쓰거나 누릴 일이 생김",
-      "신앙적으로 바른 선택인지\n점검함",
+      "신앙적으로 바른 선택인지 점검함",
       "필요와 목적을 여러 번 확인함",
       "부담과 죄책감이 올라옴",
       "돈을 쓰고 누리는 선택이\n조심스러워짐",
