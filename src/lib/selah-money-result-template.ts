@@ -168,14 +168,14 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   money_combo_organize_safety_reward: {
     title: "불안보상형",
     representativeHeart: [
-      "앞으로 돈이 부족할까 걱정되는",
-      "데, 돈을 확인하기는 두렵고",
+      "앞으로 돈이 부족할까 걱정되는데,",
+      "돈을 확인하기는 두렵고",
       "답답할 때는 소비라도 하고 싶어.",
     ],
     flow: [
       "미래에 돈이 부족할까 걱정함",
       "돈을 확인해야 한다는 압박을 느낌",
-      "통장 잔액과 카드값 확인을\n미룸",
+      "통장 잔액과 카드값 확인을 미룸",
       "불안과 답답함이 쌓임",
       "소비로 마음을 달램",
       "지출 확인이 더 두려워져 다시 미룸",
