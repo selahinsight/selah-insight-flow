@@ -35,11 +35,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_gaze: {
     title: "평가부담형",
-    representativeHeart: [
-      "다른 사람에게 뒤처져 보이기",
-      "싫어서 돈을 쓰고 나면,",
-      "카드값 보기가 두려워.",
-    ],
+    representativeHeart: ["다른 사람에게 뒤처져 보이기 싫어서 돈을 쓰고 나면, 카드값 보기가 두려워."],
     flow: [
       "다른 사람의 소비를 봄",
       "내 모습이 부족하게 느껴짐",
