@@ -289,7 +289,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     flow: [
       "돈과 관련된 결정이 생김",
       "하나님 앞에서 바른 선택인지\n걱정함",
-      "세상의 기준과 다른 사람의 시선,\n주변 상황을 중심으로 판단함",
+      "세상의 기준과 주변 시선, 상황을\n중심으로 판단함",
       "신앙과 현실의 기준이\n마음속에서 부딪힘",
       "결정한 뒤에도 마음이\n편하지 않음",
     ],

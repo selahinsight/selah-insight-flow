@@ -26,7 +26,15 @@ export function SelahMoneyResultTemplate({ content, theme }: SelahMoneyResultTem
             <div className="money-flow-steps">
               {content.flow.map((step, index) => (
                 <div key={step}>
-                  <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border, whiteSpace: "pre-line" }}>{step}</div>
+                  <div className="money-flow-step" style={{ color: theme.text, borderColor: theme.border }}>
+                    {step.includes("\n")
+                      ? step.split("\n").map((line) => (
+                          <span key={line} style={{ display: "block", whiteSpace: "nowrap" }}>
+                            {line}
+                          </span>
+                        ))
+                      : step}
+                  </div>
                   {index < content.flow.length - 1 && <div className="money-flow-arrow" style={{ color: theme.accent }}>↓</div>}
                 </div>
               ))}
