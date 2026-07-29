@@ -890,7 +890,7 @@ function Runner({
                 style={{
                   margin: "28px auto 0",
                   maxWidth: 440,
-                  padding: "26px 22px",
+                  padding: "22px 22px 24px",
                   borderRadius: 0,
                   backgroundColor: theme.bg,
                   border: `1px solid ${theme.accent}66`,
@@ -898,10 +898,17 @@ function Runner({
                   textAlign: "center",
                 }}
               >
+                <ScanSearch
+                  size={23}
+                  strokeWidth={1.7}
+                  color={theme.accent}
+                  aria-hidden="true"
+                />
                 <p
                   style={{
-                    fontSize: 12,
-                    letterSpacing: "0.08em",
+                    marginTop: 9,
+                    fontSize: 16,
+                    letterSpacing: "-0.01em",
                     color: theme.accent,
                     fontWeight: 700,
                   }}
@@ -910,9 +917,9 @@ function Runner({
                 </p>
                 <p
                   style={{
-                    marginTop: 14,
-                    fontSize: 21,
-                    lineHeight: 1.82,
+                    marginTop: 12,
+                    fontSize: 17,
+                    lineHeight: 1.65,
                     color: theme.text,
                     fontWeight: 400,
                     fontFamily: fontFamilyOf(design.font_mood),
@@ -1037,17 +1044,17 @@ function Runner({
                 <div className="money-result-section-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
                 <div
                   style={{
-                    margin: "48px auto 34px",
+                    margin: "54px auto 48px",
                     maxWidth: 420,
                     textAlign: "center",
                   }}
                 >
-                  <Sprout size={20} strokeWidth={1.6} color={theme.accent} aria-hidden="true" />
+                  <Sprout size={22} strokeWidth={1.6} color={theme.accent} aria-hidden="true" />
                   <p
                     style={{
-                      marginTop: 10,
-                      fontSize: 17,
-                      lineHeight: 1.75,
+                      marginTop: 12,
+                      fontSize: 20,
+                      lineHeight: 1.7,
                       color: theme.text,
                       fontWeight: 600,
                     }}
@@ -1061,8 +1068,8 @@ function Runner({
                   <p
                     aria-hidden="true"
                     style={{
-                      marginTop: 22,
-                      fontSize: 22,
+                      marginTop: 24,
+                      fontSize: 24,
                       lineHeight: 1,
                       color: theme.accent,
                       fontWeight: 400,
@@ -1871,42 +1878,40 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
 
         <div style={{ marginTop: 22, textAlign: "left" }}>
           <h3 style={{ fontSize: 15, color: theme.text }}>워크북에서 깊이 이해하는 내용</h3>
-          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+          <ul style={{ margin: "12px 0 0", paddingLeft: 21, display: "flex", flexDirection: "column", gap: 9 }}>
             {insights.map((item) => (
-              <div className="money-funnel-item"
+              <li
                 key={item}
                 style={{
-                  padding: "11px 14px",
-                  backgroundColor: theme.bg,
                   color: theme.text,
                   fontSize: 14,
-                  lineHeight: 1.55,
+                  lineHeight: 1.65,
+                  paddingLeft: 2,
                 }}
               >
                 {item}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <div style={{ marginTop: 20, textAlign: "left" }}>
           <h3 style={{ fontSize: 15, color: theme.text }}>워크북에서 직접 세우는 기준</h3>
-          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+          <ul style={{ margin: "12px 0 0", paddingLeft: 21, display: "flex", flexDirection: "column", gap: 9 }}>
             {standards.map((item) => (
-              <div className="money-funnel-item"
+              <li
                 key={item}
                 style={{
-                  padding: "11px 14px",
-                  backgroundColor: theme.bg,
                   color: theme.text,
                   fontSize: 14,
-                  lineHeight: 1.55,
+                  lineHeight: 1.65,
+                  paddingLeft: 2,
                 }}
               >
                 {item}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <p style={{ marginTop: 20, fontSize: 13, lineHeight: 1.7, color: theme.muted }}>
