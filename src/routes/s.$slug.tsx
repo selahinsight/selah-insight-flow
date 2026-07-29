@@ -890,8 +890,8 @@ function Runner({
                 style={{
                   margin: "28px auto 0",
                   maxWidth: 440,
-                  padding: "22px 20px",
-                  borderRadius: 8,
+                  padding: "26px 22px",
+                  borderRadius: 0,
                   backgroundColor: theme.bg,
                   border: `1px solid ${theme.accent}66`,
                   color: theme.text,
@@ -910,11 +910,12 @@ function Runner({
                 </p>
                 <p
                   style={{
-                    marginTop: 11,
-                    fontSize: 15,
-                    lineHeight: 1.45,
+                    marginTop: 14,
+                    fontSize: 21,
+                    lineHeight: 1.82,
                     color: theme.text,
                     fontWeight: 400,
+                    fontFamily: fontFamilyOf(design.font_mood),
                   }}
                 >
                   {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
@@ -1822,11 +1823,10 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
   const btn = buttonClasses(design.button_style, theme);
   const card = cardClasses(design.card_style, theme);
   const insights = [
-    "돈 앞에서 반복되는 나의 마음과 반응",
-    "재정 유형과 신앙 유형이 함께 움직이는 흐름",
-    "소비·저축·투자에서 마음이 흔들리는 이유",
-    "내 유형이 가진 강점과 약점, 성장 방향",
-    "내 유형과 연결되는 말씀과 적용 질문",
+    "내 돈-신앙 조합이 만드는 반복 패턴을 1페이지로 정리합니다",
+    "이번 달 소비 중 흔들렸던 순간 3가지를 직접 찾아 적습니다",
+    "내 강점 1개, 약점 1개를 각각 문장으로 완성합니다",
+    "내 유형에 연결된 말씀 구절을 읽고, 묵상 질문에 직접 답합니다",
   ];
   const standards = [
     "돈을 쓸 때 지킬 나만의 기준",
@@ -1845,7 +1845,7 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
         }}
       >
       <div className="money-funnel-intro" style={{ textAlign: "center" }}>
-        <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>YOUR NEXT STEP</p>
+        <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>다음 단계는</p>
         <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
           나에게 맞는 돈 관리 기준을 세워보세요
         </h2>
@@ -1855,11 +1855,10 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
           돈을 다룰 때마다 불편하고 어렵게 느껴져요.
         </p>
         <p className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
-          셀라 머니 워크북은 진단 결과를 깊이 해석하고
-          <br />
-          말씀 안에서 나에게 맞게 돈을 관리하는 기준을
-          <br />
-          직접 세우도록 도와드립니다.
+          이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다.
+          이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지,
+          그리고 말씀 안에서 나에게 맞는 기준을 어떻게 세울지는
+          셀라 머니 워크북에서 직접 다뤄드립니다.
         </p>
       </div>
 
