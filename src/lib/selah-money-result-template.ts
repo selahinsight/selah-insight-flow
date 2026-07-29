@@ -380,7 +380,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   emotional_reward: {
     title: "마음보상형",
-    representativeHeart: ["이걸 사면 지친 마음이 조금 괜찮아질 것 같아."],
+    representativeHeart: ["이걸 사면 지친 마음이 조금 괜찮아질 것", "같아."],
     flow: [
       "피곤하고 허전한 마음이 올라옴",
       "돈을 쓰면 나아질 것처럼 느껴짐",
@@ -484,7 +484,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_separation_high: {
     title: "신앙분리형",
-    representativeHeart: ["돈은 현실 문제니까 신앙과는 따로 생각해야 할 것 같아."],
+    representativeHeart: ["돈은 현실 문제니까 신앙과는 따로", "생각해야 할 것 같아."],
     flow: [
       "돈과 관련된 결정이 생김",
       "신앙과 관계없는 현실 문제라고 생각함",
