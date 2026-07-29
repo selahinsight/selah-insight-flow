@@ -453,13 +453,16 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_separation_mid: {
     title: "신앙분리형",
-    representativeHeart: ["하나님은 믿지만, 돈 문제는 현실적으로 따로 판단해야 할 것 같아."],
+    representativeHeart: [
+      "하나님은 믿지만, 돈 문제는 현실적으로",
+      "따로 판단해야 할 것 같아.",
+    ],
     flow: [
       "돈과 관련된 결정이 생김",
       "신앙과 관계없는 현실 문제라고 생각함",
       "세상의 기준과 주변 시선, 상황을 중심으로 판단함",
-      "기도하거나 믿음의 기준을\n연결하지 않음",
-      "신앙과 돈 관리가\n분리된 채 반복됨",
+      "기도하거나 믿음의 기준을 연결하지 않음",
+      "신앙과 돈 관리가 분리된 채 반복됨",
     ],
     reading: [
       "신앙분리형은 하나님을 믿지만, 돈을 벌고 쓰고 모으고 투자하는 일은 신앙과 관계없는 현실적인 문제라고 생각합니다.",
