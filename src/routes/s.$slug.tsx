@@ -886,19 +886,41 @@ function Runner({
             <div className="money-result-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
 
             {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]?.sceneHook && (
-              <p
+              <div
                 style={{
                   margin: "28px auto 0",
                   maxWidth: 440,
-                  fontSize: 16,
-                  lineHeight: 1.75,
+                  padding: "22px 20px",
+                  borderRadius: 14,
+                  backgroundColor: theme.bg,
+                  border: `1px solid ${theme.accent}66`,
                   color: theme.text,
                   textAlign: "center",
-                  fontWeight: 600,
+                  boxShadow: `0 10px 28px ${theme.accent}14`,
                 }}
               >
-                {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
-              </p>
+                <p
+                  style={{
+                    fontSize: 12,
+                    letterSpacing: "0.08em",
+                    color: theme.accent,
+                    fontWeight: 700,
+                  }}
+                >
+                  혹시 이런 모습이 익숙한가요?
+                </p>
+                <p
+                  style={{
+                    marginTop: 11,
+                    fontSize: 17,
+                    lineHeight: 1.78,
+                    color: theme.text,
+                    fontWeight: 650,
+                  }}
+                >
+                  {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
+                </p>
+              </div>
             )}
 
             <ResultSectionTitle theme={theme}>
@@ -1013,6 +1035,30 @@ function Runner({
             {selahResult?.primaryFaithLens && (
               <>
                 <div className="money-result-section-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
+                <div
+                  style={{
+                    margin: "28px auto 2px",
+                    maxWidth: 420,
+                    textAlign: "center",
+                  }}
+                >
+                  <Sprout size={20} strokeWidth={1.6} color={theme.accent} aria-hidden="true" />
+                  <p
+                    style={{
+                      marginTop: 10,
+                      fontSize: 17,
+                      lineHeight: 1.75,
+                      color: theme.text,
+                      fontWeight: 600,
+                    }}
+                  >
+                    그렇다면,
+                    <br />
+                    이런 돈 앞의 마음은
+                    <br />
+                    <span style={{ color: theme.accent }}>하나님과의 관계에서는</span> 어떻게 나타날까요?
+                  </p>
+                </div>
                 <ResultSectionTitle theme={theme}>
                   <span className="money-desktop-copy">돈과 신앙 사이의 마음 유형</span>
                   <span className="money-mobile-copy">{name.trim()}님의 돈을 대하는 신앙 유형</span>
