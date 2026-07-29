@@ -109,11 +109,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_safety_reward: {
     title: "긴장보상형",
-    representativeHeart: [
-      "미래가 걱정돼서 아껴 쓰는데,",
-      "계속 참다 보면 나를 위해",
-      "확 써버리고 싶어.",
-    ],
+    representativeHeart: ["미래가 걱정돼서 아껴 쓰는데, 계속 참다 보면 나를 위해 확 써버리고 싶어."],
     flow: [
       "미래에 돈이 부족할까 걱정함",
       "지출을 최대한 줄이고 참음",
