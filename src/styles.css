@@ -679,27 +679,27 @@
   }
 
   .money-funnel-title {
-    font-size: 17px !important;
-    line-height: 1.55 !important;
+    font-size: 20px !important;
+    line-height: 1.5 !important;
   }
 
   .money-funnel-product-title {
-    font-size: 18px !important;
+    font-size: 22px !important;
   }
 
   .money-next-step-title {
-    font-size: 18px !important;
-    line-height: 1.42 !important;
+    font-size: 21px !important;
+    line-height: 1.48 !important;
   }
 
   .money-funnel-body.money-next-step-body {
-    font-size: 15px !important;
-    line-height: 1.72 !important;
+    font-size: 16px !important;
+    line-height: 1.7 !important;
   }
 
   .money-funnel-body {
-    font-size: 14px !important;
-    line-height: 1.75 !important;
+    font-size: 16px !important;
+    line-height: 1.7 !important;
   }
   .money-question-card {
     padding: 24px 20px !important;
@@ -745,16 +745,67 @@
   .money-result-type-box {
     min-width: 140px;
     padding: 9px 22px;
-    font-size: 18px !important;
+    font-size: 22px !important;
   }
 
   .money-result-box-title {
-    font-size: 17px;
+    font-size: 18px;
   }
 
   .money-diagnosis-label {
     white-space: nowrap;
     font-size: 14px !important;
+  }
+
+  .money-result-section-title {
+    font-size: 18px !important;
+    line-height: 1.45 !important;
+  }
+
+  .money-scene-hook-body {
+    font-size: 17px !important;
+    line-height: 1.6 !important;
+  }
+
+  .money-result-bubble {
+    font-size: 17px !important;
+    line-height: 1.6 !important;
+  }
+
+  .money-unified-summary h3,
+  .money-faith-low-summary h3 {
+    font-size: 18px !important;
+    line-height: 1.5 !important;
+  }
+
+  .money-unified-summary p,
+  .money-unified-summary li,
+  .money-faith-low-summary p,
+  .money-faith-low-summary li,
+  .money-result-description,
+  .money-result-interpretation-paragraphs p,
+  .money-flow-step,
+  .money-action-item {
+    font-size: 16px !important;
+  }
+
+  .money-faith-transition-title {
+    font-size: 21px !important;
+    line-height: 1.65 !important;
+  }
+
+  .money-workbook-card h3 {
+    font-size: 18px !important;
+    line-height: 1.5 !important;
+  }
+
+  .money-workbook-card li {
+    font-size: 16px !important;
+    line-height: 1.65 !important;
+  }
+
+  .money-workbook-card button {
+    font-size: 15px !important;
   }
 
   .money-intro-title {

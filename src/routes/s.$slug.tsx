@@ -887,8 +887,9 @@ function Runner({
 
             {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]?.sceneHook && (
               <div
+                className="money-scene-hook-card"
                 style={{
-                  margin: "28px auto 30px",
+                  margin: "28px auto 46px",
                   maxWidth: 440,
                   padding: "22px 22px 24px",
                   borderRadius: 0,
@@ -899,6 +900,7 @@ function Runner({
                 }}
               >
                 <p
+                  className="money-scene-hook-body"
                   style={{
                     fontSize: 16,
                     letterSpacing: "-0.01em",
@@ -920,7 +922,7 @@ function Runner({
                     lineHeight: 1.65,
                     color: theme.text,
                     fontWeight: 600,
-                    fontFamily: fontFamilyOf(design.font_mood),
+                    fontFamily: '"SUIT", ui-sans-serif, system-ui, sans-serif',
                   }}
                 >
                   {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
@@ -1045,6 +1047,7 @@ function Runner({
               <>
                 <div className="money-result-section-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
                 <div
+                  className="money-faith-transition"
                   style={{
                     margin: "54px auto 48px",
                     maxWidth: 420,
@@ -1053,6 +1056,7 @@ function Runner({
                 >
                   <Sprout size={22} strokeWidth={1.6} color={theme.accent} aria-hidden="true" />
                   <p
+                    className="money-faith-transition-title"
                     style={{
                       marginTop: 12,
                       fontSize: 20,
