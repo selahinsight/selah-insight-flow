@@ -142,12 +142,12 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   money_combo_gaze_reward: {
     title: "인정위로형",
     representativeHeart: [
-      "다른 사람들에게 괜찮아 보이고 싶고,",
-      "지친 내 마음도 달래고 싶어서",
-      "자꾸 돈을 쓰게 돼.",
+      "다른 사람들에게 괜찮아 보이고",
+      "싶고, 지친 내 마음도 달래고",
+      "싶어서 자꾸 돈을 쓰게 돼.",
     ],
     flow: [
-      "다른 사람의 소비와 모습을 살핌",
+      "다른 사람의 소비와 모습을\n살핌",
       "내 모습이 부족하게 느껴짐",
       "지친 마음에 위로가 필요해짐",
       "옷·외식·쇼핑에 돈을 사용함",
