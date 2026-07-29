@@ -209,11 +209,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_safety_gaze_reward: {
     title: "부족보상형",
-    representativeHeart: [
-      "미래도 잘 준비하고 싶고,",
-      "다른 사람들에게도 괜찮아 보이고 싶고,",
-      "지친 내 마음도 달래고 싶어.",
-    ],
+    representativeHeart: ["미래도 잘 준비하고 싶고, 다른 사람들에게도 괜찮아 보이고 싶고, 지친 내 마음도 달래고 싶어."],
     flow: [
       "미래에 돈이 부족할까 걱정함",
       "주변 사람의 소비와 생활을 살핌",
