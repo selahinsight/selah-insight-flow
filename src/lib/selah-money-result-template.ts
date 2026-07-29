@@ -297,12 +297,12 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_no_clear_pattern: {
     title: "돈 기준 탐색형",
-    representativeHeart: ["돈을 어떤 기준으로 관리해야", "할지 아직 잘 모르겠어."],
+    representativeHeart: ["돈을 어떤 기준으로 관리해야 할지 아직 잘 모르겠어."],
     flow: [
       "돈과 관련된 결정이 생김",
       "그때의 상황에 따라 판단함",
       "결정할 때마다 기준이 달라짐",
-      "어떤 선택이 나에게 맞는지\n알기 어려움",
+      "어떤 선택이 나에게 맞는지 알기 어려움",
       "돈을 관리할 때 혼란스러워짐",
     ],
     reading: [
@@ -400,16 +400,12 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_low: {
     title: "편안한 신앙 연결형",
-    representativeHeart: [
-      "돈을 관리할 때",
-      "하나님께 묻고 말씀 안에서",
-      "선택하는 게 자연스러워.",
-    ],
+    representativeHeart: ["돈을 관리할 때 하나님께 묻고 말씀 안에서 선택하는 게 자연스러워."],
     flow: [
       "돈을 관리할 일이 생김",
       "하나님께 기도함",
       "말씀의 기준을 살펴봄",
-      "현재 형편과 필요한 책임을\n함께 생각함",
+      "현재 형편과 필요한 책임을 함께 생각함",
       "감사하며 선택하고 관리함",
     ],
     reading: [
