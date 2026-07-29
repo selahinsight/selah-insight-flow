@@ -183,11 +183,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_gaze_reward: {
     title: "인정회피형",
-    representativeHeart: [
-      "다른 사람들에게 괜찮아 보이고 싶고,",
-      "지친 마음도 달래고 싶은데,",
-      "쓴 돈을 확인하기는 두려워.",
-    ],
+    representativeHeart: ["다른 사람들에게 괜찮아 보이고 싶고, 지친 마음도 달래고 싶은데, 쓴 돈을 확인하기는 두려워."],
     flow: [
       "다른 사람의 소비와 모습을 살핌",
       "내 모습이 부족하게 느껴짐",
