@@ -312,7 +312,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   organizing_delay: {
     title: "정리미룸형",
-    sceneHook: "카드값과 통장 잔액을 확인해야 한다고 생각하면서도, 앱을 열기가 부담스러워 자꾸 미루고 있나요?",
+    sceneHook: "카드값과 통장 잔액을 확인해야 한다고\n생각하면서도, 앱을 열기가 부담스러워\n자꾸 미루고 있나요?",
     representativeHeart: ["지금 통장 잔액과 카드값을 확인하면", "더 불안해질 것 같아."],
     flow: [
       "돈을 확인해야 한다고 느낌",
