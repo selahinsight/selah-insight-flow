@@ -360,7 +360,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   gaze_sensitive: {
     title: "시선민감형",
     sceneHook: "SNS나 주변 사람의 소비를 본 뒤,\n원래 필요하지 않았던 물건도\n나에게 꼭 필요한 것처럼 느껴지나요?",
-    representativeHeart: ["나도 이 정도는", "갖춰야 하지 않을까?"],
+    representativeHeart: ["나도 이 정도는 갖춰야 하지 않을까?"],
     flow: [
       "다른 사람의 삶과 소비를 봄",
       "내 삶이 부족하거나 뒤처진 것처럼\n느껴짐",
