@@ -257,14 +257,40 @@
 
 .money-result-gap-note {
   max-width: 500px;
-  margin: 38px auto 4px;
-  padding: 20px 18px 0;
-  border-top: 1px solid rgba(122, 103, 90, 0.18);
+  margin: 42px auto 0;
+  padding: 24px 22px;
+  border: 1px solid;
+  border-radius: 1px;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
   line-height: 1.7;
   text-align: center;
+}
+
+.money-result-gap-note p {
+  margin: 0;
+}
+
+.money-result-gap-note p + p {
+  margin-top: 13px;
+}
+
+.money-result-gap-note strong {
+  font-weight: 700;
+}
+
+.money-paid-funnel-section {
+  margin-top: 24px;
+}
+
+.money-paid-bridge {
+  margin: 0;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: -0.03em;
 }
 
 .money-funnel-item {
@@ -817,8 +843,14 @@
   }
 
   .money-result-gap-note {
-    font-size: 17px !important;
+    padding: 22px 18px;
+    font-size: 18px !important;
     line-height: 1.65 !important;
+  }
+
+  .money-paid-bridge {
+    font-size: 21px !important;
+    line-height: 1.55 !important;
   }
 
   .money-faith-transition-title {

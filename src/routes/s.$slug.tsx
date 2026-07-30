@@ -1190,9 +1190,21 @@ function Runner({
               </p>
             )}
             {isMoneyDiagnosis && (
-              <p className="money-result-gap-note" style={{ color: theme.text }}>
-                이 결과는 지금 반복되는 마음의 흐름까지만 보여줍니다. 이 흐름이 어디서 시작됐는지, 소비·저축·투자 각각에서 어떻게 나타나는지는 아직 여기 담기지 않았습니다.
-              </p>
+              <div
+                className="money-result-gap-note"
+                style={{
+                  color: theme.text,
+                  borderColor: `${theme.accent}55`,
+                  backgroundColor: `${theme.accent}0D`,
+                }}
+              >
+                <p>이 결과는 지금 반복되는 마음의 흐름까지만 보여줍니다.</p>
+                <p>
+                  <strong>
+                    이 흐름이 어디서 시작됐는지, 소비·저축·투자에서 어떻게 나타나는지는 아직 여기 담기지 않았습니다.
+                  </strong>
+                </p>
+              </div>
             )}
           </div>
 
@@ -1851,29 +1863,13 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
   ];
 
   return (
-    <section className="money-funnel-section" style={{ marginTop: 48 }}>
-      <p className="money-next-step-arrow" style={{ color: theme.accent }} aria-hidden="true">↓</p>
+    <section className="money-funnel-section money-paid-funnel-section">
       <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
-        <p className="money-diagnosis-label money-funnel-label money-next-step-label" style={{ color: theme.accent }}>다음 단계는</p>
-        <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
-          “돈 앞에서 마음이 흔들리면,
+        <p className="money-paid-bridge" style={{ color: theme.text }}>
+          이제 나의 돈 유형과 신앙 유형이 만드는
           <br />
-          돈 관리도 어렵게 느껴져요.”
-        </h2>
-        <div className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
-          <p>
-            지금까지 내 돈 유형과 신앙 유형에 나타나는
-            <br />
-            마음의 흐름을 살펴보았습니다.
-          </p>
-          <p>
-            이제 두 유형이 만나 어떤 반복 패턴을 만드는지,
-            <br />
-            그 패턴이 소비·저축·투자에서 어떻게 나타나는지
-            <br />
-            더 깊이 확인해보세요.
-          </p>
-        </div>
+          구체적인 패턴을 확인해보세요.
+        </p>
       </div>
 
       <div
