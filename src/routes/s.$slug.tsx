@@ -945,7 +945,6 @@ function Runner({
               <SelahMoneyResultTemplate
                 content={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]}
                 theme={theme}
-                showInterpretationGap
               />
             )}
             {!SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && result.representative_sentence && (
@@ -1188,6 +1187,11 @@ function Runner({
             {!isMoneyDiagnosis && survey.completion_message && (
               <p className="whitespace-pre-line" style={{ marginTop: 22, fontSize: 13, color: theme.muted, textAlign: "center" }}>
                 {survey.completion_message}
+              </p>
+            )}
+            {isMoneyDiagnosis && (
+              <p className="money-result-gap-note" style={{ color: theme.text }}>
+                이 결과는 지금 반복되는 마음의 흐름까지만 보여줍니다. 이 흐름이 어디서 시작됐는지, 소비·저축·투자 각각에서 어떻게 나타나는지는 아직 여기 담기지 않았습니다.
               </p>
             )}
           </div>
