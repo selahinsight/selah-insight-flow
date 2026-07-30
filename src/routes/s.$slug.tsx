@@ -1743,7 +1743,7 @@ function EmailResultSection({
           <ul style={{ margin: "12px auto 0", maxWidth: 360, paddingLeft: 20, textAlign: "left", fontSize: 14, lineHeight: 1.85 }}>
             <li>지금 확인한 진단 결과 요약</li>
             <li>내 돈에 관한 마음을 돌아보는 질문 3개</li>
-            <li>개인 맞춤 심층 진단지 안내</li>
+            <li>셀라 머니 심층 진단 안내</li>
           </ul>
         </div>
       ) : (
@@ -1862,10 +1862,16 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         </h2>
         <div className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
           <p>
-            지금까지 내 돈 유형과 신앙 유형에 나타나는 마음의 흐름을 살펴보았습니다.
+            지금까지 내 돈 유형과 신앙 유형에 나타나는
+            <br />
+            마음의 흐름을 살펴보았습니다.
           </p>
           <p>
-            이제 두 유형이 만나 어떤 반복 패턴을 만드는지, 그 패턴이 소비·저축·투자에서 어떻게 나타나는지 더 깊이 확인해보세요.
+            이제 두 유형이 만나 어떤 반복 패턴을 만드는지,
+            <br />
+            그 패턴이 소비·저축·투자에서 어떻게 나타나는지
+            <br />
+            더 깊이 확인해보세요.
           </p>
         </div>
       </div>
@@ -1883,13 +1889,13 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         }}
       >
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>PERSONAL DEEP-DIVE REPORT</p>
-        <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>나의 개인 맞춤 심층 진단지</h2>
+        <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 심층 진단</h2>
         <p className="money-funnel-body" style={{ color: theme.text, opacity: 0.84 }}>
-          내 돈의 마음과 행동이 연결되는 방식을 구체적으로 이해해보세요.
+          내 진단 결과에 맞춰 돈과 신앙의 조합, 반복되는 감정과 선택 패턴을 깊이 해석해드립니다.
         </p>
 
         <div style={{ marginTop: 22, textAlign: "left" }}>
-          <h3 style={{ fontSize: 15, color: theme.text }}>심층 진단지에서 확인하는 내용</h3>
+          <h3 style={{ fontSize: 15, color: theme.text }}>심층 진단에서 확인하는 내용</h3>
           <ul style={{ margin: "12px 0 0", paddingLeft: 21, display: "flex", flexDirection: "column", gap: 9 }}>
             {insights.map((item) => (
               <li
@@ -1912,7 +1918,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         </p>
         <button
           type="button"
-          onClick={() => toast.info("개인 맞춤 심층 진단지 상세 페이지를 준비 중입니다.")}
+          onClick={() => toast.info("셀라 머니 심층 진단 상세 페이지를 준비 중입니다.")}
           style={{
             ...btn,
             width: "100%",
@@ -1925,7 +1931,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             cursor: "pointer",
           }}
         >
-          내 개인 맞춤 심층 진단지 확인하기
+          내 심층 진단 확인하기
         </button>
         <p style={{ marginTop: 10, fontSize: 12.5, lineHeight: 1.65, color: theme.muted }}>
           결제 후 나의 진단 결과를 바탕으로 구성된 심층 결과지를 확인할 수 있어요.
