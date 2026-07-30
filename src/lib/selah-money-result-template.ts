@@ -419,7 +419,8 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     title: "신앙부담형",
     representativeHeart: [
       "나를 위해 돈을 쓰고 누리면",
-      "하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해.",
+      "하나님 앞에서 욕심처럼 보일까 봐",
+      "마음이 불편해.",
     ],
     flow: [
       "돈을 쓰거나 누릴 일이 생김",
