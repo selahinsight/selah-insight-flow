@@ -449,7 +449,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "하나님 앞에서 바른 선택인지 강하게\n점검함",
       "욕심이나 사치는 아닌지 여러 번 의심함",
       "부담과 죄책감이 커짐",
-      "필요한 소비와 성장의 선택도 조심스러워짐",
+      "필요한 소비와 성장의 선택도\n조심스러워짐",
     ],
     reading: [
       "신앙부담형은 하나님 앞에서 바르게 살고 싶은 마음이 매우 큽니다.",
