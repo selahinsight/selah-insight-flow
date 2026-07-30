@@ -88,6 +88,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_safety_gaze: {
     title: "기준압박형",
+    sceneHook: "미래를 위해 돈을 더 모으고 싶으면서도,\n주변 사람들처럼 잘 갖추고 싶어\n저축과 소비 기준이 함께 높아지고 있나요?",
     representativeHeart: [
       "미래를 잘 준비하고 싶고,",
       "주변 사람들에게도 괜찮아 보이고 싶어서",
@@ -111,6 +112,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "이번 달 여유자금으로 사용할 금액을 정해보세요.",
       "저축과 소비 금액이 각각 정한 예산 안에 있는지 확인해보세요.",
     ],
+    checklistTitle: "이번 주 작은 실천",
   },
   money_combo_safety_reward: {
     title: "긴장보상형",
