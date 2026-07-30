@@ -420,7 +420,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     checklist: [
       "이번 주에 돈을 사용할 계획 한 가지를 하나님께 먼저 이야기해보세요.",
       "돈을 관리할 때 떠올리고 싶은 말씀 한 구절을 휴대폰에 적어두세요.",
+      "돈을 사용한 뒤 감사한 점 한 가지를 기록해보세요.",
     ],
+    checklistTitle: "이번 주 작은 실천",
   },
   faith_burden_mid: {
     title: "신앙부담형",
