@@ -106,8 +106,8 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     checklist: [
       "미래를 위해 필요한 목표액과 현재 모은 금액을 적어보세요.",
-      "외식·모임·꾸밈에 사용할 월 예산을 정해보세요.",
-      "저축과 소비가 각각 정한 범위 안에 있는지 확인해보세요.",
+      "이번 달 여유자금으로 사용할 금액을 정해보세요.",
+      "저축과 소비 금액이 각각 정한 예산 안에 있는지 확인해보세요.",
     ],
   },
   money_combo_safety_reward: {
