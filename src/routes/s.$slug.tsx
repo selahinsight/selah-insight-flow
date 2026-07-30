@@ -1909,7 +1909,9 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           <p>
             돈 앞에서 불편한 나의 마음을 살펴보고,
             <br />
-            말씀 안에서 실제 돈 관리에 필요한 기준을 세우도록 도와드립니다.
+            말씀 안에서 실제 돈 관리에 필요한 기준을
+            <br />
+            세우도록 도와드립니다.
             <br />
             나의 진단 결과에 맞는 말씀과 실천 방향을 통해
             <br />
@@ -1918,8 +1920,19 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         </div>
 
         <div
+          aria-hidden="true"
           style={{
-            margin: "24px auto 0",
+            width: "100%",
+            maxWidth: 420,
+            height: 1,
+            margin: "32px auto 0",
+            background: `${theme.accent}35`,
+          }}
+        />
+
+        <div
+          style={{
+            margin: "28px auto 0",
             maxWidth: 420,
             padding: "18px 16px",
             borderRadius: 14,
@@ -1928,10 +1941,12 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           }}
         >
           <p style={{ margin: 0, color: theme.text, fontSize: 17, fontWeight: 700 }}>
-            진단지는 이렇게 구성됩니다
+            내 심층 진단지 미리보기
           </p>
           <p style={{ margin: "6px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.65 }}>
-            심층 진단의 일부를 미리 확인해보세요.
+            나의 진단 결과를 바탕으로 구성되는
+            <br />
+            심층 진단지의 일부를 확인해보세요.
           </p>
         <button
           type="button"
