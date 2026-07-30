@@ -1198,10 +1198,16 @@ function Runner({
                   backgroundColor: `${theme.accent}0D`,
                 }}
               >
-                <p>이 결과는 지금 반복되는 마음의 흐름까지만 보여줍니다.</p>
+                <p>
+                  이 결과는 지금 반복되는 마음의
+                  <br />
+                  흐름까지만 보여줍니다.
+                </p>
                 <p>
                   <strong>
-                    이 흐름이 어디서 시작됐는지, 소비·저축·투자에서 어떻게 나타나는지는 아직 여기 담기지 않았습니다.
+                    이 흐름이 어디서 시작됐는지, 소비·저축·투자에서 어떻게 나타나는지는
+                    <br />
+                    아직 여기 담기지 않았습니다.
                   </strong>
                 </p>
               </div>
@@ -1866,9 +1872,14 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
     <section className="money-funnel-section money-paid-funnel-section">
       <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
         <p className="money-paid-bridge" style={{ color: theme.text }}>
-          이제 나의 돈 유형과 신앙 유형이 만드는
+          왜 돈 앞에서 자꾸 흔들리는지,
           <br />
-          구체적인 패턴을 확인해보세요.
+          내 마음을 더 깊이 이해해보세요.
+        </p>
+        <p className="money-paid-bridge-detail" style={{ color: theme.text }}>
+          돈 앞에서 반복되는 내 감정과 선택을 살펴보고,
+          <br />
+          말씀 안에서 나에게 맞는 평안한 돈 관리 방향을 찾아갑니다.
         </p>
       </div>
 
@@ -1876,7 +1887,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         className="money-result-card money-funnel-card money-paid-diagnosis-card"
         style={{
           ...card,
-          marginTop: 14,
+          marginTop: 0,
           textAlign: "center",
           border: `1px solid ${theme.accent}55`,
           borderTop: "none",
