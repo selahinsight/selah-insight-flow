@@ -1899,12 +1899,21 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <div className="money-paid-product-copy" style={{ color: theme.text }}>
           <p>
             <strong>
-              돈을 쓰고 후회하거나, 모으면서도 불안하고, 계획을 세워도 자꾸 흐트러지는 이유를 나의 진단 결과에서 찾아드립니다.
+              돈을 쓰고 후회하거나, 모으면서도 불안하고,
+              <br />
+              계획을 세워도 자꾸 흐트러지는 이유를
+              <br />
+              나의 진단 결과에서 찾아드립니다.
             </strong>
           </p>
           <p>
-            돈 앞에서 반복되는 감정과 선택의 연결고리를 확인하고, 실제 돈 관리에서 흔들림을 줄이는 기준과 실천 방법을 제안합니다.
-            나의 마음에 연결되는 말씀과 묵상 질문도 함께 담아 평안한 돈 관리 방향을 세워드립니다.
+            돈 앞에서 불편한 나의 마음을 살펴보고,
+            <br />
+            말씀 안에서 실제 돈 관리에 필요한 기준을 세우도록 도와드립니다.
+            <br />
+            나의 진단 결과에 맞는 말씀과 실천 방향을 통해
+            <br />
+            평안한 돈 관리를 시작해보세요.
           </p>
         </div>
 
@@ -1978,7 +1987,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             cursor: "pointer",
           }}
         >
-          심층 진단 구성과 가격 확인하기
+          셀라 머니 심층 진단지 구성 확인하기
         </button>
 
         {detailsOpen && (
