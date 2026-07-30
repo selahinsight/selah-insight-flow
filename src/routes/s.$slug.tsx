@@ -1997,6 +1997,18 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         )}
         </div>
 
+        <div style={{ marginTop: 20, textAlign: "center" }}>
+          <p style={{ margin: 0, color: theme.accent, fontSize: 14, fontWeight: 700 }}>
+            출시 이벤트가
+          </p>
+          <p style={{ margin: "3px 0 0", color: theme.text, fontSize: 26, fontWeight: 800 }}>
+            9,900원
+          </p>
+          <p style={{ margin: "4px 0 0", color: theme.muted, fontSize: 12.5 }}>
+            추후 정상가 12,000원 예정
+          </p>
+        </div>
+
         <button
           type="button"
           onClick={() => setDetailsOpen((open) => !open)}
@@ -2013,7 +2025,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             cursor: "pointer",
           }}
         >
-          셀라 머니 심층 진단지 구성 확인하기
+          셀라 머니 심층 진단지 미리 살펴보기
         </button>
 
         {detailsOpen && (
@@ -2040,9 +2052,17 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             <p style={{ margin: "18px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.7 }}>
               결제와 정보 확인을 마치면 나의 무료 진단 결과를 바탕으로 심층 진단지를 구성해 전달합니다.
             </p>
-            <p style={{ margin: "20px 0 0", color: theme.text, fontSize: 25, fontWeight: 800, textAlign: "center" }}>
-              29,000원
-            </p>
+            <div style={{ marginTop: 20, textAlign: "center" }}>
+              <p style={{ margin: 0, color: theme.accent, fontSize: 13.5, fontWeight: 700 }}>
+                출시 이벤트가
+              </p>
+              <p style={{ margin: "3px 0 0", color: theme.text, fontSize: 25, fontWeight: 800 }}>
+                9,900원
+              </p>
+              <p style={{ margin: "4px 0 0", color: theme.muted, fontSize: 12.5 }}>
+                추후 정상가 12,000원 예정
+              </p>
+            </div>
             <button
               type="button"
               onClick={() => toast.info("셀라 머니 심층 진단 신청 페이지를 준비 중입니다.")}
@@ -2057,7 +2077,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
                 cursor: "pointer",
               }}
             >
-              29,000원에 신청하기
+              9,900원에 신청하기
             </button>
           </div>
         )}
