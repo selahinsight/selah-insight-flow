@@ -334,6 +334,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   safety_seeking: {
     title: "안전추구형",
+    sceneHook: "저축하고 준비하고 있는데도,\n예상하지 못한 일이 생기면 부족할까 봐\n돈을 편하게 쓰기 어려운가요?",
     representativeHeart: [
       "아무리 준비해도 부족할까 봐",
       "마음을 놓기가 어려워.",
@@ -347,14 +348,14 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     reading: [
       "안전추구형의 불안은 앞으로 어떤 일이 생길지 알 수 없다는 마음에서 커집니다.",
-      "이미 준비하고 있어도 ‘혹시 더 필요하면 어떡하지?’라는 생각이 떠오르고, 돈을 쓰는 순간 나를 지켜줄 안전이 줄어드는 것처럼 느껴집니다.",
-      "그래서 꾸준히 모으고 관리하면서도 충분히 안심하기 어렵고, 자신을 위한 지출과 누림 앞에서 자주 망설입니다.",
+      "이미 준비하고 있어도 ‘혹시 더 필요하면 어떡하지?’라는 생각이 떠오릅니다. 꾸준히 모으고 관리하면서도 충분히 안심하기 어렵고, 자신을 위한 지출과 누림 앞에서 자주 망설입니다.",
     ],
     checklist: [
-      "비상시에 필요한 금액을 미리 적고 준비해보세요.",
-      "앞으로 꼭 하고 싶은 일에 필요한 금액과 날짜를 정해 돈을 준비해보세요.",
-      "이번 달에 마음 편히 사용할 금액을 미리 정하고 그 범위 안에서 사용해보세요.",
+      "비상시에 필요하다고 생각하는 금액을 적어보세요.",
+      "이번 달 마음 편히 사용할 금액을 하나 정해보세요.",
+      "돈이 부족할까 걱정될 때 이미 준비한 것 한 가지를 확인해보세요.",
     ],
+    checklistTitle: "이번 주 작은 실천",
   },
   gaze_sensitive: {
     title: "시선민감형",
@@ -442,7 +443,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_burden_high: {
     title: "신앙부담형",
-    representativeHeart: ["돈을 자꾸 생각하는 것 자체가 신앙적으로", "좋지 않은 것 같아."],
+    representativeHeart: ["돈을 자꾸 생각하는 것 자체가", "신앙적으로 좋지 않은 것 같아."],
     flow: [
       "돈과 관련된 선택이 생김",
       "하나님 앞에서 바른 선택인지 강하게\n점검함",
@@ -452,12 +453,14 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     reading: [
       "신앙부담형은 하나님 앞에서 바르게 살고 싶은 마음이 매우 큽니다.",
-      "돈을 벌고 투자하고 자신을 위해 사용하는 마음까지 신앙적으로 점검합니다. 생활비·저축·누림의 금액을 미리 정하면 감사와 책임 안에서 돈을 관리할 수 있습니다.",
+      "돈을 벌고 투자하고 자신을 위해 사용하는 마음까지 신앙적으로 여러 번 점검하며 부담을 느낍니다. 생활비·저축·누림의 범위를 미리 정하면 감사와 책임 안에서 돈을 관리할 수 있습니다.",
     ],
     checklist: [
-      "돈을 쓰기 전에 무엇을 위해 사용하는지 한 문장으로 적어보세요.",
-      "월초에 생활비와 저축을 정한 뒤, 나를 위해 사용할 금액도 함께 정해보세요.",
+      "돈과 관련된 이번 선택의 목적을 한 문장으로 적어보세요.",
+      "생활비·저축·누림에 사용할 금액을 대략 나누어보세요.",
+      "하나님께 맡기고 싶은 돈 걱정 한 가지를 적어보세요.",
     ],
+    checklistTitle: "이번 주 작은 실천",
   },
   faith_separation_mid: {
     title: "신앙분리형",
