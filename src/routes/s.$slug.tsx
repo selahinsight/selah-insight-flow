@@ -1898,50 +1898,61 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 심층 진단</h2>
         <div className="money-paid-product-copy" style={{ color: theme.text }}>
           <p>
-            <strong>내 진단 결과에 따라 달라지는 개인 맞춤 심층 분석</strong>
+            <strong>
+              돈을 쓰고 후회하거나, 모으면서도 불안하고, 계획을 세워도 자꾸 흐트러지는 이유를 나의 진단 결과에서 찾아드립니다.
+            </strong>
           </p>
           <p>
-            나의 돈 유형과 신앙 유형이 만날 때 나타나는 마음의 흐름과 반복되는 선택의 이유를 깊이 풀어드립니다.
-          </p>
-          <p>
-            실제 돈 관리에서 내가 흔들리는 지점을 살펴보고, 나에게 맞는 말씀과 평안한 돈 관리 방향을 제안합니다.
+            돈 앞에서 반복되는 감정과 선택의 연결고리를 확인하고, 실제 돈 관리에서 흔들림을 줄이는 기준과 실천 방법을 제안합니다.
+            나의 마음에 연결되는 말씀과 묵상 질문도 함께 담아 평안한 돈 관리 방향을 세워드립니다.
           </p>
         </div>
 
+        <div
+          style={{
+            margin: "24px auto 0",
+            maxWidth: 420,
+            padding: "18px 16px",
+            borderRadius: 14,
+            background: theme.background,
+            textAlign: "left",
+          }}
+        >
+          <p style={{ margin: 0, color: theme.text, fontSize: 17, fontWeight: 700 }}>
+            진단지는 이렇게 구성됩니다
+          </p>
+          <p style={{ margin: "6px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.65 }}>
+            심층 진단의 일부를 미리 확인해보세요.
+          </p>
         <button
           type="button"
           onClick={() => setSampleOpen((open) => !open)}
           aria-expanded={sampleOpen}
           style={{
-            width: "100%",
-            maxWidth: 340,
-            marginTop: 22,
-            padding: "12px 22px",
-            border: `1px solid ${theme.accent}80`,
-            borderRadius: 999,
+              marginTop: 10,
+              padding: 0,
+              border: 0,
             background: "transparent",
             color: theme.accent,
-            fontSize: 16,
+              fontSize: 14.5,
             fontWeight: 700,
             cursor: "pointer",
           }}
         >
-          {sampleOpen ? "심층 진단 샘플 닫기" : "심층 진단 샘플 보기"}
+            {sampleOpen ? "샘플 접기 ︿" : "샘플 펼쳐보기 〉"}
         </button>
 
         {sampleOpen && (
           <div
             style={{
-              margin: "18px auto 0",
-              maxWidth: 420,
-              padding: "20px 18px",
-              borderRadius: 14,
-              background: theme.background,
+                marginTop: 16,
+                paddingTop: 16,
+                borderTop: `1px solid ${theme.accent}30`,
               textAlign: "left",
             }}
           >
             <p style={{ margin: 0, color: theme.accent, fontSize: 13, fontWeight: 700 }}>
-              SAMPLE · 가상 사례
+                SAMPLE
             </p>
             <p style={{ margin: "10px 0 0", color: theme.text, fontSize: 16, lineHeight: 1.75 }}>
               돈을 쓰고 난 뒤 불안이 커지는 마음에는 미래를 안전하게 지키고 싶은 바람이 함께 있습니다.
@@ -1949,13 +1960,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             </p>
           </div>
         )}
-
-        <p style={{ margin: "26px 0 0", color: theme.text, fontSize: 16, fontWeight: 600 }}>
-          셀라 머니 심층 진단
-        </p>
-        <p style={{ margin: "4px 0 0", color: theme.text, fontSize: 25, fontWeight: 800 }}>
-          29,000원
-        </p>
+        </div>
 
         <button
           type="button"
@@ -1973,7 +1978,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             cursor: "pointer",
           }}
         >
-          셀라 머니 심층 진단 자세히 보기
+          심층 진단 구성과 가격 확인하기
         </button>
 
         {detailsOpen && (
@@ -1987,10 +1992,21 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
               textAlign: "left",
             }}
           >
-            <h3 style={{ margin: 0, color: theme.text, fontSize: 18 }}>신청 전에 확인해주세요</h3>
+            <h3 style={{ margin: 0, color: theme.text, fontSize: 18 }}>심층 진단 구성</h3>
             <p style={{ margin: "12px 0 0", color: theme.text, fontSize: 15, lineHeight: 1.75 }}>
-              무료 진단에서 확인한 나의 결과를 바탕으로 개인 맞춤 심층 진단지를 구성합니다.
-              결제와 정보 확인을 마치면 완성된 진단지를 안내된 방식으로 전달합니다.
+              ✓ 나의 돈 유형과 신앙 유형을 연결한 마음의 흐름
+              <br />
+              ✓ 반복되는 감정과 선택의 원인
+              <br />
+              ✓ 흔들림을 줄이는 돈 관리 기준과 실천 방법
+              <br />
+              ✓ 나에게 연결되는 말씀과 묵상 질문
+            </p>
+            <p style={{ margin: "18px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.7 }}>
+              결제와 정보 확인을 마치면 나의 무료 진단 결과를 바탕으로 심층 진단지를 구성해 전달합니다.
+            </p>
+            <p style={{ margin: "20px 0 0", color: theme.text, fontSize: 25, fontWeight: 800, textAlign: "center" }}>
+              29,000원
             </p>
             <button
               type="button"
