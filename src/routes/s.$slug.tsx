@@ -872,8 +872,8 @@ function Runner({
               className="money-result-complete-title"
               style={{
                 marginTop: 18,
-                fontSize: 18,
-                lineHeight: 1.45,
+                fontSize: 22,
+                lineHeight: 1.55,
                 color: theme.text,
                 textAlign: "center",
                 fontFamily: headingFont,
@@ -881,7 +881,7 @@ function Runner({
             >
               진단이 완료되었습니다.
             </h1>
-            <p className="money-result-complete-subtitle" style={{ marginTop: 2, fontSize: 15, lineHeight: 1.45, color: theme.text, textAlign: "center", whiteSpace: "nowrap" }}>
+            <p className="money-result-complete-subtitle" style={{ marginTop: 10, fontSize: 17, lineHeight: 1.65, color: theme.text, textAlign: "center", whiteSpace: "nowrap" }}>
               이제 나의 돈 반응 유형을 살펴볼게요.
             </p>
             <div className="money-result-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
@@ -935,7 +935,7 @@ function Runner({
               <span className="money-desktop-copy">나의 주된 돈 반응 유형</span>
               <span className="money-mobile-copy">{name.trim()}님의 주된 돈 반응 유형</span>
             </ResultSectionTitle>
-            <h2 className="money-result-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
+            <h2 className="money-result-type-box" style={{ marginTop: 18, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
               <CircleDollarSign size={20} strokeWidth={1.6} aria-hidden="true" />
               <span>{(selahResult?.primaryMoneyTypes.length ?? 0) > 1 ? "돈 반응 복합형" : (SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]?.title ?? result.title)}</span>
             </h2>
@@ -1090,7 +1090,7 @@ function Runner({
                   <span className="money-desktop-copy">돈과 신앙 사이의 마음 유형</span>
                   <span className="money-mobile-copy">{name.trim()}님의 돈을 대하는 신앙 유형</span>
                 </ResultSectionTitle>
-                <h2 className="money-result-type-box money-faith-type-box" style={{ marginTop: 10, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
+                <h2 className="money-result-type-box money-faith-type-box" style={{ marginTop: 18, fontSize: 18, lineHeight: 1.35, color: theme.text, textAlign: "center", fontFamily: headingFont }}>
                   <Heart size={20} strokeWidth={1.6} aria-hidden="true" />
                   <span>{customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)}</span>
                 </h2>
@@ -1700,8 +1700,8 @@ function ResultSectionTitle({ children, theme }: { children: React.ReactNode; th
     <p
       className="money-result-section-title"
       style={{
-        marginTop: 30,
-        fontSize: 16,
+        marginTop: 44,
+        fontSize: 18,
         color: theme.accent,
         fontWeight: 700,
         letterSpacing: "-0.01em",

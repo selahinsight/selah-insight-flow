@@ -16,7 +16,7 @@ export function SelahMoneyResultTemplate({
 }: SelahMoneyResultTemplateProps) {
   return (
     <>
-      <p className="money-result-bubble" style={{ marginTop: 18, fontSize: 15, color: theme.accent, textAlign: "center" }}>
+      <p className="money-result-bubble" style={{ marginTop: 28, fontSize: 15, color: theme.accent, textAlign: "center" }}>
         “{content.representativeHeart.map((line, index) => (
           <span key={line}>
             {line}
@@ -24,7 +24,7 @@ export function SelahMoneyResultTemplate({
           </span>
         ))}”
       </p>
-      <div style={{ marginTop: 18, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
+      <div style={{ marginTop: 26, padding: 18, borderRadius: 8, backgroundColor: theme.bg, border: `1px solid ${theme.border}` }}>
         <div className="money-unified-summary">
           <section>
             <h3>이 유형의 마음을 살펴보면,</h3>
