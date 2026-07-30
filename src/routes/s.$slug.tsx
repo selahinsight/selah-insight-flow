@@ -1196,7 +1196,7 @@ function Runner({
             )}
           </div>
 
-          {isMoneyDiagnosis && <MoneyWorkbookSection theme={theme} design={design} />}
+          {isMoneyDiagnosis && <MoneyPaidDiagnosisSection theme={theme} design={design} />}
 
           {!(result.id === "money_no_clear_pattern" && selahResult?.primaryFaithLens?.id === "faith_low") && (
             <>
@@ -1738,12 +1738,12 @@ function EmailResultSection({
       {isMoneyDiagnosis ? (
         <div className="money-funnel-body" style={{ color: theme.text, opacity: 0.82 }}>
           <p>
-            내 재정 유형과 신앙 유형의 핵심 내용을 다시 확인하고, 셀라 머니 워크북의 실제 구성도 미리 살펴볼 수 있어요.
+            내 재정 유형과 신앙 유형의 핵심 내용을 이메일에서 편하게 다시 확인할 수 있어요.
           </p>
           <ul style={{ margin: "12px auto 0", maxWidth: 360, paddingLeft: 20, textAlign: "left", fontSize: 14, lineHeight: 1.85 }}>
             <li>지금 확인한 진단 결과 요약</li>
             <li>내 돈에 관한 마음을 돌아보는 질문 3개</li>
-            <li>셀라 머니 워크북 미리보기</li>
+            <li>개인 맞춤 심층 진단지 안내</li>
           </ul>
         </div>
       ) : (
@@ -1838,26 +1838,23 @@ function EmailResultSection({
   );
 }
 
-function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
+function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
   const btn = buttonClasses(design.button_style, theme);
   const card = cardClasses(design.card_style, theme);
   const insights = [
-    "내 돈-신앙 조합이 만드는 반복 패턴을 1페이지로 정리합니다",
-    "이번 달 소비 중 흔들렸던 순간 3가지를 직접 찾아 적습니다",
-    "내 강점 1개, 약점 1개를 각각 문장으로 완성합니다",
-    "내 유형에 연결된 말씀 구절을 읽고, 묵상 질문에 직접 답합니다",
-  ];
-  const standards = [
-    "돈을 쓸 때 지킬 나만의 기준",
-    "불안·비교·감정에 흔들릴 때 확인할 질문",
-    "말씀 안에서 내 삶에 맞게 돈을 관리하는 원칙",
+    "내 돈 유형과 신앙 유형의 조합 해석",
+    "돈 앞에서 반복되는 감정과 생각",
+    "소비·저축·투자에서 나타나는 선택과 반응 패턴",
+    "내가 가진 돈 관리의 강점과 흔들리는 지점",
+    "내 유형에 연결된 말씀과 묵상 질문",
+    "앞으로의 성장 방향",
   ];
 
   return (
     <section className="money-funnel-section" style={{ marginTop: 48 }}>
       <p className="money-next-step-arrow" style={{ color: theme.accent }} aria-hidden="true">↓</p>
       <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
-        <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>다음 단계는</p>
+        <p className="money-diagnosis-label money-funnel-label money-next-step-label" style={{ color: theme.accent }}>다음 단계는</p>
         <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
           “돈 앞에서 마음이 흔들리면,
           <br />
@@ -1865,14 +1862,16 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
         </h2>
         <div className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
           <p>
-            이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지, 그리고 말씀 안에서 나에게 맞는 기준을 어떻게 세울지는
-            <strong> 셀라 머니 워크북에서 직접 다뤄드립니다.</strong>
+            지금까지 내 돈 유형과 신앙 유형에 나타나는 마음의 흐름을 살펴보았습니다.
+          </p>
+          <p>
+            이제 두 유형이 만나 어떤 반복 패턴을 만드는지, 그 패턴이 소비·저축·투자에서 어떻게 나타나는지 더 깊이 확인해보세요.
           </p>
         </div>
       </div>
 
       <div
-        className="money-result-card money-funnel-card money-workbook-card"
+        className="money-result-card money-funnel-card money-paid-diagnosis-card"
         style={{
           ...card,
           marginTop: 14,
@@ -1883,14 +1882,14 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
           backgroundColor: theme.bg,
         }}
       >
-        <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>SELAH MONEY WORKBOOK</p>
-        <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 워크북</h2>
+        <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>PERSONAL DEEP-DIVE REPORT</p>
+        <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>나의 개인 맞춤 심층 진단지</h2>
         <p className="money-funnel-body" style={{ color: theme.text, opacity: 0.84 }}>
-          돈에 관한 나의 마음과 태도를 깊이 이해하고, 말씀의 기준을 실제 돈 결정에 연결해보세요.
+          내 돈의 마음과 행동이 연결되는 방식을 구체적으로 이해해보세요.
         </p>
 
         <div style={{ marginTop: 22, textAlign: "left" }}>
-          <h3 style={{ fontSize: 15, color: theme.text }}>워크북에서 깊이 이해하는 내용</h3>
+          <h3 style={{ fontSize: 15, color: theme.text }}>심층 진단지에서 확인하는 내용</h3>
           <ul style={{ margin: "12px 0 0", paddingLeft: 21, display: "flex", flexDirection: "column", gap: 9 }}>
             {insights.map((item) => (
               <li
@@ -1908,32 +1907,12 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
           </ul>
         </div>
 
-        <div style={{ marginTop: 20, textAlign: "left" }}>
-          <h3 style={{ fontSize: 15, color: theme.text }}>워크북에서 직접 세우는 기준</h3>
-          <ul style={{ margin: "12px 0 0", paddingLeft: 21, display: "flex", flexDirection: "column", gap: 9 }}>
-            {standards.map((item) => (
-              <li
-                key={item}
-                style={{
-                  color: theme.text,
-                  fontSize: 14,
-                  lineHeight: 1.65,
-                  paddingLeft: 2,
-                }}
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
         <p style={{ marginTop: 20, fontSize: 13, lineHeight: 1.7, color: theme.muted }}>
-          개인 맞춤 진단 해석 · 말씀 적용 질문 · 돈 관리 기준 작성 · 월간 점검표
+          개인 맞춤 조합 해석 · 소비·저축·투자 패턴 · 말씀 연결 · 성장 방향
         </p>
-        <p style={{ marginTop: 15, fontSize: 28, fontWeight: 600, color: theme.text }}>39,000원</p>
         <button
           type="button"
-          onClick={() => toast.info("셀라 머니 워크북 상세 페이지를 준비 중입니다.")}
+          onClick={() => toast.info("개인 맞춤 심층 진단지 상세 페이지를 준비 중입니다.")}
           style={{
             ...btn,
             width: "100%",
@@ -1946,10 +1925,10 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
             cursor: "pointer",
           }}
         >
-          셀라 머니 워크북 자세히 보기
+          내 개인 맞춤 심층 진단지 확인하기
         </button>
         <p style={{ marginTop: 10, fontSize: 12.5, lineHeight: 1.65, color: theme.muted }}>
-          실제 워크북 내용과 작성 화면을 먼저 확인할 수 있어요.
+          결제 후 나의 진단 결과를 바탕으로 구성된 심층 결과지를 확인할 수 있어요.
         </p>
       </div>
     </section>

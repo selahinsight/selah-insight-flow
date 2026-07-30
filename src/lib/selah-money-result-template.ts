@@ -398,7 +398,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_low: {
     title: "편안한 신앙 연결형",
-    representativeHeart: ["돈을 관리할 때 하나님께 묻고 말씀 안에서", "선택하는 게 자연스러워."],
+    representativeHeart: ["돈을 관리할 때 하나님께 묻고 말씀", "안에서 선택하는 게 자연스러워."],
     flow: [
       "돈을 관리할 일이 생김",
       "하나님께 기도하고 말씀을 떠올림",

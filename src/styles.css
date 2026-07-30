@@ -212,9 +212,13 @@
 
 .money-next-step-title {
   margin-top: 14px;
-  font-size: 18px !important;
+  font-size: 21px !important;
   line-height: 1.5 !important;
   letter-spacing: -0.035em;
+}
+
+.money-next-step-label {
+  font-size: 16px !important;
 }
 
 .money-next-step-arrow {
@@ -227,7 +231,7 @@
 .money-funnel-body.money-next-step-body {
   max-width: 500px;
   margin-top: 18px;
-  font-size: 16px !important;
+  font-size: 17px !important;
   line-height: 1.7 !important;
 }
 
@@ -707,12 +711,16 @@
   }
 
   .money-next-step-title {
-    font-size: 22px !important;
+    font-size: 24px !important;
     line-height: 1.48 !important;
   }
 
+  .money-next-step-label {
+    font-size: 17px !important;
+  }
+
   .money-funnel-body.money-next-step-body {
-    font-size: 16px !important;
+    font-size: 17px !important;
     line-height: 1.7 !important;
   }
 
@@ -818,17 +826,17 @@
     line-height: 1.65 !important;
   }
 
-  .money-workbook-card h3 {
+  .money-paid-diagnosis-card h3 {
     font-size: 18px !important;
     line-height: 1.5 !important;
   }
 
-  .money-workbook-card li {
+  .money-paid-diagnosis-card li {
     font-size: 16px !important;
     line-height: 1.65 !important;
   }
 
-  .money-workbook-card button {
+  .money-paid-diagnosis-card button {
     font-size: 15px !important;
   }
 
