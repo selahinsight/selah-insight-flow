@@ -513,9 +513,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   faith_combo_mid: {
     title: "신앙·현실 갈등형",
     representativeHeart: [
-      "돈을 하나님 앞에서 바르게 다루고 싶은데,",
-      "실제 선택에서는 현실적인 기준을",
-      "먼저 따르게 돼.",
+      "돈을 하나님 앞에서 바르게 다루고",
+      "싶은데, 실제 선택에서는 현실적인",
+      "기준을 먼저 따르게 돼.",
     ],
     flow: [
       "돈을 쓸 일이 생김",
