@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { toPng } from "html-to-image";
 import QRCode from "qrcode";
+import { FileText } from "lucide-react";
 import {
   computeResultType,
   optionResultType,
@@ -1912,7 +1913,8 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             말씀 안에서 실제 돈 관리에 필요한 기준을
             <br />
             세우도록 도와드립니다.
-            <br />
+          </p>
+          <p style={{ marginTop: 14 }}>
             나의 진단 결과에 맞는 말씀과 실천 방향을 통해
             <br />
             평안한 돈 관리를 시작해보세요.
@@ -1925,14 +1927,14 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             width: "100%",
             maxWidth: 420,
             height: 1,
-            margin: "32px auto 0",
+            margin: "22px auto 0",
             background: `${theme.accent}35`,
           }}
         />
 
         <div
           style={{
-            margin: "28px auto 0",
+            margin: "16px auto 0",
             maxWidth: 420,
             padding: "18px 16px",
             borderRadius: 14,
@@ -1940,13 +1942,22 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             textAlign: "left",
           }}
         >
-          <p style={{ margin: 0, color: theme.text, fontSize: 17, fontWeight: 700 }}>
+          <p
+            style={{
+              margin: 0,
+              color: theme.text,
+              fontSize: 17,
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+            }}
+          >
+            <FileText size={19} strokeWidth={1.8} color={theme.accent} aria-hidden="true" />
             내 심층 진단지 미리보기
           </p>
           <p style={{ margin: "6px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.65 }}>
-            나의 진단 결과를 바탕으로 구성되는
-            <br />
-            심층 진단지의 일부를 확인해보세요.
+            나의 진단 결과를 바탕으로 구성되는 심층 진단지의 일부를 확인해보세요.
           </p>
         <button
           type="button"
