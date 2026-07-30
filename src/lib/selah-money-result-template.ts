@@ -51,10 +51,10 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     reading: [
       "평가부담형은 다른 사람의 소비를 보면 나도 비슷하게 갖추고 싶은 마음이 빠르게 올라옵니다.",
-      "계획보다 많이 쓴 뒤에는 카드값을 확인하기가 부담스러워 돈의 흐름을 미루게 됩니다. 관계·외식·꾸밈에 사용할 금액을 먼저 정하고 사용 내역을 짧게 확인하면 내 형편에 맞는 소비 기준을 세울 수 있습니다.",
+      "계획보다 많이 쓴 뒤에는 카드값을 확인하기가 부담스러워 돈을 관리하는 일을 자주 미룹니다. 여유자금을 먼저 정하고 사용 내역을 짧게 확인하면 내 형편에 맞는 소비 기준을 세울 수 있습니다.",
     ],
     checklist: [
-      "이번 주 관계·외식·꾸밈에 사용할 금액을 정해보세요.",
+      "이번 주 여유자금으로 사용할 금액을 정해보세요.",
       "결제하기 전 아무도 보지 않아도 사고 싶은지 물어보세요.",
       "사용한 금액과 남은 예산을 한 번 확인해보세요.",
     ],
@@ -514,9 +514,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   faith_combo_mid: {
     title: "신앙·현실 갈등형",
     representativeHeart: [
-      "돈을 하나님 앞에서 바르게 다루고",
-      "싶은데, 실제 선택에서는 현실적인",
-      "기준을 먼저 따르게 돼.",
+      "돈을 하나님 앞에서 바르게 다루고 싶고,",
+      "실제로 돈을 쓸 때는 현실에 맞게",
+      "판단합니다.",
     ],
     flow: [
       "돈을 쓸 일이 생김",
@@ -539,9 +539,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   faith_combo_high: {
     title: "신앙·현실 갈등형",
     representativeHeart: [
-      "돈을 하나님 앞에서 바르게 다루고 싶은데,",
-      "실제 선택에서는 현실적인 기준을 따라",
-      "마음이 더 무거워져.",
+      "돈을 하나님 앞에서 바르게 다루고 싶고,",
+      "실제로 돈을 쓸 때는 현실에 맞게",
+      "판단합니다.",
     ],
     flow: [
       "돈을 쓸 일이 생김",
