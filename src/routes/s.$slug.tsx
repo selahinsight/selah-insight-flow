@@ -1871,6 +1871,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
   return (
     <section className="money-funnel-section money-paid-funnel-section">
       <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
+        <p className="money-paid-bridge-icon" aria-hidden="true">🫧</p>
         <p className="money-paid-bridge" style={{ color: theme.text }}>
           왜 돈 앞에서 자꾸 흔들리는지,
           <br />
@@ -1883,6 +1884,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           <br />
           찾아보세요.
         </p>
+        <p className="money-paid-bridge-arrow" style={{ color: theme.accent }} aria-hidden="true">↓</p>
       </div>
 
       <div

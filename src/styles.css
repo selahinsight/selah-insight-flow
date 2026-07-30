@@ -281,11 +281,17 @@
 }
 
 .money-paid-funnel-section {
-  margin-top: 52px;
+  margin-top: 68px;
 }
 
 .money-paid-funnel-section .money-funnel-intro {
-  padding-bottom: 48px !important;
+  padding-bottom: 28px !important;
+}
+
+.money-paid-bridge-icon {
+  margin: 0 0 14px;
+  font-size: 25px;
+  line-height: 1;
 }
 
 .money-paid-bridge {
@@ -299,13 +305,21 @@
 
 .money-paid-bridge-detail {
   max-width: 520px;
-  margin: 20px auto 0;
+  margin: 22px auto 0;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
   font-size: 19px;
   font-weight: 500;
   line-height: 1.7;
   letter-spacing: -0.02em;
   opacity: 0.9;
+}
+
+.money-paid-bridge-arrow {
+  margin: 28px 0 0;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1;
 }
 
 .money-paid-diagnosis-card {
