@@ -310,7 +310,6 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     checklist: [
       "‘나에게 돈은 ______을 위한 도구다’라는 문장을 가볍게 떠올려보세요.",
-      "돈을 통해 지키고 싶은 것 한 가지를 생각해보세요.",
       "이번 달 돈이 어디에서 들어오고 어디로 나가는지 대략적인 흐름만 떠올려보세요.",
     ],
     checklistTitle: "이번 주 작은 실천",
