@@ -62,6 +62,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_reward: {
     title: "회피위로형",
+    sceneHook: "돈을 확인해야 한다고 생각하면서도,\n마음이 무거워 자꾸 미루고\n소비로 기분을 달래고 있나요?",
     representativeHeart: [
       "지금은 마음부터 챙기고 싶어.",
       "돈 문제는 나중에 볼래.",
@@ -83,6 +84,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "30분 동안 쉬기·산책하기·식사하기·연락하기 중 하나를 먼저 해보세요.",
       "소비한 뒤에는 사용한 금액을 바로 기록해보세요.",
     ],
+    checklistTitle: "이번 주 작은 실천",
   },
   money_combo_safety_gaze: {
     title: "기준압박형",
