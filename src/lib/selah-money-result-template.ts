@@ -516,7 +516,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     representativeHeart: [
       "돈을 하나님 앞에서 바르게 다루고 싶고,",
       "실제로 돈을 쓸 때는 현실에 맞게",
-      "판단합니다.",
+      "판단하는 것 같아.",
     ],
     flow: [
       "돈을 쓸 일이 생김",
@@ -541,7 +541,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     representativeHeart: [
       "돈을 하나님 앞에서 바르게 다루고 싶고,",
       "실제로 돈을 쓸 때는 현실에 맞게",
-      "판단합니다.",
+      "판단하는 것 같아.",
     ],
     flow: [
       "돈을 쓸 일이 생김",
