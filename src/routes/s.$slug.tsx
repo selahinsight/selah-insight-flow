@@ -408,7 +408,7 @@ function Runner({
       const faithLenses = (
         params.get("faith") ??
         (isShortResultPreview
-          ? "faith_combo_mid"
+          ? "faith_low"
           : "")
       )
         .split(",")
