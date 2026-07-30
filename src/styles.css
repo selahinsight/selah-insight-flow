@@ -301,11 +301,15 @@
   max-width: 520px;
   margin: 20px auto 0;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 500;
-  line-height: 1.75;
+  line-height: 1.7;
   letter-spacing: -0.02em;
-  opacity: 0.84;
+  opacity: 0.9;
+}
+
+.money-paid-diagnosis-card {
+  padding: 40px 30px 34px !important;
 }
 
 .money-funnel-item {
@@ -869,8 +873,12 @@
   }
 
   .money-paid-bridge-detail {
-    font-size: 17px !important;
+    font-size: 19px !important;
     line-height: 1.7 !important;
+  }
+
+  .money-paid-diagnosis-card {
+    padding: 36px 22px 32px !important;
   }
 
   .money-faith-transition-title {

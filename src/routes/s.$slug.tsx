@@ -1205,7 +1205,7 @@ function Runner({
                 </p>
                 <p>
                   <strong>
-                    이 흐름이 어디서 시작됐는지, 소비·저축·투자에서 어떻게 나타나는지는
+                    이 흐름이 어디서 시작됐는지, 실제 돈 관리 과정에서 어떻게 나타나는지는
                     <br />
                     아직 여기 담기지 않았습니다.
                   </strong>
@@ -1879,7 +1879,9 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <p className="money-paid-bridge-detail" style={{ color: theme.text }}>
           돈 앞에서 반복되는 내 감정과 선택을 살펴보고,
           <br />
-          말씀 안에서 나에게 맞는 평안한 돈 관리 방향을 찾아갑니다.
+          말씀 안에서 나에게 맞는 평안한 돈 관리 방향을
+          <br />
+          찾아보세요.
         </p>
       </div>
 
@@ -1889,10 +1891,10 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           ...card,
           marginTop: 0,
           textAlign: "center",
-          border: `1px solid ${theme.accent}55`,
-          borderTop: "none",
+          border: `1px solid ${theme.accent}70`,
           borderRadius: 0,
-          backgroundColor: theme.bg,
+          backgroundColor: `${theme.accent}0B`,
+          boxShadow: `0 18px 42px ${theme.accent}18`,
         }}
       >
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>PERSONAL DEEP-DIVE REPORT</p>
