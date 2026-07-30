@@ -1859,14 +1859,8 @@ function EmailResultSection({
 function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
   const btn = buttonClasses(design.button_style, theme);
   const card = cardClasses(design.card_style, theme);
-  const insights = [
-    "내 돈 유형과 신앙 유형의 조합 해석",
-    "돈 앞에서 반복되는 감정과 생각",
-    "소비·저축·투자에서 나타나는 선택과 반응 패턴",
-    "내가 가진 돈 관리의 강점과 흔들리는 지점",
-    "내 유형에 연결된 말씀과 묵상 질문",
-    "앞으로의 성장 방향",
-  ];
+  const [sampleOpen, setSampleOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
 
   return (
     <section className="money-funnel-section money-paid-funnel-section">
@@ -1904,55 +1898,118 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 심층 진단</h2>
         <div className="money-paid-product-copy" style={{ color: theme.text }}>
           <p>
-            <strong>내가 왜 돈 앞에서 같은 감정과 선택을 반복하는지 깊이 풀어드립니다.</strong>
+            <strong>내 진단 결과에 따라 달라지는 개인 맞춤 심층 분석</strong>
           </p>
           <p>
-            실제 돈 관리에서 흔들리는 지점을 이해하고, 말씀 안에서 나에게 맞는 평안한 돈 관리 방향을 찾도록 도와드립니다.
+            나의 돈 유형과 신앙 유형이 만날 때 나타나는 마음의 흐름과 반복되는 선택의 이유를 깊이 풀어드립니다.
+          </p>
+          <p>
+            실제 돈 관리에서 내가 흔들리는 지점을 살펴보고, 나에게 맞는 말씀과 평안한 돈 관리 방향을 제안합니다.
           </p>
         </div>
 
-        <div style={{ marginTop: 22, textAlign: "left" }}>
-          <h3 style={{ fontSize: 15, color: theme.text }}>심층 진단에서 확인하는 내용</h3>
-          <ul style={{ margin: "12px 0 0", paddingLeft: 21, display: "flex", flexDirection: "column", gap: 9 }}>
-            {insights.map((item) => (
-              <li
-                key={item}
-                style={{
-                  color: theme.text,
-                  fontSize: 14,
-                  lineHeight: 1.65,
-                  paddingLeft: 2,
-                }}
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <p style={{ marginTop: 20, fontSize: 13, lineHeight: 1.7, color: theme.muted }}>
-          개인 맞춤 조합 해석 · 소비·저축·투자 패턴 · 말씀 연결 · 성장 방향
-        </p>
         <button
           type="button"
-          onClick={() => toast.info("셀라 머니 심층 진단 상세 페이지를 준비 중입니다.")}
+          onClick={() => setSampleOpen((open) => !open)}
+          aria-expanded={sampleOpen}
+          style={{
+            width: "100%",
+            maxWidth: 340,
+            marginTop: 22,
+            padding: "12px 22px",
+            border: `1px solid ${theme.accent}80`,
+            borderRadius: 999,
+            background: "transparent",
+            color: theme.accent,
+            fontSize: 16,
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+        >
+          {sampleOpen ? "심층 진단 샘플 닫기" : "심층 진단 샘플 보기"}
+        </button>
+
+        {sampleOpen && (
+          <div
+            style={{
+              margin: "18px auto 0",
+              maxWidth: 420,
+              padding: "20px 18px",
+              borderRadius: 14,
+              background: theme.background,
+              textAlign: "left",
+            }}
+          >
+            <p style={{ margin: 0, color: theme.accent, fontSize: 13, fontWeight: 700 }}>
+              SAMPLE · 가상 사례
+            </p>
+            <p style={{ margin: "10px 0 0", color: theme.text, fontSize: 16, lineHeight: 1.75 }}>
+              돈을 쓰고 난 뒤 불안이 커지는 마음에는 미래를 안전하게 지키고 싶은 바람이 함께 있습니다.
+              나의 마음이 안정을 느끼는 기준을 먼저 세우면, 지출을 후회하는 흐름에서 벗어나 평안하게 선택할 수 있습니다.
+            </p>
+          </div>
+        )}
+
+        <p style={{ margin: "26px 0 0", color: theme.text, fontSize: 16, fontWeight: 600 }}>
+          셀라 머니 심층 진단
+        </p>
+        <p style={{ margin: "4px 0 0", color: theme.text, fontSize: 25, fontWeight: 800 }}>
+          29,000원
+        </p>
+
+        <button
+          type="button"
+          onClick={() => setDetailsOpen((open) => !open)}
+          aria-expanded={detailsOpen}
           style={{
             ...btn,
             width: "100%",
             maxWidth: 340,
             marginTop: 16,
-            padding: "13px 22px",
+            padding: "14px 22px",
             borderRadius: 999,
-            fontSize: 14,
-            fontWeight: 600,
+            fontSize: 16,
+            fontWeight: 700,
             cursor: "pointer",
           }}
         >
-          내 심층 진단 확인하기
+          셀라 머니 심층 진단 자세히 보기
         </button>
-        <p style={{ marginTop: 10, fontSize: 12.5, lineHeight: 1.65, color: theme.muted }}>
-          결제 후 나의 진단 결과를 바탕으로 구성된 심층 결과지를 확인할 수 있어요.
-        </p>
+
+        {detailsOpen && (
+          <div
+            style={{
+              margin: "18px auto 0",
+              maxWidth: 420,
+              padding: "22px 18px",
+              borderRadius: 14,
+              background: theme.background,
+              textAlign: "left",
+            }}
+          >
+            <h3 style={{ margin: 0, color: theme.text, fontSize: 18 }}>신청 전에 확인해주세요</h3>
+            <p style={{ margin: "12px 0 0", color: theme.text, fontSize: 15, lineHeight: 1.75 }}>
+              무료 진단에서 확인한 나의 결과를 바탕으로 개인 맞춤 심층 진단지를 구성합니다.
+              결제와 정보 확인을 마치면 완성된 진단지를 안내된 방식으로 전달합니다.
+            </p>
+            <button
+              type="button"
+              onClick={() => toast.info("셀라 머니 심층 진단 신청 페이지를 준비 중입니다.")}
+              style={{
+                ...btn,
+                width: "100%",
+                marginTop: 18,
+                padding: "13px 20px",
+                borderRadius: 999,
+                fontSize: 15,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              29,000원에 신청하기
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
