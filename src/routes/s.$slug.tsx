@@ -1854,7 +1854,8 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
   ];
 
   return (
-    <section className="money-funnel-section" style={{ marginTop: 34 }}>
+    <section className="money-funnel-section" style={{ marginTop: 48 }}>
+      <p className="money-next-step-arrow" style={{ color: theme.accent }} aria-hidden="true">↓</p>
       <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>다음 단계는</p>
         <h2 className="money-funnel-title money-next-step-title" style={{ color: theme.text }}>
@@ -1863,7 +1864,6 @@ function MoneyWorkbookSection({ theme, design }: { theme: ThemeColors; design: D
           돈 관리도 어렵게 느껴져요.”
         </h2>
         <div className="money-funnel-body money-next-step-body" style={{ color: theme.text, opacity: 0.82 }}>
-          <p>이번 결과는 지금 반복되는 마음과 흐름까지만 보여드렸습니다.</p>
           <p>
             이 흐름이 소비·저축·투자에서 구체적으로 어떻게 나타나는지, 그리고 말씀 안에서 나에게 맞는 기준을 어떻게 세울지는
             <strong> 셀라 머니 워크북에서 직접 다뤄드립니다.</strong>

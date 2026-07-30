@@ -217,6 +217,13 @@
   letter-spacing: -0.035em;
 }
 
+.money-next-step-arrow {
+  margin: 0 auto 24px;
+  font-size: 25px;
+  line-height: 1;
+  text-align: center;
+}
+
 .money-funnel-body.money-next-step-body {
   max-width: 500px;
   margin-top: 18px;
@@ -700,7 +707,7 @@
   }
 
   .money-next-step-title {
-    font-size: 21px !important;
+    font-size: 22px !important;
     line-height: 1.48 !important;
   }
 
