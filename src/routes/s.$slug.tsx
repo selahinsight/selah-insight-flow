@@ -1894,6 +1894,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           marginTop: 0,
           textAlign: "center",
           border: `1px solid ${theme.accent}70`,
+          borderTop: "none",
           borderRadius: 0,
           backgroundColor: `${theme.accent}0B`,
           boxShadow: `0 18px 42px ${theme.accent}18`,
@@ -1901,9 +1902,14 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
       >
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>PERSONAL DEEP-DIVE REPORT</p>
         <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 심층 진단</h2>
-        <p className="money-funnel-body" style={{ color: theme.text, opacity: 0.84 }}>
-          내 진단 결과에 맞춰 돈과 신앙의 조합, 반복되는 감정과 선택 패턴을 깊이 해석해드립니다.
-        </p>
+        <div className="money-paid-product-copy" style={{ color: theme.text }}>
+          <p>
+            <strong>내가 왜 돈 앞에서 같은 감정과 선택을 반복하는지 깊이 풀어드립니다.</strong>
+          </p>
+          <p>
+            실제 돈 관리에서 흔들리는 지점을 이해하고, 말씀 안에서 나에게 맞는 평안한 돈 관리 방향을 찾도록 도와드립니다.
+          </p>
+        </div>
 
         <div style={{ marginTop: 22, textAlign: "left" }}>
           <h3 style={{ fontSize: 15, color: theme.text }}>심층 진단에서 확인하는 내용</h3>

@@ -326,6 +326,47 @@
   padding: 40px 30px 34px !important;
 }
 
+.money-paid-diagnosis-card .money-funnel-product-title {
+  font-size: 24px !important;
+}
+
+.money-paid-product-copy {
+  max-width: 510px;
+  margin: 18px auto 0;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 18px;
+  line-height: 1.72;
+  letter-spacing: -0.02em;
+}
+
+.money-paid-product-copy p {
+  margin: 0;
+}
+
+.money-paid-product-copy p + p {
+  margin-top: 14px;
+}
+
+.money-paid-product-copy strong {
+  font-weight: 700;
+}
+
+.money-paid-diagnosis-card h3 {
+  font-size: 19px !important;
+}
+
+.money-paid-diagnosis-card li {
+  font-size: 17px !important;
+}
+
+.money-paid-diagnosis-card > p:nth-last-of-type(2) {
+  font-size: 15px !important;
+}
+
+.money-paid-diagnosis-card button {
+  font-size: 16px !important;
+}
+
 .money-funnel-item {
   border-radius: 1px !important;
 }
@@ -893,6 +934,11 @@
 
   .money-paid-diagnosis-card {
     padding: 36px 22px 32px !important;
+  }
+
+  .money-paid-product-copy {
+    font-size: 18px !important;
+    line-height: 1.68 !important;
   }
 
   .money-faith-transition-title {
