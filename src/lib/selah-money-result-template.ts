@@ -139,6 +139,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_gaze_reward: {
     title: "인정위로형",
+    sceneHook: "다른 사람들에게 괜찮아 보이고 싶고,\n지친 마음도 달래고 싶어서\n쇼핑이나 외식에 계획보다 많은 돈을 쓰게 되나요?",
     representativeHeart: [
       "다른 사람들에게 괜찮아 보이고 싶고,",
       "지친 내 마음도 달래고 싶어서",
