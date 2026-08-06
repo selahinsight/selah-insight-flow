@@ -1939,7 +1939,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             maxWidth: 420,
             padding: "18px 16px",
             borderRadius: 14,
-            background: theme.background,
+            background: theme.bg,
             textAlign: "left",
           }}
         >
@@ -2036,7 +2036,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
               maxWidth: 420,
               padding: "22px 18px",
               borderRadius: 14,
-              background: theme.background,
+              background: theme.bg,
               textAlign: "left",
             }}
           >

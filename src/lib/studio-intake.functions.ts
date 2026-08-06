@@ -77,8 +77,5 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
       };
     }
 
-    return {
-      status: "sent" as const,
-      payload,
-    };
+    return { status: "sent" as const };
   });

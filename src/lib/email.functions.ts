@@ -10,6 +10,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireAdmin } from "@/lib/require-admin";
 import { allSelahMoneyResults, customerFaithResultTitle } from "@/lib/selah-money-results";
+import type { ResultType as SurveyResultType } from "@/lib/survey-store";
 
 // ---------- Public: free result email ----------
 
@@ -23,18 +24,12 @@ const sendInput = z.object({
   faithLensId: z.string().optional().nullable(),
 });
 
-type ResultType = {
-  id: string;
-  title?: string;
-  description?: string;
-  interpretation?: string;
+interface ResultType extends SurveyResultType {
   reflection?: string;
   practice?: string;
   suggested_practice?: string;
   scripture?: string;
-  small_action?: string;
-  email_result?: string;
-};
+}
 
 function pickResultType(all: unknown, id?: string | null): ResultType | undefined {
   if (!id || !Array.isArray(all)) return undefined;
@@ -209,7 +204,7 @@ async function sendFreeResultEmailImpl(input: z.infer<typeof sendInput>): Promis
 
   const displayName = customer.name?.trim() || customer.nickname?.trim() || "고객";
   const completeResultTypes = allSelahMoneyResults(
-    Array.isArray(survey.result_types) ? survey.result_types as ResultType[] : [],
+    Array.isArray(survey.result_types) ? survey.result_types as unknown as ResultType[] : [],
   );
   const primary = pickResultType(
     completeResultTypes,

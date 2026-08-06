@@ -543,7 +543,7 @@ export function setResponseInLounge(surveyId: string, responseId: string, value:
   const r = s?.responses.find((x) => x.id === responseId);
   if (!r) return;
   r.inLounge = value;
-  let customerId: string | undefined = r.customerId;
+  const customerId: string | undefined = r.customerId;
   emitSurveys();
   if (customerId) {
     const hasAny = state.surveys.some((sv) =>
