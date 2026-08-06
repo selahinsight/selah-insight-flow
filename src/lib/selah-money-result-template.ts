@@ -99,7 +99,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     flow: [
       "미래를 든든하게 준비하고 싶어함",
       "지금의 삶도 충분히 누리고 싶어함",
-      "미래 준비와 현재의 누림을 모두 잘 해내려는\n마음이 커져 조급해짐",
+      "둘 다 잘하고 싶어\n마음이 조급해짐",
       "한정된 돈으로 두 기준을\n맞추기 어려워짐",
       "미래와 현재가 모두\n부족하게 느껴짐",
       "계속 애쓰며 압박과 피로가 쌓임",
