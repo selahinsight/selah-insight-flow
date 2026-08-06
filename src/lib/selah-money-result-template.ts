@@ -519,8 +519,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   faith_combo_mid: {
     title: "신앙·돈 기준 혼란형",
     representativeHeart: [
-      "하나님 앞에서 돈을 지혜롭게 다루고 싶은데,",
-      "실제 돈 관리에는 어떻게 적용해야 할지 막막해.",
+      "하나님 앞에서 돈을 지혜롭게 다루고 싶은데, 실제 돈 관리에는 어떻게 적용해야 할지 막막해.",
     ],
     flow: [
       "돈을 쓸 일이 생김",
