@@ -16,7 +16,10 @@ export function SelahMoneyResultTemplate({
 }: SelahMoneyResultTemplateProps) {
   return (
     <>
-      <p className="money-result-bubble" style={{ marginTop: 28, fontSize: 15, color: theme.accent, textAlign: "center" }}>
+      <p
+        className={`money-result-bubble${content.representativeHeartKeepAll ? " money-result-bubble-keep-all" : ""}`}
+        style={{ marginTop: 28, fontSize: 15, color: theme.accent, textAlign: "center" }}
+      >
         “{content.representativeHeart.map((line, index) => (
           <span key={line}>
             {line}

@@ -704,6 +704,11 @@
   font-style: normal;
 }
 
+.money-result-bubble-keep-all {
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
 .money-result-bubble::after {
   content: "";
   position: absolute;
