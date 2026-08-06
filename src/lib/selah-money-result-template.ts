@@ -166,6 +166,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_safety_reward: {
     title: "불안보상형",
+    sceneHook: "미래에 돈이 부족할까 걱정되는데,\n통장 잔액과 카드값 확인은 미루고\n답답할 때 소비로 마음을 달래게 되나요?",
     representativeHeart: [
       "앞으로 돈이 부족할까 걱정되는데,",
       "돈을 확인하기는 두렵고",
