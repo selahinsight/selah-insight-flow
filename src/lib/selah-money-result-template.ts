@@ -15,8 +15,8 @@ export interface SelahMoneyResultTemplateContent {
 export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResultTemplateContent> = {
   money_combo_organize_safety: {
     title: "확인긴장형",
-    sceneHook: "카드값과 통장 잔액을 확인해야 한다고\n생각하면서도, 미래가 불안해 앱을 열기가\n부담스럽고 자꾸 미루고 있나요?",
-    representativeHeart: ["카드값을 확인하면 미래가", "더 불안해질 것 같아."],
+    sceneHook: "카드값과 통장 잔액이 궁금하면서도,\n숫자를 보면 마음이 불안해질까 봐\n확인을 미루고 있나요?",
+    representativeHeart: ["카드값을 확인하면", "걱정이 더 커질 것 같아."],
     flow: [
       "미래의 부족함을 걱정함",
       "돈을 확인해야 한다는\n압박을 느낌",
@@ -517,22 +517,22 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     checklistTitle: "이번 주 작은 실천",
   },
   faith_combo_mid: {
-    title: "신앙·현실 갈등형",
+    title: "신앙·돈 기준 혼란형",
     representativeHeart: [
-      "돈을 하나님 앞에서 바르게 다루고 싶고,",
-      "실제로 돈을 쓸 때는 현실에 맞게",
-      "판단하는 것 같아.",
+      "하나님 앞에서 돈을 지혜롭게 다루고 싶은데,",
+      "실제 돈 관리에는 어떻게 적용해야 할지 막막해.",
     ],
     flow: [
       "돈을 쓸 일이 생김",
-      "하나님 앞에서 바른 선택인지 걱정함",
-      "현실적인 정보와 주변 상황을\n중심으로 판단함",
-      "믿음과 현실의 기준이\n마음속에서 부딪힘",
-      "결정한 뒤에도 마음이 편하지 않음",
+      "하나님 앞에서 지혜롭게\n쓰고 싶어짐",
+      "실제로 적용할 돈 관리 기준이\n정리되어 있지 않아 막막함",
+      "익숙한 정보와 주변 상황을\n따라 판단함",
+      "돈을 쓴 후 마음이\n불편해지기도 함",
     ],
     reading: [
-      "신앙·현실 갈등형은 돈을 하나님 앞에서 바르게 다루고 싶은 마음과 현실적인 상황을 살펴야 한다는 생각이 함께 움직입니다.",
-      "돈을 쓸 때 믿음의 기준을 떠올리면서도 현실적인 정보와 주변 상황을 먼저 따르며 마음이 흔들립니다. 돈의 목적과 금액을 먼저 정하고 그 선택에 담을 말씀의 기준 한 가지를 연결하면 믿음과 돈 관리를 함께 세울 수 있습니다.",
+      "신앙·돈 기준 혼란형은 하나님 앞에서 돈을 지혜롭게 다루고 싶지만, 실제 돈을 쓸 때 어떤 기준을 적용해야 할지 막막함을 느낍니다.",
+      "돈을 쓸 일이 생기면 하나님 앞에서 지혜로운 선택인지 생각하지만, 기준이 선명하지 않아 익숙한 정보와 주변 상황을 따라 결정합니다. 그래서 돈을 쓴 후 마음이 불편해지기도 합니다.",
+      "말씀 안에서 돈을 바라보는 관점과 하나님이 맡기신 돈의 목적을 이해하고, 돈을 어떤 기준으로 사용할지 구체적으로 세우면 신앙과 실제 돈 관리를 자연스럽게 연결할 수 있습니다.",
     ],
     checklist: [
       "이번 주에 쓸 돈 한 가지의 목적과 금액을 적어보세요.",
@@ -542,7 +542,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     checklistTitle: "이번 주 작은 실천",
   },
   faith_combo_high: {
-    title: "신앙·현실 갈등형",
+    title: "신앙·돈 기준 혼란형",
     representativeHeart: [
       "돈을 하나님 앞에서 바르게 다루고 싶고,",
       "실제로 돈을 쓸 때는 현실에 맞게",

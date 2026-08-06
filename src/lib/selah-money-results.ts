@@ -40,7 +40,7 @@ export function customerFaithResultTitle(resultId: string, fallback = "신앙 �
   if (resultId === "faith_low") return "편안한 신앙 연결형";
   if (resultId.startsWith("faith_burden_")) return "신앙부담형";
   if (resultId.startsWith("faith_separation_")) return "신앙분리형";
-  if (resultId.startsWith("faith_combo_")) return "신앙·현실 갈등형";
+  if (resultId.startsWith("faith_combo_")) return "신앙·돈 기준 혼란형";
   return fallback;
 }
 
