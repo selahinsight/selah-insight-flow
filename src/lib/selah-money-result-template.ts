@@ -545,9 +545,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_combo_high: {
     title: "신앙·돈 기준 혼란형",
+    representativeHeartKeepAll: true,
     representativeHeart: [
-      "하나님 앞에서 돈을 바르게 사용하고 싶은데,",
-      "무엇을 선택해도 마음이 편하지 않아.",
+      "하나님 앞에서 돈을 바르게 사용하고 싶은데, 무엇을 선택해도 마음이 편하지 않아.",
     ],
     flow: [
       "돈을 쓸 일이 생김",
@@ -563,9 +563,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "말씀 안에서 돈의 의미와 하나님이 맡기신 돈의 목적을 이해하고, 목적에 따른 예산을 세우면 신앙과 실제 돈 관리를 한 방향으로 연결할 수 있습니다.",
     ],
     checklist: [
-      "이번 주에 쓸 돈 한 가지의 목적과 금액을 적어보세요.",
-      "결제하기 전 지키고 싶은 말씀의 기준 한 가지를 떠올려보세요.",
-      "돈을 쓴 뒤 마음이 평안했는지 한 단어로 기록해보세요.",
+      "이번 주 돈을 사용할 일 한 가지를 정하고, 하나님께 지혜로운 선택을 구하며 기도해보세요.",
+      "돈과 청지기적 책임에 관한 말씀 한 구절을 찾아 적어보세요.",
+      "그 말씀을 기준으로 하나님이 맡기신 돈의 목적과 사용할 예산을 정해보세요.",
     ],
     checklistTitle: "이번 주 작은 실천",
   },
