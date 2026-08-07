@@ -36,6 +36,7 @@ import {
 import { ResultShareCard } from "@/components/survey/result-share-card";
 import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
+import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
 import { CircleDollarSign, Download, GitBranch, Heart, ScanSearch, Share2, Sprout } from "lucide-react";
 import { toast } from "sonner";
@@ -365,6 +366,7 @@ function Runner({
   const [emailSaved, setEmailSaved] = useState(false);
   const [starting, setStarting] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
+  const [editorialPreview, setEditorialPreview] = useState(false);
   const [customerContact, setCustomerContact] = useState<
     { id: string; contactToken: string } | null
   >(null);
@@ -427,6 +429,11 @@ function Runner({
         scores: {},
       });
       setPreviewMode(true);
+      setEditorialPreview(
+        params.get("layout") === "editorial" &&
+        primary.id === "emotional_reward" &&
+        faith?.id === "faith_burden_mid",
+      );
       setPhase("done");
     })();
 
@@ -886,6 +893,16 @@ function Runner({
             </p>
             <div className="money-result-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
 
+            {editorialPreview && selahResult?.primaryFaithLens && SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && SELAH_MONEY_RESULT_TEMPLATE_CONTENT[selahResult.primaryFaithLens.id] && (
+              <SelahMoneyEditorialResult
+                name={name.trim()}
+                moneyContent={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]}
+                faithContent={SELAH_MONEY_RESULT_TEMPLATE_CONTENT[selahResult.primaryFaithLens.id]}
+                faithTitle={customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)}
+                theme={theme}
+              />
+            )}
+            {!editorialPreview && <>
             {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id]?.sceneHook && (
               <div
                 className="money-scene-hook-card"
@@ -1172,6 +1189,7 @@ function Runner({
                 ))}
               </>
             )}
+            </>}
             {!isMoneyDiagnosis && (result.bibleVerse || (survey.audience_type === "christian" && survey.bible_verse)) && (
               <div
                 style={{

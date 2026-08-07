@@ -722,6 +722,314 @@
   transform: translateX(-50%) rotate(45deg);
 }
 
+.money-editorial-result {
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  margin-top: 38px;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+}
+
+.money-editorial-hero,
+.money-editorial-faith-card {
+  padding: 38px 30px 34px;
+  border: 1px solid;
+  text-align: center;
+}
+
+.money-editorial-eyebrow,
+.money-editorial-kicker {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+}
+
+.money-editorial-type-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  margin: 18px auto 12px;
+  place-items: center;
+  border: 1px solid;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.money-editorial-hero h2,
+.money-editorial-faith-card > h2 {
+  margin: 0;
+  font-size: 29px;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -0.04em;
+}
+
+.money-editorial-quote {
+  display: flex;
+  flex-direction: column;
+  margin: 22px auto 0;
+  padding: 19px 20px;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  font-family: "Gowun Batang", ui-serif, Georgia, serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+.money-editorial-quote > span:first-child,
+.money-editorial-quote > span:last-child {
+  height: 11px;
+  font-family: Georgia, serif;
+  font-size: 22px;
+  line-height: 1;
+  opacity: 0.45;
+}
+
+.money-editorial-section {
+  max-width: 520px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.money-editorial-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.money-editorial-heading h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+}
+
+.money-editorial-scenes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.money-editorial-scenes > div {
+  min-height: 106px;
+  padding: 15px 12px;
+  border: 1px solid;
+  background: rgba(255, 255, 255, 0.44);
+  text-align: left;
+}
+
+.money-editorial-scenes span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.money-editorial-scenes p {
+  margin: 9px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.money-editorial-flow,
+.money-editorial-action-section,
+.money-editorial-integration {
+  padding: 27px 24px;
+  border: 1px solid;
+}
+
+.money-editorial-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.money-editorial-timeline li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 10px 0;
+  border-bottom: 1px solid;
+  text-align: left;
+}
+
+.money-editorial-timeline li:last-child {
+  border-bottom: 0;
+}
+
+.money-editorial-step-number {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.money-editorial-timeline li > span:last-child {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.55;
+  white-space: pre-line;
+  word-break: keep-all;
+}
+
+.money-editorial-reading {
+  text-align: left;
+}
+
+.money-editorial-reading > p:not(.money-editorial-kicker),
+.money-editorial-faith-reading p,
+.money-editorial-integration > p:last-child {
+  margin: 13px 0 0;
+  font-size: 16px;
+  line-height: 1.78;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+  opacity: 0.86;
+}
+
+.money-editorial-reading-lead {
+  font-weight: 650;
+  opacity: 0.96 !important;
+}
+
+.money-editorial-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.money-editorial-actions article {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid;
+  text-align: left;
+}
+
+.money-editorial-action-icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid;
+  border-radius: 50%;
+}
+
+.money-editorial-actions strong {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.money-editorial-actions p {
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.money-editorial-faith-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0 2px;
+  text-align: center;
+}
+
+.money-editorial-faith-intro p {
+  margin: 0;
+  font-family: "Gowun Batang", ui-serif, Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.65;
+}
+
+.money-editorial-faith-card .money-editorial-timeline {
+  margin-top: 28px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.money-editorial-faith-reading {
+  margin-top: 26px;
+  text-align: left;
+}
+
+.money-editorial-faith-actions {
+  margin-top: 28px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(122, 103, 90, 0.18);
+}
+
+.money-editorial-faith-actions > h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.money-editorial-integration {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+@media (max-width: 640px) {
+  .money-editorial-result {
+    gap: 34px;
+    margin-top: 30px;
+  }
+
+  .money-editorial-hero,
+  .money-editorial-faith-card {
+    padding: 32px 20px 28px;
+  }
+
+  .money-editorial-hero h2,
+  .money-editorial-faith-card > h2 {
+    font-size: 26px;
+  }
+
+  .money-editorial-scenes {
+    grid-template-columns: 1fr;
+  }
+
+  .money-editorial-scenes > div {
+    min-height: 0;
+  }
+
+  .money-editorial-flow,
+  .money-editorial-action-section,
+  .money-editorial-integration {
+    padding: 24px 18px;
+  }
+
+  .money-editorial-quote {
+    padding-right: 8px;
+    padding-left: 8px;
+    font-size: 17px;
+  }
+}
+
 .money-loading {
   position: fixed;
   inset: 0;
