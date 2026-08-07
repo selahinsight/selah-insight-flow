@@ -924,7 +924,7 @@ function Runner({
                     color: theme.text,
                     fontWeight: 600,
                     fontFamily: '"SUIT", ui-sans-serif, system-ui, sans-serif',
-                    whiteSpace: "normal",
+                    whiteSpace: "pre-line",
                     wordBreak: "keep-all",
                     overflowWrap: "break-word",
                   }}
