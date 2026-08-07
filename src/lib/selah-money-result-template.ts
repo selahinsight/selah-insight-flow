@@ -345,7 +345,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   safety_seeking: {
     title: "안전추구형",
-    sceneHook: "저축하고 준비하고 있는데도,\n예상하지 못한 일이 생기면 부족할까 봐\n돈을 편하게 쓰기 어려운가요?",
+    sceneHook: "꾸준히 저축하고 준비하면서도,\n갑자기 돈이 필요할까 걱정되어\n나를 위한 지출을 미루고 있나요?",
     representativeHeart: [
       "아무리 준비해도 부족할까 봐",
       "마음을 놓기가 어려워.",
