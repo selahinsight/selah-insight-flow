@@ -220,6 +220,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_safety_gaze_reward: {
     title: "부족보상형",
+    sceneHook: "미래를 위해 지출을 줄이지만,\n주변 사람의 생활이 눈에 들어오거나 마음이 지치면\n계획보다 큰 소비를 하게 되나요?",
     representativeHeart: [
       "미래도 잘 준비하고 싶고,",
       "다른 사람들에게도 괜찮아 보이고 싶고,",
