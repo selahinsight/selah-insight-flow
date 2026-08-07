@@ -247,7 +247,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_safety_gaze: {
     title: "평가불안형",
-    sceneHook: "미래를 위해 지출을 줄이고 싶지만,\n주변 사람의 소비를 보고 과소비한 뒤\n잔고를 확인하기가 두려운가요?",
+    sceneHook: "미래를 위해 지출을 줄이고 싶지만,\n주변 사람의 소비를 보고 과소비한 뒤,\n잔고를 확인하기가 두려운가요?",
     representativeHeart: [
       "앞으로 돈이 부족할까 걱정되고",
       "주변 사람보다 뒤처지는 것도 싫은데,",
@@ -267,9 +267,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "생활에 필요한 돈, 미래를 준비할 돈, 관계와 꾸밈에 사용할 돈을 미리 나누면 자신의 형편 안에서 안정적으로 관리할 수 있습니다.",
     ],
     checklist: [
-      "이번 달 꼭 필요한 생활비를 적어보세요.",
-      "저축할 금액과 관계·꾸밈에 사용할 금액을 정해보세요.",
-      "일주일에 한 번 카드 사용액과 남은 예산을 확인해보세요.",
+      "미래를 위해 저축할 금액을 먼저 정해보세요.",
+      "남은 돈은 생활비와 소비 목적에 맞게 예산을 나눠보세요.",
+      "지출 전 누구를 위한 소비인지 마음을 살피고, 정한 예산 안에서 사용해보세요.",
     ],
   },
   money_combo_all: {
