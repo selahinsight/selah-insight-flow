@@ -392,7 +392,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   emotional_reward: {
     title: "마음보상형",
-    sceneHook: "지치고 답답한 날, 필요한 물건이 없어도\n무언가 사고 싶어지나요?",
+    sceneHook: "지치고 답답한 날,\n쇼핑 앱을 열거나 배달 음식을 고르며\n기분을 풀고 싶어지나요?",
     representativeHeart: ["이걸 사면 지친 마음이", "조금 괜찮아질 것 같아."],
     flow: [
       "피곤하고 허전한 마음이 올라옴",
