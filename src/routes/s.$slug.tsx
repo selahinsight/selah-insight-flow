@@ -924,7 +924,9 @@ function Runner({
                     color: theme.text,
                     fontWeight: 600,
                     fontFamily: '"SUIT", ui-sans-serif, system-ui, sans-serif',
-                    whiteSpace: "pre-line",
+                    whiteSpace: "normal",
+                    wordBreak: "keep-all",
+                    overflowWrap: "break-word",
                   }}
                 >
                   {SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id].sceneHook}
