@@ -301,7 +301,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_no_clear_pattern: {
     title: "돈 기준 탐색형",
-    sceneHook: "월급이 들어오면 이번에는 잘 관리해보겠다고 생각하지만, 막상 돈을 쓸 때는 그때그때 상황에 따라 결정하고 있나요?",
+    sceneHook: "월급이 들어오면 잘 관리하겠다고 생각하지만,\n돈을 쓸 때마다 그때의 상황에 따라 결정하고,\n이번 달에도 기준 없이 돈이 흘러가고 있나요?",
     representativeHeart: ["돈을 어떤 기준으로 관리해야 할지", "아직 잘 모르겠어."],
     flow: [
       "돈과 관련된 결정이 생김",
