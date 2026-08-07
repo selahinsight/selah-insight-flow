@@ -247,7 +247,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_safety_gaze: {
     title: "평가불안형",
-    sceneHook: "미래에 돈이 부족할까 걱정되고,\n주변 사람보다 뒤처질까 지출하면서도\n카드값과 통장 잔액 확인은 미루고 있나요?",
+    sceneHook: "미래를 위해 지출을 줄이고 싶지만,\n주변 사람의 소비를 보고 과소비한 뒤\n잔고를 확인하기가 두려운가요?",
     representativeHeart: [
       "앞으로 돈이 부족할까 걱정되고",
       "주변 사람보다 뒤처지는 것도 싫은데,",
