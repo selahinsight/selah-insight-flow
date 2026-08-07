@@ -274,7 +274,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_all: {
     title: "전반적 복합반응형",
-    sceneHook: "미래가 걱정돼 돈을 아끼다가,\n비교하거나 지친 날에는 계획보다 많이 쓰고,\n이후 카드값과 잔고 확인을 미루고 있나요?",
+    sceneHook: "미래가 걱정돼 돈을 아끼다가,\n비교하거나 지친 날엔 많이 쓰고,\n카드값과 잔고 확인은 미루나요?",
     representativeHeart: [
       "돈을 잘 관리하고 싶은데,",
       "걱정도 많고 마음도 자꾸 흔들려서",
