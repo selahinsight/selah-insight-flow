@@ -410,7 +410,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "쉬기·산책하기·식사하기·연락하기 중 하나를 먼저 해보세요.",
       "30분 뒤에도 필요하다면 사용할 횟수와 지출 가능한 금액을 확인해보세요.",
     ],
-    checklistTitle: "이번 주 작은 실천",
+    checklistTitle: "이번 주, 이렇게 시작해보세요",
   },
   faith_low: {
     title: "편안한 신앙 연결형",
