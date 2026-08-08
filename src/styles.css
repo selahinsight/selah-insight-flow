@@ -776,7 +776,7 @@
 .money-editorial-hero {
   position: relative;
   overflow: hidden;
-  padding: 44px 32px 42px;
+  padding: 52px 32px 42px;
   border-radius: 0;
   background-image:
     radial-gradient(circle at 50% 37%, rgba(255, 255, 255, 0.68) 0, rgba(255, 255, 255, 0.2) 29%, transparent 53%),
@@ -808,7 +808,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 22px;
+  margin-bottom: 26px;
   opacity: 0.66;
 }
 
@@ -904,24 +904,41 @@
 }
 
 .money-editorial-heart-panel {
-  display: grid;
-  grid-template-columns: minmax(96px, 0.72fr) minmax(0, 1.65fr);
-  align-items: center;
-  gap: 24px;
+  position: relative;
+  display: block;
   margin: 38px -32px -42px;
-  padding: 30px 32px 34px;
-  border-top: 1px solid;
-  background: linear-gradient(115deg, rgba(199, 169, 146, 0.13), rgba(255, 255, 255, 0.42));
+  padding: 34px 44px 38px;
+  overflow: hidden;
+  border-top: 0;
+  background:
+    radial-gradient(circle at 88% 24%, rgba(255, 255, 255, 0.58), transparent 37%),
+    linear-gradient(118deg, rgba(199, 169, 146, 0.19), rgba(225, 205, 187, 0.28));
   text-align: left;
 }
 
+.money-editorial-heart-panel::before {
+  position: absolute;
+  top: 0;
+  left: 18%;
+  width: 64%;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  opacity: 0.18;
+}
+
 .money-editorial-heart-panel > p {
-  margin: 0;
+  margin: 0 0 14px;
   font-size: 13px;
   font-weight: 700;
   line-height: 1.55;
   letter-spacing: 0.02em;
   word-break: keep-all;
+}
+
+.money-editorial-heart-panel .money-editorial-quote {
+  width: min(92%, 390px);
+  margin-left: auto;
 }
 
 .money-editorial-hero .money-editorial-quote > span:first-child {
@@ -936,8 +953,12 @@
 
 @media (max-width: 520px) {
   .money-editorial-heart-panel {
-    grid-template-columns: 92px minmax(0, 1fr);
-    gap: 18px;
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .money-editorial-heart-panel .money-editorial-quote {
+    width: 94%;
   }
 }
 

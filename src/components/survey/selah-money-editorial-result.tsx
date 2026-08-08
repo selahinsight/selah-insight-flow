@@ -60,7 +60,6 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
   return (
     <div className="money-editorial-result">
       <section className="money-editorial-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
-        <p className="money-editorial-cover-label" style={{ color: theme.accent }}>SELAH MONEY DIAGNOSIS</p>
         <div className="money-editorial-ornament" style={{ color: theme.accent }} aria-hidden="true">
           <span />
           <CircleDollarSign size={22} strokeWidth={1.35} />
