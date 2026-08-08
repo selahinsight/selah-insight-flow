@@ -1,4 +1,4 @@
-import { Check, CircleDollarSign, Coffee, Heart, ScanSearch, ShoppingBag, Sparkles, Sprout, WalletCards } from "lucide-react";
+import { Check, CircleDollarSign, Heart, ScanSearch, Sparkles, Sprout } from "lucide-react";
 
 import type { SelahMoneyResultTemplateContent } from "@/lib/selah-money-result-template";
 import type { ThemeColors } from "@/lib/survey-themes";
@@ -54,18 +54,15 @@ function ActionCards({ content, theme }: { content: SelahMoneyResultTemplateCont
 
 export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, faithTitle, theme }: SelahMoneyEditorialResultProps) {
   const scenes = moneyContent.sceneHook?.split("\n").map((line) => line.trim()).filter(Boolean) ?? [];
-  const sceneIcons = [ShoppingBag, Coffee, WalletCards];
 
   return (
     <div className="money-editorial-result">
       <section className="money-editorial-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
-        <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
-        <div className="money-editorial-type-title">
-          <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
-          <span className="money-editorial-type-icon" style={{ color: theme.accent, borderColor: `${theme.accent}44` }}>
-            <CircleDollarSign size={22} strokeWidth={1.5} />
-          </span>
+        <div className="money-editorial-type-icon" style={{ color: theme.accent, borderColor: `${theme.accent}44` }}>
+          <CircleDollarSign size={22} strokeWidth={1.5} />
         </div>
+        <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
+        <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
         <HeartQuote content={moneyContent} accent={theme.accent} />
       </section>
 
@@ -75,16 +72,10 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
             <ScanSearch size={20} strokeWidth={1.6} style={{ color: theme.accent }} />
             <h3>혹시 이런 모습이 익숙한가요?</h3>
           </div>
-          <figure className="money-editorial-scene-image">
-            <img src="/selah-money-emotional-reward-editorial.jpg" alt="쇼핑 후 창가에서 잠시 마음을 돌아보는 모습" />
-          </figure>
           <div className="money-editorial-scenes">
             {scenes.map((scene, index) => (
               <div key={scene} style={{ color: theme.text }}>
-                {(() => {
-                  const SceneIcon = sceneIcons[index] ?? Coffee;
-                  return <SceneIcon size={19} strokeWidth={1.55} style={{ color: theme.accent }} aria-hidden="true" />;
-                })()}
+                <span aria-hidden="true" style={{ backgroundColor: theme.accent }} />
                 <p>{scene}</p>
               </div>
             ))}
