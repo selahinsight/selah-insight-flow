@@ -856,7 +856,7 @@ function Runner({
               border: `1px solid ${theme.border}`,
             }}
           >
-            {previewMode && (
+            {previewMode && !editorialPreview && (
               <p
                 style={{
                   marginBottom: 14,

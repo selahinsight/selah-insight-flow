@@ -755,7 +755,11 @@
 
 .money-editorial-intro-divider {
   width: min(160px, 48%);
-  margin-top: 26px;
+  margin-top: 34px;
+}
+
+.money-editorial-intro-divider + .money-editorial-result {
+  margin-top: 46px;
 }
 
 .money-editorial-hero,
@@ -874,7 +878,7 @@
   border-radius: 0;
   background: rgba(255, 255, 255, 0.34);
   text-align: center;
-  font-size: 21px;
+  font-size: 19px;
 }
 
 .money-editorial-hero .money-editorial-quote > span:first-child {
