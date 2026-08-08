@@ -794,6 +794,14 @@
   z-index: 1;
 }
 
+.money-editorial-cover-label {
+  margin: 0 0 22px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
+}
+
 .money-editorial-ornament {
   display: grid;
   grid-template-columns: 42px auto 42px;
@@ -885,25 +893,52 @@
 
 .money-editorial-hero .money-editorial-quote {
   justify-content: center;
-  min-height: 168px;
-  margin: 34px 0 0;
-  padding: 26px 18px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
   border: 0;
   border-radius: 0;
-  background:
-    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.62) 0, rgba(255, 255, 255, 0.29) 42%, transparent 74%);
-  text-align: center;
+  background: transparent;
+  text-align: left;
   font-size: 19px;
+}
+
+.money-editorial-heart-panel {
+  display: grid;
+  grid-template-columns: minmax(96px, 0.72fr) minmax(0, 1.65fr);
+  align-items: center;
+  gap: 24px;
+  margin: 38px -32px -42px;
+  padding: 30px 32px 34px;
+  border-top: 1px solid;
+  background: linear-gradient(115deg, rgba(199, 169, 146, 0.13), rgba(255, 255, 255, 0.42));
+  text-align: left;
+}
+
+.money-editorial-heart-panel > p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  word-break: keep-all;
 }
 
 .money-editorial-hero .money-editorial-quote > span:first-child {
   margin-bottom: 8px;
-  transform: translateX(-46px);
+  transform: none;
 }
 
 .money-editorial-hero .money-editorial-quote > span:last-child {
   margin-top: 8px;
-  transform: translateX(46px);
+  transform: none;
+}
+
+@media (max-width: 520px) {
+  .money-editorial-heart-panel {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 18px;
+  }
 }
 
 .money-editorial-quote > span:first-child,
