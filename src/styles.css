@@ -802,15 +802,26 @@
   font-size: 19px;
   font-style: normal;
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.6;
   word-break: keep-all;
 }
 
 .money-editorial-hero .money-editorial-quote {
-  padding: 20px 18px;
+  justify-content: center;
+  min-height: 180px;
+  margin-top: 38px;
+  padding: 30px 18px;
   border: 1px solid rgba(122, 103, 90, 0.12);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.43);
+}
+
+.money-editorial-hero .money-editorial-quote > span:first-child {
+  margin-bottom: 8px;
+}
+
+.money-editorial-hero .money-editorial-quote > span:last-child {
+  margin-top: 8px;
 }
 
 .money-editorial-quote > span:first-child,
