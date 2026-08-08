@@ -63,6 +63,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         </div>
         <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
         <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
+        <p className="money-editorial-definition" style={{ color: theme.text }}>지친 마음을 소비로 위로하는 돈 반응 유형</p>
         <HeartQuote content={moneyContent} accent={theme.accent} />
       </section>
 

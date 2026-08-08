@@ -738,9 +738,9 @@
 }
 
 .money-editorial-hero {
-  border-radius: 18px;
+  border-radius: 0;
   background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.52), rgba(184, 154, 126, 0.07));
-  box-shadow: 0 14px 34px rgba(83, 63, 49, 0.09);
+  box-shadow: 0 10px 26px rgba(83, 63, 49, 0.055);
 }
 
 .money-editorial-eyebrow,
@@ -792,6 +792,16 @@
   letter-spacing: 0.02em;
 }
 
+.money-editorial-definition {
+  margin: 12px 0 0;
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+  opacity: 0.72;
+  word-break: keep-all;
+}
+
 .money-editorial-quote {
   display: flex;
   flex-direction: column;
@@ -811,8 +821,8 @@
   min-height: 180px;
   margin-top: 38px;
   padding: 30px 18px;
-  border: 1px solid rgba(122, 103, 90, 0.12);
-  border-radius: 14px;
+  border: 0;
+  border-radius: 0;
   background: rgba(255, 255, 255, 0.43);
 }
 
