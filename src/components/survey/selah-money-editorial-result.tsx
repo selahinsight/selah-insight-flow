@@ -1,4 +1,4 @@
-import { Check, CircleDollarSign, Heart, ScanSearch, Sparkles, Sprout } from "lucide-react";
+import { Check, Heart, ScanSearch, Sparkles, Sprout } from "lucide-react";
 
 import type { SelahMoneyResultTemplateContent } from "@/lib/selah-money-result-template";
 import type { ThemeColors } from "@/lib/survey-themes";
@@ -60,17 +60,15 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
   return (
     <div className="money-editorial-result">
       <section className="money-editorial-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
-        <div className="money-editorial-hero-main">
-          <div className="money-editorial-type-icon" style={{ color: theme.accent, borderColor: `${theme.accent}44` }}>
-            <CircleDollarSign size={22} strokeWidth={1.5} />
-          </div>
-          <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
-          <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
-          <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록, 소비로 나를 달래는 편이에요.</p>
+        <div className="money-editorial-ornament" style={{ color: theme.accent }} aria-hidden="true">
+          <span />
+          <Sparkles size={20} strokeWidth={1.35} />
+          <span />
         </div>
-        <div className="money-editorial-quote-panel" style={{ backgroundColor: theme.accent }}>
-          <HeartQuote content={moneyContent} accent="#fff" lines={["오늘만큼은 나를 위해 써도", "괜찮잖아."]} />
-        </div>
+        <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
+        <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
+        <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록, 소비로 나를 달래는 편이에요.</p>
+        <HeartQuote content={moneyContent} accent={theme.accent} lines={["오늘만큼은 나를 위해 써도", "괜찮잖아."]} />
       </section>
 
       {scenes.length > 0 && (
