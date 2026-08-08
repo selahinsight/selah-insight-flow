@@ -730,6 +730,34 @@
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
 }
 
+.money-editorial-intro-label {
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  line-height: 1.3;
+  letter-spacing: 0.08em !important;
+}
+
+.money-editorial-intro-title {
+  margin-top: 8px !important;
+  font-size: 26px !important;
+  font-weight: 700;
+  line-height: 1.3 !important;
+}
+
+.money-editorial-intro-subtitle {
+  margin-top: 10px !important;
+  font-size: 17px !important;
+  line-height: 1.5 !important;
+  word-break: keep-all;
+}
+
+.money-editorial-intro-divider {
+  width: min(160px, 48%);
+  margin-top: 26px;
+}
+
 .money-editorial-hero,
 .money-editorial-faith-card {
   padding: 38px 30px 34px;
@@ -815,7 +843,7 @@
 
 .money-editorial-definition {
   margin: 12px 0 0;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 550;
   line-height: 1.55;
   letter-spacing: -0.015em;
@@ -846,6 +874,7 @@
   border-radius: 0;
   background: rgba(255, 255, 255, 0.34);
   text-align: center;
+  font-size: 21px;
 }
 
 .money-editorial-hero .money-editorial-quote > span:first-child {

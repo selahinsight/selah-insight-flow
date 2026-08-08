@@ -870,13 +870,13 @@ function Runner({
               </p>
             )}
             <p
-              className="money-diagnosis-label"
+              className={`money-diagnosis-label${editorialPreview ? " money-editorial-intro-label" : ""}`}
               style={{ fontSize: 15, letterSpacing: "0.05em", color: theme.accent, textAlign: "center" }}
             >
               SELAH MONEY DIAGNOSIS
             </p>
             <h1
-              className="money-result-complete-title"
+              className={`money-result-complete-title${editorialPreview ? " money-editorial-intro-title" : ""}`}
               style={{
                 marginTop: 18,
                 fontSize: 22,
@@ -886,12 +886,12 @@ function Runner({
                 fontFamily: headingFont,
               }}
             >
-              진단이 완료되었습니다.
+              {editorialPreview ? "진단이 완료되었어요" : "진단이 완료되었습니다."}
             </h1>
-            <p className="money-result-complete-subtitle" style={{ marginTop: 10, fontSize: 17, lineHeight: 1.65, color: theme.text, textAlign: "center", whiteSpace: "nowrap" }}>
-              이제 나의 돈 반응 유형을 살펴볼게요.
+            <p className={`money-result-complete-subtitle${editorialPreview ? " money-editorial-intro-subtitle" : ""}`} style={{ marginTop: 10, fontSize: 17, lineHeight: 1.65, color: theme.text, textAlign: "center", whiteSpace: editorialPreview ? "normal" : "nowrap" }}>
+              {editorialPreview ? "지금부터 나의 돈 반응과 그 안에 담긴 마음을 차분히 살펴볼게요." : "이제 나의 돈 반응 유형을 살펴볼게요."}
             </p>
-            <div className="money-result-divider" style={{ backgroundColor: theme.border }} aria-hidden="true" />
+            <div className={`money-result-divider${editorialPreview ? " money-editorial-intro-divider" : ""}`} style={{ backgroundColor: theme.border }} aria-hidden="true" />
 
             {editorialPreview && selahResult?.primaryFaithLens && SELAH_MONEY_RESULT_TEMPLATE_CONTENT[result.id] && SELAH_MONEY_RESULT_TEMPLATE_CONTENT[selahResult.primaryFaithLens.id] && (
               <SelahMoneyEditorialResult
