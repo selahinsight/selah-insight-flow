@@ -11,11 +11,13 @@ interface SelahMoneyEditorialResultProps {
   theme: ThemeColors;
 }
 
-function HeartQuote({ content, accent }: { content: SelahMoneyResultTemplateContent; accent: string }) {
+function HeartQuote({ content, accent, lines }: { content: SelahMoneyResultTemplateContent; accent: string; lines?: string[] }) {
+  const quoteLines = lines ?? content.representativeHeart;
+
   return (
     <blockquote className="money-editorial-quote" style={{ color: accent }}>
       <span aria-hidden="true">“</span>
-      {content.representativeHeart.map((line) => <span key={line}>{line}</span>)}
+      {quoteLines.map((line) => <span key={line}>{line}</span>)}
       <span aria-hidden="true">”</span>
     </blockquote>
   );
@@ -63,8 +65,8 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         </div>
         <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
         <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
-        <p className="money-editorial-definition" style={{ color: theme.text }}>지친 마음을 소비로 위로하는 돈 반응 유형</p>
-        <HeartQuote content={moneyContent} accent={theme.accent} />
+        <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록, 소비로 나를 달래는 편이에요.</p>
+        <HeartQuote content={moneyContent} accent={theme.accent} lines={["오늘만큼은 나를 위해 써도", "괜찮잖아."]} />
       </section>
 
       {scenes.length > 0 && (
