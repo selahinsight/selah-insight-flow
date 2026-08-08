@@ -848,7 +848,7 @@ function Runner({
       return (
         <Wrap theme={theme} design={design} introMode>
           <div
-            className="money-result-card"
+            className={`money-result-card${editorialPreview ? " money-editorial-result-shell" : ""}`}
             style={{
               ...cardStyle,
               borderRadius: 8,
