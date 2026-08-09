@@ -85,9 +85,6 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
     ? "통장 앱을 열어 현재 잔액만 먼저 확인해보세요."
     : moneyContent.checklist[0];
   const integratedChecklist = [moneyAction, faithContent.checklist[0]].filter((item): item is string => Boolean(item));
-  const [faithLeadSentence, ...faithLeadRest] = faithContent.reading[0].split(/(?<=\.)\s+/);
-  const faithBody = [...faithLeadRest, ...faithContent.reading.slice(1)].join(" ");
-
   return (
     <div className="money-editorial-result">
       {scenes.length > 0 && (
@@ -157,8 +154,9 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       </section>
 
       <section className="money-editorial-section money-editorial-reading money-editorial-faith-reading">
-        <p style={{ color: theme.text }}><strong>{faithLeadSentence}</strong></p>
-        {faithBody && <p style={{ color: theme.text }}>{faithBody}</p>}
+        {faithContent.reading.map((paragraph, index) => (
+          <p key={paragraph} className={index === 0 ? "money-editorial-reading-lead" : ""} style={{ color: theme.text }}>{paragraph}</p>
+        ))}
       </section>
 
       <section className="money-editorial-section money-editorial-action-section money-editorial-faith-action-section">
