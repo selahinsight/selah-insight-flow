@@ -352,11 +352,6 @@
   word-break: keep-all;
 }
 
-.money-email-result-line {
-  white-space: nowrap;
-  font-size: clamp(12px, 3.8vw, 17px);
-}
-
 .money-email-recipient-guide {
   font-weight: 500;
   line-height: 1.55;

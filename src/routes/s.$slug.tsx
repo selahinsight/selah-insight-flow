@@ -1808,7 +1808,7 @@ function EmailResultSection({
       {isMoneyDiagnosis ? (
         <div className="money-funnel-body" style={{ color: theme.text, opacity: 0.82 }}>
           <p>
-            <span className="money-email-result-line">지금 확인한 돈 반응 유형과 신앙 유형 결과를</span><br />
+            지금 확인한 돈 반응 유형과 신앙 유형 결과를<br />
             이메일로 보내드려요.<br />
             천천히 다시 읽으며 나의 돈 관리 흐름을 돌아보세요.
           </p>
