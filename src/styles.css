@@ -740,7 +740,7 @@
 }
 
 .money-result-card.money-editorial-result-shell {
-  padding-top: 80px !important;
+  padding-top: 104px !important;
 }
 
 .money-editorial-intro-title {
@@ -759,11 +759,11 @@
 
 .money-editorial-intro-divider {
   width: min(160px, 48%);
-  margin-top: 34px;
+  margin-top: 72px;
 }
 
 .money-editorial-intro-divider + .money-editorial-result {
-  margin-top: 46px;
+  margin-top: 70px;
 }
 
 .money-editorial-hero,
@@ -777,15 +777,10 @@
   position: relative;
   overflow: hidden;
   padding: 52px 32px 42px;
-  border-radius: 0;
-  background-image:
-    radial-gradient(circle at 50% 37%, rgba(255, 255, 255, 0.68) 0, rgba(255, 255, 255, 0.2) 29%, transparent 53%),
-    radial-gradient(circle at 7% 10%, rgba(194, 151, 151, 0.15), transparent 34%),
-    radial-gradient(circle at 94% 91%, rgba(184, 154, 126, 0.14), transparent 37%),
-    repeating-linear-gradient(0deg, rgba(92, 70, 52, 0.012) 0, rgba(92, 70, 52, 0.012) 1px, transparent 1px, transparent 4px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.72),
-    inset 0 -22px 44px rgba(167, 125, 96, 0.035);
+  border: 0 !important;
+  border-radius: 6px;
+  background: #fbf8f3 !important;
+  box-shadow: none;
   text-align: center;
 }
 
@@ -910,10 +905,8 @@
   padding: 34px 44px 38px;
   overflow: hidden;
   border-top: 0;
-  background:
-    radial-gradient(circle at 88% 24%, rgba(255, 255, 255, 0.58), transparent 37%),
-    linear-gradient(118deg, rgba(199, 169, 146, 0.19), rgba(225, 205, 187, 0.28));
-  text-align: left;
+  background: transparent;
+  text-align: center;
 }
 
 .money-editorial-heart-panel::before {
@@ -938,7 +931,9 @@
 
 .money-editorial-heart-panel .money-editorial-quote {
   width: min(92%, 390px);
+  margin-right: auto;
   margin-left: auto;
+  text-align: center;
 }
 
 .money-editorial-hero .money-editorial-quote > span:first-child {
