@@ -782,7 +782,7 @@
   border-style: solid !important;
   border-color: rgba(154, 118, 100, 0.45) !important;
   border-radius: 0;
-  background: #f3e7e1 !important;
+  background: #fffdf9 !important;
   box-shadow: none;
   text-align: center;
 }
@@ -908,8 +908,12 @@
   padding: 34px 44px 38px;
   overflow: hidden;
   border-top: 0;
-  background: #fffdf9;
+  background: #f3e7e1;
   text-align: center;
+}
+
+.money-editorial-hero + .money-editorial-section {
+  margin-top: 58px;
 }
 
 .money-editorial-heart-panel::before {
