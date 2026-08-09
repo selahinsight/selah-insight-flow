@@ -792,7 +792,14 @@
 }
 
 .money-editorial-primary-hero {
+  padding: 48px 32px 58px;
+  border-width: 0 !important;
   background: #f3e7e1 !important;
+}
+
+.money-editorial-primary-ornament {
+  margin-top: 34px;
+  margin-bottom: 0;
 }
 
 .money-editorial-hero > * {
@@ -1815,5 +1822,11 @@
   .money-intro-card {
     padding-top: 18px !important;
     padding-bottom: 16px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .money-editorial-primary-hero {
+    padding: 38px 22px 52px;
   }
 }

@@ -73,12 +73,10 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         "부담과 죄책감이 올라와 선택이 조심스러워짐",
       ]
     : [faithContent.flow[0], faithContent.flow[Math.floor(faithContent.flow.length / 2)], faithContent.flow.at(-1)].filter((step): step is string => Boolean(step));
-  const faithChecklist = faithContent.title === "신앙부담형"
-    ? [
-        "이번 지출의 목적과 감사하며 사용할 금액을 함께 적어보세요.",
-        "산책·일기 쓰기처럼 마음을 돌볼 수 있는 나만의 방법을 한 가지 정해보세요.",
-      ]
-    : faithContent.checklist.slice(0, 2);
+  const integratedChecklist = [
+    "결제 전, 이 소비로 어떤 마음을 달래고 싶은지 확인해보세요.",
+    "하나님이 공급자이심에 감사하며, 이번 지출의 목적과 사용할 금액을 적어보세요.",
+  ];
 
   return (
     <div className="money-editorial-result">
@@ -95,14 +93,14 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       )}
 
       <section className="money-editorial-hero money-editorial-primary-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
-        <div className="money-editorial-ornament" style={{ color: theme.accent }} aria-hidden="true">
+        <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
+        <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
+        <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록, 소비로 나를 달래는 편이에요.</p>
+        <div className="money-editorial-ornament money-editorial-primary-ornament" style={{ color: theme.accent }} aria-hidden="true">
           <span />
           <CircleDollarSign size={22} strokeWidth={1.35} />
           <span />
         </div>
-        <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
-        <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
-        <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록, 소비로 나를 달래는 편이에요.</p>
       </section>
 
       <section className="money-editorial-section money-editorial-flow">
@@ -117,16 +115,6 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         {moneyContent.reading.map((paragraph, index) => (
           <p key={paragraph} className={index === 0 ? "money-editorial-reading-lead" : ""} style={{ color: theme.text }}>{paragraph}</p>
         ))}
-      </section>
-
-      <section className="money-editorial-section money-editorial-action-section">
-        <div className="money-editorial-action-card">
-          <div className="money-editorial-heading" style={{ color: theme.text }}>
-            <Sprout size={21} strokeWidth={1.6} style={{ color: theme.accent }} />
-            <h3>이렇게 시작해보세요</h3>
-          </div>
-          <ActionCards content={moneyContent} theme={theme} showNumbers={false} />
-        </div>
       </section>
 
       <section className="money-editorial-faith-transition">
@@ -168,7 +156,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
             <Sprout size={21} strokeWidth={1.6} style={{ color: theme.accent }} />
             <h3>이렇게 시작해보세요</h3>
           </div>
-          <ActionCards content={faithContent} theme={theme} showNumbers={false} items={faithChecklist} />
+          <ActionCards content={faithContent} theme={theme} showNumbers={false} items={integratedChecklist} />
         </div>
       </section>
 
