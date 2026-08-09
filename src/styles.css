@@ -286,7 +286,7 @@
 
 .money-paid-funnel-section .money-funnel-intro {
   padding-top: 32px !important;
-  padding-bottom: 46px !important;
+  padding-bottom: 70px !important;
 }
 
 .money-paid-bridge-icon {
@@ -325,7 +325,7 @@
 }
 
 .money-paid-diagnosis-card {
-  padding: 56px 30px 50px !important;
+  padding: 76px 30px 70px !important;
 }
 
 .money-paid-diagnosis-card .money-funnel-product-title {
@@ -338,7 +338,7 @@
 
 .money-paid-product-copy {
   max-width: 510px;
-  margin: 18px auto 0;
+  margin: 32px auto 0;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
   font-size: 18px;
   line-height: 1.72;
@@ -350,11 +350,56 @@
 }
 
 .money-paid-product-copy p + p {
-  margin-top: 14px;
+  margin-top: 28px;
 }
 
 .money-paid-product-copy strong {
+  font-family: "Gowun Batang", ui-serif, Georgia, serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.money-paid-product-summary {
+  word-break: keep-all;
+}
+
+.money-paid-inclusions {
+  max-width: 430px;
+  margin: 38px auto 0;
+  padding: 28px 26px;
+  text-align: left;
+}
+
+.money-paid-inclusions h3 {
+  margin: 0;
+  font-size: 18px !important;
   font-weight: 700;
+}
+
+.money-paid-inclusions ul {
+  display: grid;
+  gap: 11px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.money-paid-inclusions li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 16px !important;
+  font-weight: 500;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.money-paid-inclusions li::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #9a7664;
+  content: "✓";
 }
 
 .money-paid-diagnosis-card h3 {
@@ -1708,7 +1753,7 @@
   }
 
   .money-paid-diagnosis-card {
-    padding: 48px 22px 44px !important;
+    padding: 64px 22px 58px !important;
   }
 
   .money-paid-product-copy {

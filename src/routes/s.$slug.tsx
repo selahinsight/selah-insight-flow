@@ -1889,18 +1889,27 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>PERSONAL DEEP-DIVE REPORT</p>
         <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 심층 진단</h2>
         <div className="money-paid-product-copy" style={{ color: theme.text }}>
-          <p>
+          <p className="money-paid-product-question">
             <strong>
               돈을 쓰고 후회하고, 모으면서도 불안하고,
               <br />
               계획을 세워도 자꾸 흐트러지나요?
             </strong>
           </p>
-          <p>
-            셀라 머니 심층 진단지는 소비·저축·투자에서 반복되는 나의 패턴을 찾아,
-            <br />
-            흔들릴 때 돌아올 수 있는 나만의 돈 관리 기준을 세워드립니다.
+          <p className="money-paid-product-summary">
+            셀라 머니 심층 진단지는 소비·저축·투자에서 반복되는 나의 패턴을 찾고, 흔들릴 때 돌아올 수 있는 나만의 돈 관리 기준을 세워드립니다.
           </p>
+        </div>
+
+        <div className="money-paid-inclusions" style={{ color: theme.text, backgroundColor: theme.bg }}>
+          <h3>진단지에 담긴 내용</h3>
+          <ul>
+            <li>돈 유형과 신앙 유형을 연결한 통합 해석</li>
+            <li>소비·저축·투자에서 나타나는 실제 돈 행동</li>
+            <li>반복되는 감정과 선택의 흐름</li>
+            <li>말씀을 바탕으로 세우는 돈 관리 기준</li>
+            <li>지금 시작할 수 있는 맞춤 실천 방향</li>
+          </ul>
         </div>
 
         <div
@@ -1956,17 +1965,9 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
               textAlign: "left",
             }}
           >
-            <h3 style={{ margin: 0, color: theme.text, fontSize: 18 }}>심층 진단 구성</h3>
+            <h3 style={{ margin: 0, color: theme.text, fontSize: 18 }}>셀라 머니 진단지 미리보기</h3>
             <p style={{ margin: "12px 0 0", color: theme.text, fontSize: 15, lineHeight: 1.75 }}>
-              ✓ 돈 유형과 신앙 유형을 연결한 통합 해석
-              <br />
-              ✓ 소비·저축·투자에서 나타나는 실제 돈 행동
-              <br />
-              ✓ 반복되는 감정과 선택의 흐름
-              <br />
-              ✓ 말씀을 바탕으로 세우는 돈 관리 기준
-              <br />
-              ✓ 지금 시작할 수 있는 맞춤 실천 방향
+              돈을 쓰고 난 뒤 불안이 커지는 마음에는 미래를 안전하게 지키고 싶은 바람이 함께 있습니다. 나의 마음이 안정을 느끼는 기준을 먼저 세우면 지출을 후회하는 흐름에서 벗어나 평안하게 선택할 수 있습니다.
             </p>
             <p style={{ margin: "18px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.7 }}>
               결제와 정보 확인을 마치면 나의 무료 진단 결과를 바탕으로 심층 진단지를 구성해 전달합니다.
