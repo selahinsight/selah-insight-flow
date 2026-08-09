@@ -530,6 +530,59 @@
   color: #9a7664;
 }
 
+.money-paid-price-row {
+  display: flex;
+  max-width: 390px;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 17px;
+  margin: 46px auto 0;
+  padding: 24px 8px;
+  border-top: 1px solid rgba(154, 118, 100, 0.3);
+  border-bottom: 1px solid rgba(154, 118, 100, 0.3);
+  white-space: nowrap;
+}
+
+.money-paid-normal-price,
+.money-paid-launch-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.money-paid-normal-price span {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.money-paid-normal-price strong {
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: line-through;
+}
+
+.money-paid-price-arrow {
+  padding-bottom: 5px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.money-paid-launch-price span {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.money-paid-launch-price strong {
+  margin-top: 3px;
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
 .money-paid-diagnosis-card h3 {
   font-size: 19px !important;
 }

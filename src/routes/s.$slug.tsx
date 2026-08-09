@@ -1934,16 +1934,16 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           </ul>
         </div>
 
-        <div style={{ marginTop: 46, textAlign: "center" }}>
-          <p style={{ margin: 0, color: theme.accent, fontSize: 14, fontWeight: 700 }}>
-            런칭가
-          </p>
-          <p style={{ margin: "3px 0 0", color: theme.text, fontSize: 26, fontWeight: 800 }}>
-            9,900원
-          </p>
-          <p style={{ margin: "4px 0 0", color: theme.muted, fontSize: 13, textDecoration: "line-through" }}>
-            정상가 15,000원
-          </p>
+        <div className="money-paid-price-row">
+          <div className="money-paid-normal-price" style={{ color: theme.muted }}>
+            <span>정상가</span>
+            <strong>15,000원</strong>
+          </div>
+          <span className="money-paid-price-arrow" style={{ color: theme.accent }} aria-hidden="true">→</span>
+          <div className="money-paid-launch-price">
+            <span style={{ color: theme.accent }}>런칭가</span>
+            <strong style={{ color: theme.text }}>9,900원</strong>
+          </div>
         </div>
 
         <button
