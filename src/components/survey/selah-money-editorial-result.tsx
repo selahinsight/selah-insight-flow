@@ -83,6 +83,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
     : [faithContent.flow[0], faithContent.flow[Math.floor(faithContent.flow.length / 2)], faithContent.flow.at(-1)].filter((step): step is string => Boolean(step));
   const integratedChecklist = [moneyContent.checklist[0], faithContent.checklist[0]].filter((item): item is string => Boolean(item));
   const [faithLeadSentence, ...faithLeadRest] = faithContent.reading[0].split(/(?<=\.)\s+/);
+  const faithBody = [...faithLeadRest, ...faithContent.reading.slice(1)].join(" ");
 
   return (
     <div className="money-editorial-result">
@@ -151,10 +152,8 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       </section>
 
       <section className="money-editorial-section money-editorial-reading money-editorial-faith-reading">
-        <p style={{ color: theme.text }}>
-          <strong>{faithLeadSentence}</strong>{faithLeadRest.length ? ` ${faithLeadRest.join(" ")}` : ""}
-        </p>
-        {faithContent.reading.slice(1).map((paragraph) => <p key={paragraph} style={{ color: theme.text }}>{paragraph}</p>)}
+        <p style={{ color: theme.text }}><strong>{faithLeadSentence}</strong></p>
+        {faithBody && <p style={{ color: theme.text }}>{faithBody}</p>}
       </section>
 
       <section className="money-editorial-section money-editorial-action-section money-editorial-faith-action-section">
