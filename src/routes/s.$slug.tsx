@@ -37,7 +37,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { CircleDollarSign, Compass, Download, Fingerprint, GitBranch, Heart, Mail, ScanSearch, Share2, Sprout } from "lucide-react";
+import { CircleDollarSign, Compass, Download, Fingerprint, GitBranch, Heart, Instagram, Mail, ScanSearch, Share2, Sprout, Youtube } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -1770,8 +1770,9 @@ function EmailResultSection({
       {isMoneyDiagnosis ? (
         <div className="money-funnel-body" style={{ color: theme.text, opacity: 0.82 }}>
           <p>
-            지금 확인한 돈 반응 유형과 신앙 유형<br />
-            결과를 이메일로 보내드려요.<br />
+            지금 확인한 돈 반응 유형과<br />
+            신앙 유형 결과를<br />
+            이메일로 보내드려요.<br />
             천천히 다시 읽으며 나의 돈 관리 흐름을 돌아보세요.
           </p>
         </div>
@@ -2002,51 +2003,22 @@ function FunnelCtas({
   const card = cardClasses(design.card_style, theme);
   if (isMoneyDiagnosis) {
     return (
-      <>
-        <div className="money-result-card money-funnel-card" style={{ ...card, marginTop: 16, textAlign: "center" }}>
-          <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>SELAH MONEY LOUNGE</p>
-          <h2 className="money-funnel-title" style={{ color: theme.text }}>
-            돈에 관한 마음과 기준을 셀라와 함께 정리해보세요
-          </h2>
-          <p style={{ margin: "13px auto 0", maxWidth: 430, fontSize: 14, lineHeight: 1.75, color: theme.text, opacity: 0.8 }}>
-            셀라 머니 라운지에서 내 돈과 마음을 점검하는 질문, 일상에 바로 활용하는 무료 자료와 셀라의 새로운 소식을 받아보세요.
-          </p>
-          <button
-            type="button"
-            onClick={() => toast.info("셀라 머니 라운지 연결을 준비 중입니다.")}
-            style={{ ...btn, width: "100%", maxWidth: 320, marginTop: 17, padding: "12px 20px", borderRadius: 999, fontSize: 13 }}
-          >
-            무료 머니 라운지 입장하기
-          </button>
+      <section className="money-content-footer" style={{ color: theme.text }}>
+        <h2>
+          셀라의 이야기를<br />
+          계속 만나보세요
+        </h2>
+        <div className="money-content-footer-links">
+          <a href="https://www.youtube.com/@selahinsight" target="_blank" rel="noreferrer">
+            <Youtube size={19} strokeWidth={1.5} aria-hidden="true" />
+            YouTube
+          </a>
+          <a href="https://www.instagram.com/selah.insight/" target="_blank" rel="noreferrer">
+            <Instagram size={19} strokeWidth={1.5} aria-hidden="true" />
+            Instagram
+          </a>
         </div>
-
-        <div className="money-result-card money-funnel-card" style={{ ...card, marginTop: 16, textAlign: "center" }}>
-          <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>SELAH CONTENT</p>
-          <h2 className="money-funnel-title" style={{ color: theme.text }}>
-            돈과 신앙에 관한 셀라의 이야기를 계속 만나보세요
-          </h2>
-          <div style={{ marginTop: 18, display: "flex", flexDirection: "column", gap: 12 }}>
-            <div style={{ padding: 16, borderRadius: 16, backgroundColor: theme.bg }}>
-              <h3 style={{ fontSize: 15, color: theme.text }}>유튜브</h3>
-              <p style={{ marginTop: 7, fontSize: 13.5, lineHeight: 1.65, color: theme.text, opacity: 0.78 }}>
-                돈·소비·저축·투자·신앙을 일상의 선택과 연결하는 콘텐츠를 만나보세요.
-              </p>
-              <button type="button" onClick={() => toast.info("유튜브 연결을 준비 중입니다.")} style={{ ...btn, marginTop: 12, padding: "10px 18px", borderRadius: 999, fontSize: 12.5 }}>
-                유튜브에서 더 알아보기
-              </button>
-            </div>
-            <div style={{ padding: 16, borderRadius: 16, backgroundColor: theme.bg }}>
-              <h3 style={{ fontSize: 15, color: theme.text }}>인스타그램</h3>
-              <p style={{ marginTop: 7, fontSize: 13.5, lineHeight: 1.65, color: theme.text, opacity: 0.78 }}>
-                크리스천의 돈 관리 기준을 짧고 쉽게 정리한 글과 카드 콘텐츠를 받아보세요.
-              </p>
-              <button type="button" onClick={() => toast.info("인스타그램 연결을 준비 중입니다.")} style={{ ...btn, marginTop: 12, padding: "10px 18px", borderRadius: 999, fontSize: 12.5 }}>
-                인스타그램에서 받아보기
-              </button>
-            </div>
-          </div>
-        </div>
-      </>
+      </section>
     );
   }
   const links = [

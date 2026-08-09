@@ -330,7 +330,7 @@
 
 .money-email-result-card {
   margin-top: 76px !important;
-  padding: 70px 30px 64px !important;
+  padding: 70px 30px 78px !important;
 }
 
 .money-email-result-icon {
@@ -385,6 +385,45 @@
   min-height: 50px;
 }
 
+.money-content-footer {
+  margin-top: 76px;
+  padding: 56px 24px;
+  background: rgba(227, 219, 209, 0.35);
+  text-align: center;
+}
+
+.money-content-footer h2 {
+  margin: 0;
+  font-family: "Gowun Batang", ui-serif, Georgia, serif;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: -0.025em;
+}
+
+.money-content-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.money-content-footer-links a {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  border: 1px solid rgba(154, 118, 100, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 253, 249, 0.7);
+  color: rgba(68, 58, 53, 0.82);
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+}
+
 .money-paid-diagnosis-card .money-funnel-product-title {
   font-size: 28px !important;
   font-weight: 700;
@@ -423,19 +462,19 @@
   display: block;
   color: #9a7664;
   font-family: Georgia, serif;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 400;
-  line-height: 1;
+  line-height: 0.75;
   opacity: 0.55;
 }
 
 .money-paid-product-question::before {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   content: "“";
 }
 
 .money-paid-product-question::after {
-  margin-top: 12px;
+  margin-top: 8px;
   content: "”";
 }
 
@@ -1840,7 +1879,7 @@
 
   .money-email-result-card {
     margin-top: 64px !important;
-    padding: 60px 22px 54px !important;
+    padding: 60px 22px 68px !important;
   }
 
   .money-email-result-card .money-funnel-title {
