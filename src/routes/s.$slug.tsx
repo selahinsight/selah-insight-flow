@@ -1239,7 +1239,7 @@ function Runner({
               />
 
               <FunnelCtas theme={theme} design={design} isMoneyDiagnosis={isMoneyDiagnosis} />
-              <ResultActions survey={survey} result={result} design={design} theme={theme} />
+              {!isMoneyDiagnosis && <ResultActions survey={survey} result={result} design={design} theme={theme} />}
             </>
           )}
         </Wrap>
@@ -1770,8 +1770,7 @@ function EmailResultSection({
       {isMoneyDiagnosis ? (
         <div className="money-funnel-body" style={{ color: theme.text, opacity: 0.82 }}>
           <p>
-            지금 확인한 돈 반응 유형과<br />
-            신앙 유형 결과를<br />
+            <span className="money-email-result-line">지금 확인한 돈 반응 유형과 신앙 유형 결과를</span><br />
             이메일로 보내드려요.<br />
             천천히 다시 읽으며 나의 돈 관리 흐름을 돌아보세요.
           </p>
@@ -2005,8 +2004,7 @@ function FunnelCtas({
     return (
       <section className="money-content-footer" style={{ color: theme.text }}>
         <h2>
-          셀라의 이야기를<br />
-          계속 만나보세요
+          셀라의 이야기를 계속 만나보세요
         </h2>
         <div className="money-content-footer-links">
           <a href="https://www.youtube.com/@selahinsight" target="_blank" rel="noreferrer">

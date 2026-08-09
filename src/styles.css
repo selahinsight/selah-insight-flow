@@ -352,6 +352,11 @@
   word-break: keep-all;
 }
 
+.money-email-result-line {
+  white-space: nowrap;
+  font-size: clamp(12px, 3.8vw, 17px);
+}
+
 .money-email-recipient-guide {
   font-weight: 500;
   line-height: 1.55;
@@ -395,10 +400,11 @@
 .money-content-footer h2 {
   margin: 0;
   font-family: "Gowun Batang", ui-serif, Georgia, serif;
-  font-size: 21px;
+  font-size: clamp(17px, 5.3vw, 21px);
   font-weight: 600;
   line-height: 1.55;
   letter-spacing: -0.025em;
+  white-space: nowrap;
 }
 
 .money-content-footer-links {
