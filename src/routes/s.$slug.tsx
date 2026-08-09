@@ -1901,7 +1901,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           </p>
         </div>
 
-        <div className="money-paid-inclusions" style={{ color: theme.text, backgroundColor: theme.bg }}>
+        <div className="money-paid-inclusions" style={{ color: theme.text }}>
           <h3>진단지에 담긴 내용</h3>
           <ul>
             <li>돈 유형과 신앙 유형을 연결한 통합 해석</li>

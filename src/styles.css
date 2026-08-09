@@ -329,11 +329,12 @@
 }
 
 .money-paid-diagnosis-card .money-funnel-product-title {
-  font-size: 24px !important;
+  font-size: 28px !important;
+  font-weight: 700;
 }
 
 .money-paid-diagnosis-card .money-diagnosis-label {
-  font-weight: 700 !important;
+  font-weight: 800 !important;
 }
 
 .money-paid-product-copy {
@@ -356,8 +357,29 @@
 .money-paid-product-copy strong {
   font-family: "Gowun Batang", ui-serif, Georgia, serif;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.7;
+}
+
+.money-paid-product-question::before,
+.money-paid-product-question::after {
+  display: block;
+  color: #9a7664;
+  font-family: Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1;
+  opacity: 0.55;
+}
+
+.money-paid-product-question::before {
+  margin-bottom: 12px;
+  content: "“";
+}
+
+.money-paid-product-question::after {
+  margin-top: 12px;
+  content: "”";
 }
 
 .money-paid-product-summary {
@@ -368,6 +390,9 @@
   max-width: 430px;
   margin: 38px auto 0;
   padding: 28px 26px;
+  border: 1px solid rgba(154, 118, 100, 0.28);
+  background: #f3e7e1;
+  box-shadow: 0 12px 28px rgba(96, 72, 59, 0.08);
   text-align: left;
 }
 
