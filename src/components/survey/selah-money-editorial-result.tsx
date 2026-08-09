@@ -1,4 +1,4 @@
-import { Check, CircleDollarSign, Heart, ScanSearch, Sparkles, Sprout } from "lucide-react";
+import { Check, CircleDollarSign, Heart, Sparkles, Sprout } from "lucide-react";
 
 import type { SelahMoneyResultTemplateContent } from "@/lib/selah-money-result-template";
 import type { ThemeColors } from "@/lib/survey-themes";
@@ -75,9 +75,9 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       </section>
 
       {scenes.length > 0 && (
-        <section className="money-editorial-section">
+        <section className="money-editorial-section money-editorial-scene-section">
+          <span className="money-editorial-scene-quote" style={{ color: theme.accent }} aria-hidden="true">“</span>
           <div className="money-editorial-heading" style={{ color: theme.text }}>
-            <ScanSearch size={20} strokeWidth={1.6} style={{ color: theme.accent }} />
             <h3>혹시 이런 모습이 익숙한가요?</h3>
           </div>
           <div className="money-editorial-scenes">

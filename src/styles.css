@@ -913,8 +913,8 @@
 }
 
 .money-editorial-hero + .money-editorial-section {
-  margin-top: 58px;
-  margin-bottom: 58px;
+  margin-top: 98px;
+  margin-bottom: 98px;
 }
 
 .money-editorial-heart-panel::before {
@@ -929,8 +929,8 @@
 }
 
 .money-editorial-heart-panel > p {
-  margin: 0 0 14px;
-  font-size: 13px;
+  margin: 0 0 18px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.55;
   letter-spacing: 0.02em;
@@ -942,6 +942,30 @@
   margin-right: auto;
   margin-left: auto;
   text-align: center;
+}
+
+.money-editorial-scene-section {
+  text-align: center;
+}
+
+.money-editorial-scene-quote {
+  display: block;
+  height: 42px;
+  margin-bottom: 18px;
+  font-family: Georgia, serif;
+  font-size: 58px;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.money-editorial-scene-section::after {
+  display: block;
+  width: 42px;
+  height: 1px;
+  margin: 34px auto 0;
+  background: #9a7664;
+  content: "";
+  opacity: 0.55;
 }
 
 .money-editorial-hero .money-editorial-quote > span:first-child {
