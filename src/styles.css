@@ -776,11 +776,15 @@
 .money-editorial-hero {
   position: relative;
   overflow: hidden;
-  padding: 52px 32px 42px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding: 66px 32px 42px;
   border: 0 !important;
-  border-radius: 6px;
-  background: #fbf8f3 !important;
-  box-shadow: none;
+  border-radius: 120px 120px 10px 10px / 68px 68px 10px 10px;
+  background: #f1e8de !important;
+  box-shadow:
+    8px 8px 0 #dfc9c4,
+    0 22px 46px rgba(86, 62, 49, 0.1);
   text-align: center;
 }
 
@@ -905,7 +909,7 @@
   padding: 34px 44px 38px;
   overflow: hidden;
   border-top: 0;
-  background: transparent;
+  background: #fffdf9;
   text-align: center;
 }
 
