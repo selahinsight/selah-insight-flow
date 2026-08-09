@@ -1622,7 +1622,7 @@
 }
 
 .money-editorial-faith-transition {
-  padding: 74px 0 90px;
+  padding: 48px 0 58px;
   text-align: center;
 }
 
@@ -1638,12 +1638,12 @@
 
 .money-editorial-faith-transition::before {
   height: 46px;
-  margin-bottom: 32px;
+  margin-bottom: 22px;
 }
 
 .money-editorial-faith-transition::after {
   height: 62px;
-  margin-top: 36px;
+  margin-top: 24px;
 }
 
 .money-editorial-faith-transition p {
