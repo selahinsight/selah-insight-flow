@@ -930,7 +930,7 @@
 
 .money-editorial-heart-panel > p {
   margin: 0 0 18px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   line-height: 1.55;
   letter-spacing: 0.02em;
@@ -946,6 +946,10 @@
 
 .money-editorial-scene-section {
   text-align: center;
+}
+
+.money-editorial-scene-section .money-editorial-heading h3 {
+  font-size: 27px;
 }
 
 .money-editorial-scene-quote {
@@ -1060,9 +1064,9 @@
 
 .money-editorial-scenes p {
   margin: 0;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
-  line-height: 2;
+  line-height: 1.7;
   white-space: pre-line;
   word-break: keep-all;
 }
