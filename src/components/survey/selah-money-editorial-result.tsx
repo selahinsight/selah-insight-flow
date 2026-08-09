@@ -30,10 +30,12 @@ function HeartQuote({ content, accent, lines }: { content: SelahMoneyResultTempl
   );
 }
 
-function FlowCards({ content, theme }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors }) {
+function FlowCards({ content, theme, steps }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors; steps?: string[] }) {
+  const flowSteps = steps ?? content.flow;
+
   return (
     <ol className="money-editorial-flow-cards">
-      {content.flow.map((step) => (
+      {flowSteps.map((step) => (
         <li key={step} style={{ color: theme.text, borderColor: `${theme.accent}3D` }}>
           {step}
         </li>
@@ -42,10 +44,12 @@ function FlowCards({ content, theme }: { content: SelahMoneyResultTemplateConten
   );
 }
 
-function ActionCards({ content, theme, showNumbers = true }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors; showNumbers?: boolean }) {
+function ActionCards({ content, theme, showNumbers = true, items }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors; showNumbers?: boolean; items?: string[] }) {
+  const checklistItems = items ?? content.checklist;
+
   return (
     <div className="money-editorial-actions">
-      {content.checklist.map((item, index) => (
+      {checklistItems.map((item, index) => (
         <article key={item} style={{ borderColor: theme.border, backgroundColor: "rgba(255,255,255,0.5)" }}>
           <span className="money-editorial-action-icon" style={{ color: theme.accent, borderColor: `${theme.accent}55` }}>
             <Check size={15} strokeWidth={2} />
@@ -62,6 +66,19 @@ function ActionCards({ content, theme, showNumbers = true }: { content: SelahMon
 
 export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, faithTitle, theme }: SelahMoneyEditorialResultProps) {
   const scenes = moneyContent.sceneHook?.split("\n").map((line) => line.trim()).filter(Boolean) ?? [];
+  const faithFlow = faithContent.title === "신앙부담형"
+    ? [
+        "돈을 쓰거나 누릴 일이 생김",
+        "하나님 앞에서 바른 선택인지 여러 번 점검함",
+        "부담과 죄책감이 올라와 선택이 조심스러워짐",
+      ]
+    : [faithContent.flow[0], faithContent.flow[Math.floor(faithContent.flow.length / 2)], faithContent.flow.at(-1)].filter((step): step is string => Boolean(step));
+  const faithChecklist = faithContent.title === "신앙부담형"
+    ? [
+        "이번 지출의 목적과 감사하며 사용할 금액을 함께 적어보세요.",
+        "산책·일기 쓰기처럼 마음을 돌볼 수 있는 나만의 방법을 한 가지 정해보세요.",
+      ]
+    : faithContent.checklist.slice(0, 2);
 
   return (
     <div className="money-editorial-result">
@@ -120,16 +137,6 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         <p style={{ color: theme.text }}>그렇다면<br />나는 하나님 앞에서 돈을 어떻게 바라보고 있을까요?</p>
       </section>
 
-      <section className="money-editorial-section money-editorial-scene-section money-editorial-faith-scene">
-        <span className="money-editorial-scene-quote" style={{ color: theme.accent }} aria-hidden="true">“</span>
-        <div className="money-editorial-heading" style={{ color: theme.text }}>
-          <h3>혹시 이런 모습이 익숙한가요?</h3>
-        </div>
-        <div className="money-editorial-scenes">
-          <p style={{ color: theme.text }}>돈을 관리할 때,<br />하나님 앞에서 잘하고 있는지 걱정되나요?</p>
-        </div>
-      </section>
-
       <section className="money-editorial-hero money-editorial-faith-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
         <div className="money-editorial-ornament" style={{ color: theme.accent }} aria-hidden="true">
           <span />
@@ -150,7 +157,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
           <Sparkles size={20} strokeWidth={1.6} style={{ color: theme.accent }} />
           <h3>내 마음은 이렇게 흘러가요</h3>
         </div>
-        <FlowCards content={faithContent} theme={theme} />
+        <FlowCards content={faithContent} theme={theme} steps={faithFlow} />
       </section>
 
       <section className="money-editorial-section money-editorial-reading money-editorial-faith-reading">
@@ -165,7 +172,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
             <Sprout size={21} strokeWidth={1.6} style={{ color: theme.accent }} />
             <h3>이렇게 시작해보세요</h3>
           </div>
-          <ActionCards content={faithContent} theme={theme} showNumbers={false} />
+          <ActionCards content={faithContent} theme={theme} showNumbers={false} items={faithChecklist} />
         </div>
       </section>
 
