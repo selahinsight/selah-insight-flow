@@ -48,7 +48,7 @@ function FlowCards({ content, theme }: { content: SelahMoneyResultTemplateConten
   );
 }
 
-function ActionCards({ content, theme }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors }) {
+function ActionCards({ content, theme, showNumbers = true }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors; showNumbers?: boolean }) {
   return (
     <div className="money-editorial-actions">
       {content.checklist.map((item, index) => (
@@ -57,7 +57,7 @@ function ActionCards({ content, theme }: { content: SelahMoneyResultTemplateCont
             <Check size={15} strokeWidth={2} />
           </span>
           <div>
-            <strong style={{ color: theme.accent }}>{String(index + 1).padStart(2, "0")}</strong>
+            {showNumbers && <strong style={{ color: theme.accent }}>{String(index + 1).padStart(2, "0")}</strong>}
             <p style={{ color: theme.text }}>{item}</p>
           </div>
         </article>
@@ -112,12 +112,12 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         ))}
       </section>
 
-      <section className="money-editorial-section money-editorial-action-section" style={{ backgroundColor: `${theme.accent}0D`, borderColor: `${theme.accent}44` }}>
+      <section className="money-editorial-section money-editorial-action-section">
         <div className="money-editorial-heading" style={{ color: theme.text }}>
           <Sprout size={21} strokeWidth={1.6} style={{ color: theme.accent }} />
           <h3>이렇게 시작해보세요</h3>
         </div>
-        <ActionCards content={moneyContent} theme={theme} />
+        <ActionCards content={moneyContent} theme={theme} showNumbers={false} />
       </section>
 
       <section className="money-editorial-faith-intro">
