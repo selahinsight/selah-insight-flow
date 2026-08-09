@@ -412,20 +412,19 @@
 }
 
 .money-paid-diagnosis-card .money-paid-inclusions li {
-  position: relative;
-  padding-left: 26px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   font-size: 16px !important;
   font-weight: 500;
   line-height: 1.45 !important;
   word-break: keep-all;
 }
 
-.money-paid-inclusions li::before {
-  position: absolute;
-  top: 0;
-  left: 0;
+.money-paid-inclusions li svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
   color: #9a7664;
-  content: "✓";
 }
 
 .money-paid-diagnosis-card h3 {

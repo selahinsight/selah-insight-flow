@@ -37,7 +37,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { CircleDollarSign, Download, Fingerprint, GitBranch, Heart, ScanSearch, Share2, Sprout } from "lucide-react";
+import { CircleDollarSign, Compass, Download, Fingerprint, GitBranch, Heart, ScanSearch, Share2, Sprout } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -1906,15 +1906,14 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <div className="money-paid-inclusions" style={{ color: theme.text }}>
           <h3>진단지에 담긴 내용</h3>
           <ul>
-            <li>돈 유형과 신앙 유형을 연결한 통합 해석</li>
-            <li>소비·저축·투자에서 나타나는 실제 돈 행동</li>
-            <li>반복되는 감정과 선택의 흐름</li>
-            <li>말씀을 바탕으로 세우는 돈 관리 기준</li>
-            <li>지금 시작할 수 있는 맞춤 실천 방향</li>
+            <li><GitBranch size={18} strokeWidth={1.5} aria-hidden="true" /><span>돈 유형과 신앙 유형을 연결한 통합 해석</span></li>
+            <li><CircleDollarSign size={18} strokeWidth={1.5} aria-hidden="true" /><span>소비·저축·투자에서 나타나는 나의 돈 관리 패턴</span></li>
+            <li><Compass size={18} strokeWidth={1.5} aria-hidden="true" /><span>말씀을 바탕으로 세우는 돈 관리 기준</span></li>
+            <li><Sprout size={18} strokeWidth={1.5} aria-hidden="true" /><span>지금 시작할 수 있는 맞춤 실천 방향</span></li>
           </ul>
         </div>
 
-        <div style={{ marginTop: 30, textAlign: "center" }}>
+        <div style={{ marginTop: 46, textAlign: "center" }}>
           <p style={{ margin: 0, color: theme.accent, fontSize: 14, fontWeight: 700 }}>
             런칭가
           </p>
@@ -1934,7 +1933,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             ...btn,
             width: "100%",
             maxWidth: 340,
-            marginTop: 16,
+            marginTop: 30,
             padding: "14px 22px",
             borderRadius: 999,
             fontSize: 16,
