@@ -323,7 +323,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   organizing_delay: {
     title: "정리미룸형",
-    sceneHook: "카드값과 잔액을 확인해야 하지만,\n잔고를 볼 생각만 해도 마음이 무거워\n확인을 계속 미루고 있나요?",
+    sceneHook: "카드값과 잔액을 확인해야 하는데,\n마음이 무거워 미루고 있나요?",
     representativeHeart: ["지금 통장 잔액과 카드값을 확인하면", "더 불안해질 것 같아."],
     flow: [
       "돈을 확인해야 한다고 느낌",
@@ -414,11 +414,11 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   faith_low: {
     title: "편안한 신앙 연결형",
-    representativeHeart: ["돈을 관리할 때 하나님께 묻고 말씀", "안에서 선택하는 게 자연스러워."],
+    representativeHeart: ["돈을 관리할 때 하나님께 묻고", "말씀 안에서 선택하는 게 자연스러워."],
     flow: [
       "돈을 관리할 일이 생김",
       "하나님께 기도하고 말씀을 떠올림",
-      "현재 형편과 필요한 책임을 함께 생각함",
+      "말씀과 현실의 균형을 잡음",
       "감사하며 선택하고 관리함",
     ],
     reading: [

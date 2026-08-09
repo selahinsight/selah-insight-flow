@@ -12,10 +12,15 @@ interface SelahMoneyEditorialResultProps {
 }
 
 const faithDefinitions: Record<string, string> = {
-  "편안한 신앙 연결형": "돈을 관리할 때 하나님께 묻고, 감사와 책임 안에서 선택하는 편이에요.",
+  "편안한 신앙 연결형": "돈을 관리할 때 하나님께 묻고,\n감사와 책임 안에서 선택하는 편이에요.",
   "신앙부담형": "하나님 앞에서 바른 선택을 하고 싶은 마음이 커서, 돈을 쓸 때 부담을 느끼는 편이에요.",
   "신앙분리형": "신앙과 돈을 서로 다른 영역으로 두고, 익숙한 기준으로 돈을 관리하는 편이에요.",
   "신앙·돈 기준 혼란형": "하나님과 돈을 연결하는 기준을 찾는 과정에서 마음이 자주 흔들리는 편이에요.",
+};
+
+const moneyDefinitions: Record<string, string> = {
+  "정리미룸형": "돈의 흐름을 확인하는 일이 부담스러워,\n정리를 미루는 편이에요.",
+  "마음보상형": "마음이 지칠수록,\n소비로 나를 달래는 편이에요.",
 };
 
 function HeartQuote({ content, accent, lines }: { content: SelahMoneyResultTemplateContent; accent: string; lines?: string[] }) {
@@ -76,10 +81,8 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         "부담과 죄책감이 올라와 선택이 조심스러워짐",
       ]
     : [faithContent.flow[0], faithContent.flow[Math.floor(faithContent.flow.length / 2)], faithContent.flow.at(-1)].filter((step): step is string => Boolean(step));
-  const integratedChecklist = [
-    "결제 전, 이 소비로 어떤 마음을 달래고 싶은지 확인해보세요.",
-    "하나님이 공급자이심에 감사하며, 이번 지출의 목적을 한 문장으로 적어보세요.",
-  ];
+  const integratedChecklist = [moneyContent.checklist[0], faithContent.checklist[0]].filter((item): item is string => Boolean(item));
+  const [faithLeadSentence, ...faithLeadRest] = faithContent.reading[0].split(/(?<=\.)\s+/);
 
   return (
     <div className="money-editorial-result">
@@ -98,7 +101,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       <section className="money-editorial-hero money-editorial-primary-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
         <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
         <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
-        <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록,<br />소비로 나를 달래는 편이에요.</p>
+        <p className="money-editorial-definition" style={{ color: theme.text }}>{moneyDefinitions[moneyContent.title] ?? moneyContent.reading[0]}</p>
         <div className="money-editorial-ornament money-editorial-primary-ornament" style={{ color: theme.accent }} aria-hidden="true">
           <span />
           <CircleDollarSign size={22} strokeWidth={1.35} />
@@ -148,9 +151,10 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       </section>
 
       <section className="money-editorial-section money-editorial-reading money-editorial-faith-reading">
-        {faithContent.reading.map((paragraph, index) => (
-          <p key={paragraph} className={index === 0 ? "money-editorial-reading-lead" : ""} style={{ color: theme.text }}>{paragraph}</p>
-        ))}
+        <p style={{ color: theme.text }}>
+          <strong>{faithLeadSentence}</strong>{faithLeadRest.length ? ` ${faithLeadRest.join(" ")}` : ""}
+        </p>
+        {faithContent.reading.slice(1).map((paragraph) => <p key={paragraph} style={{ color: theme.text }}>{paragraph}</p>)}
       </section>
 
       <section className="money-editorial-section money-editorial-action-section money-editorial-faith-action-section">

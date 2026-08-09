@@ -1344,6 +1344,7 @@
   line-height: 1.7;
   white-space: pre-line;
   word-break: keep-all;
+  white-space: pre-line;
 }
 
 .money-editorial-flow,
