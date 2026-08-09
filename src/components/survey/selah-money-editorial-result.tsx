@@ -42,7 +42,12 @@ function FlowCards({ content, theme, steps }: { content: SelahMoneyResultTemplat
     <ol className="money-editorial-flow-cards">
       {flowSteps.map((step) => (
         <li key={step} style={{ color: theme.text, borderColor: `${theme.accent}3D` }}>
-          {step}
+          {step.split("\n").map((line, index, lines) => (
+            <span key={`${line}-${index}`}>
+              {line}
+              {index < lines.length - 1 && <br />}
+            </span>
+          ))}
         </li>
       ))}
     </ol>
