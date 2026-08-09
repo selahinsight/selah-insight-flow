@@ -1111,9 +1111,20 @@
 }
 
 .money-editorial-reading {
-  margin-top: -20px;
+  margin-top: 24px;
   margin-bottom: 70px;
   padding-top: 0;
+  text-align: center;
+}
+
+.money-editorial-reading::before {
+  display: block;
+  width: 42px;
+  height: 1px;
+  margin: 0 auto 38px;
+  background: #9a7664;
+  content: "";
+  opacity: 0.55;
 }
 
 .money-editorial-flow-cards li:not(:last-child)::after {
@@ -1197,7 +1208,7 @@
 }
 
 .money-editorial-reading {
-  text-align: left;
+  text-align: center;
 }
 
 .money-editorial-reading > p:not(.money-editorial-kicker),
@@ -1256,6 +1267,18 @@
   padding: 0;
   border: 0;
   background: transparent;
+}
+
+.money-editorial-action-section::before {
+  display: block;
+  margin: 0 auto 48px;
+  color: #9a7664;
+  content: "↓";
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 1;
+  text-align: center;
+  opacity: 0.7;
 }
 
 .money-editorial-action-section .money-editorial-actions {
