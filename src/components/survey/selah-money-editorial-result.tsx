@@ -113,11 +113,13 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       </section>
 
       <section className="money-editorial-section money-editorial-action-section">
-        <div className="money-editorial-heading" style={{ color: theme.text }}>
-          <Sprout size={21} strokeWidth={1.6} style={{ color: theme.accent }} />
-          <h3>이렇게 시작해보세요</h3>
+        <div className="money-editorial-action-card">
+          <div className="money-editorial-heading" style={{ color: theme.text }}>
+            <Sprout size={21} strokeWidth={1.6} style={{ color: theme.accent }} />
+            <h3>이렇게 시작해보세요</h3>
+          </div>
+          <ActionCards content={moneyContent} theme={theme} showNumbers={false} />
         </div>
-        <ActionCards content={moneyContent} theme={theme} showNumbers={false} />
       </section>
 
       <section className="money-editorial-faith-intro">

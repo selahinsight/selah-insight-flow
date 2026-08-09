@@ -1273,6 +1273,12 @@
   background: transparent;
 }
 
+.money-editorial-action-card {
+  padding: 42px 38px;
+  border-radius: 18px;
+  background: #f3e7e1;
+}
+
 .money-editorial-action-section .money-editorial-heading h3 {
   font-size: 27px;
 }
@@ -1323,6 +1329,12 @@
 
 .money-editorial-action-section .money-editorial-actions p {
   margin-top: 0;
+}
+
+@media (max-width: 520px) {
+  .money-editorial-action-card {
+    padding: 38px 26px;
+  }
 }
 
 .money-editorial-faith-intro {
