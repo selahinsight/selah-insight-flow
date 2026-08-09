@@ -129,11 +129,11 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         </div>
         <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 돈을 대하는 신앙 유형</p>
         <h2 style={{ color: theme.text }}>{faithTitle}</h2>
-        <p className="money-editorial-definition" style={{ color: theme.text }}>{faithDefinitions[faithContent.title] ?? faithContent.reading[0]}</p>
         <div className="money-editorial-heart-panel" style={{ borderColor: `${theme.accent}30` }}>
           <MessageCircleMore className="money-editorial-thought-mark" size={28} strokeWidth={1.35} aria-hidden="true" />
           <HeartQuote content={faithContent} accent={theme.accent} />
         </div>
+        <p className="money-editorial-definition" style={{ color: theme.text }}>{faithDefinitions[faithContent.title] ?? faithContent.reading[0]}</p>
       </section>
 
       <section className="money-editorial-section money-editorial-flow money-editorial-faith-flow">
