@@ -1276,18 +1276,18 @@
 .money-editorial-action-card {
   width: calc(100% + 64px);
   margin-left: -32px;
-  padding: 42px 38px;
+  padding: 52px 38px;
   border-radius: 0;
   background: #f3e7e1;
 }
 
 .money-editorial-action-section .money-editorial-heading h3 {
-  font-size: 27px;
+  font-size: 24px;
 }
 
 .money-editorial-action-section::before {
   display: block;
-  margin: -20px auto 80px;
+  margin: -40px auto 60px;
   color: #9a7664;
   content: "↓";
   font-size: 25px;
@@ -1337,7 +1337,7 @@
   .money-editorial-action-card {
     width: calc(100% + 32px);
     margin-left: -16px;
-    padding: 38px 26px;
+    padding: 48px 26px;
   }
 }
 
