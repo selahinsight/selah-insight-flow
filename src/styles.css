@@ -791,6 +791,10 @@
   text-align: center;
 }
 
+.money-editorial-primary-hero {
+  background: #f3e7e1 !important;
+}
+
 .money-editorial-hero > * {
   position: relative;
   z-index: 1;
