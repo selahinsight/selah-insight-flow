@@ -390,8 +390,12 @@
   min-height: 50px;
 }
 
+.money-email-submit-button:disabled {
+  opacity: 1 !important;
+}
+
 .money-content-footer {
-  margin-top: 76px;
+  margin-top: 16px;
   padding: 56px 24px;
   background: rgba(227, 219, 209, 0.35);
   text-align: center;
@@ -463,8 +467,7 @@
   line-height: 1.7;
 }
 
-.money-paid-product-question::before,
-.money-paid-product-question::after {
+.money-paid-product-quote {
   display: block;
   color: #9a7664;
   font-family: Georgia, serif;
@@ -474,14 +477,12 @@
   opacity: 0.55;
 }
 
-.money-paid-product-question::before {
+.money-paid-product-quote:first-child {
   margin-bottom: 8px;
-  content: "“";
 }
 
-.money-paid-product-question::after {
+.money-paid-product-quote:last-child {
   margin-top: 8px;
-  content: "”";
 }
 
 .money-paid-product-summary {

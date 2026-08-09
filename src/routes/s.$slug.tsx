@@ -1863,7 +1863,7 @@ function EmailResultSection({
           fontSize: isMoneyDiagnosis ? 16 : 13,
           fontWeight: isMoneyDiagnosis ? 700 : 500,
           cursor: submitting ? "wait" : "pointer",
-          opacity: saved ? 0.82 : !privacyConsent || !email.trim() ? 0.7 : 1,
+          opacity: saved ? 0.82 : 1,
         }}
       >
         {saved
@@ -1909,6 +1909,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 심층 진단</h2>
         <div className="money-paid-product-copy" style={{ color: theme.text }}>
           <p className="money-paid-product-question">
+            <span className="money-paid-product-quote" aria-hidden="true">“</span>
             <strong>
               돈을 쓰고 후회하고,
               <br />
@@ -1916,6 +1917,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
               <br />
               계획을 세워도 자꾸 흐트러지나요?
             </strong>
+            <span className="money-paid-product-quote" aria-hidden="true">”</span>
           </p>
           <p className="money-paid-product-summary">
             셀라 머니 심층 진단지는 소비·저축·투자에서 반복되는 나의 패턴을 찾고, 흔들릴 때 돌아올 수 있는 나만의 돈 관리 기준을 세우도록 도와드립니다.
