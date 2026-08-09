@@ -1543,8 +1543,8 @@
   word-break: keep-all;
 }
 
-.money-editorial-reading > p:nth-child(n + 3) {
-  margin-top: 5px;
+.money-editorial-reading-body {
+  text-align: left;
 }
 
 .money-editorial-action-section {
