@@ -60,7 +60,6 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
   return (
     <div className="money-editorial-result">
       <section className="money-editorial-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
-        <p className="money-editorial-cover-label" style={{ color: theme.accent }}>SELAH MONEY DIAGNOSIS</p>
         <div className="money-editorial-ornament" style={{ color: theme.accent }} aria-hidden="true">
           <span />
           <CircleDollarSign size={22} strokeWidth={1.35} />
@@ -71,15 +70,12 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록, 소비로 나를 달래는 편이에요.</p>
         <div className="money-editorial-heart-panel" style={{ borderColor: `${theme.accent}30` }}>
           <p style={{ color: theme.accent }}>마음속에서 자주 떠오르는 말</p>
-          <HeartQuote content={moneyContent} accent={theme.accent} />
+          <HeartQuote content={moneyContent} accent={theme.accent} lines={["오늘만큼은 나를 위해 써도", "괜찮지 않을까?"]} />
         </div>
-        <a className="money-editorial-scroll-cue" href="#money-editorial-story" style={{ color: theme.accent }}>
-          나의 마음 살펴보기 <span aria-hidden="true">↓</span>
-        </a>
       </section>
 
       {scenes.length > 0 && (
-        <section className="money-editorial-section" id="money-editorial-story">
+        <section className="money-editorial-section">
           <div className="money-editorial-heading" style={{ color: theme.text }}>
             <ScanSearch size={20} strokeWidth={1.6} style={{ color: theme.accent }} />
             <h3>혹시 이런 모습이 익숙한가요?</h3>
