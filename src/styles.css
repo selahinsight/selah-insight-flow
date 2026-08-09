@@ -1059,6 +1059,7 @@
 
 .money-editorial-scenes p {
   margin: 0;
+  font-family: "Gowun Batang", ui-serif, Georgia, serif;
   font-size: 20px;
   font-weight: 500;
   line-height: 1.7;
@@ -1270,6 +1271,10 @@
   padding: 0;
   border: 0;
   background: transparent;
+}
+
+.money-editorial-action-section .money-editorial-heading h3 {
+  font-size: 27px;
 }
 
 .money-editorial-action-section::before {
