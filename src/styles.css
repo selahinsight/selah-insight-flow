@@ -726,7 +726,7 @@
   display: flex;
   flex-direction: column;
   gap: 42px;
-  margin-top: 38px;
+  margin-top: 0;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -740,7 +740,8 @@
 }
 
 .money-result-card.money-editorial-result-shell {
-  padding-top: 80px !important;
+  padding: 0 !important;
+  overflow: hidden;
 }
 
 .money-editorial-intro-title {
@@ -776,7 +777,8 @@
 .money-editorial-hero {
   position: relative;
   overflow: hidden;
-  padding: 52px 32px 42px;
+  min-height: min(760px, 92svh);
+  padding: 50px 32px 40px;
   border-radius: 0;
   background-image:
     radial-gradient(circle at 50% 37%, rgba(255, 255, 255, 0.68) 0, rgba(255, 255, 255, 0.2) 29%, transparent 53%),
@@ -795,7 +797,7 @@
 }
 
 .money-editorial-cover-label {
-  margin: 0 0 22px;
+  margin: 0 0 34px;
   font-size: 13px;
   font-weight: 700;
   line-height: 1.4;
@@ -808,7 +810,7 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-bottom: 26px;
+  margin-bottom: 30px;
   opacity: 0.66;
 }
 
@@ -843,7 +845,7 @@
 }
 
 .money-editorial-hero > .money-editorial-eyebrow {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 650;
   line-height: 1.45;
   letter-spacing: -0.02em;
@@ -859,16 +861,17 @@
 }
 
 .money-editorial-hero h2 {
-  margin-top: 12px;
+  margin-top: 14px;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
-  font-size: 28px;
-  font-weight: 700;
+  font-size: clamp(38px, 9vw, 54px);
+  font-weight: 750;
   line-height: 1.2;
   letter-spacing: 0.02em;
 }
 
 .money-editorial-definition {
-  margin: 12px 0 0;
+  margin: 18px auto 0;
+  max-width: 360px;
   font-size: 18px;
   font-weight: 550;
   line-height: 1.55;
@@ -906,14 +909,29 @@
 .money-editorial-heart-panel {
   position: relative;
   display: block;
-  margin: 38px -32px -42px;
-  padding: 34px 44px 38px;
+  margin: 46px -8px 0;
+  padding: 30px 36px 32px;
   overflow: hidden;
   border-top: 0;
   background:
     radial-gradient(circle at 88% 24%, rgba(255, 255, 255, 0.58), transparent 37%),
     linear-gradient(118deg, rgba(199, 169, 146, 0.19), rgba(225, 205, 187, 0.28));
   text-align: left;
+}
+
+.money-editorial-scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+}
+
+.money-editorial-scroll-cue span {
+  font-size: 17px;
 }
 
 .money-editorial-heart-panel::before {
