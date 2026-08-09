@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Check, CircleDollarSign, Heart, MessageCircleMore, Sparkles, Sprout } from "lucide-react";
 
 import type { SelahMoneyResultTemplateContent } from "@/lib/selah-money-result-template";
@@ -43,10 +44,10 @@ function FlowCards({ content, theme, steps }: { content: SelahMoneyResultTemplat
       {flowSteps.map((step) => (
         <li key={step} style={{ color: theme.text, borderColor: `${theme.accent}3D` }}>
           {step.split("\n").map((line, index, lines) => (
-            <span key={`${line}-${index}`}>
+            <Fragment key={`${line}-${index}`}>
               {line}
               {index < lines.length - 1 && <br />}
-            </span>
+            </Fragment>
           ))}
         </li>
       ))}
