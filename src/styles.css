@@ -859,10 +859,10 @@
 }
 
 .money-editorial-hero h2 {
-  margin-top: 12px;
+  margin-top: 18px;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 750;
   line-height: 1.2;
   letter-spacing: 0.02em;
 }
@@ -945,7 +945,7 @@
 }
 
 .money-editorial-scene-section .money-editorial-heading h3 {
-  font-size: 27px;
+  font-size: 25px;
 }
 
 .money-editorial-scene-quote {
