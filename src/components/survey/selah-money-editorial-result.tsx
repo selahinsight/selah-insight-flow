@@ -71,9 +71,6 @@ function ActionCards({ content, theme, showNumbers = true, items }: { content: S
 
 export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, faithTitle, theme }: SelahMoneyEditorialResultProps) {
   const scenes = moneyContent.sceneHook?.split("\n").map((line) => line.trim()).filter(Boolean) ?? [];
-  const faithHeartLines = faithContent.representativeHeart.join(" ") === "나를 위해 돈을 쓰고 누리면 하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해."
-    ? ["나를 위해 돈을 쓰고 누리면", "하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해."]
-    : undefined;
   const faithFlow = faithContent.title === "신앙부담형"
     ? [
         "돈을 쓰거나 누릴 일이 생김",
@@ -141,7 +138,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         <h2 style={{ color: theme.text }}>{faithTitle}</h2>
         <div className="money-editorial-heart-panel" style={{ borderColor: `${theme.accent}30` }}>
           <MessageCircleMore className="money-editorial-thought-mark" size={28} strokeWidth={1.35} aria-hidden="true" />
-          <HeartQuote content={faithContent} accent={theme.text} lines={faithHeartLines} />
+          <HeartQuote content={faithContent} accent={theme.text} />
         </div>
         <p className="money-editorial-definition" style={{ color: theme.text }}>
           {(faithDefinitions[faithContent.title] ?? faithContent.reading[0]).split("\n").map((line) => <span key={line}>{line}</span>)}

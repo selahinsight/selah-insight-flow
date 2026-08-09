@@ -1207,7 +1207,7 @@
   margin-right: auto;
   margin-left: auto;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.7;
   text-align: center;
 }
@@ -1503,7 +1503,9 @@
 }
 
 .money-editorial-reading-lead {
+  font-size: 19px !important;
   font-weight: 650;
+  text-align: left;
   opacity: 0.96 !important;
 }
 
