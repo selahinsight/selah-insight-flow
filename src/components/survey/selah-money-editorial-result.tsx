@@ -117,7 +117,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       </section>
 
       <section className="money-editorial-faith-transition">
-        <p style={{ color: theme.text }}>그렇다면 나는 하나님 앞에서<br />돈을 어떻게 바라보고 있을까요?</p>
+        <p style={{ color: theme.text }}>그렇다면<br />나는 하나님 앞에서 돈을 어떻게 바라보고 있을까요?</p>
       </section>
 
       <section className="money-editorial-section money-editorial-scene-section money-editorial-faith-scene">
@@ -169,13 +169,6 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         </div>
       </section>
 
-      <section className="money-editorial-integration" style={{ borderColor: `${theme.accent}66`, backgroundColor: `${theme.accent}0D` }}>
-        <p className="money-editorial-kicker" style={{ color: theme.accent }}>두 결과를 함께 살펴보면</p>
-        <p style={{ color: theme.text }}>
-          {name}님은 지친 마음을 소비로 돌보려는 경향과 돈을 사용한 뒤 하나님 앞에서 선택을 다시 점검하는 마음이 함께 움직입니다.
-          소비 전에는 위로가 필요하고, 소비 후에는 부담이 커지는 흐름을 알아차릴 때 자신을 돌보는 방식과 돈의 기준을 함께 세울 수 있습니다.
-        </p>
-      </section>
     </div>
   );
 }

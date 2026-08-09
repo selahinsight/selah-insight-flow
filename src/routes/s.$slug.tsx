@@ -1211,29 +1211,6 @@ function Runner({
                 {survey.completion_message}
               </p>
             )}
-            {isMoneyDiagnosis && (
-              <div
-                className="money-result-gap-note"
-                style={{
-                  color: theme.text,
-                  borderColor: `${theme.accent}55`,
-                  backgroundColor: `${theme.accent}0D`,
-                }}
-              >
-                <p>
-                  이 결과는 지금 반복되는 마음의
-                  <br />
-                  흐름까지만 보여줍니다.
-                </p>
-                <p>
-                  <strong>
-                    이 흐름이 어디서 시작됐는지, 실제 돈 관리 과정에서 어떻게 나타나는지는
-                    <br />
-                    아직 여기 담기지 않았습니다.
-                  </strong>
-                </p>
-              </div>
-            )}
           </div>
 
           {isMoneyDiagnosis && <MoneyPaidDiagnosisSection theme={theme} design={design} />}
@@ -1887,7 +1864,9 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
   return (
     <section className="money-funnel-section money-paid-funnel-section">
       <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
-        <p className="money-paid-bridge-icon" aria-hidden="true">🫧</p>
+        <div className="money-paid-bridge-icon" style={{ color: theme.accent }} aria-hidden="true">
+          <ScanSearch size={28} strokeWidth={1.4} />
+        </div>
         <p className="money-paid-bridge" style={{ color: theme.text }}>
           왜 돈 앞에서 자꾸 흔들리는지,
           <br />

@@ -281,17 +281,19 @@
 }
 
 .money-paid-funnel-section {
-  margin-top: 68px;
+  margin-top: 96px;
 }
 
 .money-paid-funnel-section .money-funnel-intro {
-  padding-bottom: 28px !important;
+  padding-top: 38px !important;
+  padding-bottom: 46px !important;
 }
 
 .money-paid-bridge-icon {
-  margin: 0 0 14px;
-  font-size: 25px;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 28px;
 }
 
 .money-paid-bridge {
