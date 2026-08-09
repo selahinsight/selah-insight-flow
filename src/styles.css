@@ -1364,19 +1364,6 @@
   word-break: keep-all;
 }
 
-.money-editorial-faith-scene {
-  margin-bottom: 43px;
-}
-
-.money-editorial-faith-hero h2 {
-  margin-top: 18px;
-  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
-  font-size: 28px;
-  font-weight: 750;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
-}
-
 .money-editorial-faith-intro p {
   margin: 0;
   font-family: "Gowun Batang", ui-serif, Georgia, serif;
@@ -1389,11 +1376,6 @@
   margin-top: 28px;
   padding: 20px;
   background: rgba(255, 255, 255, 0.42);
-}
-
-.money-editorial-faith-reading {
-  margin-top: 26px;
-  text-align: left;
 }
 
 .money-editorial-faith-actions {

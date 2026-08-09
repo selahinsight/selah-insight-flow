@@ -122,6 +122,9 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
 
       <section className="money-editorial-section money-editorial-scene-section money-editorial-faith-scene">
         <span className="money-editorial-scene-quote" style={{ color: theme.accent }} aria-hidden="true">“</span>
+        <div className="money-editorial-heading" style={{ color: theme.text }}>
+          <h3>혹시 이런 모습이 익숙한가요?</h3>
+        </div>
         <div className="money-editorial-scenes">
           <p style={{ color: theme.text }}>돈을 관리할 때,<br />하나님 앞에서 잘하고 있는지 걱정되나요?</p>
         </div>
