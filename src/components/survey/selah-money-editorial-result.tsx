@@ -77,7 +77,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
   const faithFlow = faithContent.title === "신앙부담형"
     ? [
         "돈을 쓰거나 누릴 일이 생김",
-        "하나님 앞에서 바른 선택인지 여러 번 점검함",
+        "하나님 앞에서 바른 선택인지\n여러 번 점검함",
         "부담과 죄책감이 올라와 선택이 조심스러워짐",
       ]
     : [faithContent.flow[0], faithContent.flow[Math.floor(faithContent.flow.length / 2)], faithContent.flow.at(-1)].filter((step): step is string => Boolean(step));
@@ -102,7 +102,9 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       <section className="money-editorial-hero money-editorial-primary-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
         <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
         <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
-        <p className="money-editorial-definition" style={{ color: theme.text }}>{moneyDefinitions[moneyContent.title] ?? moneyContent.reading[0]}</p>
+        <p className="money-editorial-definition" style={{ color: theme.text }}>
+          {(moneyDefinitions[moneyContent.title] ?? moneyContent.reading[0]).split("\n").map((line) => <span key={line}>{line}</span>)}
+        </p>
         <div className="money-editorial-ornament money-editorial-primary-ornament" style={{ color: theme.accent }} aria-hidden="true">
           <span />
           <CircleDollarSign size={22} strokeWidth={1.35} />

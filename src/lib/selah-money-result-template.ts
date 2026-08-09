@@ -452,7 +452,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     reading: [
       "신앙부담형은 돈을 쓸 때 이 선택이 하나님 앞에서 바른지 세심하게 살핍니다.",
-      "하나님께 잘하고 싶은 마음이 커서 필요한 지출과 자신을 돌보는 선택에도 부담을 느낍니다.",
+      "하나님 앞에서 바르게 선택하려는 마음이 커서, 필요한 지출과 자신을 돌보는 선택에도 부담을 느낍니다.",
       "지출의 목적과 범위를 미리 정하고 감사와 책임 안에서 편안하게 선택해보세요.",
     ],
     checklist: [

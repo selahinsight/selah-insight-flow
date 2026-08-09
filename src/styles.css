@@ -1494,7 +1494,7 @@
 .money-editorial-reading > p:not(.money-editorial-kicker),
 .money-editorial-faith-reading p,
 .money-editorial-integration > p:last-child {
-  margin: 13px 0 0;
+  margin: 12px 0 0;
   font-size: 18px;
   line-height: 1.7;
   letter-spacing: -0.02em;
@@ -1541,6 +1541,10 @@
   font-size: 17px;
   line-height: 1.65;
   word-break: keep-all;
+}
+
+.money-editorial-reading > p:nth-child(n + 3) {
+  margin-top: 5px;
 }
 
 .money-editorial-action-section {
@@ -1652,6 +1656,10 @@
 }
 
 .money-editorial-faith-hero > .money-editorial-definition span {
+  display: block;
+}
+
+.money-editorial-primary-hero > .money-editorial-definition span {
   display: block;
 }
 
