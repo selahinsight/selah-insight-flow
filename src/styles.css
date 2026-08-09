@@ -792,18 +792,19 @@
 }
 
 .money-editorial-primary-hero {
-  padding: 56px 32px 38px;
-  border-width: 0 !important;
+  padding: 52px 32px 42px;
+  border: 1px solid rgba(154, 118, 100, 0.2) !important;
   background: #f3e7e1 !important;
+  box-shadow: 0 14px 34px rgba(96, 72, 59, 0.1);
 }
 
 .money-editorial-primary-ornament {
-  margin-top: 46px;
+  margin-top: 42px;
   margin-bottom: 0;
 }
 
 .money-editorial-primary-hero .money-editorial-definition {
-  margin-top: 34px;
+  margin-top: 30px;
 }
 
 .money-editorial-faith-hero .money-editorial-heart-panel {
@@ -1853,11 +1854,11 @@
 
 @media (max-width: 640px) {
   .money-editorial-primary-hero {
-    padding: 46px 22px 28px;
+    padding: 46px 22px 36px;
   }
 
   .money-editorial-primary-ornament {
-    margin-top: 50px;
+    margin-top: 42px;
   }
 
   .money-editorial-faith-hero .money-editorial-heart-panel {

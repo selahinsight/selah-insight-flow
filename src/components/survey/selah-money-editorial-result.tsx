@@ -78,7 +78,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
     : [faithContent.flow[0], faithContent.flow[Math.floor(faithContent.flow.length / 2)], faithContent.flow.at(-1)].filter((step): step is string => Boolean(step));
   const integratedChecklist = [
     "결제 전, 이 소비로 어떤 마음을 달래고 싶은지 확인해보세요.",
-    "하나님이 공급자이심에 감사하며, 이번 지출의 목적과 사용할 금액을 적어보세요.",
+    "하나님이 공급자이심에 감사하며, 이번 지출의 목적을 한 문장으로 적어보세요.",
   ];
 
   return (
