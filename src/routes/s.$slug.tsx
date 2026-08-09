@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { toPng } from "html-to-image";
 import QRCode from "qrcode";
-import { FileText } from "lucide-react";
 import {
   computeResultType,
   optionResultType,
@@ -1858,7 +1857,6 @@ function EmailResultSection({
 function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
   const btn = buttonClasses(design.button_style, theme);
   const card = cardClasses(design.card_style, theme);
-  const [sampleOpen, setSampleOpen] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
 
   return (
@@ -1893,24 +1891,13 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <div className="money-paid-product-copy" style={{ color: theme.text }}>
           <p>
             <strong>
-              돈을 쓰고 후회하거나, 모으면서도 불안하고,
-              <br />
-              계획을 세워도 자꾸 흐트러지는 이유를
-              <br />
-              나의 진단 결과에서 찾아드립니다.
+              나의 돈 유형과 신앙 유형을 함께 연결해
+              반복되는 감정과 선택의 이유를 살펴봅니다.
             </strong>
           </p>
           <p>
-            돈 앞에서 불편한 나의 마음을 살펴보고,
-            <br />
-            말씀 안에서 실제 돈 관리에 필요한 기준을
-            <br />
-            세우도록 도와드립니다.
-          </p>
-          <p style={{ marginTop: 14 }}>
-            나의 진단 결과에 맞는 말씀과 실천 방향을 통해
-            <br />
-            평안한 돈 관리를 시작해보세요.
+            말씀 안에서 나에게 맞는 돈 관리 기준과
+            실천 방향을 세워드립니다.
           </p>
         </div>
 
@@ -1925,80 +1912,12 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           }}
         />
 
-        <div
-          style={{
-            margin: "16px auto 0",
-            maxWidth: 420,
-            padding: "18px 16px",
-            borderRadius: 14,
-            background: theme.bg,
-            textAlign: "left",
-          }}
-        >
-          <p
-            style={{
-              margin: 0,
-              color: theme.text,
-              fontSize: 17,
-              fontWeight: 700,
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            <FileText size={19} strokeWidth={1.8} color={theme.accent} aria-hidden="true" />
-            내 심층 진단지 미리보기
-          </p>
-          <p style={{ margin: "6px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.65 }}>
-            나의 진단 결과를 바탕으로 구성되는 심층 진단지의 일부를 확인해보세요.
-          </p>
-        <button
-          type="button"
-          onClick={() => setSampleOpen((open) => !open)}
-          aria-expanded={sampleOpen}
-          style={{
-              marginTop: 10,
-              padding: 0,
-              border: 0,
-            background: "transparent",
-            color: theme.accent,
-              fontSize: 14.5,
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-            {sampleOpen ? "샘플 접기 ︿" : "샘플 펼쳐보기 〉"}
-        </button>
-
-        {sampleOpen && (
-          <div
-            style={{
-                marginTop: 16,
-                paddingTop: 16,
-                borderTop: `1px solid ${theme.accent}30`,
-              textAlign: "left",
-            }}
-          >
-            <p style={{ margin: 0, color: theme.accent, fontSize: 13, fontWeight: 700 }}>
-                SAMPLE
-            </p>
-            <p style={{ margin: "10px 0 0", color: theme.text, fontSize: 16, lineHeight: 1.75 }}>
-              돈을 쓰고 난 뒤 불안이 커지는 마음에는 미래를 안전하게 지키고 싶은 바람이 함께 있습니다.
-              나의 마음이 안정을 느끼는 기준을 먼저 세우면, 지출을 후회하는 흐름에서 벗어나 평안하게 선택할 수 있습니다.
-            </p>
-          </div>
-        )}
-        </div>
-
         <div style={{ marginTop: 20, textAlign: "center" }}>
           <p style={{ margin: 0, color: theme.accent, fontSize: 14, fontWeight: 700 }}>
-            출시 이벤트가
+            정상가
           </p>
           <p style={{ margin: "3px 0 0", color: theme.text, fontSize: 26, fontWeight: 800 }}>
-            9,900원
-          </p>
-          <p style={{ margin: "4px 0 0", color: theme.muted, fontSize: 12.5 }}>
-            추후 정상가 12,000원 예정
+            15,000원
           </p>
         </div>
 
@@ -2018,7 +1937,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             cursor: "pointer",
           }}
         >
-          셀라 머니 심층 진단지 미리 살펴보기
+          미리 살펴보기
         </button>
 
         {detailsOpen && (
@@ -2045,33 +1964,6 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
             <p style={{ margin: "18px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.7 }}>
               결제와 정보 확인을 마치면 나의 무료 진단 결과를 바탕으로 심층 진단지를 구성해 전달합니다.
             </p>
-            <div style={{ marginTop: 20, textAlign: "center" }}>
-              <p style={{ margin: 0, color: theme.accent, fontSize: 13.5, fontWeight: 700 }}>
-                출시 이벤트가
-              </p>
-              <p style={{ margin: "3px 0 0", color: theme.text, fontSize: 25, fontWeight: 800 }}>
-                9,900원
-              </p>
-              <p style={{ margin: "4px 0 0", color: theme.muted, fontSize: 12.5 }}>
-                추후 정상가 12,000원 예정
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => toast.info("셀라 머니 심층 진단 신청 페이지를 준비 중입니다.")}
-              style={{
-                ...btn,
-                width: "100%",
-                marginTop: 18,
-                padding: "13px 20px",
-                borderRadius: 999,
-                fontSize: 15,
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              9,900원에 신청하기
-            </button>
           </div>
         )}
       </div>
