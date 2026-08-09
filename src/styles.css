@@ -798,21 +798,25 @@
 }
 
 .money-editorial-primary-ornament {
-  margin-top: 46px;
+  margin-top: 34px;
   margin-bottom: 0;
 }
 
 .money-editorial-primary-hero .money-editorial-definition {
-  margin-top: 22px;
+  margin-top: 34px;
 }
 
 .money-editorial-faith-hero .money-editorial-heart-panel {
   margin-top: 32px;
   margin-bottom: 0;
+  padding-top: 28px;
+  padding-bottom: 30px;
 }
 
 .money-editorial-faith-hero > .money-editorial-definition {
-  margin-top: 34px;
+  margin-top: 38px;
+  font-weight: 600;
+  opacity: 0.82;
 }
 
 .money-editorial-hero > * {
@@ -961,6 +965,9 @@
   width: min(92%, 390px);
   margin-right: auto;
   margin-left: auto;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.7;
   text-align: center;
 }
 

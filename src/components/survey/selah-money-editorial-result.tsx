@@ -66,6 +66,9 @@ function ActionCards({ content, theme, showNumbers = true, items }: { content: S
 
 export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, faithTitle, theme }: SelahMoneyEditorialResultProps) {
   const scenes = moneyContent.sceneHook?.split("\n").map((line) => line.trim()).filter(Boolean) ?? [];
+  const faithHeartLines = faithContent.representativeHeart.join(" ") === "나를 위해 돈을 쓰고 누리면 하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해."
+    ? ["나를 위해 돈을 쓰고 누리면", "하나님 앞에서 욕심처럼 보일까 봐 마음이 불편해."]
+    : undefined;
   const faithFlow = faithContent.title === "신앙부담형"
     ? [
         "돈을 쓰거나 누릴 일이 생김",
@@ -95,7 +98,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       <section className="money-editorial-hero money-editorial-primary-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
         <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
         <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
-        <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록, 소비로 나를 달래는 편이에요.</p>
+        <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록,<br />소비로 나를 달래는 편이에요.</p>
         <div className="money-editorial-ornament money-editorial-primary-ornament" style={{ color: theme.accent }} aria-hidden="true">
           <span />
           <CircleDollarSign size={22} strokeWidth={1.35} />
@@ -131,7 +134,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         <h2 style={{ color: theme.text }}>{faithTitle}</h2>
         <div className="money-editorial-heart-panel" style={{ borderColor: `${theme.accent}30` }}>
           <MessageCircleMore className="money-editorial-thought-mark" size={28} strokeWidth={1.35} aria-hidden="true" />
-          <HeartQuote content={faithContent} accent={theme.accent} />
+          <HeartQuote content={faithContent} accent={theme.accent} lines={faithHeartLines} />
         </div>
         <p className="money-editorial-definition" style={{ color: theme.text }}>{faithDefinitions[faithContent.title] ?? faithContent.reading[0]}</p>
       </section>
