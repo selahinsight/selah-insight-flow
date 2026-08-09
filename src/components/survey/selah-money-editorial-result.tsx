@@ -85,15 +85,13 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
 
       <section className="money-editorial-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
         <div className="money-editorial-ornament" style={{ color: theme.accent }} aria-hidden="true">
-          <span />
           <CircleDollarSign size={22} strokeWidth={1.35} />
-          <span />
         </div>
         <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 주된 돈 반응 유형</p>
         <h2 style={{ color: theme.text }}>{moneyContent.title}</h2>
         <p className="money-editorial-definition" style={{ color: theme.text }}>마음이 지칠수록, 소비로 나를 달래는 편이에요.</p>
         <div className="money-editorial-heart-panel" style={{ borderColor: `${theme.accent}30` }}>
-          <p style={{ color: theme.accent }}>마음속에서 자주 떠오르는 말</p>
+          <span className="money-editorial-thought-mark" aria-hidden="true">💭</span>
           <HeartQuote content={moneyContent} accent={theme.accent} lines={["오늘만큼은 나를 위해 써도", "괜찮지 않을까?"]} />
         </div>
       </section>
@@ -107,7 +105,6 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
       </section>
 
       <section className="money-editorial-section money-editorial-reading">
-        <p className="money-editorial-kicker" style={{ color: theme.accent }}>{moneyContent.title}을 깊이 이해해보면</p>
         {moneyContent.reading.map((paragraph, index) => (
           <p key={paragraph} className={index === 0 ? "money-editorial-reading-lead" : ""} style={{ color: theme.text }}>{paragraph}</p>
         ))}
