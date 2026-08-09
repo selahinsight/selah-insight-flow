@@ -36,6 +36,18 @@ function FlowTimeline({ content, theme }: { content: SelahMoneyResultTemplateCon
   );
 }
 
+function FlowCards({ content, theme }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors }) {
+  return (
+    <ol className="money-editorial-flow-cards">
+      {content.flow.map((step) => (
+        <li key={step} style={{ color: theme.text, borderColor: `${theme.accent}3D` }}>
+          {step}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 function ActionCards({ content, theme }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors }) {
   return (
     <div className="money-editorial-actions">
@@ -59,6 +71,18 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
 
   return (
     <div className="money-editorial-result">
+      {scenes.length > 0 && (
+        <section className="money-editorial-section money-editorial-scene-section">
+          <span className="money-editorial-scene-quote" style={{ color: theme.accent }} aria-hidden="true">“</span>
+          <div className="money-editorial-heading" style={{ color: theme.text }}>
+            <h3>혹시 이런 모습이 익숙한가요?</h3>
+          </div>
+          <div className="money-editorial-scenes">
+            <p style={{ color: theme.text }}>{scenes.join("\n")}</p>
+          </div>
+        </section>
+      )}
+
       <section className="money-editorial-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
         <div className="money-editorial-ornament" style={{ color: theme.accent }} aria-hidden="true">
           <span />
@@ -74,24 +98,12 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         </div>
       </section>
 
-      {scenes.length > 0 && (
-        <section className="money-editorial-section money-editorial-scene-section">
-          <span className="money-editorial-scene-quote" style={{ color: theme.accent }} aria-hidden="true">“</span>
-          <div className="money-editorial-heading" style={{ color: theme.text }}>
-            <h3>혹시 이런 모습이 익숙한가요?</h3>
-          </div>
-          <div className="money-editorial-scenes">
-            <p style={{ color: theme.text }}>{scenes.join("\n")}</p>
-          </div>
-        </section>
-      )}
-
-      <section className="money-editorial-section money-editorial-flow" style={{ backgroundColor: theme.bg, borderColor: theme.border }}>
+      <section className="money-editorial-section money-editorial-flow">
         <div className="money-editorial-heading" style={{ color: theme.text }}>
           <Sparkles size={20} strokeWidth={1.6} style={{ color: theme.accent }} />
-          <h3>내 마음에서는 이런 흐름이 움직여요</h3>
+          <h3>내 마음은 이렇게 흘러가요</h3>
         </div>
-        <FlowTimeline content={moneyContent} theme={theme} />
+        <FlowCards content={moneyContent} theme={theme} />
       </section>
 
       <section className="money-editorial-section money-editorial-reading">
