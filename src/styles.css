@@ -1274,8 +1274,10 @@
 }
 
 .money-editorial-action-card {
+  width: calc(100% + 64px);
+  margin-left: -32px;
   padding: 42px 38px;
-  border-radius: 18px;
+  border-radius: 0;
   background: #f3e7e1;
 }
 
@@ -1333,6 +1335,8 @@
 
 @media (max-width: 520px) {
   .money-editorial-action-card {
+    width: calc(100% + 32px);
+    margin-left: -16px;
     padding: 38px 26px;
   }
 }
