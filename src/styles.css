@@ -1544,9 +1544,7 @@
 }
 
 .money-editorial-reading-body {
-  text-align: justify;
-  text-align-last: left;
-  text-justify: inter-character;
+  text-align: left;
 }
 
 .money-editorial-action-section {
