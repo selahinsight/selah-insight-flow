@@ -15,6 +15,11 @@ const studioIntakeInput = z.object({
   primaryFaithLensId: z.string().optional().nullable(),
   privacyConsent: z.boolean().optional(),
   marketingConsent: z.boolean().optional(),
+  emailContent: z.object({
+    subject: z.string().min(1),
+    html: z.string().min(1),
+    text: z.string().min(1),
+  }),
 });
 
 export const sendStudioIntake = createServerFn({ method: "POST" })
@@ -57,6 +62,7 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
         privacy_consent: data.privacyConsent ?? true,
         result_email_consent: true,
         marketing_consent: data.marketingConsent ?? false,
+        email_content: data.emailContent,
       }),
     });
 
@@ -77,5 +83,11 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
       };
     }
 
+    const intake = payload && typeof payload === "object" && "intake" in payload
+      ? (payload as { intake?: { email_status?: string } }).intake
+      : undefined;
+    if (intake?.email_status !== "sent") {
+      return { status: "email_failed" as const, emailStatus: intake?.email_status ?? "unknown" };
+    }
     return { status: "sent" as const };
   });

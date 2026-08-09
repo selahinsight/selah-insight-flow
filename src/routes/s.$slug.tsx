@@ -272,6 +272,39 @@ interface SelahMoneyResult {
   hasMoneyTie?: boolean;
 }
 
+function escapeEmailHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[character] ?? character);
+}
+
+function buildResultEmailContent(args: {
+  name: string;
+  surveyTitle: string;
+  primary?: ResultType;
+  secondary?: ResultType;
+  faith?: ResultType;
+}) {
+  const displayName = args.name.trim() || "고객";
+  const primaryTitle = args.primary?.title || "돈 반응 유형";
+  const primaryBody = args.primary?.email_result || args.primary?.interpretation || args.primary?.description || "";
+  const secondaryTitle = args.secondary?.title || "";
+  const faithTitle = args.faith ? customerFaithResultTitle(args.faith.id, args.faith.title) : "";
+  const faithBody = args.faith?.email_result || args.faith?.interpretation || args.faith?.description || "";
+  const action = args.primary?.small_action || "이번 주에 한 번, 돈을 쓰기 전 지금의 마음과 선택 기준을 짧게 적어보세요.";
+  const subject = `${displayName}님의 ${args.surveyTitle} 전체 결과`;
+  const text = [
+    `${displayName}님, 안녕하세요.`, "", `${args.surveyTitle} 전체 결과를 보내드립니다.`, "",
+    `나의 주된 돈 반응 유형: ${primaryTitle}`, primaryBody,
+    secondaryTitle ? `함께 나타나는 돈 반응 유형: ${secondaryTitle}` : "",
+    faithTitle ? `나의 신앙 유형: ${faithTitle}` : "", faithBody,
+    "", "이번 주 작은 실천", action, "", "Selah Insight",
+  ].filter(Boolean).join("\n");
+  const section = (label: string, title: string, body: string) => title ? `<section style="border:1px solid #eadfce;border-radius:16px;padding:22px;margin:0 0 16px"><p style="margin:0 0 7px;color:#a36f58;font-size:12px;letter-spacing:.12em">${escapeEmailHtml(label)}</p><h2 style="margin:0 0 10px;font:600 20px Georgia,serif;color:#3d3028">${escapeEmailHtml(title)}</h2>${body ? `<p style="margin:0;color:#66584e;font-size:14px;line-height:1.8;white-space:pre-line">${escapeEmailHtml(body)}</p>` : ""}</section>` : "";
+  const html = `<!doctype html><html lang="ko"><body style="margin:0;background:#f7f1e8;color:#3d3028;font-family:Arial,'Noto Sans KR',sans-serif"><main style="max-width:600px;margin:auto;background:#fffdf8;padding:36px 24px"><p style="margin:0 0 8px;color:#a36f58;font-size:12px;letter-spacing:.18em">SELAH INSIGHT</p><h1 style="margin:0 0 12px;font:400 28px/1.4 Georgia,serif">${escapeEmailHtml(displayName)}님의 전체 결과</h1><p style="margin:0 0 28px;color:#76675c;line-height:1.8">${escapeEmailHtml(args.surveyTitle)}에 참여해 주셔서 감사합니다. 지금의 돈 반응과 신앙 흐름을 차분히 살펴보세요.</p>${section("나의 주된 돈 반응 유형", primaryTitle, primaryBody)}${section("함께 나타나는 돈 반응 유형", secondaryTitle, "")}${section("나의 신앙 유형", faithTitle, faithBody)}<section style="background:#f4eadf;border-radius:16px;padding:22px;margin-top:18px"><p style="margin:0 0 7px;color:#a36f58;font-size:12px;letter-spacing:.12em">이번 주 작은 실천</p><p style="margin:0;color:#4c3d34;font-size:15px;line-height:1.8">${escapeEmailHtml(action)}</p></section><p style="margin:30px 0 0;color:#9a8a7e;font-size:12px;line-height:1.7">이 메일은 요청하신 진단 결과를 전달하기 위해 발송했습니다.</p></main></body></html>`;
+  return { subject, html, text };
+}
+
 function quoteRepresentativeSentence(sentence: string): string {
   const trimmed = sentence.trim().replace(/^[‘’'“”"]+|[‘’'“”"]+$/g, "");
   return `‘${trimmed}’`;
@@ -559,6 +592,13 @@ function Runner({
           primaryFaithLensId: selahResult?.primaryFaithLens?.id,
           privacyConsent: true,
           marketingConsent,
+          emailContent: buildResultEmailContent({
+            name,
+            surveyTitle: survey.title,
+            primary: result,
+            secondary: selahResult?.secondaryMoneyType,
+            faith: selahResult?.primaryFaithLens,
+          }),
         },
       });
 
@@ -569,7 +609,7 @@ function Runner({
       }
 
       setEmailSaved(true);
-      toast.success("결과가 저장되었습니다.");
+      toast.success("전체 결과를 이메일로 보내드렸습니다.");
     } catch (err) {
       console.error("[selah] submitEmailRequest failed", err);
       toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
