@@ -356,7 +356,7 @@
 
 .money-paid-product-copy strong {
   font-family: "Gowun Batang", ui-serif, Georgia, serif;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 500;
   line-height: 1.7;
 }
@@ -383,15 +383,16 @@
 }
 
 .money-paid-product-summary {
+  font-size: 17px;
   word-break: keep-all;
 }
 
 .money-paid-inclusions {
   max-width: 430px;
   margin: 38px auto 0;
-  padding: 28px 26px;
+  padding: 28px 32px;
   border: 1px solid rgba(154, 118, 100, 0.28);
-  background: #f3e7e1;
+  background: #f1ece4;
   box-shadow: 0 12px 28px rgba(96, 72, 59, 0.08);
   text-align: left;
 }
@@ -404,18 +405,18 @@
 
 .money-paid-inclusions ul {
   display: grid;
-  gap: 11px;
+  gap: 8px;
   margin: 18px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.money-paid-inclusions li {
+.money-paid-diagnosis-card .money-paid-inclusions li {
   position: relative;
-  padding-left: 22px;
+  padding-left: 26px;
   font-size: 16px !important;
   font-weight: 500;
-  line-height: 1.65;
+  line-height: 1.45 !important;
   word-break: keep-all;
 }
 

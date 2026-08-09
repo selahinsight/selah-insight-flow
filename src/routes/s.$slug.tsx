@@ -1891,13 +1891,15 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
         <div className="money-paid-product-copy" style={{ color: theme.text }}>
           <p className="money-paid-product-question">
             <strong>
-              돈을 쓰고 후회하고, 모으면서도 불안하고,
+              돈을 쓰고 후회하고,
+              <br />
+              모으면서도 불안하고,
               <br />
               계획을 세워도 자꾸 흐트러지나요?
             </strong>
           </p>
           <p className="money-paid-product-summary">
-            셀라 머니 심층 진단지는 소비·저축·투자에서 반복되는 나의 패턴을 찾고, 흔들릴 때 돌아올 수 있는 나만의 돈 관리 기준을 세워드립니다.
+            셀라 머니 심층 진단지는 소비·저축·투자에서 반복되는 나의 패턴을 찾고, 흔들릴 때 돌아올 수 있는 나만의 돈 관리 기준을 세우도록 도와드립니다.
           </p>
         </div>
 
@@ -1912,18 +1914,7 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           </ul>
         </div>
 
-        <div
-          aria-hidden="true"
-          style={{
-            width: "100%",
-            maxWidth: 420,
-            height: 1,
-            margin: "22px auto 0",
-            background: `${theme.accent}35`,
-          }}
-        />
-
-        <div style={{ marginTop: 20, textAlign: "center" }}>
+        <div style={{ marginTop: 30, textAlign: "center" }}>
           <p style={{ margin: 0, color: theme.accent, fontSize: 14, fontWeight: 700 }}>
             런칭가
           </p>
