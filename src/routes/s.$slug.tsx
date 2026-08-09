@@ -37,7 +37,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { CircleDollarSign, Compass, Download, Fingerprint, GitBranch, Heart, ScanSearch, Share2, Sprout } from "lucide-react";
+import { CircleDollarSign, Compass, Download, Fingerprint, GitBranch, Heart, Mail, ScanSearch, Share2, Sprout } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -1742,25 +1742,37 @@ function EmailResultSection({
   const btn = buttonClasses(design.button_style, theme);
   const card = cardClasses(design.card_style, theme);
   return (
-    <div className="money-result-card money-funnel-card" style={{ ...card, marginTop: 16, textAlign: "center" }}>
+    <div
+      className={`money-result-card money-funnel-card${isMoneyDiagnosis ? " money-email-result-card" : ""}`}
+      style={isMoneyDiagnosis ? {
+        ...card,
+        marginTop: 16,
+        textAlign: "center",
+        border: "1px solid #d8c4b7",
+        borderRadius: 0,
+        backgroundColor: "#f1e7dd",
+        boxShadow: "0 18px 42px rgba(96, 72, 59, 0.14)",
+      } : { ...card, marginTop: 16, textAlign: "center" }}
+    >
+      {isMoneyDiagnosis && (
+        <div className="money-email-result-icon" style={{ color: theme.accent }} aria-hidden="true">
+          <Mail size={25} strokeWidth={1.45} />
+        </div>
+      )}
       <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>
-        {isMoneyDiagnosis ? "SAVE MY RESULT" : "EMAIL RESULT"}
+        {isMoneyDiagnosis ? "EMAIL MY RESULT" : "EMAIL RESULT"}
       </p>
       <h2 className="money-funnel-title" style={{ color: theme.text }}>
         {isMoneyDiagnosis ? (
-          <>지금 확인한 결과를 이메일에 저장해두세요</>
+          <>무료 진단 결과를<br />이메일로 받아보세요</>
         ) : "전체 결과 이메일 신청"}
       </h2>
       {isMoneyDiagnosis ? (
         <div className="money-funnel-body" style={{ color: theme.text, opacity: 0.82 }}>
           <p>
-            내 재정 유형과 신앙 유형의 핵심 내용을 이메일에서 편하게 다시 확인할 수 있어요.
+            지금 확인한 돈 반응 유형과 신앙 유형 결과를 이메일로 보내드려요.<br />
+            천천히 다시 읽으며 나의 돈 관리 흐름을 돌아보세요.
           </p>
-          <ul style={{ margin: "12px auto 0", maxWidth: 360, paddingLeft: 20, textAlign: "left", fontSize: 14, lineHeight: 1.85 }}>
-            <li>지금 확인한 진단 결과 요약</li>
-            <li>내 돈에 관한 마음을 돌아보는 질문 3개</li>
-            <li>셀라 머니 심층 진단 안내</li>
-          </ul>
         </div>
       ) : (
         <p
@@ -1787,7 +1799,7 @@ function EmailResultSection({
         <input
           value={email}
           onChange={(e) => onEmailChange(e.target.value)}
-          placeholder="이메일"
+          placeholder="이메일 주소 입력"
           type="email"
           autoComplete="email"
           style={{
@@ -1811,16 +1823,16 @@ function EmailResultSection({
           alignItems: "center",
         }}
       >
-        <label style={{ fontSize: 12, color: theme.muted }}>
+        <label className="money-email-consent" style={{ color: theme.muted }}>
           <input
             type="checkbox"
             checked={privacyConsent}
             onChange={(e) => onPrivacyConsentChange(e.target.checked)}
             style={{ marginRight: 6 }}
           />
-          (필수) 개인정보 수집 및 이용에 동의합니다.
+          <strong>필수</strong> 개인정보 수집 및 이용에 동의합니다.
         </label>
-        <label style={{ fontSize: 12, color: theme.muted }}>
+        <label className="money-email-consent" style={{ color: theme.muted }}>
           <input
             type="checkbox"
             checked={marketingConsent}
@@ -1828,8 +1840,8 @@ function EmailResultSection({
             style={{ marginRight: 6 }}
           />
           {isMoneyDiagnosis
-            ? "(선택) 돈에 관한 마음과 기준을 정리하는 데 도움이 되는 자료를 가끔 이메일로 받아봅니다."
-            : "(선택) 셀라 소식과 자료 안내를 이메일로 받아봅니다."}
+            ? <><strong>선택</strong> 돈에 관한 마음과 기준을 정리하는 자료를 이메일로 받아봅니다.</>
+            : <><strong>선택</strong> 셀라 소식과 자료 안내를 이메일로 받아봅니다.</>}
         </label>
       </div>
       <button
@@ -1848,7 +1860,7 @@ function EmailResultSection({
       >
         {saved
           ? isMoneyDiagnosis ? "결과를 저장했어요. 이메일에서 확인해주세요." : "이메일 정보가 저장되었습니다"
-          : isMoneyDiagnosis ? "내 결과 이메일로 저장하기" : "이메일 정보 저장하기"}
+          : isMoneyDiagnosis ? "무료 결과 이메일로 받기" : "이메일 정보 저장하기"}
       </button>
     </div>
   );
@@ -1879,11 +1891,10 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
           ...card,
           marginTop: 0,
           textAlign: "center",
-          border: `1px solid ${theme.accent}70`,
-          borderTop: "none",
+          border: "1px solid #d8c4b7",
           borderRadius: 0,
-          backgroundColor: `${theme.accent}0B`,
-          boxShadow: `0 18px 42px ${theme.accent}18`,
+          backgroundColor: "#f1e7dd",
+          boxShadow: "0 18px 42px rgba(96, 72, 59, 0.14)",
         }}
       >
         <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>PERSONAL DEEP-DIVE REPORT</p>

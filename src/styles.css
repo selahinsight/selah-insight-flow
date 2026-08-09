@@ -328,6 +328,52 @@
   padding: 76px 30px 70px !important;
 }
 
+.money-email-result-card {
+  margin-top: 76px !important;
+  padding: 70px 30px 64px !important;
+}
+
+.money-email-result-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.money-email-result-card .money-funnel-title {
+  margin-top: 14px;
+  font-size: 28px !important;
+  line-height: 1.48 !important;
+}
+
+.money-email-result-card .money-funnel-body {
+  margin-top: 24px;
+  font-size: 17px !important;
+  line-height: 1.7 !important;
+  word-break: keep-all;
+}
+
+.money-email-result-card input[type="email"] {
+  min-height: 48px;
+  border-radius: 1px !important;
+  background: #fffdf9 !important;
+  font-size: 15px !important;
+}
+
+.money-email-consent {
+  display: flex;
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.money-email-consent strong {
+  margin-right: 5px;
+  color: #9a7664;
+  font-size: 13px;
+  line-height: 1.72;
+}
+
 .money-paid-diagnosis-card .money-funnel-product-title {
   font-size: 28px !important;
   font-weight: 700;
@@ -1779,6 +1825,19 @@
 
   .money-paid-diagnosis-card {
     padding: 64px 22px 58px !important;
+  }
+
+  .money-email-result-card {
+    margin-top: 64px !important;
+    padding: 60px 22px 54px !important;
+  }
+
+  .money-email-result-card .money-funnel-title {
+    font-size: 25px !important;
+  }
+
+  .money-email-result-card .money-funnel-body {
+    font-size: 16px !important;
   }
 
   .money-paid-product-copy {
