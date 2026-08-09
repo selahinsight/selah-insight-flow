@@ -11,6 +11,13 @@ interface SelahMoneyEditorialResultProps {
   theme: ThemeColors;
 }
 
+const faithDefinitions: Record<string, string> = {
+  "편안한 신앙 연결형": "돈을 관리할 때 하나님께 묻고, 감사와 책임 안에서 선택하는 편이에요.",
+  "신앙부담형": "하나님 앞에서 바른 선택을 하고 싶은 마음이 커서, 돈을 쓸 때 부담을 느끼는 편이에요.",
+  "신앙분리형": "신앙과 돈을 서로 다른 영역으로 두고, 익숙한 기준으로 돈을 관리하는 편이에요.",
+  "신앙·돈 기준 혼란형": "하나님과 돈을 연결하는 기준을 찾는 과정에서 마음이 자주 흔들리는 편이에요.",
+};
+
 function HeartQuote({ content, accent, lines }: { content: SelahMoneyResultTemplateContent; accent: string; lines?: string[] }) {
   const quoteLines = lines ?? content.representativeHeart;
 
@@ -20,19 +27,6 @@ function HeartQuote({ content, accent, lines }: { content: SelahMoneyResultTempl
       {quoteLines.map((line) => <span key={line}>{line}</span>)}
       <span aria-hidden="true">”</span>
     </blockquote>
-  );
-}
-
-function FlowTimeline({ content, theme }: { content: SelahMoneyResultTemplateContent; theme: ThemeColors }) {
-  return (
-    <ol className="money-editorial-timeline">
-      {content.flow.map((step, index) => (
-        <li key={step} style={{ borderColor: `${theme.accent}55` }}>
-          <span className="money-editorial-step-number" style={{ backgroundColor: theme.accent }}>{String(index + 1).padStart(2, "0")}</span>
-          <span style={{ color: theme.text }}>{step}</span>
-        </li>
-      ))}
-    </ol>
   );
 }
 
@@ -122,27 +116,53 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         </div>
       </section>
 
-      <section className="money-editorial-faith-intro">
-        <Sprout size={23} strokeWidth={1.5} style={{ color: theme.accent }} />
-        <p style={{ color: theme.text }}>돈을 관리할 때 나타나는<br />나의 신앙 반응도 함께 살펴보았어요</p>
+      <section className="money-editorial-faith-transition">
+        <p style={{ color: theme.text }}>그렇다면 나는 하나님 앞에서<br />돈을 어떻게 바라보고 있을까요?</p>
       </section>
 
-      <section className="money-editorial-faith-card" style={{ backgroundColor: theme.bg, borderColor: `${theme.accent}55` }}>
+      <section className="money-editorial-section money-editorial-scene-section money-editorial-faith-scene">
+        <span className="money-editorial-scene-quote" style={{ color: theme.accent }} aria-hidden="true">“</span>
+        <div className="money-editorial-scenes">
+          <p style={{ color: theme.text }}>돈을 관리할 때,<br />하나님 앞에서 잘하고 있는지 걱정되나요?</p>
+        </div>
+      </section>
+
+      <section className="money-editorial-hero money-editorial-faith-hero" style={{ borderColor: `${theme.accent}55`, backgroundColor: theme.bg }}>
+        <div className="money-editorial-ornament" style={{ color: theme.accent }} aria-hidden="true">
+          <span />
+          <Heart size={22} strokeWidth={1.35} />
+          <span />
+        </div>
         <p className="money-editorial-eyebrow" style={{ color: theme.accent }}>{name}님의 돈을 대하는 신앙 유형</p>
-        <div className="money-editorial-type-icon" style={{ color: theme.accent, borderColor: `${theme.accent}44` }}>
-          <Heart size={21} strokeWidth={1.5} />
-        </div>
         <h2 style={{ color: theme.text }}>{faithTitle}</h2>
-        <HeartQuote content={faithContent} accent={theme.accent} />
-        <FlowTimeline content={faithContent} theme={theme} />
-        <div className="money-editorial-faith-reading">
-          {faithContent.reading.map((paragraph, index) => (
-            <p key={paragraph} className={index === 0 ? "money-editorial-reading-lead" : ""} style={{ color: theme.text }}>{paragraph}</p>
-          ))}
+        <p className="money-editorial-definition" style={{ color: theme.text }}>{faithDefinitions[faithContent.title] ?? faithContent.reading[0]}</p>
+        <div className="money-editorial-heart-panel" style={{ borderColor: `${theme.accent}30` }}>
+          <MessageCircleMore className="money-editorial-thought-mark" size={28} strokeWidth={1.35} aria-hidden="true" />
+          <HeartQuote content={faithContent} accent={theme.accent} />
         </div>
-        <div className="money-editorial-faith-actions">
-          <h3 style={{ color: theme.text }}>이렇게 시작해보세요</h3>
-          <ActionCards content={faithContent} theme={theme} />
+      </section>
+
+      <section className="money-editorial-section money-editorial-flow money-editorial-faith-flow">
+        <div className="money-editorial-heading" style={{ color: theme.text }}>
+          <Sparkles size={20} strokeWidth={1.6} style={{ color: theme.accent }} />
+          <h3>내 마음은 이렇게 흘러가요</h3>
+        </div>
+        <FlowCards content={faithContent} theme={theme} />
+      </section>
+
+      <section className="money-editorial-section money-editorial-reading money-editorial-faith-reading">
+        {faithContent.reading.map((paragraph, index) => (
+          <p key={paragraph} className={index === 0 ? "money-editorial-reading-lead" : ""} style={{ color: theme.text }}>{paragraph}</p>
+        ))}
+      </section>
+
+      <section className="money-editorial-section money-editorial-action-section money-editorial-faith-action-section">
+        <div className="money-editorial-action-card">
+          <div className="money-editorial-heading" style={{ color: theme.text }}>
+            <Sprout size={21} strokeWidth={1.6} style={{ color: theme.accent }} />
+            <h3>이렇게 시작해보세요</h3>
+          </div>
+          <ActionCards content={faithContent} theme={theme} showNumbers={false} />
         </div>
       </section>
 
