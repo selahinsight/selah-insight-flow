@@ -134,7 +134,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         <h2 style={{ color: theme.text }}>{faithTitle}</h2>
         <div className="money-editorial-heart-panel" style={{ borderColor: `${theme.accent}30` }}>
           <MessageCircleMore className="money-editorial-thought-mark" size={28} strokeWidth={1.35} aria-hidden="true" />
-          <HeartQuote content={faithContent} accent={theme.accent} lines={faithHeartLines} />
+          <HeartQuote content={faithContent} accent={theme.text} lines={faithHeartLines} />
         </div>
         <p className="money-editorial-definition" style={{ color: theme.text }}>{faithDefinitions[faithContent.title] ?? faithContent.reading[0]}</p>
       </section>

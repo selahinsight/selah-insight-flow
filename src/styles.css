@@ -792,13 +792,13 @@
 }
 
 .money-editorial-primary-hero {
-  padding: 48px 32px 58px;
+  padding: 48px 32px 46px;
   border-width: 0 !important;
   background: #f3e7e1 !important;
 }
 
 .money-editorial-primary-ornament {
-  margin-top: 34px;
+  margin-top: 46px;
   margin-bottom: 0;
 }
 
@@ -817,6 +817,21 @@
   margin-top: 38px;
   font-weight: 600;
   opacity: 0.82;
+}
+
+.money-editorial-faith-hero {
+  border-width: 0 !important;
+}
+
+.money-editorial-faith-hero::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 54px;
+  height: 1px;
+  background: rgba(154, 118, 100, 0.45);
+  content: "";
+  transform: translateX(-50%);
 }
 
 .money-editorial-hero > * {
@@ -966,7 +981,7 @@
   margin-right: auto;
   margin-left: auto;
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.7;
   text-align: center;
 }
@@ -1838,7 +1853,11 @@
 
 @media (max-width: 640px) {
   .money-editorial-primary-hero {
-    padding: 38px 22px 52px;
+    padding: 38px 22px 36px;
+  }
+
+  .money-editorial-primary-ornament {
+    margin-top: 50px;
   }
 
   .money-editorial-faith-hero .money-editorial-heart-panel {
