@@ -81,7 +81,10 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         "부담과 죄책감이 올라와 선택이 조심스러워짐",
       ]
     : [faithContent.flow[0], faithContent.flow[Math.floor(faithContent.flow.length / 2)], faithContent.flow.at(-1)].filter((step): step is string => Boolean(step));
-  const integratedChecklist = [moneyContent.checklist[0], faithContent.checklist[0]].filter((item): item is string => Boolean(item));
+  const moneyAction = moneyContent.title === "정리미룸형"
+    ? "통장 앱을 열어 현재 잔액만 먼저 확인해보세요."
+    : moneyContent.checklist[0];
+  const integratedChecklist = [moneyAction, faithContent.checklist[0]].filter((item): item is string => Boolean(item));
   const [faithLeadSentence, ...faithLeadRest] = faithContent.reading[0].split(/(?<=\.)\s+/);
   const faithBody = [...faithLeadRest, ...faithContent.reading.slice(1)].join(" ");
 
@@ -140,7 +143,9 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
           <MessageCircleMore className="money-editorial-thought-mark" size={28} strokeWidth={1.35} aria-hidden="true" />
           <HeartQuote content={faithContent} accent={theme.text} lines={faithHeartLines} />
         </div>
-        <p className="money-editorial-definition" style={{ color: theme.text }}>{faithDefinitions[faithContent.title] ?? faithContent.reading[0]}</p>
+        <p className="money-editorial-definition" style={{ color: theme.text }}>
+          {(faithDefinitions[faithContent.title] ?? faithContent.reading[0]).split("\n").map((line) => <span key={line}>{line}</span>)}
+        </p>
       </section>
 
       <section className="money-editorial-section money-editorial-flow money-editorial-faith-flow">

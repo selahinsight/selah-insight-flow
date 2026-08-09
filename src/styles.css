@@ -1622,8 +1622,28 @@
 }
 
 .money-editorial-faith-transition {
-  padding: 42px 0 54px;
+  padding: 74px 0 90px;
   text-align: center;
+}
+
+.money-editorial-faith-transition::before,
+.money-editorial-faith-transition::after {
+  display: block;
+  width: 1px;
+  margin-right: auto;
+  margin-left: auto;
+  background: rgba(154, 118, 100, 0.48);
+  content: "";
+}
+
+.money-editorial-faith-transition::before {
+  height: 46px;
+  margin-bottom: 32px;
+}
+
+.money-editorial-faith-transition::after {
+  height: 62px;
+  margin-top: 36px;
 }
 
 .money-editorial-faith-transition p {
@@ -1633,6 +1653,10 @@
   font-weight: 600;
   line-height: 1.65;
   word-break: keep-all;
+}
+
+.money-editorial-faith-hero > .money-editorial-definition span {
+  display: block;
 }
 
 .money-editorial-faith-intro p {
