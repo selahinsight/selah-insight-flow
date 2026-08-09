@@ -38,7 +38,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { CircleDollarSign, Download, GitBranch, Heart, ScanSearch, Share2, Sprout } from "lucide-react";
+import { CircleDollarSign, Download, Fingerprint, GitBranch, Heart, ScanSearch, Share2, Sprout } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -1865,19 +1865,12 @@ function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; desi
     <section className="money-funnel-section money-paid-funnel-section">
       <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
         <div className="money-paid-bridge-icon" style={{ color: theme.accent }} aria-hidden="true">
-          <ScanSearch size={28} strokeWidth={1.4} />
+          <Fingerprint size={28} strokeWidth={1.4} />
         </div>
         <p className="money-paid-bridge" style={{ color: theme.text }}>
-          왜 돈 앞에서 자꾸 흔들리는지,
+          돈 앞에서 왜 자꾸 흔들리는지,
           <br />
           내 마음을 더 깊이 이해해보세요.
-        </p>
-        <p className="money-paid-bridge-detail" style={{ color: theme.text }}>
-          돈 앞에서 반복되는 내 감정과 선택을 살펴보고,
-          <br />
-          말씀 안에서 나에게 맞는 평안한 돈 관리 방향을
-          <br />
-          찾아보세요.
         </p>
         <p className="money-paid-bridge-arrow" style={{ color: theme.accent }} aria-hidden="true">↓</p>
       </div>
