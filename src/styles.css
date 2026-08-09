@@ -792,7 +792,7 @@
 }
 
 .money-editorial-primary-hero {
-  padding: 52px 32px 42px;
+  padding: 52px 32px 36px;
   border: 1px solid rgba(154, 118, 100, 0.2) !important;
   background: #f3e7e1 !important;
   box-shadow: 0 14px 34px rgba(96, 72, 59, 0.1);
@@ -1854,7 +1854,7 @@
 
 @media (max-width: 640px) {
   .money-editorial-primary-hero {
-    padding: 46px 22px 36px;
+    padding: 46px 22px 30px;
   }
 
   .money-editorial-primary-ornament {
