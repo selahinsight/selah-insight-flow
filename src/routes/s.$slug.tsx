@@ -1770,7 +1770,8 @@ function EmailResultSection({
       {isMoneyDiagnosis ? (
         <div className="money-funnel-body" style={{ color: theme.text, opacity: 0.82 }}>
           <p>
-            지금 확인한 돈 반응 유형과 신앙 유형 결과를 이메일로 보내드려요.<br />
+            지금 확인한 돈 반응 유형과 신앙 유형<br />
+            결과를 이메일로 보내드려요.<br />
             천천히 다시 읽으며 나의 돈 관리 흐름을 돌아보세요.
           </p>
         </div>
@@ -1789,7 +1790,7 @@ function EmailResultSection({
         </p>
       )}
       {name && (
-        <p style={{ marginTop: 10, fontSize: 13, color: theme.muted }}>
+        <p className={isMoneyDiagnosis ? "money-email-recipient-guide" : undefined} style={{ marginTop: isMoneyDiagnosis ? 32 : 10, fontSize: isMoneyDiagnosis ? 16 : 13, color: theme.muted }}>
           {isMoneyDiagnosis
             ? `${name}님의 결과를 받을 이메일 주소를 입력해주세요.`
             : `${name}님의 결과를 저장할 이메일을 알려주세요.`}
@@ -1820,7 +1821,10 @@ function EmailResultSection({
           display: "flex",
           flexDirection: "column",
           gap: 8,
-          alignItems: "center",
+          alignItems: isMoneyDiagnosis ? "stretch" : "center",
+          maxWidth: isMoneyDiagnosis ? 460 : undefined,
+          marginLeft: isMoneyDiagnosis ? "auto" : undefined,
+          marginRight: isMoneyDiagnosis ? "auto" : undefined,
         }}
       >
         <label className="money-email-consent" style={{ color: theme.muted }}>
@@ -1828,34 +1832,38 @@ function EmailResultSection({
             type="checkbox"
             checked={privacyConsent}
             onChange={(e) => onPrivacyConsentChange(e.target.checked)}
-            style={{ marginRight: 6 }}
+            style={{ margin: "3px 0 0" }}
           />
-          <strong>필수</strong> 개인정보 수집 및 이용에 동의합니다.
+          <strong>필수</strong>
+          <span>개인정보 수집 및 이용에 동의합니다.</span>
         </label>
         <label className="money-email-consent" style={{ color: theme.muted }}>
           <input
             type="checkbox"
             checked={marketingConsent}
             onChange={(e) => onMarketingConsentChange(e.target.checked)}
-            style={{ marginRight: 6 }}
+            style={{ margin: "3px 0 0" }}
           />
           {isMoneyDiagnosis
-            ? <><strong>선택</strong> 돈에 관한 마음과 기준을 정리하는 자료를 이메일로 받아봅니다.</>
-            : <><strong>선택</strong> 셀라 소식과 자료 안내를 이메일로 받아봅니다.</>}
+            ? <><strong>선택</strong><span>돈에 관한 마음과 기준을 정리하는 데 도움이 되는 자료를 가끔 이메일로 받아봅니다.</span></>
+            : <><strong>선택</strong><span>셀라 소식과 자료 안내를 이메일로 받아봅니다.</span></>}
         </label>
       </div>
       <button
+        className={isMoneyDiagnosis ? "money-email-submit-button" : undefined}
         onClick={onSubmit}
         disabled={submitting || saved || !privacyConsent || !email.trim()}
         style={{
           ...btn,
-          marginTop: 18,
-          padding: "12px 26px",
+          width: isMoneyDiagnosis ? "100%" : undefined,
+          maxWidth: isMoneyDiagnosis ? 340 : undefined,
+          marginTop: isMoneyDiagnosis ? 32 : 18,
+          padding: isMoneyDiagnosis ? "14px 22px" : "12px 26px",
           borderRadius: 999,
-          fontSize: 13,
-          fontWeight: 500,
+          fontSize: isMoneyDiagnosis ? 16 : 13,
+          fontWeight: isMoneyDiagnosis ? 700 : 500,
           cursor: submitting ? "wait" : "pointer",
-          opacity: saved ? 0.75 : !privacyConsent || !email.trim() ? 0.5 : 1,
+          opacity: saved ? 0.82 : !privacyConsent || !email.trim() ? 0.7 : 1,
         }}
       >
         {saved

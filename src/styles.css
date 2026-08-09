@@ -352,6 +352,12 @@
   word-break: keep-all;
 }
 
+.money-email-recipient-guide {
+  font-weight: 500;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
 .money-email-result-card input[type="email"] {
   min-height: 48px;
   border-radius: 1px !important;
@@ -360,18 +366,23 @@
 }
 
 .money-email-consent {
-  display: flex;
+  display: grid;
+  grid-template-columns: 20px 34px minmax(0, 1fr);
   align-items: flex-start;
+  gap: 0 7px;
   font-size: 15px;
   line-height: 1.5;
   text-align: left;
 }
 
 .money-email-consent strong {
-  margin-right: 5px;
   color: #9a7664;
   font-size: 13px;
   line-height: 1.72;
+}
+
+.money-email-submit-button {
+  min-height: 50px;
 }
 
 .money-paid-diagnosis-card .money-funnel-product-title {
