@@ -462,9 +462,7 @@ function Runner({
       });
       setPreviewMode(true);
       setEditorialPreview(
-        params.get("layout") === "editorial" &&
-        primary.id === "emotional_reward" &&
-        faith?.id === "faith_burden_mid",
+        params.get("layout") === "editorial",
       );
       setPhase("done");
     })();
