@@ -914,6 +914,7 @@
 
 .money-editorial-hero + .money-editorial-section {
   margin-top: 58px;
+  margin-bottom: 58px;
 }
 
 .money-editorial-heart-panel::before {
@@ -1003,13 +1004,13 @@
 }
 
 .money-editorial-scenes {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-top: 18px;
-  padding: 6px 20px;
-  border: 1px solid rgba(122, 103, 90, 0.16);
-  background: rgba(255, 255, 255, 0.46);
+  display: block;
+  max-width: 430px;
+  margin: 28px auto 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: center;
 }
 
 .money-editorial-scenes > div {
@@ -1035,9 +1036,10 @@
 
 .money-editorial-scenes p {
   margin: 0;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.55;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 2;
+  white-space: pre-line;
   word-break: keep-all;
 }
 

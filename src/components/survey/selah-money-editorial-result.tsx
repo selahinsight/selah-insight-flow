@@ -81,12 +81,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
             <h3>혹시 이런 모습이 익숙한가요?</h3>
           </div>
           <div className="money-editorial-scenes">
-            {scenes.map((scene, index) => (
-              <div key={scene} style={{ color: theme.text }}>
-                <span aria-hidden="true" style={{ backgroundColor: theme.accent }} />
-                <p>{scene}</p>
-              </div>
-            ))}
+            <p style={{ color: theme.text }}>{scenes.join("\n")}</p>
           </div>
         </section>
       )}
