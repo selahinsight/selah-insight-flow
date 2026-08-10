@@ -333,7 +333,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "돈의 흐름이 흐릿해져 불안이 커짐",
     ],
     reading: [
-      "돈의 상태를 마주할 때 부담을 느껴 확인과 정리를 미루는 유형입니다.",
+      "돈을 마주할 때 부담을 느껴 확인과 정리를 미루는 유형입니다.",
       "잔액과 카드값 확인이 늦어지면서 지출 계획과 필요한 결정도 밀리고, 돈의 흐름이 흐릿해져 불안이 커집니다.",
       "통장 앱을 열어 현재 잔액과 이번 주에 나갈 돈 한 가지만 확인하며 흐름을 다시 잡아보세요.",
     ],
@@ -422,7 +422,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     flow: [
       "돈을 쓰거나 관리할 일이 생김",
       "기도하며 말씀과 현재 형편을 함께 살핌",
-      "현실에 맞게 지혜롭게 선택함",
+      "말씀과 현실에 맞게 지혜롭게 선택함",
     ],
     reading: [
       "돈을 하나님께 맡기신 자원으로 받아들이고, 기도와 말씀 안에서 관리하는 유형입니다.",
