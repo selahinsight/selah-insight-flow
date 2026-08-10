@@ -21,6 +21,7 @@ const faithDefinitions: Record<string, string> = {
 
 const moneyDefinitions: Record<string, string> = {
   "정리미룸형": "돈의 흐름을 확인하는 일이 부담스러워,\n정리를 미루는 편이에요.",
+  "안전추구형": "아무리 준비해도 부족할까 봐,\n마음을 놓기 어려운 편이에요.",
   "마음보상형": "마음이 지칠수록,\n소비로 나를 달래는 편이에요.",
 };
 

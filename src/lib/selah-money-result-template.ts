@@ -346,7 +346,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   safety_seeking: {
     title: "안전추구형",
-    sceneHook: "꾸준히 저축하고 준비하면서도,\n갑자기 돈이 필요할까 걱정되어\n나를 위한 지출을 미루고 있나요?",
+    sceneHook: "꾸준히 저축하고 준비하면서도,\n갑자기 돈이 필요할까 걱정돼서\n나를 위한 지출을 미루고 있나요?",
     representativeHeart: [
       "아무리 준비해도 부족할까 봐",
       "마음을 놓기가 어려워.",
@@ -359,7 +359,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "다시 돈을 단단히 붙들게 됨",
     ],
     reading: [
-      "미래의 불확실성에 대비하며\n돈을 꼼꼼히 모으고 지키는 유형입니다.",
+      "불확실한 미래를 대비하기 위해\n돈을 꼼꼼히 모으고 지키는 유형입니다.",
       "충분히 준비하고 있어도 예상하지 못한 지출이 걱정되어, 현재 필요한 소비와 자신을 위한 지출을 미루게 됩니다.",
       "비상금 목표와 현재 금액을 확인하고, 준비된 범위 안에서 이번 달에 편안히 사용할 금액을 정해보세요.",
     ],
