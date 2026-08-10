@@ -16,7 +16,7 @@ export interface SelahMoneyResultTemplateContent {
 export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResultTemplateContent> = {
   money_combo_organize_safety: {
     title: "확인긴장형",
-    sceneHook: "카드값과 통장 잔액이 궁금하면서도,\n숫자를 보면 마음이 불안해질까 봐\n확인을 미루고 있나요?",
+    sceneHook: "카드값을 확인하면 앞으로 돈이 부족할까 걱정돼,\n자꾸 미루고 있나요?",
     representativeHeart: ["카드값을 확인하면", "걱정이 더 커질 것 같아."],
     flow: [
       "미래의 부족함을 걱정함",
@@ -26,9 +26,9 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "돈의 흐름이 흐릿해져\n불안이 커짐",
     ],
     reading: [
-      "돈을 지키려는 마음이 강할수록 현재의 숫자를 마주하기 어려워지는 유형입니다.",
+      "앞으로 돈이 부족할까 걱정하면서도, 현재 잔액과 카드값 확인은 미루는 유형입니다.",
       "잔액이나 카드값을 보면 생활비와 비상금 걱정이 한꺼번에 떠올라, 확인과 정리를 계속 미룹니다.",
-      "숫자를 한 번에 정리하기보다 현재 잔액과 이번 주에 나갈 돈부터 차례로 확인해보세요.",
+      "현재 잔액과 이번 주에 나갈 돈만 먼저 확인해, 지금 준비할 수 있는 금액부터 정해보세요.",
     ],
     checklist: [
       "통장 앱을 열어 현재 잔액만 먼저 확인해보세요.",
@@ -518,8 +518,8 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "신앙과 돈 관리가 분리되어 움직임",
     ],
     reading: [
-      "돈을 하나님이 맡기신 자원으로 바라보는 기준을 실제 관리에 적용하기 어려운 유형입니다.",
-      "현실적인 정보와 주변 상황을 중심으로 지출과 저축을 정하며, 말씀의 기준을 재정 선택에 연결하는 데 어려움을 느낍니다.",
+      "돈 문제를 현실적인 정보와 계산으로 해결하려는 성향이 강한 유형입니다.",
+      "지출과 저축을 정할 때 기도와 말씀을 연결하는 과정이 빠져, 돈 관리와 믿음이 따로 움직입니다.",
       "돈에 관한 말씀 한 구절을 찾아 적고, 이번 주 지출이나 저축 한 가지에 적용해보세요.",
     ],
     checklist: [
