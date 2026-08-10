@@ -16,7 +16,7 @@ export interface SelahMoneyResultTemplateContent {
 export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResultTemplateContent> = {
   money_combo_organize_safety: {
     title: "확인긴장형",
-    sceneHook: "카드값을 확인하면 앞으로 돈이 부족할까 걱정돼,\n자꾸 미루고 있나요?",
+    sceneHook: "카드값을 확인하면\n앞으로 돈이 부족할까 걱정돼,\n자꾸 미루고 있나요?",
     representativeHeart: ["카드값을 확인하면", "걱정이 더 커질 것 같아."],
     flow: [
       "미래의 부족함을 걱정함",
@@ -28,10 +28,10 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     reading: [
       "앞으로 돈이 부족할까 걱정하면서도, 현재 잔액과 카드값 확인은 미루는 유형입니다.",
       "잔액이나 카드값을 보면 생활비와 비상금 걱정이 한꺼번에 떠올라, 확인과 정리를 계속 미룹니다.",
-      "현재 잔액과 이번 주에 나갈 돈만 먼저 확인해, 지금 준비할 수 있는 금액부터 정해보세요.",
+      "이번 주에 쓴 돈부터 확인하고, 다음 주에 줄이거나 준비할 지출 한 가지를 정해보세요.",
     ],
     checklist: [
-      "통장 앱을 열어 현재 잔액만 먼저 확인해보세요.",
+      "이번 주에 쓴 돈만 먼저 확인해보세요.",
       "이번 주 꼭 나갈 돈 한 가지만 적어보세요.",
       "남은 금액 안에서 이번 주 사용할 한도를 정해보세요.",
     ],
@@ -520,10 +520,10 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     reading: [
       "돈 문제를 현실적인 정보와 계산으로 해결하려는 성향이 강한 유형입니다.",
       "지출과 저축을 정할 때 기도와 말씀을 연결하는 과정이 빠져, 돈 관리와 믿음이 따로 움직입니다.",
-      "돈에 관한 말씀 한 구절을 찾아 적고, 이번 주 지출이나 저축 한 가지에 적용해보세요.",
+      "성경에서 돈이나 재정에 관해 하나님이 내게 주시는 말씀 한 구절을 찾아 천천히 묵상해보세요.",
     ],
     checklist: [
-      "돈에 관한 말씀 한 구절을 적고, 이번 주 지출이나 저축 한 가지에 적용할 기준을 정해보세요.",
+      "성경에서 돈이나 재정에 관한 말씀 한 구절을 찾아 천천히 묵상해보세요.",
       "결제하기 전 10초 멈추고 이 돈을 어떻게 사용하면 좋을지 기도해보세요.",
       "계획한 금액 안에서 사용한 뒤 마음이 평안했는지 기록해보세요.",
     ],
