@@ -1498,7 +1498,8 @@
   font-size: 18px;
   line-height: 1.7;
   letter-spacing: -0.02em;
-  word-break: keep-all;
+  word-break: normal;
+  overflow-wrap: break-word;
   opacity: 0.86;
 }
 
@@ -1542,7 +1543,8 @@
   margin: 4px 0 0;
   font-size: 17px;
   line-height: 1.65;
-  word-break: keep-all;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .money-editorial-reading-body {
