@@ -538,8 +538,8 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     flow: [
       "돈을 쓸 일이 생김",
-      "하나님 뜻에 맞게 쓰고 싶지만\n어떤 말씀을 기준으로 삼을지 막막함",
-      "익숙한 정보와 상황을 따라 결정한 뒤\n마음이 불편해짐",
+      "하나님 뜻에 맞게 쓰고 싶지만\n기준이 막막함",
+      "평소 방식대로 결정한 뒤\n마음이 불편해짐",
     ],
     reading: [
       "하나님 뜻에 맞게 돈을 사용하고 싶지만, 말씀을 실제 선택에 연결하는 기준이 아직 익숙하지 않은 유형입니다.",
