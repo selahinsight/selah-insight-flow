@@ -100,8 +100,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "미래에 돈이 부족할까 걱정함",
       "돈을 아끼고 꾸준히 모음",
       "다른 사람의 삶과 소비를 봄",
-      "내 삶이 부족해 보임",
-      "남들처럼 갖추고 싶어짐",
+      "내 삶이 부족해 보여\n남들처럼 갖추고 싶어짐",
       "돈을 쓰자니 미래가 걱정되고,\n참자니 뒤처진 것 같아 마음이 지침",
     ],
     reading: [
@@ -110,7 +109,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "미래를 위해 모을 금액과 지금 사용할 금액을 미리 정해두면, 남과 비교해 사고 싶은 마음이 생겨도 내 예산 안에서 결정할 수 있습니다.",
     ],
     checklist: [
-      "이번 달 모을 돈과 쓸 돈을 먼저 나누고, 물건을 사고 싶을 때는 내게 필요한지 남과 비교해 갖고 싶은지 한 번 더 생각해보세요.",
+      "이번 달 모을 돈과 쓸 돈을 나누고, 사고 싶은 마음이 필요 때문인지 비교 때문인지 생각해보세요.",
     ],
     checklistTitle: "이번 주 작은 실천",
   },
