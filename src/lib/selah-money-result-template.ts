@@ -115,7 +115,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_safety_reward: {
     title: "긴장보상형",
-    sceneHook: "미래가 걱정돼 돈을 아끼다가,\n답답함이 쌓이면 한꺼번에 돈을 쓰나요?",
+    sceneHook: "평소에는 사고 싶은 것을 참다가,\n지친 날 한꺼번에 결제한 적 있나요?",
     representativeHeart: [
       "아껴야 마음이 놓이는데,",
       "계속 참다 보면 나를 위해 확 쓰고 싶어.",
@@ -133,7 +133,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "저축할 금액과 마음 편히 쓸 금액을 미리 나누면, 미래를 준비하면서도 답답함이 쌓여 한꺼번에 쓰는 흐름을 줄일 수 있습니다.",
     ],
     checklist: [
-      "이번 달 마음 편히 쓸 금액을 정하고, 그 안에서 나를 위한 작은 즐거움 하나를 미리 계획해보세요.",
+      "이번 달 모을 돈과 편하게 쓸 돈을 미리 나누고, 쓸 돈 안에서 작은 즐거움 하나를 계획해보세요.",
     ],
   },
   money_combo_gaze_reward: {
