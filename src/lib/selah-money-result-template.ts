@@ -164,7 +164,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_safety_reward: {
     title: "불안보상형",
-    sceneHook: "앞으로 돈이 부족할까 걱정하면서도,\n카드값 확인은 미루고 답답한 날 쇼핑한 적 있나요?",
+    sceneHook: "앞으로 돈이 부족할까 걱정하면서도,\n카드값 확인은 미루고\n답답한 날 쇼핑한 적 있나요?",
     representativeHeart: [
       "앞으로 돈이 부족할까 걱정돼.",
       "지금 내 돈을 확인하기는 두렵고,",
@@ -180,7 +180,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     reading: [
       "미래 불안과 확인 회피, 감정 소비가 하나의 흐름으로 이어지는 유형입니다.",
       "돈의 상태를 모르는 동안 걱정이 커지고, 그 마음을 달래려고 돈을 쓰면서 확인은 더 부담스러워집니다.",
-      "최근 일주일 지출 내역부터 가볍게 살펴보고, 감정을 달래려고 쓴 소비를 찾아 돈을 쓰지 않는 방법으로 하나씩 바꿔보세요.",
+      "최근 지출 중 감정 소비가 시작되는 순간을 살펴보고, 다음에는 소비 대신 다른 방법으로 마음을 풀어보세요.",
     ],
     checklist: [
       "카드 앱에서 최근 일주일 지출만 확인하고, 기분을 달래려고 쓴 항목 하나와 다음에 대신할 행동 하나를 정해보세요.",
