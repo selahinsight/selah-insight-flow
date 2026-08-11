@@ -240,7 +240,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_combo_organize_safety_gaze: {
     title: "평가불안형",
-    sceneHook: "다른 사람을 보고 계획보다 돈을 쓴 뒤,\n미래 계획이 흔들렸을까 걱정돼\n잔고를 확인하지 못한 적 있나요?",
+    sceneHook: "다른 사람을 보고 돈을 쓴 뒤,\n미래 계획이 흔들렸을까 걱정돼\n잔고 확인을 미룬 적 있나요?",
     representativeHeart: [
       "나도 저 정도는 누려야 할 것 같아서 샀는데,",
       "미래를 위한 돈까지 써버린 건 아닐까?",
@@ -256,7 +256,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     reading: [
       "다른 사람의 기준으로 한 소비가 미래 불안을 키우고, 돈의 상태를 외면하게 만드는 유형입니다.",
       "카드값과 잔액을 보면 미래를 위한 계획이 얼마나 흔들렸는지 드러날까 봐, 모르는 상태에 머물며 불안을 미룹니다.",
-      "최근 일주일 지출부터 확인해 지금 돈의 상태를 파악하고, 미래를 위한 돈과 현재 사용할 돈을 나눈 뒤 내 필요에 따라 소비를 결정해보세요.",
+      "최근 일주일 지출부터 확인해 지금 돈의 상태를 파악하고, 미래를 위한 돈과 현재 사용할 돈을 나눈 뒤 예산 안에서 내 필요에 따라 소비를 결정해보세요.",
     ],
     checklist: [
       "카드 앱에서 최근 일주일 지출만 확인한 뒤, 이번 달 예산을 미래를 위한 돈과 현재 쓸 돈으로 나눠보세요.",
