@@ -235,7 +235,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "미래를 위해 모을 돈과 지금 편하게 쓸 돈을 미리 나누고, 다른 사람과의 비교보다 내가 오래 만족할 수 있는 누림에 집중해보세요.",
     ],
     checklist: [
-      "남들의 선택은 잠시 내려두고, 내가 진짜 좋아하고 원하는 것을 생각한 뒤 그중 한 가지를 예산 안에서 선택해보세요.",
+      "남들의 소비는 잠시 내려두고, 내가 진짜 좋아하고 원하는 것을 생각한 뒤 그중 한 가지를 예산 안에서 선택해보세요.",
     ],
   },
   money_combo_organize_safety_gaze: {
