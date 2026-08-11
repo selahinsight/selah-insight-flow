@@ -75,8 +75,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "확인과 정리를 미룸",
       "답답하고 지친 마음이 커짐",
       "소비로 마음을 달램",
-      "지출 내역 확인이 다시 무거워짐",
-      "확인과 정리를 다시 미룸",
+      "지출 내역 확인과 정리가 불편해져 다시 미룸",
     ],
     reading: [
       "돈을 마주할 때 올라오는 부담과 지친 마음이 소비를 찾게 만드는 유형입니다.",
@@ -563,7 +562,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     flow: [
       "돈을 쓸 일이 생김",
       "하나님 뜻에 맞게 쓰고 싶어\n말씀을 떠올림",
-      "어떻게 적용할지 몰라 평소대로 결정한 뒤\n마음이 무거워짐",
+      "어떻게 적용할지 몰라\n평소대로 결정한 뒤 마음이 무거워짐",
     ],
     reading: [
       "하나님 앞에서 돈을 바르게 사용하려는 마음이 크지만, 말씀을 실제 돈 관리에 적용하는 일이 막막한 유형입니다.",
