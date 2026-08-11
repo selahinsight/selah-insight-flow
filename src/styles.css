@@ -1742,6 +1742,11 @@
     padding: 24px 18px;
   }
 
+  .money-editorial-flow {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   .money-editorial-quote {
     padding-right: 8px;
     padding-left: 8px;
