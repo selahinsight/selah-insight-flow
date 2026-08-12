@@ -488,7 +488,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
     ],
     reading: [
       "돈 관리를 믿음의 영역과 연결하는 일이 아직 익숙하지 않은 유형입니다.",
-      "수입과 지출을 현실적인 정보만으로 판단해, 말씀의 기준을 실제 선택에 적용하기 어렵습니다.",
+      "돈 관리를 현실적인 정보만으로 판단해, 말씀의 기준을 실제 선택에 적용하기 어렵습니다.",
       "중요한 지출을 앞두고 돈에 관한 말씀 한 구절을 찾아 읽으며, 내 선택에 적용할 기준을 한 가지 정해보세요.",
     ],
     checklist: [
