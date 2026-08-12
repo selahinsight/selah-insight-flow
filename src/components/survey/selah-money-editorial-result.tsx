@@ -98,9 +98,7 @@ export function SelahMoneyEditorialResult({ name, moneyContent, faithContent, fa
         "부담과 죄책감이 올라와 선택이 조심스러워짐",
       ]
     : [faithContent.flow[0], faithContent.flow[Math.floor(faithContent.flow.length / 2)], faithContent.flow.at(-1)].filter((step): step is string => Boolean(step));
-  const moneyAction = moneyContent.title === "정리미룸형"
-    ? "통장 앱을 열어 현재 잔액만 먼저 확인해보세요."
-    : moneyContent.checklist[0];
+  const moneyAction = moneyContent.checklist[0];
   const integratedChecklist = [moneyAction, faithContent.checklist[0]].filter((item): item is string => Boolean(item));
   const moneyBody = moneyContent.reading.slice(1).join(" ");
   const faithBody = faithContent.reading.slice(1).join(" ");
