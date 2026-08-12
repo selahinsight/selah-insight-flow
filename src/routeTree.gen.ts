@@ -17,6 +17,7 @@ import { Route as SSlugRouteImport } from './routes/s.$slug'
 import { Route as AdminSurveysRouteImport } from './routes/admin.surveys'
 import { Route as AdminResponsesRouteImport } from './routes/admin.responses'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
+import { Route as AdminMoneyResultsReviewRouteImport } from './routes/admin.money-results-review'
 import { Route as AdminEmailLogsRouteImport } from './routes/admin.email-logs'
 import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
 import { Route as AdminSurveysIndexRouteImport } from './routes/admin.surveys.index'
@@ -65,6 +66,11 @@ const AdminResponsesRoute = AdminResponsesRouteImport.update({
 const AdminNewRoute = AdminNewRouteImport.update({
   id: '/new',
   path: '/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMoneyResultsReviewRoute = AdminMoneyResultsReviewRouteImport.update({
+  id: '/money-results-review',
+  path: '/money-results-review',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminEmailLogsRoute = AdminEmailLogsRouteImport.update({
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
+  '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/responses': typeof AdminResponsesRoute
   '/admin/surveys': typeof AdminSurveysRouteWithChildren
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
+  '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/responses': typeof AdminResponsesRoute
   '/s/$slug': typeof SSlugRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
+  '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/responses': typeof AdminResponsesRoute
   '/admin/surveys': typeof AdminSurveysRouteWithChildren
@@ -177,6 +186,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/admin/customers'
     | '/admin/email-logs'
+    | '/admin/money-results-review'
     | '/admin/new'
     | '/admin/responses'
     | '/admin/surveys'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/admin/customers'
     | '/admin/email-logs'
+    | '/admin/money-results-review'
     | '/admin/new'
     | '/admin/responses'
     | '/s/$slug'
@@ -213,6 +224,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/admin/customers'
     | '/admin/email-logs'
+    | '/admin/money-results-review'
     | '/admin/new'
     | '/admin/responses'
     | '/admin/surveys'
@@ -290,6 +302,13 @@ declare module '@tanstack/react-router' {
       path: '/new'
       fullPath: '/admin/new'
       preLoaderRoute: typeof AdminNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/money-results-review': {
+      id: '/admin/money-results-review'
+      path: '/money-results-review'
+      fullPath: '/admin/money-results-review'
+      preLoaderRoute: typeof AdminMoneyResultsReviewRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/email-logs': {
@@ -405,6 +424,7 @@ const AdminSurveysRouteWithChildren = AdminSurveysRoute._addFileChildren(
 interface AdminRouteChildren {
   AdminCustomersRoute: typeof AdminCustomersRouteWithChildren
   AdminEmailLogsRoute: typeof AdminEmailLogsRoute
+  AdminMoneyResultsReviewRoute: typeof AdminMoneyResultsReviewRoute
   AdminNewRoute: typeof AdminNewRoute
   AdminResponsesRoute: typeof AdminResponsesRoute
   AdminSurveysRoute: typeof AdminSurveysRouteWithChildren
@@ -414,6 +434,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminCustomersRoute: AdminCustomersRouteWithChildren,
   AdminEmailLogsRoute: AdminEmailLogsRoute,
+  AdminMoneyResultsReviewRoute: AdminMoneyResultsReviewRoute,
   AdminNewRoute: AdminNewRoute,
   AdminResponsesRoute: AdminResponsesRoute,
   AdminSurveysRoute: AdminSurveysRouteWithChildren,
