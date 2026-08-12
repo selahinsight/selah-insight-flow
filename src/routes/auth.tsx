@@ -1,8 +1,15 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
+
+const ADMIN_RETURN_TO_KEY = "selah:admin-return-to";
+
+function adminReturnTo() {
+  const value = sessionStorage.getItem(ADMIN_RETURN_TO_KEY);
+  sessionStorage.removeItem(ADMIN_RETURN_TO_KEY);
+  return value?.startsWith("/admin") ? value : "/admin";
+}
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -10,7 +17,6 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
-  const navigate = useNavigate();
   const [checking, setChecking] = useState(true);
   const [signingIn, setSigningIn] = useState(false);
 
@@ -19,32 +25,35 @@ function AuthPage() {
     (async () => {
       const { data } = await supabase.auth.getSession();
       if (!cancelled && data.session) {
-        navigate({ to: "/admin" });
+        window.location.assign(adminReturnTo());
         return;
       }
       if (!cancelled) setChecking(false);
     })();
     const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_IN" && session) {
-        navigate({ to: "/admin" });
+        window.location.assign(adminReturnTo());
       }
     });
     return () => {
       cancelled = true;
       sub.subscription.unsubscribe();
     };
-  }, [navigate]);
+  }, []);
 
   async function signInWithGoogle() {
     if (signingIn) return;
     setSigningIn(true);
     try {
-      const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin + "/auth",
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/auth",
+        },
       });
-      if (result.error) {
+      if (error) {
         toast.error("로그인에 실패했습니다.");
-        console.error(result.error);
+        console.error(error);
       }
     } finally {
       setSigningIn(false);

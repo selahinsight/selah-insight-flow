@@ -9,6 +9,9 @@ export const Route = createFileRoute("/admin")({
     // Server functions enforce admin authorization independently.
     const { data } = await supabase.auth.getSession();
     if (!data.session) {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("selah:admin-return-to", window.location.pathname + window.location.search);
+      }
       throw redirect({ to: "/auth" });
     }
   },
