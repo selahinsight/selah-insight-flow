@@ -1717,6 +1717,11 @@
     padding: 40px 22px 36px;
   }
 
+  .money-editorial-primary-hero .money-editorial-definition {
+    width: 240px;
+    max-width: 240px;
+  }
+
   .money-editorial-hero h2,
   .money-editorial-faith-card > h2 {
     font-size: 26px;
