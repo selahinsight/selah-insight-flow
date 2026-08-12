@@ -330,7 +330,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
       "통장 앱을 열어 현재 잔액과 이번 주에 나갈 돈 한 가지만 확인하며 흐름을 다시 잡아보세요.",
     ],
     checklist: [
-      "통장 앱을 열어 현재 잔액만 확인해보세요.",
+      "현재 잔액과 이번 주에 나갈 돈을 확인하고, 가장 먼저 챙겨야 할 지출 한 가지를 적어보세요.",
       "이번 주 꼭 나갈 돈 한 가지만 적어보세요.",
       "돈을 확인할 요일과 시간을 10분만 정해보세요.",
     ],
