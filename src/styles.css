@@ -1661,11 +1661,7 @@
 }
 
 .money-editorial-definition span {
-  display: inline;
-}
-
-.money-editorial-definition span + span::before {
-  content: " ";
+  display: block;
 }
 
 .money-editorial-faith-intro p {
