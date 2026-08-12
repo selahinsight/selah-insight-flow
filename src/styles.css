@@ -1660,12 +1660,12 @@
   word-break: keep-all;
 }
 
-.money-editorial-faith-hero > .money-editorial-definition span {
-  display: block;
+.money-editorial-definition span {
+  display: inline;
 }
 
-.money-editorial-primary-hero > .money-editorial-definition span {
-  display: block;
+.money-editorial-definition span + span::before {
+  content: " ";
 }
 
 .money-editorial-faith-intro p {
