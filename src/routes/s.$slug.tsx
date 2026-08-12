@@ -884,6 +884,7 @@ function Runner({
     if (result) {
       return (
         <Wrap theme={theme} design={design} introMode>
+          <div className={isMoneyDiagnosis ? "money-email-capture-content" : undefined}>
           <div
             className={`money-result-card${editorialPreview ? " money-editorial-result-shell" : ""}`}
             style={{
@@ -1251,6 +1252,8 @@ function Runner({
           </div>
 
           {isMoneyDiagnosis && <MoneyPaidDiagnosisSection theme={theme} design={design} />}
+          {isMoneyDiagnosis && <FunnelCtas theme={theme} design={design} isMoneyDiagnosis />}
+          </div>
 
           {!(result.id === "money_no_clear_pattern" && selahResult?.primaryFaithLens?.id === "faith_low") && (
             <>
@@ -1276,7 +1279,7 @@ function Runner({
                 }}
               />
 
-              <FunnelCtas theme={theme} design={design} isMoneyDiagnosis={isMoneyDiagnosis} />
+              {!isMoneyDiagnosis && <FunnelCtas theme={theme} design={design} isMoneyDiagnosis={false} />}
               {!isMoneyDiagnosis && <ResultActions survey={survey} result={result} design={design} theme={theme} />}
             </>
           )}
