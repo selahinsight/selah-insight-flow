@@ -2212,4 +2212,18 @@
     margin-left: -16px;
     padding: 48px 26px;
   }
+
+  .money-paid-funnel-section,
+  .money-result-card.money-funnel-card,
+  .money-content-footer {
+    width: 390px;
+    max-width: 390px;
+    margin-right: auto;
+    margin-left: auto;
+    box-sizing: border-box;
+  }
+
+  .money-paid-funnel-section .money-result-card.money-funnel-card {
+    width: 100%;
+  }
 }
