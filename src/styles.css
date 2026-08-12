@@ -2156,3 +2156,60 @@
     margin-left: -22px;
   }
 }
+
+/* Keep the approved mobile editorial result layout on desktop as well. */
+@media (min-width: 641px) {
+  .money-result-card.money-editorial-result-shell {
+    width: 390px;
+    max-width: 390px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 22px !important;
+    padding-left: 22px !important;
+  }
+
+  .money-editorial-result {
+    gap: 34px;
+    margin-top: 30px;
+  }
+
+  .money-editorial-hero,
+  .money-editorial-faith-card {
+    padding: 32px 20px 28px;
+  }
+
+  .money-editorial-hero {
+    padding: 40px 22px 36px;
+  }
+
+  .money-editorial-primary-hero .money-editorial-definition {
+    width: 240px;
+    max-width: 240px;
+  }
+
+  .money-editorial-flow-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .money-editorial-flow-cards li {
+    width: min(100%, 390px);
+    min-height: 0;
+    padding: 20px 24px;
+  }
+
+  .money-editorial-flow-cards li:not(:last-child)::after {
+    top: calc(100% + 7px);
+    left: 50%;
+    content: "↓";
+    transform: translateX(-50%);
+  }
+
+  .money-editorial-action-card {
+    width: calc(100% + 32px);
+    margin-left: -16px;
+    padding: 48px 26px;
+  }
+}
