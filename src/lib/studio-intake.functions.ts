@@ -19,6 +19,10 @@ const studioIntakeInput = z.object({
     subject: z.string().min(1),
     html: z.string().min(1),
     text: z.string().min(1),
+    resultImage: z.object({
+      dataUrl: z.string().startsWith("data:image/png;base64,"),
+      filename: z.string().min(1).max(120),
+    }).optional(),
   }),
 });
 

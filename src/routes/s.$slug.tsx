@@ -403,6 +403,7 @@ function Runner({
     { id: string; contactToken: string } | null
   >(null);
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
+  const emailCaptureRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (survey.slug !== "selah-money-diagnosis" || typeof window === "undefined") return;
@@ -563,6 +564,39 @@ function Runner({
 
     setSubmitting(true);
     try {
+      let resultImage: { dataUrl: string; filename: string } | undefined;
+      if (isMoneyDiagnosis && emailCaptureRef.current) {
+        await document.fonts?.ready;
+        const node = emailCaptureRef.current;
+        let dataUrl = await toPng(node, {
+          cacheBust: true,
+          pixelRatio: 1.5,
+          backgroundColor: theme.bg,
+          width: node.scrollWidth,
+          height: node.scrollHeight,
+        });
+        if (dataUrl.length > 20_000_000) {
+          dataUrl = await toPng(node, {
+            cacheBust: true,
+            pixelRatio: 1,
+            backgroundColor: theme.bg,
+            width: node.scrollWidth,
+            height: node.scrollHeight,
+          });
+        }
+        if (dataUrl.length > 24_000_000) {
+          throw new Error("결과 이미지 용량이 너무 큽니다.");
+        }
+        resultImage = { dataUrl, filename: "selah-money-result.png" };
+      }
+
+      const emailContent = buildResultEmailContent({
+        name,
+        surveyTitle: survey.title,
+        primary: result,
+        secondary: selahResult?.secondaryMoneyType,
+        faith: selahResult?.primaryFaithLens,
+      });
       const studioRes = await sendStudioIntake({
         data: {
           email: trimmedEmail,
@@ -590,13 +624,7 @@ function Runner({
           primaryFaithLensId: selahResult?.primaryFaithLens?.id,
           privacyConsent: true,
           marketingConsent,
-          emailContent: buildResultEmailContent({
-            name,
-            surveyTitle: survey.title,
-            primary: result,
-            secondary: selahResult?.secondaryMoneyType,
-            faith: selahResult?.primaryFaithLens,
-          }),
+          emailContent: { ...emailContent, resultImage },
         },
       });
 
@@ -884,7 +912,7 @@ function Runner({
     if (result) {
       return (
         <Wrap theme={theme} design={design} introMode>
-          <div className={isMoneyDiagnosis ? "money-email-capture-content" : undefined}>
+          <div ref={isMoneyDiagnosis ? emailCaptureRef : undefined} className={isMoneyDiagnosis ? "money-email-capture-content" : undefined}>
           <div
             className={`money-result-card${editorialPreview ? " money-editorial-result-shell" : ""}`}
             style={{
