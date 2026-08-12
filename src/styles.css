@@ -1139,10 +1139,11 @@
 }
 
 .money-editorial-definition {
-  margin: 12px 0 0;
+  max-width: 280px;
+  margin: 12px auto 0;
   font-size: 18px;
   font-weight: 550;
-  line-height: 1.55;
+  line-height: 1.75;
   letter-spacing: -0.015em;
   opacity: 0.72;
   word-break: keep-all;
