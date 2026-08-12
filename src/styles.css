@@ -1017,6 +1017,7 @@
 }
 
 .money-editorial-primary-hero {
+  height: auto;
   padding: 52px 32px 33px;
   border: 1px solid rgba(154, 118, 100, 0.2) !important;
   background: #f3e7e1 !important;
@@ -1029,6 +1030,7 @@
 }
 
 .money-editorial-primary-hero .money-editorial-definition {
+  width: 100%;
   margin-top: 30px;
   font-size: 19px;
 }
