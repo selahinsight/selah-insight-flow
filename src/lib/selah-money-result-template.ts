@@ -290,7 +290,7 @@ export const SELAH_MONEY_RESULT_TEMPLATE_CONTENT: Record<string, SelahMoneyResul
   },
   money_no_clear_pattern: {
     title: "돈 기준 탐색형",
-    sceneHook: "돈을 모아야 한다는 생각은 드는데,\n왜 모으는지, 모아서 무엇을 하고 싶은지\n선뜻 떠오르지 않나요?",
+    sceneHook: "돈을 모아야 한다는 생각은 드는데,\n왜 모으고, 무엇을 하고 싶은지\n선뜻 떠오르지 않나요?",
     representativeHeart: [
       "돈은 모아야 할 것 같은데,",
       "얼마를 모아야 하는지도 모르겠고",
