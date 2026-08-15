@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const studioIntakeInput = z.object({
-  email: z.string().email(),
+  email: z.string().email().optional().nullable(),
   name: z.string().optional().nullable(),
   responseId: z.string().min(1),
   surveyId: z.string().min(1),
@@ -23,7 +23,7 @@ const studioIntakeInput = z.object({
       dataUrl: z.string().startsWith("data:image/png;base64,"),
       filename: z.string().min(1).max(120),
     }).optional(),
-  }),
+  }).optional(),
 });
 
 export const sendStudioIntake = createServerFn({ method: "POST" })
@@ -57,16 +57,16 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
         survey_slug: data.surveySlug,
         survey_title: data.surveyTitle,
         name: data.name,
-        email: data.email,
+        email: data.email || null,
         answers: data.answers,
         result_type_id: data.resultTypeId,
         primary_money_type_id: data.primaryMoneyTypeId,
         secondary_money_type_id: data.secondaryMoneyTypeId,
         primary_faith_lens_id: data.primaryFaithLensId,
         privacy_consent: data.privacyConsent ?? true,
-        result_email_consent: true,
+        result_email_consent: Boolean(data.email),
         marketing_consent: data.marketingConsent ?? false,
-        email_content: data.emailContent,
+        email_content: data.emailContent || null,
       }),
     });
 
@@ -88,8 +88,11 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
     }
 
     const intake = payload && typeof payload === "object" && "intake" in payload
-      ? (payload as { intake?: { email_status?: string } }).intake
+      ? (payload as { intake?: { email_status?: string; saved?: boolean } }).intake
       : undefined;
+    if (!data.email && intake?.saved) {
+      return { status: "saved" as const };
+    }
     if (intake?.email_status !== "sent") {
       return { status: "email_failed" as const, emailStatus: intake?.email_status ?? "unknown" };
     }

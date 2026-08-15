@@ -500,6 +500,10 @@ function Runner({
       toast.error("이름 또는 닉네임을 입력해주세요.");
       return;
     }
+    if (survey.slug === "selah-money-diagnosis" && !privacyConsent) {
+      toast.error("진단 결과 저장을 위한 필수 동의가 필요합니다.");
+      return;
+    }
     setStarting(true);
     try {
       if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement) {
@@ -544,6 +548,39 @@ function Runner({
     setResult(rt);
     setSelahResult(selah);
     setPhase("done");
+    if (survey.slug === "selah-money-diagnosis") {
+      void sendStudioIntake({
+        data: {
+          email: null,
+          name: name.trim() || undefined,
+          responseId: id,
+          surveyId: survey.id || survey.slug,
+          surveySlug: survey.slug,
+          surveyTitle: survey.title,
+          answers: {
+            ...answersForStudio(survey, answers),
+            ...(selah ? {
+              __diagnosis_result: {
+                scoringVersion: "2026-07-17",
+                scores: selah.scores,
+                moneyResultCode: rt?.id,
+                faithResultCode: selah.primaryFaithLens?.id,
+                includedMoneyTypeIds: selah.includedMoneyTypeIds ?? [],
+                hasMoneyTie: selah.hasMoneyTie ?? false,
+              },
+            } : {}),
+          },
+          resultTypeId: rt?.id,
+          primaryMoneyTypeId: selah?.primaryMoneyType?.id,
+          secondaryMoneyTypeId: selah?.secondaryMoneyType?.id,
+          primaryFaithLensId: selah?.primaryFaithLens?.id,
+          privacyConsent: true,
+          marketingConsent: false,
+        },
+      }).then((studioRes) => {
+        if (studioRes.status !== "saved") console.warn("[selah] diagnosis completion save was not completed", studioRes);
+      }).catch((error) => console.warn("[selah] diagnosis completion save failed", error));
+    }
   }
 
   async function submitEmailRequest() {
@@ -823,12 +860,18 @@ function Runner({
               </p>
             )}
           </div>
+          {isMoneyDiagnosis && (
+            <label className="money-email-consent" style={{ maxWidth: 360, margin: "16px auto 0", color: theme.muted }}>
+              <input checked={privacyConsent} onChange={(event) => setPrivacyConsent(event.target.checked)} type="checkbox" />
+              <span>진단 응답과 결과를 Selah Studio에 저장·관리하는 데 동의합니다. (필수)</span>
+            </label>
+          )}
           <button
             className={isMoneyDiagnosis ? "money-start-button" : undefined}
             onClick={() => {
               void startSurvey();
             }}
-            disabled={starting || !name.trim()}
+            disabled={starting || !name.trim() || (isMoneyDiagnosis && !privacyConsent)}
             style={{
               ...btnPrimary,
               marginTop: 24,
@@ -837,7 +880,7 @@ function Runner({
               fontSize: 14,
               fontWeight: 500,
               cursor: starting ? "wait" : "pointer",
-              opacity: !name.trim() ? 0.5 : 1,
+              opacity: !name.trim() || (isMoneyDiagnosis && !privacyConsent) ? 0.5 : 1,
             }}
           >
             {starting ? "준비 중..." : isMoneyDiagnosis ? "진단 시작하기" : "시작하기"}
