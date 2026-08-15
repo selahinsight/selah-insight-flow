@@ -2230,4 +2230,25 @@
   .money-paid-funnel-section .money-result-card.money-funnel-card {
     width: 100%;
   }
+
+  .money-result-card.money-funnel-card {
+    padding: 34px 22px 30px !important;
+  }
+
+  .money-paid-diagnosis-card {
+    padding: 64px 22px 58px !important;
+  }
+
+  .money-email-result-card {
+    margin-top: 64px !important;
+    padding: 60px 22px 68px !important;
+  }
+
+  .money-email-result-card .money-funnel-title {
+    font-size: 25px !important;
+  }
+
+  .money-email-result-card .money-funnel-body {
+    font-size: 16px !important;
+  }
 }
