@@ -281,7 +281,7 @@
 }
 
 .money-paid-funnel-section {
-  margin-top: 72px;
+  margin-top: 96px;
 }
 
 .money-paid-funnel-section .money-funnel-intro {
@@ -407,7 +407,7 @@
   font-weight: 600;
   line-height: 1.55;
   letter-spacing: -0.025em;
-  white-space: nowrap;
+  word-break: keep-all;
 }
 
 .money-content-footer-links {
@@ -2220,7 +2220,7 @@
   .money-paid-funnel-section,
   .money-result-card.money-funnel-card,
   .money-content-footer {
-    width: 390px;
+    width: min(390px, 100vw);
     max-width: 390px;
     margin-right: auto;
     margin-left: auto;
