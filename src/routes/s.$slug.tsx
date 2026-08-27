@@ -567,7 +567,9 @@ function Runner({
             __consents: {
               privacy: true,
               sensitiveInfo: true,
-              consentVersion: "2026-08-27",
+              consentVersion: "2026-08-27-v2",
+              identifiableRetention: "3_years",
+              anonymousStatisticsRetention: "indefinite",
             },
             ...(selah ? {
               __diagnosis_result: {
@@ -908,13 +910,19 @@ function Runner({
             <details className="money-intro-privacy-details" style={{ color: theme.muted }}>
               <summary>개인정보 및 민감정보 수집·이용 안내 보기</summary>
               <div>
-                <p><strong>개인정보</strong></p>
-                <p>수집 항목: 이름 또는 닉네임</p>
-                <p>이용 목적: 진단 결과 제공 및 확인</p>
-                <p><strong>민감정보</strong></p>
-                <p>수집 항목: 신앙과 돈에 관한 진단 응답</p>
-                <p>이용 목적: 진단 결과 분석·산출 및 제공</p>
-                <p>각 동의를 거부할 수 있으나, 필수 동의가 없으면 진단에 참여할 수 없습니다.</p>
+                <p><strong>수집·이용 주체</strong></p>
+                <p>셀라 인사이트(Selah Insight)</p>
+                <p><strong>개인정보 수집·이용</strong></p>
+                <p>수집 항목: 이름 또는 닉네임, 돈 관련 진단 응답과 결과, 응답 일시</p>
+                <p>이용 목적: 진단 결과 산출·제공·확인, 문의 대응, 서비스 운영 및 개인을 알아볼 수 없도록 처리한 통계 작성</p>
+                <p><strong>신앙 관련 민감정보 수집·이용</strong></p>
+                <p>수집 항목: 신앙 관련 진단 응답과 그에 따라 산출된 신앙 유형</p>
+                <p>이용 목적: 신앙 관련 진단 결과 산출·제공·확인 및 개인을 알아볼 수 없도록 처리한 통계 작성</p>
+                <p><strong>보유 및 이용 기간</strong></p>
+                <p>개인을 알아볼 수 있는 개인정보와 민감정보는 수집일로부터 3년간 보유한 뒤 지체 없이 파기하거나 복원이 불가능한 방식으로 익명 처리합니다. 법령에 따라 별도 보관이 필요한 경우에는 해당 법정 기간 동안 분리 보관합니다.</p>
+                <p>이름·연락처·응답 식별정보를 제거하여 합리적인 방법으로도 개인을 알아볼 수 없도록 만든 익명 통계는 서비스 개선과 연구·통계 분석을 위해 기간 제한 없이 보관할 수 있습니다.</p>
+                <p><strong>동의 거부 및 삭제 요청</strong></p>
+                <p>각 동의를 거부할 수 있으나, 진단 결과 산출에 필요한 정보이므로 필수 동의가 없으면 진단에 참여할 수 없습니다. 보유기간 전이라도 셀라 인사이트 문의 채널을 통해 열람·정정·삭제 또는 처리 정지를 요청할 수 있으며, 다른 법령상 보존 의무가 없는 정보는 확인 후 지체 없이 처리합니다.</p>
               </div>
             </details>
           )}
