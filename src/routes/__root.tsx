@@ -101,6 +101,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         rel: "stylesheet",
+        href: "https://cdn.jsdelivr.net/gh/innks/NanumSquareRound@master/nanumsquareround.min.css",
+      },
+      {
+        rel: "stylesheet",
         href: appCss,
       },
     ],

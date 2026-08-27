@@ -42,8 +42,13 @@ import { toast } from "sonner";
 
 
 export const Route = createFileRoute("/s/$slug")({
-  component: RespondentSurvey,
+  component: SurveyRoute,
 });
+
+function SurveyRoute() {
+  const { slug } = Route.useParams();
+  return <RespondentSurvey slug={slug} />;
+}
 
 function scoreForStudio(question: Question, answer: string | string[] | number | undefined): number | undefined {
   const value = Array.isArray(answer) ? answer[0] : answer;
@@ -84,8 +89,7 @@ function answersForStudio(
   );
 }
 
-function RespondentSurvey() {
-  const { slug } = Route.useParams();
+export function RespondentSurvey({ slug }: { slug: string }) {
   const isSelahMoneyDiagnosis = slug === "selah-money-diagnosis" || slug === "selah-money-d";
   const [survey, setSurvey] = useState<Survey | null | undefined>(undefined);
 
@@ -393,6 +397,7 @@ function Runner({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [privacyConsent, setPrivacyConsent] = useState(false);
+  const [sensitiveInfoConsent, setSensitiveInfoConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
@@ -500,8 +505,8 @@ function Runner({
       toast.error("이름 또는 닉네임을 입력해주세요.");
       return;
     }
-    if (survey.slug === "selah-money-diagnosis" && !privacyConsent) {
-      toast.error("진단 결과 저장을 위한 필수 동의가 필요합니다.");
+    if (survey.slug === "selah-money-diagnosis" && (!privacyConsent || !sensitiveInfoConsent)) {
+      toast.error("진단을 시작하려면 두 가지 필수 동의가 필요합니다.");
       return;
     }
     setStarting(true);
@@ -559,6 +564,11 @@ function Runner({
           surveyTitle: survey.title,
           answers: {
             ...answersForStudio(survey, answers),
+            __consents: {
+              privacy: true,
+              sensitiveInfo: true,
+              consentVersion: "2026-08-27",
+            },
             ...(selah ? {
               __diagnosis_result: {
                 scoringVersion: "2026-07-17",
@@ -769,8 +779,8 @@ function Runner({
           >
             {isMoneyDiagnosis ? (
               <>
-                <span className="money-intro-line">나는 돈을</span>{" "}
-                <span className="money-intro-line">어떻게 다루고 있을까요?</span>
+                <span className="money-intro-line">돈 때문에</span>{" "}
+                <span className="money-intro-line">마음이 불편한가요?</span>
               </>
             ) : survey.title}
           </h1>
@@ -781,16 +791,14 @@ function Runner({
                 className="money-intro-description money-intro-lead"
                 style={{ margin: "24px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
-                <span className="money-intro-line">내가 돈을 다루는 방식에는</span>{" "}
-                <span className="money-intro-line">나도 미처 알지 못했던 마음과 기준이</span>{" "}
-                <span className="money-intro-line">숨어 있습니다.</span>
+                그 불편함에는 이유가 있습니다.
               </p>
               <p
                 className="money-intro-description money-intro-flow money-intro-body"
                 style={{ margin: "16px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
-                <span>진단지를 통해 돈에 대한 마음과 기준을 발견하고, 돈을 더 평안하고 지혜롭게 다루기 위한 여정을</span>{" "}
-                <span className="money-intro-mobile-break">시작하세요.</span>
+                  <span className="money-intro-line">셀라 머니 진단을 통해</span>{" "}
+                  <span className="money-intro-line">돈을 대하는 내 마음과 행동을 확인해보세요.</span>
               </p>
             </>
           ) : (
@@ -821,7 +829,7 @@ function Runner({
               정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
             </p>
           )}
-          <div className={isMoneyDiagnosis ? "money-name-field" : undefined} style={{ marginTop: 24, maxWidth: 320, marginLeft: "auto", marginRight: "auto" }}>
+          <div className={isMoneyDiagnosis ? "money-name-field" : undefined} style={{ marginTop: 24, maxWidth: isMoneyDiagnosis ? 380 : 320, marginLeft: "auto", marginRight: "auto" }}>
             <label
               htmlFor="respondent-name"
               style={{
@@ -834,13 +842,13 @@ function Runner({
                 textTransform: "uppercase",
               }}
             >
-              이름 또는 닉네임
+              이름 또는 닉네임을 적어주세요
             </label>
             <input
               id="respondent-name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder={isMoneyDiagnosis ? "예: 김다윗 / 하나님의 자녀" : "예: 지혜 / 회복중인 사람"}
+              placeholder={isMoneyDiagnosis ? "이름 또는 닉네임 입력" : "예: 지혜 / 회복중인 사람"}
               autoComplete="off"
               style={{
                 width: "100%",
@@ -861,17 +869,23 @@ function Runner({
             )}
           </div>
           {isMoneyDiagnosis && (
-            <label className="money-email-consent" style={{ maxWidth: 360, margin: "16px auto 0", color: theme.muted }}>
-              <input checked={privacyConsent} onChange={(event) => setPrivacyConsent(event.target.checked)} type="checkbox" />
-              <span>진단 응답과 결과를 Selah Studio에 저장·관리하는 데 동의합니다. (필수)</span>
-            </label>
+            <div className="money-intro-consent-block">
+              <label className="money-email-consent money-intro-consent" style={{ color: theme.muted }}>
+                <input checked={privacyConsent} onChange={(event) => setPrivacyConsent(event.target.checked)} type="checkbox" />
+                <span>진단 결과 확인을 위한 개인정보 수집·이용에 동의합니다. (필수)</span>
+              </label>
+              <label className="money-email-consent money-intro-consent" style={{ color: theme.muted }}>
+                <input checked={sensitiveInfoConsent} onChange={(event) => setSensitiveInfoConsent(event.target.checked)} type="checkbox" />
+                <span>진단 결과 분석을 위한 신앙 관련 민감정보 수집·이용에 동의합니다. (필수)</span>
+              </label>
+            </div>
           )}
           <button
             className={isMoneyDiagnosis ? "money-start-button" : undefined}
             onClick={() => {
               void startSurvey();
             }}
-            disabled={starting || !name.trim() || (isMoneyDiagnosis && !privacyConsent)}
+            disabled={starting || !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent))}
             style={{
               ...btnPrimary,
               marginTop: 24,
@@ -880,15 +894,29 @@ function Runner({
               fontSize: 14,
               fontWeight: 500,
               cursor: starting ? "wait" : "pointer",
-              opacity: !name.trim() || (isMoneyDiagnosis && !privacyConsent) ? 0.5 : 1,
+              opacity: !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent)) ? 0.5 : 1,
             }}
           >
             {starting ? "준비 중..." : isMoneyDiagnosis ? "진단 시작하기" : "시작하기"}
           </button>
           {isMoneyDiagnosis && (
-            <p className="money-duration" style={{ marginTop: 12, fontSize: 13, color: theme.muted, textAlign: "center" }}>
+            <p className="money-duration" style={{ marginTop: 14, fontSize: 13, color: theme.muted, textAlign: "center" }}>
               총 30문항 · 약 3~4분 소요
             </p>
+          )}
+          {isMoneyDiagnosis && (
+            <details className="money-intro-privacy-details" style={{ color: theme.muted }}>
+              <summary>개인정보 및 민감정보 수집·이용 안내 보기</summary>
+              <div>
+                <p><strong>개인정보</strong></p>
+                <p>수집 항목: 이름 또는 닉네임</p>
+                <p>이용 목적: 진단 결과 제공 및 확인</p>
+                <p><strong>민감정보</strong></p>
+                <p>수집 항목: 신앙과 돈에 관한 진단 응답</p>
+                <p>이용 목적: 진단 결과 분석·산출 및 제공</p>
+                <p>각 동의를 거부할 수 있으나, 필수 동의가 없으면 진단에 참여할 수 없습니다.</p>
+              </div>
+            </details>
           )}
         </div>
       </Wrap>
