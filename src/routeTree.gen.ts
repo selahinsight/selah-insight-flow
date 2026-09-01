@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as MoneyResultsReviewRouteImport } from './routes/money-results-review'
 import { Route as DiagnosisRouteImport } from './routes/diagnosis'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -29,6 +30,11 @@ import { Route as AdminSurveysIdPublishRouteImport } from './routes/admin.survey
 import { Route as AdminSurveysIdEditRouteImport } from './routes/admin.surveys.$id.edit'
 import { Route as AdminSurveysIdAnalyticsRouteImport } from './routes/admin.surveys.$id.analytics'
 
+const MoneyResultsReviewRoute = MoneyResultsReviewRouteImport.update({
+  id: '/money-results-review',
+  path: '/money-results-review',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DiagnosisRoute = DiagnosisRouteImport.update({
   id: '/diagnosis',
   path: '/diagnosis',
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
+  '/money-results-review': typeof MoneyResultsReviewRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -150,6 +157,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
+  '/money-results-review': typeof MoneyResultsReviewRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -171,6 +179,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
+  '/money-results-review': typeof MoneyResultsReviewRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/diagnosis'
+    | '/money-results-review'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/diagnosis'
+    | '/money-results-review'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/auth'
     | '/diagnosis'
+    | '/money-results-review'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -256,11 +268,19 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AuthRoute: typeof AuthRoute
   DiagnosisRoute: typeof DiagnosisRoute
+  MoneyResultsReviewRoute: typeof MoneyResultsReviewRoute
   SSlugRoute: typeof SSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/money-results-review': {
+      id: '/money-results-review'
+      path: '/money-results-review'
+      fullPath: '/money-results-review'
+      preLoaderRoute: typeof MoneyResultsReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/diagnosis': {
       id: '/diagnosis'
       path: '/diagnosis'
@@ -468,6 +488,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AuthRoute: AuthRoute,
   DiagnosisRoute: DiagnosisRoute,
+  MoneyResultsReviewRoute: MoneyResultsReviewRoute,
   SSlugRoute: SSlugRoute,
 }
 export const routeTree = rootRouteImport
