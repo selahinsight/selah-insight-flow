@@ -1,6 +1,6 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { toJpeg, toPng } from "html-to-image";
+import { toPng } from "html-to-image";
 import QRCode from "qrcode";
 import {
   computeResultType,
@@ -649,10 +649,9 @@ function Runner({
       if (isMoneyDiagnosis && emailCaptureRef.current) {
         await document.fonts?.ready;
         const node = emailCaptureRef.current;
-        const dataUrl = await toJpeg(node, {
+        const dataUrl = await toPng(node, {
           cacheBust: true,
-          pixelRatio: 2,
-          quality: 0.95,
+          pixelRatio: 1,
           backgroundColor: theme.bg,
           width: node.scrollWidth,
           height: node.scrollHeight,
@@ -660,7 +659,7 @@ function Runner({
         if (dataUrl.length > 24_000_000) {
           throw new Error("결과 이미지 용량이 너무 큽니다.");
         }
-        resultImage = { dataUrl, filename: "selah-money-result.jpg" };
+        resultImage = { dataUrl, filename: "selah-money-result.png" };
       }
 
       const emailContent = buildResultEmailContent({
