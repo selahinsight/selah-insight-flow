@@ -20,7 +20,7 @@ const studioIntakeInput = z.object({
     html: z.string().min(1),
     text: z.string().min(1),
     resultImage: z.object({
-      dataUrl: z.string().startsWith("data:image/png;base64,"),
+      dataUrl: z.string().regex(/^data:image\/(?:png|jpeg);base64,/),
       filename: z.string().min(1).max(120),
     }).optional(),
   }).optional(),
