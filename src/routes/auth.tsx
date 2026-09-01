@@ -19,8 +19,6 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const [checking, setChecking] = useState(true);
   const [signingIn, setSigningIn] = useState(false);
-  const [email, setEmail] = useState("");
-  const [sendingLink, setSendingLink] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -59,29 +57,6 @@ function AuthPage() {
       }
     } finally {
       setSigningIn(false);
-    }
-  }
-
-  async function sendEmailLink() {
-    const normalizedEmail = email.trim();
-    if (!normalizedEmail || sendingLink) return;
-    setSendingLink(true);
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email: normalizedEmail,
-        options: {
-          emailRedirectTo: window.location.origin + "/auth",
-          shouldCreateUser: false,
-        },
-      });
-      if (error) {
-        toast.error("로그인 링크 발송에 실패했습니다.");
-        console.error(error);
-        return;
-      }
-      toast.success("관리자 이메일로 로그인 링크를 보냈습니다.");
-    } finally {
-      setSendingLink(false);
     }
   }
 
@@ -129,47 +104,6 @@ function AuthPage() {
           }}
         >
           {signingIn ? "이동 중…" : "Google 계정으로 계속하기"}
-        </button>
-        <div style={{ margin: "20px 0 14px", fontSize: 11, opacity: 0.45 }}>또는</div>
-        <input
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") void sendEmailLink();
-          }}
-          placeholder="관리자 이메일"
-          autoComplete="email"
-          style={{
-            width: "100%",
-            boxSizing: "border-box",
-            padding: "12px 14px",
-            borderRadius: 10,
-            border: "1px solid #2f2f39",
-            background: "#0f0f14",
-            color: "#fff",
-            fontSize: 14,
-          }}
-        />
-        <button
-          type="button"
-          onClick={() => void sendEmailLink()}
-          disabled={!email.trim() || sendingLink}
-          style={{
-            width: "100%",
-            marginTop: 10,
-            padding: "12px 16px",
-            borderRadius: 10,
-            border: "1px solid #2f2f39",
-            background: "#24242d",
-            color: "#fff",
-            fontWeight: 600,
-            fontSize: 14,
-            cursor: !email.trim() || sendingLink ? "not-allowed" : "pointer",
-            opacity: !email.trim() || sendingLink ? 0.6 : 1,
-          }}
-        >
-          {sendingLink ? "발송 중…" : "이메일로 로그인 링크 받기"}
         </button>
         <p style={{ fontSize: 11, opacity: 0.4, marginTop: 20 }}>
           권한이 없는 계정은 로그인 후에도 접근이 거부됩니다.
