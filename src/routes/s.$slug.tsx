@@ -289,17 +289,18 @@ function buildResultEmailContent(args: {
   const secondaryTitle = args.secondary?.title || "";
   const faithTitle = args.faith ? customerFaithResultTitle(args.faith.id, args.faith.title) : "";
   const faithBody = args.faith?.email_result || args.faith?.interpretation || args.faith?.description || "";
-  const action = args.primary?.small_action || "이번 주에 한 번, 돈을 쓰기 전 지금의 마음과 선택 기준을 짧게 적어보세요.";
+  const moneyAction = args.primary?.small_action || "이번 주에 한 번, 돈을 쓰기 전 지금의 마음과 선택 기준을 짧게 적어보세요.";
+  const faithAction = args.faith?.small_action || "돈에 관한 선택 앞에서 잠시 멈추고, 지금 붙들고 싶은 믿음의 기준을 한 문장으로 적어보세요.";
   const subject = `${displayName}님의 ${args.surveyTitle} 전체 결과`;
   const text = [
     `${displayName}님, 안녕하세요.`, "", `${args.surveyTitle} 전체 결과를 보내드립니다.`, "",
     `나의 주된 돈 반응 유형: ${primaryTitle}`, primaryBody,
     secondaryTitle ? `함께 나타나는 돈 반응 유형: ${secondaryTitle}` : "",
     faithTitle ? `나의 신앙 유형: ${faithTitle}` : "", faithBody,
-    "", "이번 주 작은 실천", action, "", "Selah Insight",
+    "", "이렇게 시작해보세요", `돈 유형: ${moneyAction}`, `신앙 유형: ${faithAction}`, "", "Selah Insight",
   ].filter(Boolean).join("\n");
   const section = (label: string, title: string, body: string) => title ? `<section style="border:1px solid #eadfce;border-radius:16px;padding:22px;margin:0 0 16px"><p style="margin:0 0 7px;color:#a36f58;font-size:12px;letter-spacing:.12em">${escapeEmailHtml(label)}</p><h2 style="margin:0 0 10px;font:600 20px Georgia,serif;color:#3d3028">${escapeEmailHtml(title)}</h2>${body ? `<p style="margin:0;color:#66584e;font-size:14px;line-height:1.8;white-space:pre-line">${escapeEmailHtml(body)}</p>` : ""}</section>` : "";
-  const html = `<!doctype html><html lang="ko"><body style="margin:0;background:#f7f1e8;color:#3d3028;font-family:Arial,'Noto Sans KR',sans-serif"><main style="max-width:600px;margin:auto;background:#fffdf8;padding:36px 24px"><p style="margin:0 0 8px;color:#a36f58;font-size:12px;letter-spacing:.18em">SELAH INSIGHT</p><h1 style="margin:0 0 12px;font:400 28px/1.4 Georgia,serif">${escapeEmailHtml(displayName)}님의 전체 결과</h1><p style="margin:0 0 28px;color:#76675c;line-height:1.8">${escapeEmailHtml(args.surveyTitle)}에 참여해 주셔서 감사합니다. 지금의 돈 반응과 신앙 흐름을 차분히 살펴보세요.</p>${section("나의 주된 돈 반응 유형", primaryTitle, primaryBody)}${section("함께 나타나는 돈 반응 유형", secondaryTitle, "")}${section("나의 신앙 유형", faithTitle, faithBody)}<section style="background:#f4eadf;border-radius:16px;padding:22px;margin-top:18px"><p style="margin:0 0 7px;color:#a36f58;font-size:12px;letter-spacing:.12em">이번 주 작은 실천</p><p style="margin:0;color:#4c3d34;font-size:15px;line-height:1.8">${escapeEmailHtml(action)}</p></section><p style="margin:30px 0 0;color:#9a8a7e;font-size:12px;line-height:1.7">이 메일은 요청하신 진단 결과를 전달하기 위해 발송했습니다.</p></main></body></html>`;
+  const html = `<!doctype html><html lang="ko"><body style="margin:0;background:#f7f1e8;color:#3d3028;font-family:Arial,'Noto Sans KR',sans-serif"><main style="max-width:390px;margin:auto;background:#fffdf8;padding:36px 22px"><p style="margin:0 0 8px;color:#a36f58;font-size:12px;letter-spacing:.18em">SELAH INSIGHT</p><h1 style="margin:0 0 12px;font:400 28px/1.4 Georgia,serif">${escapeEmailHtml(displayName)}님의 전체 결과</h1><p style="margin:0 0 28px;color:#76675c;line-height:1.8">${escapeEmailHtml(args.surveyTitle)}에 참여해 주셔서 감사합니다. 지금의 돈 반응과 신앙 흐름을 차분히 살펴보세요.</p>${section("나의 주된 돈 반응 유형", primaryTitle, primaryBody)}${section("함께 나타나는 돈 반응 유형", secondaryTitle, "")}${section("나의 신앙 유형", faithTitle, faithBody)}<section style="background:#f4eadf;border-radius:16px;padding:22px;margin-top:18px"><p style="margin:0 0 14px;color:#a36f58;font-size:12px;letter-spacing:.12em">이렇게 시작해보세요</p><p style="margin:0 0 8px;color:#4c3d34;font-size:15px;line-height:1.8"><strong>돈 유형</strong><br>${escapeEmailHtml(moneyAction)}</p><p style="margin:0;color:#4c3d34;font-size:15px;line-height:1.8"><strong>신앙 유형</strong><br>${escapeEmailHtml(faithAction)}</p></section><p style="margin:30px 0 0;color:#9a8a7e;font-size:12px;line-height:1.7">이 메일은 요청하신 진단 결과를 전달하기 위해 발송했습니다.</p></main></body></html>`;
   return { subject, html, text };
 }
 
@@ -658,32 +659,6 @@ function Runner({
 
     setSubmitting(true);
     try {
-      let resultImage: { dataUrl: string; filename: string } | undefined;
-      if (isMoneyDiagnosis && emailCaptureRef.current) {
-        await document.fonts?.ready;
-        const node = emailCaptureRef.current;
-        let dataUrl = await toPng(node, {
-          cacheBust: true,
-          pixelRatio: 1.5,
-          backgroundColor: theme.bg,
-          width: node.scrollWidth,
-          height: node.scrollHeight,
-        });
-        if (dataUrl.length > 20_000_000) {
-          dataUrl = await toPng(node, {
-            cacheBust: true,
-            pixelRatio: 1,
-            backgroundColor: theme.bg,
-            width: node.scrollWidth,
-            height: node.scrollHeight,
-          });
-        }
-        if (dataUrl.length > 24_000_000) {
-          throw new Error("결과 이미지 용량이 너무 큽니다.");
-        }
-        resultImage = { dataUrl, filename: "selah-money-result.png" };
-      }
-
       const emailContent = buildResultEmailContent({
         name,
         surveyTitle: survey.title,
@@ -701,6 +676,13 @@ function Runner({
           surveyTitle: survey.title,
           answers: {
             ...answersForStudio(survey, answers),
+            __consents: {
+              privacy: true,
+              sensitiveInfo: sensitiveInfoConsent,
+              resultEmail: true,
+              marketing: marketingConsent,
+              consentVersion: "2026-09-01-v3",
+            },
             ...(selahResult ? {
               __diagnosis_result: {
                 scoringVersion: "2026-07-17",
@@ -718,7 +700,7 @@ function Runner({
           primaryFaithLensId: selahResult?.primaryFaithLens?.id,
           privacyConsent: true,
           marketingConsent,
-          emailContent: { ...emailContent, resultImage },
+          emailContent,
         },
       });
 
@@ -2308,7 +2290,7 @@ function Wrap({
         padding: "40px 20px",
       }}
     >
-      <div style={{ maxWidth: 560, margin: "0 auto" }}>
+      <div className={introMode ? "money-mobile-frame" : undefined} style={{ maxWidth: 560, margin: "0 auto" }}>
         {children}
       </div>
     </div>

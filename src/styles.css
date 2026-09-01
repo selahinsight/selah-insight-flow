@@ -2347,6 +2347,20 @@
 
 /* Keep the approved mobile editorial result layout on desktop as well. */
 @media (min-width: 641px) {
+  .money-intro-wrap .money-mobile-frame {
+    width: 390px;
+    max-width: 390px !important;
+  }
+
+  .money-intro-wrap .money-intro-card,
+  .money-intro-wrap .money-prep-card,
+  .money-intro-wrap .money-question-card,
+  .money-intro-wrap .money-result-card {
+    box-sizing: border-box;
+    width: 390px;
+    max-width: 390px;
+  }
+
   .money-result-card.money-editorial-result-shell {
     width: 390px;
     max-width: 390px;
