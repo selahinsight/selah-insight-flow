@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
 
 const ADMIN_RETURN_TO_KEY = "selah:admin-return-to";
@@ -45,11 +46,8 @@ function AuthPage() {
     if (signingIn) return;
     setSigningIn(true);
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: window.location.origin + "/auth",
-        },
+      const { error } = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin + "/auth",
       });
       if (error) {
         toast.error("로그인에 실패했습니다.");
