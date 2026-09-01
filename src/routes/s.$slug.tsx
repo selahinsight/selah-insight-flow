@@ -651,7 +651,7 @@ function Runner({
         const node = emailCaptureRef.current;
         const dataUrl = await toPng(node, {
           cacheBust: true,
-          pixelRatio: 1.5,
+          pixelRatio: 1.25,
           backgroundColor: theme.bg,
           width: node.scrollWidth,
           height: node.scrollHeight,
