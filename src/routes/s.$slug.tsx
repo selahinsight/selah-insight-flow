@@ -123,10 +123,7 @@ export function RespondentSurvey({ slug }: { slug: string }) {
         estimated_time: start.estimatedTime || "약 3~4분",
         bible_verse: undefined,
         questions: Array.isArray(content.questions)
-          ? content.questions.map((question: Question, index: number) => ({
-              ...question,
-              text: MONEY_QUESTION_TEXT_OVERRIDES[index + 1] ?? question.text,
-            }))
+          ? prepareSelahMoneyQuestions(content.questions)
           : [],
         resultTypes: allSelahMoneyResults(Array.isArray(content.results) ? content.results : []),
         status: "published",
@@ -148,10 +145,7 @@ export function RespondentSurvey({ slug }: { slug: string }) {
         ...fallback,
         id: fallback.id || "selah-money-diagnosis",
         slug: fallback.slug || "selah-money-diagnosis",
-        questions: (fallback.questions ?? []).map((question, index) => ({
-          ...question,
-          text: MONEY_QUESTION_TEXT_OVERRIDES[index + 1] ?? question.text,
-        })),
+        questions: prepareSelahMoneyQuestions(fallback.questions ?? []),
         resultTypes: allSelahMoneyResults(fallback.resultTypes ?? []),
         status: "published",
         responses: fallback.responses ?? [],
@@ -314,56 +308,99 @@ function quoteRepresentativeSentence(sentence: string): string {
   return `‘${trimmed}’`;
 }
 
-const MONEY_QUESTION_BREAKS: Record<number, string[]> = {
-  1: ["금액을"],
-  2: ["돈 쓰기가"],
-  3: ["느껴질"],
-  4: ["무언가를"],
-  5: ["보려고 하면", "복잡해"],
-  6: ["생기면", "마음이 더 크게"],
-  7: ["선택할 때", "어떻게 보일지가"],
-  8: ["해도 돼'", "많이"],
-  9: ["할부 내역을", "알면서도"],
-  10: ["될 것"],
+const MONEY_QUESTION_BREAKS_BY_SOURCE_INDEX: Record<number, string[]> = {
+  1: ["카드값을", "자꾸"],
+  2: ["않아도"],
+  3: ["보면", "때가"],
+  4: ["때"],
+  5: ["확인하려 하면"],
+  6: ["생기면", "마음이 크게"],
+  7: ["결정할 때", "보일지가"],
+  8: ["써도 돼'", "많이"],
+  9: ["것이"],
+  10: ["휴식처럼", "소비도"],
+  11: ["보면", "같은"],
   12: ["받으면"],
-  13: ["세우려", "중간에"],
+  13: ["세우려다가도"],
   14: ["내역을"],
-  15: ["능력과", "느낄 때가"],
-  17: ["시간이 지나면 불안이"],
+  15: ["능력과"],
+  16: ["불안과"],
+  17: ["미뤘다가"],
   18: ["준비해도", "느낌이"],
-  19: ["필요해서라기보다", "돈을"],
-  20: ["되지만", "시간이 지나면 다시 허전해질"],
-  22: ["현실의"],
-  23: ["데도", "마음이 불편할"],
-  24: ["믿는", "연결해야 할지"],
-  25: ["회복하는 데"],
-  26: ["중요하게", "불안이나 주변"],
-  27: ["늘리는 데", "세속적인 것"],
-  28: ["기도해도", "따로 결정할"],
-  29: ["하나님", "사람처럼"],
-  30: ["연결해 생각"],
+  19: ["의식해"],
+  20: ["되지만,"],
+  21: ["마음이"],
+  22: ["문제지만,", "문제라고"],
+  23: ["데도", "불편할 때가"],
+  24: ["할 때", "잘"],
+  25: ["쓸 때"],
+  26: ["할 때", "고려하고"],
+  27: ["것 같아"],
+  28: ["할 때"],
+  29: ["못했을 때"],
+  30: ["하나님께"],
 };
 
 const MONEY_QUESTION_TEXT_OVERRIDES: Record<number, string> = {
-  1: "통장 잔고나 결제 예정 금액을 확인해야 한다고 생각하면서도 자꾸 미룬다.",
-  5: "돈의 흐름을 정확히 보려고 하면 마음이 무겁고 머리가 복잡해진다.",
-  8: "'이 정도는 나에게 해도 돼'라는 마음으로 계획보다 많이 쓸 때가 있다.",
-  11: "주변 사람들의 소비 수준을 보면 나도 그 정도는 써야 할 것 같다.",
-  12: "스트레스를 많이 받으면 쇼핑, 배달, 취미 등에 쓰는 돈이 늘어난다.",
-  13: "예산이나 재정 계획을 세우려 하면 머리가 복잡해져 중간에 포기할 때가 있다.",
+  1: "통장 잔고나 카드값을 확인해야 한다고 생각하면서도 자꾸 미룬다.",
+  2: "지금 돈이 부족하지 않아도 앞으로 부족해질 것 같아 걱정된다.",
+  3: "SNS나 주변 사람의 소비를 보면 내 삶이 뒤처진 것처럼 느껴질 때가 있다.",
+  4: "지치거나 허전할 때 무언가를 사고 싶어진다.",
+  5: "내 수입과 지출을 확인하려 하면 마음이 무겁고 복잡해진다.",
+  6: "예상하지 못한 지출이 생기면 금액이 크지 않아도 마음이 크게 흔들린다.",
+  7: "돈을 쓸지 결정할 때 다른 사람에게 어떻게 보일지가 영향을 준다.",
+  8: "'이 정도는 나를 위해 써도 돼'라는 마음으로 계획보다 많이 쓸 때가 있다.",
+  9: "내 재정 상태를 정확히 마주하는 것이 왠지 불편할 때가 있다.",
+  10: "건강, 배움, 휴식처럼 나를 위한 소비도 나중에 돈이 부족할까 봐 망설인다.",
+  11: "주변 사람들의 씀씀이를 보면 나도 그 정도는 써야 할 것 같은 부담을 느낀다.",
+  12: "스트레스를 많이 받으면 쇼핑, 배달 등에 쓰는 돈이 늘어난다.",
+  13: "예산을 세우려다가도 머리가 복잡해져 끝내지 못한다.",
   14: "통장 잔액이나 지출 내역을 자주 확인해야 마음이 놓인다.",
   15: "소득이나 가진 것이 내 능력과 가치를 보여준다고 느낄 때가 있다.",
-  17: "돈 문제를 잠시 덮어두면 마음은 편하지만, 시간이 지나면 불안이 더 커진다.",
+  17: "돈 문제를 미뤘다가 나중에 더 큰 불안을 느끼는 일이 종종 있다.",
   18: "저축하고 미래를 준비해도 아직 충분하지 않다는 느낌이 자주 든다.",
-  20: "돈을 쓸 때는 위로가 되지만 시간이 지나면 다시 허전해질 때가 많다.",
-  22: "헌금과 나눔은 신앙의 문제지만 소비, 저축, 투자는 현실의 문제라고 느껴진다.",
-  24: "소비나 투자 결정을 내가 믿는 가치와 어떻게 연결해야 할지 잘 모르겠다.",
-  26: "돈을 쓸 때 내가 중요하게 여기는 가치보다 불안이나 주변 분위기에 더 흔들리는 편이다.",
-  27: "투자하거나 자산을 늘리는 데 관심을 가지면 세속적인 것 같아 마음이 불편하다.",
+  19: "주변의 시선이나 분위기를 의식해 평소보다 돈을 더 쓸 때가 있다.",
+  20: "돈을 쓰면 잠시 위로가 되지만, 시간이 지나면 다시 허전해진다.",
+  21: "돈을 더 많이 벌고 싶다는 마음이 욕심처럼 느껴질 때가 있다.",
+  22: "헌금과 나눔은 신앙의 문제지만, 소비·저축·투자는 현실의 문제라고 느껴진다.",
+  23: "나에게 필요한 돈을 썼는데도 하나님 앞에서 마음이 불편할 때가 있다.",
+  24: "돈과 관련된 선택을 할 때 말씀을 어떻게 적용해야 할지 잘 모르겠다.",
+  25: "쉼과 회복을 위해 돈을 쓸 때 하나님보다 나를 먼저 생각하는 것 같아 망설일 때가 있다.",
+  26: "돈과 관련된 결정을 할 때 현실적인 상황을 먼저 고려하고 말씀은 나중에 생각하는 편이다.",
+  27: "하나님보다 돈을 앞세우는 것 같아 투자나 자산 형성을 망설일 때가 있다.",
+  28: "돈과 관련된 결정을 할 때 말씀을 떠올리는 것이 익숙하지 않다.",
+  29: "돈 관리를 잘하지 못했을 때 믿음이 부족한 것 같아 자책할 때가 있다.",
+  30: "돈에 대한 고민을 하나님께 솔직히 이야기하는 것이 익숙하지 않다.",
 };
 
+// 각 유형의 생각→감정→행동→결과 순서는 유지하면서 신앙 문항을 고르게 섞습니다.
+const MONEY_QUESTION_ORDER = [
+  1, 2, 21, 3, 22, 4,
+  5, 23, 6, 7, 24, 8,
+  9, 10, 25, 11, 12, 26,
+  13, 27, 14, 15, 28, 16,
+  17, 18, 29, 19, 30, 20,
+] as const;
+
+function prepareSelahMoneyQuestions(questions: Question[]): Question[] {
+  const canonical = questions.map((question, index) => ({
+    ...question,
+    text: MONEY_QUESTION_TEXT_OVERRIDES[index + 1] ?? question.text,
+  }));
+
+  if (canonical.length !== MONEY_QUESTION_ORDER.length) return canonical;
+  return MONEY_QUESTION_ORDER.map((sourceIndex) => canonical[sourceIndex - 1]);
+}
+
+const MONEY_QUESTION_BREAKS_BY_TEXT = Object.fromEntries(
+  Object.entries(MONEY_QUESTION_BREAKS_BY_SOURCE_INDEX).flatMap(([sourceIndex, markers]) => {
+    const text = MONEY_QUESTION_TEXT_OVERRIDES[Number(sourceIndex)];
+    return text ? [[text, markers]] : [];
+  }),
+) as Record<string, string[]>;
+
 function renderMoneyQuestion(text: string, questionNumber: number): ReactNode {
-  const markers = MONEY_QUESTION_BREAKS[questionNumber];
+  const markers = MONEY_QUESTION_BREAKS_BY_TEXT[text];
   if (!markers?.length) return text;
 
   const output: ReactNode[] = [];
@@ -497,6 +534,14 @@ function Runner({
   const total = survey.questions.length;
   const q = survey.questions[i];
   const progress = phase === "done" ? 100 : (i / total) * 100;
+  const currentAnswer = answers[q.id];
+  const hasCurrentAnswer = q.required === false || (
+    Array.isArray(currentAnswer)
+      ? currentAnswer.length > 0
+      : typeof currentAnswer === "string"
+        ? currentAnswer.trim().length > 0
+        : currentAnswer !== undefined
+  );
 
   async function startSurvey() {
     if (starting) return;
@@ -699,26 +744,22 @@ function Runner({
 
     const hasSelahTypes = currentSurvey.resultTypes?.some((rt) => rt.id === "organizing_delay");
     if (!hasSelahTypes) return undefined;
-    const scoreByQuestionIndex = (index: number) => {
-      const question = currentSurvey.questions[index - 1];
-      const answer = question ? currentAnswers[question.id] : undefined;
-      const value = Array.isArray(answer) ? answer[0] : answer;
-      return scoreForStudio(question, value) ?? 0;
+    type ScoreGroup = "organizing_delay" | "safety_seeking" | "gaze_sensitive" | "emotional_reward" | "faith_burden" | "faith_separation";
+    const totals: Record<ScoreGroup, number> = {
+      organizing_delay: 0,
+      safety_seeking: 0,
+      gaze_sensitive: 0,
+      emotional_reward: 0,
+      faith_burden: 0,
+      faith_separation: 0,
     };
-    const groups: Record<string, number[]> = {
-      organizing_delay: [1, 5, 9, 13, 17],
-      safety_seeking: [2, 6, 10, 14, 18],
-      gaze_sensitive: [3, 7, 11, 15, 19],
-      emotional_reward: [4, 8, 12, 16, 20],
-      faith_burden: [21, 23, 25, 27, 29],
-      faith_separation: [22, 24, 26, 28, 30],
-    };
-    const totals = Object.fromEntries(
-      Object.entries(groups).map(([id, indexes]) => {
-        const totalScore = indexes.reduce((sum, idx) => sum + scoreByQuestionIndex(idx), 0);
-        return [id, totalScore];
-      }),
-    ) as Record<"organizing_delay" | "safety_seeking" | "gaze_sensitive" | "emotional_reward" | "faith_burden" | "faith_separation", number>;
+
+    for (const question of currentSurvey.questions) {
+      const resultType = question.options?.map(optionResultType).find(Boolean);
+      if (!resultType || !(resultType in totals)) continue;
+      const answer = currentAnswers[question.id];
+      totals[resultType as ScoreGroup] += scoreForStudio(question, answer) ?? 0;
+    }
     const classified = classifySelahMoneyDiagnosis(totals, currentSurvey.resultTypes ?? []);
     return {
       primaryMoneyType: classified.moneyResult,
@@ -939,33 +980,49 @@ function Runner({
           style={{
             ...cardStyle,
             borderRadius: 8,
-            padding: "42px 36px 34px",
+            padding: "48px 42px 40px",
             textAlign: "center",
             border: `1px solid ${theme.border}`,
           }}
         >
-          <p className="money-prep-intro" style={{ fontSize: 14, lineHeight: 1.8, color: theme.text, fontWeight: 400 }}>
-            더 정확한 결과를 위해,
+          <div className="money-prep-content">
+          <p
+            className="money-diagnosis-label money-intro-sans"
+            style={{
+              margin: 0,
+              fontSize: 15,
+              fontWeight: 700,
+              letterSpacing: "0.18em",
+              color: theme.accent,
+              textTransform: "uppercase",
+            }}
+          >
+            SELAH MONEY DIAGNOSIS
           </p>
-          <p className="money-prep-subtitle" style={{ marginTop: 22, fontSize: 26, lineHeight: 1.5, color: theme.text, fontWeight: 700 }}>
-            <span className="money-prep-line">이 진단지는</span>{" "}
-            <span className="money-prep-line">가볍게 유형만 나누는 테스트가 아닙니다</span>
+          <h1 className="money-intro-title money-prep-title">
+            <span className="money-prep-line">진단 전,</span>
+            <span className="money-prep-line">이것만 기억해주세요</span>
+          </h1>
+          <p className="money-prep-research">
+            <span className="money-prep-line">이 진단지는 돈에 대한 태도와 크리스천의 돈·신앙</span>
+            <span className="money-prep-line">인식을 다룬 국내외 연구와 통계자료를 바탕으로</span>
+              <span className="money-prep-line">구성되었습니다.</span>
           </p>
-          <p className="money-prep-research" style={{ marginTop: 18, fontSize: 14, lineHeight: 1.9, color: theme.text, opacity: 0.78, textAlign: "center" }}>
-            돈에 대한 태도를 분석한 국내외 연구와 크리스천의 돈, 신앙 인식을 다룬 통계자료를 바탕으로 셀라가 구성한 연구 기반 점검지입니다.
+          <div className="money-prep-guidance">
+            <h2>
+              <span className="money-prep-line">최근 6개월간의</span>
+              <span className="money-prep-line">나의 실제 모습을 떠올려주세요.</span>
+            </h2>
+            <p>
+              <span className="money-prep-line">좋아 보이는 답이 아니라,</span>
+              <span className="money-prep-line">실제로 자주 했던 선택에 따라 답해주세요.</span>
+            </p>
+          </div>
+          <p className="money-prep-final">
+            <span className="money-prep-line">솔직하게 답할수록 돈·신앙 유형을</span>
+            <span className="money-prep-line">더 정확히 알 수 있습니다.</span>
           </p>
-          <h2 className="money-prep-reminder" style={{ marginTop: 28, fontSize: 17, lineHeight: 1.5, color: theme.text, fontWeight: 600 }}>
-            답할 때 꼭 기억해주세요
-          </h2>
-          <p className="money-prep-period" style={{ marginTop: 4, fontSize: 15, lineHeight: 1.8, color: theme.text, opacity: 0.84 }}>
-            <span className="money-prep-line">최근 3개월 동안의 나를 떠올려주세요.</span>
-            <span className="money-prep-line">좋아 보이는 답보다,</span>
-            <span className="money-prep-line">실제로 자주 반복된 모습으로 답해주세요.</span>
-          </p>
-          <p className="money-prep-final" style={{ marginTop: 20, fontSize: 19, lineHeight: 1.7, color: theme.text, fontWeight: 700 }}>
-            <span className="money-prep-line">솔직하게 답할수록</span>{" "}
-            <span className="money-prep-line">더 정확한 나의 마음을 알 수 있습니다.</span>
-          </p>
+          </div>
           <button
             className="money-start-button"
             onClick={() => setPhase("questions")}
@@ -979,7 +1036,7 @@ function Runner({
               cursor: "pointer",
             }}
           >
-            준비됐어요, 시작할게요
+            진단 시작하기
           </button>
         </div>
       </Wrap>
@@ -1359,7 +1416,6 @@ function Runner({
           </div>
 
           {isMoneyDiagnosis && <MoneyPaidDiagnosisSection theme={theme} design={design} />}
-          {isMoneyDiagnosis && <FunnelCtas theme={theme} design={design} isMoneyDiagnosis />}
           </div>
 
           {!(result.id === "money_no_clear_pattern" && selahResult?.primaryFaithLens?.id === "faith_low") && (
@@ -1390,6 +1446,8 @@ function Runner({
               {!isMoneyDiagnosis && <ResultActions survey={survey} result={result} design={design} theme={theme} />}
             </>
           )}
+
+          {isMoneyDiagnosis && <FunnelCtas theme={theme} design={design} isMoneyDiagnosis />}
         </Wrap>
       );
     }
@@ -1448,6 +1506,7 @@ function Runner({
     <Wrap theme={theme} design={design}>
       <div style={{ marginBottom: 24 }}>
         <div
+          className={isMoneyDiagnosis ? "money-question-progress-meta" : undefined}
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -1484,8 +1543,11 @@ function Runner({
         className={isMoneyDiagnosis ? "money-question-card" : undefined}
         style={{ ...cardStyle, borderRadius: 8, padding: "34px 30px", border: `1px solid ${theme.border}` }}
       >
-        <p style={{ marginBottom: 14, fontSize: 11, letterSpacing: "0.18em", color: theme.accent, textAlign: "center" }}>
-          SELAH MONEY CHECK
+        <p
+          className={isMoneyDiagnosis ? "money-diagnosis-label money-intro-sans" : undefined}
+          style={{ marginBottom: 14, fontSize: isMoneyDiagnosis ? 15 : 11, letterSpacing: "0.18em", color: theme.accent, textAlign: "center" }}
+        >
+          {isMoneyDiagnosis ? "SELAH MONEY DIAGNOSIS" : "SELAH MONEY CHECK"}
         </p>
         <h2
           className={isMoneyDiagnosis ? "money-question-title" : undefined}
@@ -1542,7 +1604,15 @@ function Runner({
                 return (
                   <button
                     key={n}
-                    onClick={() => setAnswers({ ...answers, [q.id]: n })}
+                    onClick={() => {
+                      if (active) {
+                        const nextAnswers = { ...answers };
+                        delete nextAnswers[q.id];
+                        setAnswers(nextAnswers);
+                      } else {
+                        setAnswers({ ...answers, [q.id]: n });
+                      }
+                    }}
                     style={{
                       width: 48,
                       height: 48,
@@ -1578,6 +1648,10 @@ function Runner({
                       if (idx >= 0) arr.splice(idx, 1);
                       else arr.push(label);
                       setAnswers({ ...answers, [q.id]: arr });
+                    } else if (selected) {
+                      const nextAnswers = { ...answers };
+                      delete nextAnswers[q.id];
+                      setAnswers(nextAnswers);
                     } else {
                       setAnswers({ ...answers, [q.id]: label });
                     }
@@ -1597,7 +1671,7 @@ function Runner({
                     border: `1px solid ${selected ? theme.selected : theme.border}`,
                     backgroundColor: selected ? theme.bg : theme.surface,
                     color: theme.text,
-                    fontSize: 15,
+                    fontSize: 16,
                     lineHeight: 1.5,
                     textAlign: "center",
                     cursor: "pointer",
@@ -1636,28 +1710,35 @@ function Runner({
         }}
       >
         <button
-          onClick={() => setI(Math.max(0, i - 1))}
-          disabled={i === 0}
+          onClick={() => {
+            if (i === 0 && isMoneyDiagnosis) setPhase("prep");
+            else setI(Math.max(0, i - 1));
+          }}
+          disabled={i === 0 && !isMoneyDiagnosis}
           style={{
-            fontSize: 14,
-            color: theme.muted,
-            background: "none",
-            border: "none",
-            cursor: i === 0 ? "default" : "pointer",
-            opacity: i === 0 ? 0.4 : 1,
+            padding: "12px 32px",
+            borderRadius: 999,
+            fontSize: 15,
+            color: theme.text,
+            backgroundColor: theme.surface,
+            border: `1px solid ${theme.border}`,
+            cursor: i === 0 && !isMoneyDiagnosis ? "default" : "pointer",
+            opacity: i === 0 && !isMoneyDiagnosis ? 0.4 : 1,
           }}
         >
           이전
         </button>
         <button
           onClick={next}
+          disabled={!hasCurrentAnswer}
           style={{
             ...btnPrimary,
             padding: "12px 32px",
             borderRadius: 999,
-            fontSize: 14,
+            fontSize: 15,
             fontWeight: 500,
-            cursor: "pointer",
+            cursor: hasCurrentAnswer ? "pointer" : "default",
+            opacity: hasCurrentAnswer ? 1 : 0.45,
           }}
         >
           {i === total - 1 ? "결과 보기" : "다음"}
