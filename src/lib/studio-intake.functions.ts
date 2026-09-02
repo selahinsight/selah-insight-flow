@@ -58,6 +58,8 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
         survey_title: data.surveyTitle,
         name: data.name,
         email: data.email || null,
+        respondent_email: data.email || null,
+        email_address: data.email || null,
         answers: data.answers,
         result_type_id: data.resultTypeId,
         primary_money_type_id: data.primaryMoneyTypeId,
