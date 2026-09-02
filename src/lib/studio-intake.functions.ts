@@ -94,7 +94,11 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
       return { status: "saved" as const };
     }
     if (intake?.email_status !== "sent") {
-      return { status: "email_failed" as const, emailStatus: intake?.email_status ?? "unknown" };
+      return {
+        status: "email_failed" as const,
+        emailStatus: intake?.email_status ?? "unknown",
+        inputEmailPresent: Boolean(data.email),
+      };
     }
     return { status: "sent" as const };
   });
