@@ -596,6 +596,7 @@ function Runner({
           surveyTitle: survey.title,
           answers: {
             ...answersForStudio(survey, answers),
+            __contact: { email: trimmedEmail },
             __consents: {
               privacy: true,
               sensitiveInfo: true,
