@@ -629,7 +629,8 @@ function Runner({
 
   async function submitEmailRequest() {
     if (submitting) return;
-    const trimmedEmail = email.trim();
+    const emailInput = document.querySelector<HTMLInputElement>("[data-result-email]");
+    const trimmedEmail = (emailInput?.value || email).trim();
     if (!trimmedEmail) {
       toast.error("이메일을 입력해주세요.");
       return;
@@ -2012,6 +2013,7 @@ function EmailResultSection({
       )}
       <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
         <input
+          data-result-email
           value={email}
           onChange={(e) => onEmailChange(e.target.value)}
           placeholder="이메일 주소 입력"
