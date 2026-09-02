@@ -18,7 +18,6 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const [checking, setChecking] = useState(true);
-  const [signingIn, setSigningIn] = useState(false);
   const [email, setEmail] = useState("");
   const [sendingLink, setSendingLink] = useState(false);
 
@@ -42,25 +41,6 @@ function AuthPage() {
       sub.subscription.unsubscribe();
     };
   }, []);
-
-  async function signInWithGoogle() {
-    if (signingIn) return;
-    setSigningIn(true);
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: window.location.origin + "/auth",
-        },
-      });
-      if (error) {
-        toast.error("로그인에 실패했습니다.");
-        console.error(error);
-      }
-    } finally {
-      setSigningIn(false);
-    }
-  }
 
   async function sendEmailLink() {
     const normalizedEmail = email.trim();
@@ -111,26 +91,6 @@ function AuthPage() {
         <p style={{ fontSize: 13, opacity: 0.65, marginBottom: 24 }}>
           Selah Studio 내부 관리자만 접근할 수 있습니다.
         </p>
-        <button
-          type="button"
-          onClick={signInWithGoogle}
-          disabled={checking || signingIn}
-          style={{
-            width: "100%",
-            padding: "12px 16px",
-            borderRadius: 10,
-            border: "1px solid #2f2f39",
-            background: "#fff",
-            color: "#111",
-            fontWeight: 600,
-            fontSize: 14,
-            cursor: checking || signingIn ? "not-allowed" : "pointer",
-            opacity: checking || signingIn ? 0.6 : 1,
-          }}
-        >
-          {signingIn ? "이동 중…" : "Google 계정으로 계속하기"}
-        </button>
-        <div style={{ margin: "20px 0 14px", fontSize: 11, opacity: 0.45 }}>또는</div>
         <input
           type="email"
           value={email}
@@ -154,7 +114,7 @@ function AuthPage() {
         <button
           type="button"
           onClick={() => void sendEmailLink()}
-          disabled={!email.trim() || sendingLink}
+          disabled={checking || !email.trim() || sendingLink}
           style={{
             width: "100%",
             marginTop: 10,
@@ -165,8 +125,8 @@ function AuthPage() {
             color: "#fff",
             fontWeight: 600,
             fontSize: 14,
-            cursor: !email.trim() || sendingLink ? "not-allowed" : "pointer",
-            opacity: !email.trim() || sendingLink ? 0.6 : 1,
+            cursor: checking || !email.trim() || sendingLink ? "not-allowed" : "pointer",
+            opacity: checking || !email.trim() || sendingLink ? 0.6 : 1,
           }}
         >
           {sendingLink ? "발송 중…" : "이메일로 로그인 링크 받기"}
