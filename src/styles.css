@@ -607,30 +607,30 @@
 }
 
 /* Selah Money paid report conversion flow */
-.money-paid-teaser { margin-top: 0; padding: 64px 28px 58px; border: 1px solid #cdb7a8; background: #4b3a32; box-shadow: 0 20px 46px rgba(55,39,31,.2); color: #fffaf4; text-align: center; }
-.money-paid-teaser-kicker, .money-report-section-kicker { margin: 0; color: #d9b9a4; font-size: 12px; font-weight: 750; letter-spacing: .13em; }
-.money-paid-teaser .money-paid-bridge-icon { margin: 22px auto 24px; color: #ddbba4; }
-.money-paid-teaser-copy { margin: 0; color: rgba(255,250,244,.78); font-size: 17px; line-height: 1.7; }
-.money-paid-teaser h2 { margin: 24px 0 0; color: #fffaf4; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; font-weight: 700; line-height: 1.5; letter-spacing: -.035em; word-break: keep-all; }
-.money-paid-teaser-detail { max-width: 430px; margin: 24px auto 0; color: rgba(255,250,244,.8); font-size: 16px; line-height: 1.75; word-break: keep-all; }
+.money-paid-teaser { margin-top: 0; padding: 64px 28px 58px; border: 1px solid #d8c4b7; background: #f3e7e1; box-shadow: 0 16px 38px rgba(96,72,59,.1); color: #493c32; text-align: center; }
+.money-paid-teaser-kicker, .money-report-section-kicker { margin: 0; color: #9a7664; font-size: 12px; font-weight: 750; letter-spacing: .13em; }
+.money-paid-teaser .money-paid-bridge-icon { margin: 22px auto 24px; color: #9a7664; }
+.money-paid-teaser-copy { margin: 0; color: rgba(73,60,50,.76); font-size: 17px; line-height: 1.7; }
+.money-paid-teaser h2 { margin: 24px 0 0; color: #493c32; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; font-weight: 700; line-height: 1.5; letter-spacing: -.035em; word-break: keep-all; }
+.money-paid-teaser-detail { max-width: 430px; margin: 24px auto 0; color: rgba(73,60,50,.78); font-size: 16px; line-height: 1.75; word-break: keep-all; }
 .money-paid-preview-button, .money-report-purchase-button { display: inline-flex; width: 100%; max-width: 350px; align-items: center; justify-content: center; gap: 9px; margin: 32px auto 0; padding: 16px 22px !important; border-radius: 999px !important; font-size: 16px !important; font-weight: 750 !important; line-height: 1.35; text-decoration: none; cursor: pointer; }
-.money-paid-teaser-meta { margin: 14px 0 0; color: rgba(255,250,244,.62); font-size: 12.5px; }
+.money-paid-teaser-meta { margin: 14px 0 0; color: rgba(73,60,50,.58); font-size: 12.5px; }
 .money-report-offer-overlay { position: fixed; z-index: 9999; inset: 0; overflow-y: auto; background: rgba(40,29,24,.72); overscroll-behavior: contain; }
 .money-report-offer-page { position: relative; width: min(100%,720px); min-height: 100svh; margin: 0 auto; background: #fffdf9; color: #493c32; }
-.money-report-offer-close { position: sticky; z-index: 3; top: 14px; display: grid; width: 42px; height: 42px; margin: 0 14px -42px auto; place-items: center; border: 1px solid rgba(255,255,255,.38); border-radius: 50%; background: rgba(49,36,30,.74); color: #fff; backdrop-filter: blur(8px); cursor: pointer; }
-.money-report-offer-hero { padding: 82px 28px 68px; background: #4b3a32; color: #fffaf4; text-align: center; }
-.money-report-offer-hero>p:first-child { margin: 0; color: #d9b9a4; font-size: 12px; font-weight: 750; letter-spacing: .13em; }
+.money-report-offer-close { position: sticky; z-index: 3; top: 14px; display: grid; width: 42px; height: 42px; margin: 0 14px -42px auto; place-items: center; border: 1px solid #d8c4b7; border-radius: 50%; background: rgba(255,253,249,.9); color: #493c32; backdrop-filter: blur(8px); cursor: pointer; }
+.money-report-offer-hero { padding: 82px 28px 68px; background: #f3e7e1; color: #493c32; text-align: center; }
+.money-report-offer-hero>p:first-child { margin: 0; color: #9a7664; font-size: 12px; font-weight: 750; letter-spacing: .13em; }
 .money-report-offer-hero h2 { margin: 27px auto 0; max-width: 560px; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 30px; line-height: 1.5; letter-spacing: -.035em; word-break: keep-all; }
 .money-report-type-combination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin: 30px auto 0; }
-.money-report-type-combination span { padding: 9px 15px; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; background: rgba(255,255,255,.07); font-size: 15px; font-weight: 650; }
-.money-report-type-combination strong { color: #d9b9a4; font-size: 17px; }
-.money-report-offer-lead { margin: 24px 0 0; color: rgba(255,250,244,.78); font-size: 16px; line-height: 1.7; }
-.money-report-offer-hero small, .money-report-offer-footer small { display: block; margin-top: 13px; color: rgba(255,250,244,.58); font-size: 12px; line-height: 1.55; }
+.money-report-type-combination span { padding: 9px 15px; border: 1px solid #d8c4b7; border-radius: 999px; background: #fffdf9; font-size: 15px; font-weight: 650; }
+.money-report-type-combination strong { color: #9a7664; font-size: 17px; }
+.money-report-offer-lead { margin: 24px 0 0; color: rgba(73,60,50,.76); font-size: 16px; line-height: 1.7; }
+.money-report-offer-hero small, .money-report-offer-footer small { display: block; margin-top: 13px; color: rgba(73,60,50,.58); font-size: 12px; line-height: 1.55; }
 .money-report-sample-section, .money-report-inclusions-section { padding: 72px 28px; text-align: center; }
 .money-report-sample-section .money-report-section-kicker, .money-report-inclusions-section .money-report-section-kicker { color: #9a7664; }
 .money-report-sample-section>h3, .money-report-inclusions-section>h3 { margin: 18px auto 0; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; line-height: 1.5; letter-spacing: -.03em; }
 .money-report-sample-pages { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 15px; margin-top: 38px; text-align: left; }
-.money-report-sample-pages article { position: relative; min-height: 330px; padding: 30px 22px 24px; overflow: hidden; border: 1px solid #ddcfc4; background: #f7f0e9; box-shadow: 0 12px 28px rgba(74,54,44,.08); }
+.money-report-sample-pages article { position: relative; min-height: 330px; padding: 30px 22px 24px; overflow: hidden; border: 1px solid #ddcfc4; background: #fffdf9; box-shadow: 0 12px 28px rgba(74,54,44,.08); }
 .money-report-sample-number { position: absolute; top: 18px; right: 18px; color: #b59785; font-size: 11px; font-weight: 750; letter-spacing: .08em; }
 .money-report-sample-pages article>svg { color: #9a7664; }
 .money-report-sample-pages h4 { margin: 23px 0 0; font-size: 18px; line-height: 1.45; }
@@ -649,10 +649,10 @@
 .money-report-inclusions-section ul { display: grid; max-width: 470px; gap: 0; margin: 34px auto 0; padding: 0; list-style: none; text-align: left; }
 .money-report-inclusions-section li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; padding: 15px 0; border-bottom: 1px solid #eadfd6; font-size: 16px; line-height: 1.6; }
 .money-report-inclusions-section li svg { margin-top: 3px; color: #9a7664; }
-.money-report-offer-footer { padding: 68px 28px 76px; background: #4b3a32; color: #fffaf4; text-align: center; }
-.money-report-offer-footer>p { margin: 0; color: #d9b9a4; font-size: 12px; font-weight: 750; letter-spacing: .13em; }
+.money-report-offer-footer { padding: 68px 28px 76px; border-top: 1px solid #d8c4b7; background: #f7f0e9; color: #493c32; text-align: center; }
+.money-report-offer-footer>p { margin: 0; color: #9a7664; font-size: 12px; font-weight: 750; letter-spacing: .13em; }
 .money-report-offer-footer>strong { display: block; margin-top: 16px; font-size: 37px; line-height: 1.2; }
-.money-report-offer-footer>span { display: block; margin-top: 8px; color: rgba(255,255,255,.6); font-size: 13px; }
+.money-report-offer-footer>span { display: block; margin-top: 8px; color: rgba(73,60,50,.58); font-size: 13px; }
 
 @media (max-width: 639px) {
   .money-paid-teaser { padding: 56px 22px 52px; }
