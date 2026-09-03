@@ -37,7 +37,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { CircleDollarSign, Compass, Download, Fingerprint, GitBranch, Heart, Instagram, Mail, ScanSearch, Share2, Sprout, Youtube } from "lucide-react";
+import { ArrowRight, BarChart3, Check, CircleDollarSign, Compass, Download, Fingerprint, GitBranch, Heart, Instagram, LockKeyhole, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -1409,7 +1409,16 @@ function Runner({
             )}
           </div>
 
-          {isMoneyDiagnosis && <MoneyPaidDiagnosisSection theme={theme} design={design} />}
+          {isMoneyDiagnosis && (
+            <MoneyPaidDiagnosisSection
+              theme={theme}
+              design={design}
+              moneyTitle={result.title}
+              faithTitle={selahResult?.primaryFaithLens
+                ? customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)
+                : "신앙 유형"}
+            />
+          )}
           {isMoneyDiagnosis && (
             <div className="money-email-social-capture" aria-hidden="true">
               <FunnelCtas theme={theme} design={design} isMoneyDiagnosis />
@@ -2103,118 +2112,154 @@ function EmailResultSection({
   );
 }
 
-function MoneyPaidDiagnosisSection({ theme, design }: { theme: ThemeColors; design: DesignSettings }) {
+function MoneyPaidDiagnosisSection({
+  theme,
+  design,
+  moneyTitle,
+  faithTitle,
+}: {
+  theme: ThemeColors;
+  design: DesignSettings;
+  moneyTitle: string;
+  faithTitle: string;
+}) {
   const btn = buttonClasses(design.button_style, theme);
-  const card = cardClasses(design.card_style, theme);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_REPORT_CHECKOUT_URL as string | undefined)?.trim();
+
+  useEffect(() => {
+    if (!detailsOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [detailsOpen]);
+
+  const purchaseButton = (placement: string) => checkoutUrl ? (
+    <a
+      className="money-report-purchase-button"
+      href={checkoutUrl}
+      data-placement={placement}
+      style={{ ...btn }}
+    >
+      9,900원으로 내 심층 리포트 받기
+      <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
+    </a>
+  ) : (
+    <button
+      className="money-report-purchase-button money-report-purchase-button-pending"
+      type="button"
+      data-placement={placement}
+      onClick={() => toast.info("결제 링크를 연결하고 있습니다.")}
+      style={{ ...btn }}
+    >
+      9,900원으로 내 심층 리포트 받기
+      <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
+    </button>
+  );
 
   return (
     <section className="money-funnel-section money-paid-funnel-section">
-      <div className="money-funnel-intro" style={{ padding: "0 18px", textAlign: "center" }}>
-        <div className="money-paid-bridge-icon" style={{ color: theme.accent }} aria-hidden="true">
-          <Fingerprint size={28} strokeWidth={1.4} />
-        </div>
-        <p className="money-paid-bridge" style={{ color: theme.text }}>
-          돈 앞에서 왜 자꾸 흔들리는지,
-          <br />
-          내 마음을 더 깊이 이해해보세요.
+      <div className="money-paid-teaser">
+        <p className="money-paid-teaser-kicker">무료 결과 다음 이야기</p>
+        <div className="money-paid-bridge-icon" aria-hidden="true"><Fingerprint size={29} strokeWidth={1.35} /></div>
+        <p className="money-paid-teaser-copy">
+          여기까지는 돈 반응과 신앙 유형을<br />각각 살펴봤어요.
         </p>
-        <p className="money-paid-bridge-arrow" style={{ color: theme.accent }} aria-hidden="true">↓</p>
-      </div>
-
-      <div
-        className="money-result-card money-funnel-card money-paid-diagnosis-card"
-        style={{
-          ...card,
-          marginTop: 0,
-          textAlign: "center",
-          border: "1px solid #d8c4b7",
-          borderRadius: 0,
-          backgroundColor: "#f1e7dd",
-          boxShadow: "0 18px 42px rgba(96, 72, 59, 0.14)",
-        }}
-      >
-        <p className="money-diagnosis-label money-funnel-label" style={{ color: theme.accent }}>PERSONAL DEEP-DIVE REPORT</p>
-        <h2 className="money-funnel-title money-funnel-product-title" style={{ color: theme.text }}>셀라 머니 심층 진단</h2>
-        <div className="money-paid-product-copy" style={{ color: theme.text }}>
-          <p className="money-paid-product-question">
-            <span className="money-paid-product-quote" aria-hidden="true">“</span>
-            <strong>
-              돈을 쓰고 후회하고,
-              <br />
-              모으면서도 불안하고,
-              <br />
-              계획을 세워도 자꾸 흐트러지나요?
-            </strong>
-            <span className="money-paid-product-quote" aria-hidden="true">”</span>
-          </p>
-          <p className="money-paid-product-summary">
-            셀라 머니 심층 진단지는 소비·저축·투자에서 반복되는 나의 패턴을 찾고, 흔들릴 때 돌아올 수 있는 나만의 돈 관리 기준을 세우도록 도와드립니다.
-          </p>
-        </div>
-
-        <div className="money-paid-inclusions" style={{ color: theme.text }}>
-          <h3>진단지에 담긴 내용</h3>
-          <ul>
-            <li><GitBranch size={18} strokeWidth={1.5} aria-hidden="true" /><span>돈 유형과 신앙 유형을 연결한 통합 해석</span></li>
-            <li><CircleDollarSign size={18} strokeWidth={1.5} aria-hidden="true" /><span>소비·저축·투자에서 나타나는 나의 돈 관리 패턴</span></li>
-            <li><Compass size={18} strokeWidth={1.5} aria-hidden="true" /><span>말씀을 바탕으로 세우는 돈 관리 기준</span></li>
-            <li><Sprout size={18} strokeWidth={1.5} aria-hidden="true" /><span>지금 시작할 수 있는 맞춤 실천 방향</span></li>
-          </ul>
-        </div>
-
-        <div className="money-paid-price-row">
-          <div className="money-paid-normal-price" style={{ color: theme.muted }}>
-            <span>정상가</span>
-            <strong>15,000원</strong>
-          </div>
-          <span className="money-paid-price-arrow" style={{ color: theme.accent }} aria-hidden="true">→</span>
-          <div className="money-paid-launch-price">
-            <span style={{ color: theme.accent }}>런칭가</span>
-            <strong style={{ color: theme.text }}>9,900원</strong>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => setDetailsOpen((open) => !open)}
-          aria-expanded={detailsOpen}
-          style={{
-            ...btn,
-            width: "100%",
-            maxWidth: 340,
-            marginTop: 30,
-            padding: "14px 22px",
-            borderRadius: 999,
-            fontSize: 16,
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-          셀라 머니 진단지 미리 살펴보기
+        <h2>내 두 결과가 만나면<br />어떤 흐름이 만들어질까요?</h2>
+        <p className="money-paid-teaser-detail">
+          실제 소비·저축·투자에서는 두 반응이 따로 움직이지 않습니다. 두 결과의 연결을 이해하면 반복되는 선택의 이유가 더 선명해집니다.
+        </p>
+        <button className="money-paid-preview-button" type="button" onClick={() => setDetailsOpen(true)} style={{ ...btn }}>
+          내 심층 리포트 미리보기
+          <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
         </button>
-
-        {detailsOpen && (
-          <div
-            style={{
-              margin: "18px auto 0",
-              maxWidth: 420,
-              padding: "22px 18px",
-              borderRadius: 14,
-              background: theme.bg,
-              textAlign: "left",
-            }}
-          >
-            <h3 style={{ margin: 0, color: theme.text, fontSize: 18 }}>셀라 머니 진단지 미리보기</h3>
-            <p style={{ margin: "12px 0 0", color: theme.text, fontSize: 15, lineHeight: 1.75 }}>
-              돈을 쓰고 난 뒤 불안이 커지는 마음에는 미래를 안전하게 지키고 싶은 바람이 함께 있습니다. 나의 마음이 안정을 느끼는 기준을 먼저 세우면 지출을 후회하는 흐름에서 벗어나 평안하게 선택할 수 있습니다.
-            </p>
-            <p style={{ margin: "18px 0 0", color: theme.muted, fontSize: 14.5, lineHeight: 1.7 }}>
-              결제와 정보 확인을 마치면 나의 무료 진단 결과를 바탕으로 심층 진단지를 구성해 전달합니다.
-            </p>
-          </div>
-        )}
+        <p className="money-paid-teaser-meta">10페이지 개인 맞춤 PDF · 런칭가 9,900원</p>
       </div>
+
+      {detailsOpen && (
+        <div className="money-report-offer-overlay" role="dialog" aria-modal="true" aria-label="셀라 머니 심층 리포트 미리보기">
+          <div className="money-report-offer-page">
+            <button className="money-report-offer-close" type="button" onClick={() => setDetailsOpen(false)} aria-label="미리보기 닫기">
+              <X size={22} />
+            </button>
+
+            <header className="money-report-offer-hero">
+              <p>SELAH MONEY PERSONAL REPORT</p>
+              <h2>돈 반응과 신앙 유형을 연결하면<br />반복되는 선택의 이유가 선명해집니다.</h2>
+              <div className="money-report-type-combination">
+                <span>{moneyTitle}</span><strong>×</strong><span>{faithTitle}</span>
+              </div>
+              <p className="money-report-offer-lead">나의 두 결과로 완성되는 10페이지 개인 맞춤 리포트</p>
+              {purchaseButton("hero")}
+              <small>결제 후 현재 진단 결과를 바탕으로 개인 리포트가 생성됩니다.</small>
+            </header>
+
+            <section className="money-report-sample-section">
+              <p className="money-report-section-kicker">REPORT PREVIEW</p>
+              <h3>실제 리포트에는<br />이런 내용이 담겨요</h3>
+              <div className="money-report-sample-pages">
+                <article>
+                  <div className="money-report-sample-number">02</div>
+                  <BarChart3 size={30} strokeWidth={1.35} aria-hidden="true" />
+                  <h4>나의 돈 반응 지도</h4>
+                  <p>4개의 돈 반응과 2개의 신앙 렌즈 점수로 결과가 만들어진 근거를 확인합니다.</p>
+                  <div className="money-report-mini-bars" aria-hidden="true"><i /><i /><i /><i /></div>
+                </article>
+                <article>
+                  <div className="money-report-sample-number">05</div>
+                  <GitBranch size={30} strokeWidth={1.35} aria-hidden="true" />
+                  <h4>두 결과의 연결 해석</h4>
+                  <p>돈 반응과 신앙의 해석이 실제 돈 결정 안에서 어떻게 하나의 흐름을 만드는지 살펴봅니다.</p>
+                  <div className="money-report-locked-line"><LockKeyhole size={14} /> 나의 연결 해석은 구매 후 공개됩니다</div>
+                </article>
+                <article>
+                  <div className="money-report-sample-number">07</div>
+                  <Compass size={30} strokeWidth={1.35} aria-hidden="true" />
+                  <h4>내 유형의 돈의 4가지 자리</h4>
+                  <p>드림·세움·자람·쓰임의 자리에서 나타나는 내 반응과 맞춤 적용점을 안내합니다.</p>
+                  <div className="money-report-four-seats" aria-hidden="true"><i>드림</i><i>세움</i><i>자람</i><i>쓰임</i></div>
+                </article>
+              </div>
+              {purchaseButton("after-samples")}
+            </section>
+
+            <section className="money-report-difference-section">
+              <div>
+                <span>무료 진단</span>
+                <h3>나에게 어떤 반응이 나타나는지 발견합니다.</h3>
+              </div>
+              <ArrowRight size={24} aria-hidden="true" />
+              <div>
+                <span>심층 리포트</span>
+                <h3>왜 함께 나타나는지 이해하고, 무엇부터 바꿀지 확인합니다.</h3>
+              </div>
+            </section>
+
+            <section className="money-report-inclusions-section">
+              <p className="money-report-section-kicker">10-PAGE PERSONAL REPORT</p>
+              <h3>막연한 다짐 대신<br />내 마음을 이해한 뒤 세우는 돈의 기준</h3>
+              <ul>
+                <li><Check size={18} /><span>6개 점수로 보는 나의 돈 반응 지도</span></li>
+                <li><Check size={18} /><span>돈 반응과 신앙 유형의 개별 상세 해석</span></li>
+                <li><Check size={18} /><span>두 결과가 만날 때 나타나는 연결 흐름</span></li>
+                <li><Check size={18} /><span>소비·저축·투자에서 반복되는 실제 패턴</span></li>
+                <li><Check size={18} /><span>내 유형에 맞춘 돈의 4가지 자리 적용</span></li>
+                <li><Check size={18} /><span>개인 돈 기준 선언문과 이번 주 실행 계획</span></li>
+              </ul>
+            </section>
+
+            <footer className="money-report-offer-footer">
+              <p>LAUNCH PRICE</p>
+              <strong>9,900원</strong>
+              <span>런칭 종료 후 12,000원</span>
+              {purchaseButton("footer")}
+              <small>개인 맞춤 10페이지 PDF · 이메일 전달</small>
+            </footer>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
