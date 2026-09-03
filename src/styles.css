@@ -400,6 +400,14 @@
   width: 100%;
 }
 
+.money-email-social-capture {
+  display: none;
+}
+
+.money-email-capture-content[data-capturing-email="true"] .money-email-social-capture {
+  display: block;
+}
+
 .money-content-footer h2 {
   margin: 0;
   font-family: "Gowun Batang", ui-serif, Georgia, serif;

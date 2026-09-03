@@ -651,13 +651,20 @@ function Runner({
       if (isMoneyDiagnosis && emailCaptureRef.current) {
         await document.fonts?.ready;
         const node = emailCaptureRef.current;
-        const dataUrl = await toPng(node, {
-          cacheBust: true,
-          pixelRatio: 1,
-          backgroundColor: theme.bg,
-          width: node.scrollWidth,
-          height: node.scrollHeight,
-        });
+        node.setAttribute("data-capturing-email", "true");
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+        let dataUrl: string;
+        try {
+          dataUrl = await toPng(node, {
+            cacheBust: true,
+            pixelRatio: 1,
+            backgroundColor: theme.bg,
+            width: node.scrollWidth,
+            height: node.scrollHeight,
+          });
+        } finally {
+          node.removeAttribute("data-capturing-email");
+        }
         if (dataUrl.length > 24_000_000) {
           throw new Error("결과 이미지 용량이 너무 큽니다.");
         }
@@ -1403,6 +1410,11 @@ function Runner({
           </div>
 
           {isMoneyDiagnosis && <MoneyPaidDiagnosisSection theme={theme} design={design} />}
+          {isMoneyDiagnosis && (
+            <div className="money-email-social-capture" aria-hidden="true">
+              <FunnelCtas theme={theme} design={design} isMoneyDiagnosis />
+            </div>
+          )}
           </div>
 
           {!(result.id === "money_no_clear_pattern" && selahResult?.primaryFaithLens?.id === "faith_low") && (
