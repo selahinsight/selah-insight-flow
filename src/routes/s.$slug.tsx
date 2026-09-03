@@ -286,7 +286,7 @@ function buildResultEmailContent(args: {
   const displayName = args.name.trim() || "고객";
   const subject = `[셀라인사이트] ${displayName}님의 셀라 머니 진단 결과가 도착했습니다`;
   const text = `${displayName}님의 셀라 머니 진단 결과가 도착했습니다. 아래 결과 이미지를 확인해주세요.`;
-  const html = `<!doctype html><html lang="ko"><body style="margin:0;background:#f7f1e8;color:#3d3028;font-family:Arial,'Noto Sans KR',sans-serif"><main style="max-width:780px;margin:auto;background:#fffdf8;padding:36px 22px 28px"><p style="margin:0 0 8px;color:#a36f58;font-size:12px;letter-spacing:.18em">SELAH INSIGHT</p><h1 style="margin:0 0 12px;font:400 28px/1.4 Georgia,'Noto Serif KR',serif">${escapeEmailHtml(displayName)}님의 셀라 머니 진단 결과가 도착했습니다</h1><p style="margin:0;color:#76675c;font-size:14px;line-height:1.8">아래에서 진단 결과를 확인해보세요.</p></main></body></html>`;
+  const html = `<!doctype html><html lang="ko"><body style="margin:0;background:#f7f1e8;color:#3d3028;font-family:Arial,'Noto Sans KR',sans-serif"><main style="max-width:780px;margin:auto;background:#fffdf8;padding:36px 22px 22px;text-align:center"><p style="margin:0 0 10px;color:#a36f58;font-size:12px;letter-spacing:.18em">SELAH INSIGHT</p><h1 style="margin:0 0 10px;font:400 26px/1.45 Georgia,'Noto Serif KR',serif">${escapeEmailHtml(displayName)}님의<br>셀라 머니 진단 결과가 도착했습니다</h1><p style="margin:0;color:#76675c;font-size:14px;line-height:1.8">아래에서 진단 결과를 확인해보세요.</p></main></body></html>`;
   return { subject, html, text };
 }
 
@@ -657,7 +657,7 @@ function Runner({
         try {
           dataUrl = await toPng(node, {
             cacheBust: true,
-            pixelRatio: 1,
+            pixelRatio: 2,
             backgroundColor: theme.bg,
             width: node.scrollWidth,
             height: node.scrollHeight,
