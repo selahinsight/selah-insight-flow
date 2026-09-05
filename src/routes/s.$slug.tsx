@@ -2162,17 +2162,22 @@ function MoneyPaidDiagnosisSection({
   return (
     <section className="money-funnel-section money-paid-funnel-section">
       <div className="money-paid-teaser">
-        <p className="money-paid-teaser-kicker">무료 결과 다음 이야기</p>
+        <p className="money-paid-teaser-kicker">두 결과를 함께 보면</p>
         <div className="money-paid-bridge-icon" aria-hidden="true"><Fingerprint size={29} strokeWidth={1.35} /></div>
         <p className="money-paid-teaser-copy">
-          여기까지는 돈 반응과 신앙 유형을<br />각각 살펴봤어요.
+          {moneyTitle} × {faithTitle}
         </p>
-        <h2>내 두 결과가 만나면<br />어떤 흐름이 만들어질까요?</h2>
+        <h2>같은 마음이 반복되는데도<br />돈 문제마다 선택이 달라지는 이유</h2>
         <p className="money-paid-teaser-detail">
-          실제 소비·저축·투자에서는 두 반응이 따로 움직이지 않습니다. 두 결과의 연결을 이해하면 반복되는 선택의 이유가 더 선명해집니다.
+          무료 진단에서는 두 유형을 각각 확인했습니다. 심층 리포트에서는 두 반응이 소비·저축·투자에서 어떻게 부딪히고 이어지는지, 그래서 무엇부터 바꿔야 하는지를 내 조합에 맞춰 풀어드립니다.
         </p>
+        <ul className="money-paid-teaser-benefits">
+          <li><Check size={16} aria-hidden="true" />반복되는 돈 선택의 이유</li>
+          <li><Check size={16} aria-hidden="true" />내 조합의 강점과 주의할 흐름</li>
+          <li><Check size={16} aria-hidden="true" />지금 적용할 세 가지 돈 기준</li>
+        </ul>
         <button className="money-paid-preview-button" type="button" onClick={() => setDetailsOpen(true)} style={{ ...btn }}>
-          내 심층 리포트 미리보기
+          내 조합의 심층 리포트 보기
           <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
         </button>
         <p className="money-paid-teaser-meta">11페이지 개인 맞춤 PDF · 구매 후 24시간 이내 이메일 전송</p>
@@ -2187,11 +2192,11 @@ function MoneyPaidDiagnosisSection({
 
             <header className="money-report-offer-hero">
               <p>SELAH MONEY PERSONAL REPORT</p>
-              <h2>돈 반응과 신앙 유형을 연결하면<br />반복되는 선택의 이유가 선명해집니다.</h2>
+              <h2>유형의 이름에서 끝나지 않고<br />내 실제 돈 선택까지 해석합니다.</h2>
               <div className="money-report-type-combination">
                 <span>{moneyTitle}</span><strong>×</strong><span>{faithTitle}</span>
               </div>
-              <p className="money-report-offer-lead">나의 두 결과로 완성되는 11페이지 개인 맞춤 리포트</p>
+              <p className="money-report-offer-lead">두 반응의 연결 원인과 바꿔갈 기준을 담은 11페이지 개인 맞춤 리포트</p>
               {purchaseButton("hero")}
               <small>결제하신 진단 결과를 바탕으로 제작해 24시간 이내 이메일로 보내드립니다.</small>
             </header>

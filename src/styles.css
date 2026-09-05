@@ -613,6 +613,9 @@
 .money-paid-teaser-copy { margin: 0; color: rgba(73,60,50,.76); font-size: 17px; line-height: 1.7; }
 .money-paid-teaser h2 { margin: 24px 0 0; color: #493c32; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; font-weight: 700; line-height: 1.5; letter-spacing: -.035em; word-break: keep-all; }
 .money-paid-teaser-detail { max-width: 430px; margin: 24px auto 0; color: rgba(73,60,50,.78); font-size: 16px; line-height: 1.75; word-break: keep-all; }
+.money-paid-teaser-benefits { display: grid; max-width: 390px; gap: 10px; margin: 24px auto 0; padding: 0; list-style: none; text-align: left; }
+.money-paid-teaser-benefits li { display: flex; align-items: center; gap: 9px; color: rgba(73,60,50,.84); font-size: 14px; line-height: 1.55; }
+.money-paid-teaser-benefits svg { flex: 0 0 auto; color: #9a7664; }
 .money-paid-preview-button, .money-report-purchase-button { display: inline-flex; width: 100%; max-width: 350px; align-items: center; justify-content: center; gap: 9px; margin: 32px auto 0; padding: 16px 22px !important; border-radius: 999px !important; font-size: 16px !important; font-weight: 750 !important; line-height: 1.35; text-decoration: none; cursor: pointer; }
 .money-paid-teaser-meta { margin: 14px 0 0; color: rgba(73,60,50,.58); font-size: 12.5px; }
 .money-report-offer-overlay { position: fixed; z-index: 9999; inset: 0; overflow-y: auto; background: rgba(40,29,24,.72); overscroll-behavior: contain; }

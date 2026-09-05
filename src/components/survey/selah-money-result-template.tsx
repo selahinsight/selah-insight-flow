@@ -60,7 +60,7 @@ export function SelahMoneyResultTemplate({
           <section className="money-unified-checklist">
             <h3>이렇게 시작해보세요</h3>
             <ul>
-              {content.checklist.map((item) => <li key={item}>{item}</li>)}
+              {content.checklist.slice(0, 1).map((item) => <li key={item}>{item}</li>)}
             </ul>
           </section>
         </div>
