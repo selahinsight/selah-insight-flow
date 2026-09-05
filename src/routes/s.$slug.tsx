@@ -37,7 +37,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { ArrowRight, BarChart3, Check, CircleDollarSign, Compass, Download, Fingerprint, GitBranch, Heart, Instagram, LockKeyhole, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
+import { ArrowRight, Check, CircleDollarSign, Download, Fingerprint, GitBranch, Heart, Instagram, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -2175,7 +2175,7 @@ function MoneyPaidDiagnosisSection({
           내 심층 리포트 미리보기
           <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
         </button>
-        <p className="money-paid-teaser-meta">10페이지 개인 맞춤 PDF · 런칭가 9,900원</p>
+        <p className="money-paid-teaser-meta">11페이지 개인 맞춤 PDF · 구매 후 24시간 이내 이메일 전송</p>
       </div>
 
       {detailsOpen && (
@@ -2191,35 +2191,39 @@ function MoneyPaidDiagnosisSection({
               <div className="money-report-type-combination">
                 <span>{moneyTitle}</span><strong>×</strong><span>{faithTitle}</span>
               </div>
-              <p className="money-report-offer-lead">나의 두 결과로 완성되는 10페이지 개인 맞춤 리포트</p>
+              <p className="money-report-offer-lead">나의 두 결과로 완성되는 11페이지 개인 맞춤 리포트</p>
               {purchaseButton("hero")}
-              <small>결제 후 현재 진단 결과를 바탕으로 개인 리포트가 생성됩니다.</small>
+              <small>결제하신 진단 결과를 바탕으로 제작해 24시간 이내 이메일로 보내드립니다.</small>
             </header>
 
             <section className="money-report-sample-section">
               <p className="money-report-section-kicker">REPORT PREVIEW</p>
               <h3>실제 리포트에는<br />이런 내용이 담겨요</h3>
-              <div className="money-report-sample-pages">
+              <div className="money-report-sample-pages" aria-label="실제 리포트 페이지 미리보기">
                 <article>
-                  <div className="money-report-sample-number">02</div>
-                  <BarChart3 size={30} strokeWidth={1.35} aria-hidden="true" />
-                  <h4>나의 돈 반응 지도</h4>
-                  <p>4개의 돈 반응과 2개의 신앙 렌즈 점수로 결과가 만들어진 근거를 확인합니다.</p>
-                  <div className="money-report-mini-bars" aria-hidden="true"><i /><i /><i /><i /></div>
+                  <div className="money-report-page-image">
+                    <img src="/selah-money-report-preview/page-01-cover.png" alt="개인 이름과 돈 유형, 신앙 유형이 담긴 실제 리포트 표지 예시" loading="lazy" />
+                  </div>
+                  <div className="money-report-sample-copy"><span>01 · 개인 맞춤 표지</span><h4>나의 두 유형으로 시작해요</h4><p>이름과 돈 반응, 신앙 반응을 반영한 개인 리포트로 제작됩니다.</p></div>
                 </article>
                 <article>
-                  <div className="money-report-sample-number">05</div>
-                  <GitBranch size={30} strokeWidth={1.35} aria-hidden="true" />
-                  <h4>두 결과의 연결 해석</h4>
-                  <p>돈 반응과 신앙의 해석이 실제 돈 결정 안에서 어떻게 하나의 흐름을 만드는지 살펴봅니다.</p>
-                  <div className="money-report-locked-line"><LockKeyhole size={14} /> 나의 연결 해석은 구매 후 공개됩니다</div>
+                  <div className="money-report-page-image money-report-page-image--locked">
+                    <img src="/selah-money-report-preview/page-06-integration.png" alt="돈 반응과 신앙 반응을 연결한 실제 리포트 페이지 예시" loading="lazy" />
+                    <div className="money-report-page-lock">개인별 연결 해석은<br />구매 후 확인할 수 있어요</div>
+                  </div>
+                  <div className="money-report-sample-copy"><span>06 · 통합 해석</span><h4>두 마음이 함께 만드는 돈 선택</h4><p>돈 반응과 신앙 반응이 실제 선택 안에서 어떻게 함께 움직이는지 살펴봅니다.</p></div>
                 </article>
                 <article>
-                  <div className="money-report-sample-number">07</div>
-                  <Compass size={30} strokeWidth={1.35} aria-hidden="true" />
-                  <h4>내 유형의 돈의 4가지 자리</h4>
-                  <p>드림·세움·자람·쓰임의 자리에서 나타나는 내 반응과 맞춤 적용점을 안내합니다.</p>
-                  <div className="money-report-four-seats" aria-hidden="true"><i>드림</i><i>세움</i><i>자람</i><i>쓰임</i></div>
+                  <div className="money-report-page-image">
+                    <img src="/selah-money-report-preview/page-08-direction.png" alt="앞으로 세워갈 돈과 삶의 방향을 제안하는 실제 리포트 페이지 예시" loading="lazy" />
+                  </div>
+                  <div className="money-report-sample-copy"><span>08 · 행동 방향</span><h4>앞으로 세워갈 돈과 삶의 방향</h4><p>오늘부터 적용할 수 있는 세 가지 기준과 실천 방향을 제안합니다.</p></div>
+                </article>
+                <article>
+                  <div className="money-report-page-image money-report-page-image--summary">
+                    <img src="/selah-money-report-preview/page-10-summary.png" alt="핵심 해석과 기억할 방향을 정리한 실제 리포트 페이지 예시" loading="lazy" />
+                  </div>
+                  <div className="money-report-sample-copy"><span>10 · 전체 정리</span><h4>나의 결과를 한눈에 정리해요</h4><p>11페이지의 핵심 해석과 앞으로 기억할 방향을 한 장으로 다시 확인합니다.</p></div>
                 </article>
               </div>
               {purchaseButton("after-samples")}
@@ -2238,15 +2242,15 @@ function MoneyPaidDiagnosisSection({
             </section>
 
             <section className="money-report-inclusions-section">
-              <p className="money-report-section-kicker">10-PAGE PERSONAL REPORT</p>
+              <p className="money-report-section-kicker">11-PAGE PERSONAL REPORT</p>
               <h3>막연한 다짐 대신<br />내 마음을 이해한 뒤 세우는 돈의 기준</h3>
               <ul>
-                <li><Check size={18} /><span>6개 점수로 보는 나의 돈 반응 지도</span></li>
-                <li><Check size={18} /><span>돈 반응과 신앙 유형의 개별 상세 해석</span></li>
-                <li><Check size={18} /><span>두 결과가 만날 때 나타나는 연결 흐름</span></li>
-                <li><Check size={18} /><span>소비·저축·투자에서 반복되는 실제 패턴</span></li>
-                <li><Check size={18} /><span>내 유형에 맞춘 돈의 4가지 자리 적용</span></li>
-                <li><Check size={18} /><span>개인 돈 기준 선언문과 이번 주 실행 계획</span></li>
+                <li><Check size={18} /><span>돈 앞에서 반복되는 나의 반응과 일상 속 모습</span></li>
+                <li><Check size={18} /><span>돈을 대할 때 나타나는 신앙 반응</span></li>
+                <li><Check size={18} /><span>돈 반응과 신앙 반응이 함께 만드는 선택</span></li>
+                <li><Check size={18} /><span>이 조합이 가진 강점과 살펴볼 방향</span></li>
+                <li><Check size={18} /><span>앞으로 세워갈 돈과 삶의 세 가지 방향</span></li>
+                <li><Check size={18} /><span>말씀 묵상과 나의 결과 전체 정리</span></li>
               </ul>
             </section>
 
@@ -2255,7 +2259,7 @@ function MoneyPaidDiagnosisSection({
               <strong>9,900원</strong>
               <span>런칭 종료 후 12,000원</span>
               {purchaseButton("footer")}
-              <small>개인 맞춤 10페이지 PDF · 이메일 전달</small>
+              <small>개인 맞춤 11페이지 PDF · 구매 후 24시간 이내 이메일 전송</small>
             </footer>
           </div>
         </div>
