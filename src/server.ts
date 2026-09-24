@@ -40,6 +40,13 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const requestUrl = new URL(request.url);
+      if (requestUrl.hostname === "diagnosis.selahinsight.co.kr") {
+        const canonicalUrl = new URL("https://selahinsight.co.kr/money-diagnosis");
+        canonicalUrl.search = requestUrl.search;
+        return Response.redirect(canonicalUrl.toString(), 301);
+      }
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
