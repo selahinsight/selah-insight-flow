@@ -37,7 +37,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { ArrowRight, Check, CircleDollarSign, Download, Fingerprint, GitBranch, Heart, Instagram, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
+import { ArrowRight, BookOpen, Check, ChevronDown, CircleDollarSign, Download, GitBranch, Heart, Instagram, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -2136,14 +2136,14 @@ function MoneyPaidDiagnosisSection({
     };
   }, [detailsOpen]);
 
-  const purchaseButton = (placement: string) => checkoutUrl ? (
+  const purchaseButton = (placement: string, label = "9,900원으로 내 심층 리포트 받기") => checkoutUrl ? (
     <a
       className="money-report-purchase-button"
       href={checkoutUrl}
       data-placement={placement}
       style={{ ...btn }}
     >
-      9,900원으로 내 심층 리포트 받기
+      {label}
       <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
     </a>
   ) : (
@@ -2154,33 +2154,38 @@ function MoneyPaidDiagnosisSection({
       onClick={() => toast.info("결제 링크를 연결하고 있습니다.")}
       style={{ ...btn }}
     >
-      9,900원으로 내 심층 리포트 받기
+      {label}
       <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
     </button>
   );
 
   return (
     <section className="money-funnel-section money-paid-funnel-section">
-      <div className="money-paid-teaser">
-        <p className="money-paid-teaser-kicker">두 결과를 함께 보면</p>
-        <div className="money-paid-bridge-icon" aria-hidden="true"><Fingerprint size={29} strokeWidth={1.35} /></div>
-        <p className="money-paid-teaser-copy">
-          {moneyTitle} × {faithTitle}
+      <div className="money-paid-transition" aria-label="맞춤 리포트 안내">
+        <strong>돈 앞의 내 반응을 발견했다면,</strong>
+        <span>이제 그 반응이 반복되는 이유와 나에게 맞는 변화의 방향을 이해할 차례입니다.</span>
+        <ChevronDown className="money-paid-transition-arrow" size={36} strokeWidth={1.8} aria-hidden="true" />
+      </div>
+      <div className="money-paid-teaser money-paid-teaser--compact">
+        <div className="money-paid-teaser-icon" aria-hidden="true"><BookOpen size={44} strokeWidth={1.5} /></div>
+        <h2>
+          <span>돈을 관리할 때,</span>
+          <span>무엇이 나의 선택을 이끌고 있을까요?</span>
+        </h2>
+        <p className="money-paid-teaser-key">
+          <span>내가 돈을 관리하는 방식 안에는</span>
+          <span>나도 모르는 마음과 믿음이 담겨 있습니다.</span>
         </p>
-        <h2>같은 마음이 반복되는데도<br />돈 문제마다 선택이 달라지는 이유</h2>
-        <p className="money-paid-teaser-detail">
-          무료 진단에서는 두 유형을 각각 확인했습니다. 심층 리포트에서는 두 반응이 소비·저축·투자에서 어떻게 부딪히고 이어지는지, 그래서 무엇부터 바꿔야 하는지를 내 조합에 맞춰 풀어드립니다.
-        </p>
+        <p className="money-paid-teaser-benefit-title">나만의 맞춤 리포트에서 확인해보세요</p>
         <ul className="money-paid-teaser-benefits">
-          <li><Check size={16} aria-hidden="true" />반복되는 돈 선택의 이유</li>
-          <li><Check size={16} aria-hidden="true" />내 조합의 강점과 주의할 흐름</li>
-          <li><Check size={16} aria-hidden="true" />지금 적용할 세 가지 돈 기준</li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내 선택을 이끄는 기준과 반복되는 돈 관리 흐름</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>이미 가진 강점과 앞으로 필요한 방향</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>유형에 맞는 말씀과 묵상 질문</span></li>
         </ul>
-        <button className="money-paid-preview-button" type="button" onClick={() => setDetailsOpen(true)} style={{ ...btn }}>
-          내 조합의 심층 리포트 보기
-          <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
+        <button className="money-report-purchase-button" type="button" data-placement="free-results" onClick={() => setDetailsOpen(true)} style={{ ...btn }}>
+          내 맞춤 리포트 미리보기
+          <ArrowRight size={18} strokeWidth={1.9} aria-hidden="true" />
         </button>
-        <p className="money-paid-teaser-meta">11페이지 개인 맞춤 PDF · 구매 후 24시간 이내 이메일 전송</p>
       </div>
 
       {detailsOpen && (
