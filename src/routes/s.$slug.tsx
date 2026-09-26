@@ -2162,8 +2162,8 @@ function MoneyPaidDiagnosisSection({
   return (
     <section className="money-funnel-section money-paid-funnel-section">
       <div className="money-paid-transition" aria-label="맞춤 리포트 안내">
-        <strong>돈 앞의 내 반응을 발견했다면,</strong>
-        <span>이제 그 반응이 반복되는 이유와 나에게 맞는 변화의 방향을 이해할 차례입니다.</span>
+        <span className="money-paid-transition-lead">돈 앞의 내 마음을 발견했다면,</span>
+        <span className="money-paid-transition-main">이제 그 이유와 <em>앞으로의 방향</em>을 세울 차례입니다.</span>
         <ChevronDown className="money-paid-transition-arrow" size={36} strokeWidth={1.8} aria-hidden="true" />
       </div>
       <div className="money-paid-teaser money-paid-teaser--compact">

@@ -297,18 +297,25 @@
   word-break: keep-all;
 }
 
-.money-paid-transition strong {
-  font-size: 34px;
-  font-weight: 800;
-  line-height: 1.35;
-  letter-spacing: -.03em;
+.money-paid-transition-lead {
+  color: #8F7468;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -.01em;
 }
 
-.money-paid-transition span {
+.money-paid-transition-main {
+  width: 100%;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.48;
   letter-spacing: -.02em;
+}
+
+.money-paid-transition-main em {
+  color: #8F7468;
+  font-style: normal;
 }
 
 .money-paid-transition-arrow {
@@ -718,8 +725,8 @@
     margin-bottom: 92px;
     padding: 0 18px;
   }
-  .money-paid-transition strong { font-size: 28px; line-height: 1.38; }
-  .money-paid-transition span { font-size: 23px; line-height: 1.52; }
+  .money-paid-transition-lead { font-size: 17px; line-height: 1.6; }
+  .money-paid-transition-main { font-size: 23px; line-height: 1.52; }
   .money-paid-transition-arrow { width: 32px; height: 32px; margin-top: 18px; }
   .money-paid-teaser { padding: 56px 22px 52px; }
   .money-paid-teaser h2 { font-size: 25px; }
