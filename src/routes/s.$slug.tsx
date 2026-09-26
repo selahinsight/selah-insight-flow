@@ -2169,18 +2169,21 @@ function MoneyPaidDiagnosisSection({
       <div className="money-paid-teaser money-paid-teaser--compact">
         <div className="money-paid-teaser-icon" aria-hidden="true"><BookOpen size={44} strokeWidth={1.5} /></div>
         <h2>
-          <span>돈을 관리할 때,</span>
-          <span>무엇이 나의 선택을 이끌고 있을까요?</span>
+          <span>나는 왜 돈 앞에서</span>
+          <span><em>늘 비슷한 선택</em>을 할까요?</span>
         </h2>
         <p className="money-paid-teaser-key">
-          <span>내가 돈을 관리하는 방식 안에는</span>
-          <span>나도 모르는 마음과 믿음이 담겨 있습니다.</span>
+          <span>11페이지 개인 맞춤 리포트에서</span>
+          <span><strong>내 선택 뒤에 숨은 마음과 믿음</strong>을 살펴보고,</span>
+          <span>앞으로의 방향을 세워보세요.</span>
         </p>
         <p className="money-paid-teaser-benefit-title">나만의 맞춤 리포트에서 확인해보세요</p>
         <ul className="money-paid-teaser-benefits">
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내 선택을 이끄는 기준과 반복되는 돈 관리 흐름</span></li>
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>이미 가진 강점과 앞으로 필요한 방향</span></li>
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>유형에 맞는 말씀과 묵상 질문</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>돈 앞에서 반복되는 생각과 행동</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내 선택에 영향을 주는 마음과 믿음</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내가 가진 강점과 살펴볼 부분</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>앞으로 세워갈 돈과 삶의 방향</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>나에게 맞는 말씀 묵상</span></li>
         </ul>
         <button className="money-report-purchase-button" type="button" data-placement="free-results" onClick={() => setDetailsOpen(true)} style={{ ...btn }}>
           내 맞춤 리포트 미리보기

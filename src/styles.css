@@ -659,13 +659,16 @@
 .money-paid-teaser-meta { margin: 14px 0 0; color: rgba(73,60,50,.58); font-size: 12.5px; }
 .money-paid-teaser.money-paid-teaser--compact { padding: 84px 24px 80px; border: 1.5px solid #D7B9A8; border-radius: 8px; background: #FAEEE7; box-shadow: 0 10px 26px rgba(85,67,56,.11); color: #503B2F; font-family: "SUIT", ui-sans-serif, system-ui, sans-serif; text-align: center; word-break: keep-all; overflow-wrap: break-word; }
 .money-paid-teaser-icon { display: flex; justify-content: center; margin: 0 auto 24px; color: #9A7664; }
-.money-paid-teaser.money-paid-teaser--compact h2 { margin: 0 auto; color: #503B2F; font-family: inherit; font-size: 28px; font-weight: 800; line-height: 1.48; letter-spacing: -.035em; }
-.money-paid-teaser.money-paid-teaser--compact h2 span { display: block; white-space: nowrap; }
+.money-paid-teaser.money-paid-teaser--compact h2 { margin: 0 auto; color: #503B2F; font-family: inherit; font-size: 28px; font-weight: 600; line-height: 1.48; letter-spacing: -.035em; }
+.money-paid-teaser.money-paid-teaser--compact h2 span { display: block; }
+.money-paid-teaser.money-paid-teaser--compact h2 span:first-child { margin-bottom: 4px; font-size: 22px; font-weight: 500; color: #765746; }
+.money-paid-teaser.money-paid-teaser--compact h2 em { color: #A35F49; font-style: normal; }
 .money-paid-teaser-divider { display: flex; align-items: center; justify-content: center; gap: 10px; max-width: 180px; margin: 28px auto; color: #765746; }
 .money-paid-teaser-divider span { flex: 1; height: 1px; background: #E4CDBE; }
 .money-paid-teaser-divider svg { flex: 0 0 auto; }
 .money-paid-teaser-key { margin: 28px 0 0; color: #503B2F; font-size: 18px; font-weight: 400; line-height: 1.65; letter-spacing: -.025em; text-wrap: initial; }
 .money-paid-teaser-key span { display: block; }
+.money-paid-teaser-key strong { color: #765746; font-weight: 600; }
 .money-paid-teaser-benefit-title { margin: 32px 0 0; color: #503B2F; font-size: 17px; font-weight: 700; line-height: 1.55; }
 .money-paid-teaser--compact .money-paid-teaser-benefits { display: grid; max-width: 430px; gap: 0; margin: 16px auto 0; padding: 4px 18px; border-top: 1px solid rgba(154,118,100,.28); border-bottom: 1px solid rgba(154,118,100,.28); list-style: none; text-align: left; }
 .money-paid-teaser--compact .money-paid-teaser-benefits li { display: grid; grid-template-columns: 22px minmax(0,1fr); align-items: start; gap: 10px; padding: 13px 0; color: #503B2F; font-size: 16px; line-height: 1.6; }
@@ -732,6 +735,7 @@
   .money-paid-teaser h2 { font-size: 25px; }
   .money-paid-teaser.money-paid-teaser--compact { padding: 72px 18px 68px; }
   .money-paid-teaser.money-paid-teaser--compact h2 { font-size: 25px; }
+  .money-paid-teaser.money-paid-teaser--compact h2 span:first-child { font-size: 20px; }
   .money-paid-teaser--compact .money-paid-teaser-benefits { padding-right: 10px; padding-left: 10px; }
   .money-report-offer-hero { padding: 76px 22px 62px; }
   .money-report-offer-hero h2 { font-size: 26px; }
