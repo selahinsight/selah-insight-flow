@@ -2208,7 +2208,7 @@ function MoneyPaidDiagnosisSection({
             </button>
 
             <header className="money-report-offer-hero">
-              <p>11페이지 개인 맞춤 리포트</p>
+              <p className="money-report-offer-product-title">셀라 머니 심층 리포트</p>
               <h2>내 진단 결과로<br />‘나만의 맞춤 리포트’가 만들어집니다</h2>
               <p className="money-report-result-label">나의 실제 진단 결과</p>
               <div className="money-report-type-combination">
@@ -2240,7 +2240,7 @@ function MoneyPaidDiagnosisSection({
                 </article>
                 <article className="money-report-difference-paid">
                   <span className="money-report-product-name">
-                    <strong>셀라 머니 심층 진단지</strong>
+                    <strong>셀라 머니 심층 리포트</strong>
                   </span>
                   <ul>
                     <li><Check size={17} aria-hidden="true" />돈 앞에서 왜 늘 비슷한 생각과 행동을 반복하는지 이해합니다.</li>
@@ -2279,26 +2279,42 @@ function MoneyPaidDiagnosisSection({
             </section>
 
             <footer className="money-report-offer-footer">
-              <h3>나를 이해했다면,<br />이제 나만의 기준으로 돈을 관리할 차례입니다.</h3>
-              <p>셀라 머니 심층 진단지가 반복되는 돈 패턴과 방향을 보여준다면,<br />셀라 머니 워크북은 그 방향을 예산·소비·저축·투자 기준과 가계부 습관으로 옮기도록 돕습니다.</p>
+              <h3>나만의 돈 관리 기준이 생기면,<br />선택은 더 분명해지고 돈 앞의 마음은 한결 평안해집니다.</h3>
+              <p className="money-report-workbook-hook-action">이제 말씀을 바탕으로 나만의 기준을 세우고,<br />하나님이 맡기신 돈을 지혜롭게 관리해보세요.</p>
+              <div className="money-report-workbook-intro">
+                <h4>셀라 머니 워크북</h4>
+                <p>돈 앞의 마음을 돌아보고 말씀의 기준을 세워,<br />나만의 예산과 소비 원칙을 실제 생활에 적용합니다.</p>
+                <span>실행 워크북 · 50페이지</span>
+              </div>
+              <div className="money-report-workbook-samples" aria-label="셀라 머니 워크북 실제 페이지 미리보기">
+                <figure className="money-report-workbook-sample">
+                  <img src="/selah-money-workbook-preview/page-10-money-meaning.webp" alt="나에게 돈이 무엇인지 돌아보는 실제 워크북 10쪽 샘플" loading="lazy" />
+                  <figcaption><span>실제 워크북 10쪽</span><strong>나에게 돈이 무엇인지 돌아봅니다.</strong></figcaption>
+                </figure>
+                <figure className="money-report-workbook-sample">
+                  <img src="/selah-money-workbook-preview/page-24-money-criteria.webp" alt="말씀을 바탕으로 돈 관리 기준을 세우는 실제 워크북 24쪽 샘플" loading="lazy" />
+                  <figcaption><span>실제 워크북 24쪽</span><strong>말씀을 바탕으로 나만의 돈 관리 기준을 세웁니다.</strong></figcaption>
+                </figure>
+                <figure className="money-report-workbook-sample">
+                  <img src="/selah-money-workbook-preview/page-45-next-month-budget.webp" alt="다음 달 수입과 드림·세움·쓰임 예산을 작성하는 실제 워크북 45쪽 샘플" loading="lazy" />
+                  <figcaption><span>실제 워크북 45쪽</span><strong>세운 기준을 다음 달 예산에 적용합니다.</strong></figcaption>
+                </figure>
+              </div>
               <div className="money-report-purchase-options">
                 <article>
-                  <span>셀라 머니 심층 진단지만</span>
-                  <strong>9,900원</strong>
-                  {purchaseButton("footer-report", "심층 진단지 구매하기")}
+                  <span>셀라 머니 심층 리포트</span>
+                  <s>15,000원</s>
+                  <strong><small>런칭가</small> 9,900원</strong>
+                  {purchaseButton("footer-report", "심층 리포트 구매하기")}
                 </article>
                 <article className="money-report-purchase-option-set">
                   <em>가장 추천 · 이해부터 실행까지</em>
-                  <span>심층 진단지 + 셀라 머니 워크북 세트</span>
-                  <strong>34,900원</strong>
-                  <small>개별 런칭가 합계 38,900원</small>
+                  <span>심층 리포트 + 셀라 머니 워크북 세트</span>
+                  <s>개별 구매 38,900원</s>
+                  <strong><small>세트 런칭가</small> 34,900원</strong>
                   <a className="money-report-purchase-button" href="https://selahinsight.co.kr/money-study" target="_blank" rel="noreferrer" data-placement="footer-set">세트 구매하기</a>
                 </article>
               </div>
-              <figure className="money-report-workbook-sample money-report-workbook-sample--offer">
-                <img src="/selah-money-workbook-preview/page-45-next-month-budget.webp" alt="다음 달 수입과 드림·세움·쓰임 예산을 작성하는 실제 워크북 45쪽 샘플" loading="lazy" />
-                <figcaption><span>실제 워크북 45쪽</span><strong>돈의 의미와 삶의 우선순위를 정리하고, 나만의 기준을 실제 예산과 기록에 적용해보세요.</strong></figcaption>
-              </figure>
             </footer>
           </div>
         </div>

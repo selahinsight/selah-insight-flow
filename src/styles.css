@@ -690,9 +690,9 @@
 .money-report-offer-page { position: relative; width: min(100%,720px); min-height: 100svh; margin: 0 auto; background: #fffdf9; color: #493c32; }
 .money-report-offer-close { position: sticky; z-index: 3; top: 14px; display: grid; width: 42px; height: 42px; margin: 0 14px -42px auto; place-items: center; border: 1px solid #d8c4b7; border-radius: 50%; background: rgba(255,253,249,.9); color: #493c32; backdrop-filter: blur(8px); cursor: pointer; }
 .money-report-offer-hero { padding: 76px 28px 64px; background: #f3e7e1; color: #493c32; text-align: center; }
-.money-report-offer-hero>p:first-child { margin: 0; color: #9a7664; font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
+.money-report-offer-product-title { margin: 0; color: #765746; font-size: 22px; font-weight: 700; line-height: 1.45; letter-spacing: -.025em; }
 .money-report-offer-hero h2 { margin: 18px auto 0; max-width: 560px; font-family: inherit; font-size: 28px; font-weight: 700; line-height: 1.48; letter-spacing: -.035em; word-break: keep-all; }
-.money-report-result-label { margin: 30px 0 0; color: #765746; font-size: 14px; font-weight: 700; line-height: 1.5; }
+.money-report-result-label { margin: 30px 0 0; color: #765746; font-size: 17px; font-weight: 600; line-height: 1.5; }
 .money-report-type-combination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin: 12px auto 0; }
 .money-report-type-combination span { padding: 9px 15px; border: 1px solid #d8c4b7; border-radius: 999px; background: #fffdf9; font-size: 15px; font-weight: 650; }
 .money-report-type-combination strong { color: #9a7664; font-size: 17px; }
@@ -716,7 +716,7 @@
 .money-report-difference-grid .money-report-difference-paid { border-color: #bd8b75; background: #f5e8e1; }
 .money-report-difference-grid article>span { color: #765746; font-size: 16px; font-weight: 750; }
 .money-report-product-name { display: block; }
-.money-report-product-name strong { color: #493c32; font-size: 19px; line-height: 1.45; }
+.money-report-product-name strong { color: #493c32; font-size: 19px; font-weight: 600; line-height: 1.45; }
 .money-report-difference-grid ul { display: grid; gap: 12px; margin: 20px 0 0; padding: 0; list-style: none; }
 .money-report-difference-grid li { display: grid; grid-template-columns: 19px 1fr; gap: 8px; color: rgba(73,60,50,.83); font-size: 15px; line-height: 1.65; }
 .money-report-difference-grid li svg { margin-top: 2px; color: #9a7664; }
@@ -746,16 +746,23 @@
 .money-report-workbook-sample>figcaption strong { font-size: 15px; line-height: 1.5; }
 .money-report-offer-footer { padding: 68px 20px 76px; border-top: 1px solid #d8c4b7; background: #f7f0e9; color: #493c32; text-align: center; }
 .money-report-offer-footer>h3 { margin: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 25px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; word-break: keep-all; }
-.money-report-offer-footer>p { margin: 20px auto 0; color: rgba(73,60,50,.78); font-size: 15px; line-height: 1.72; word-break: keep-all; }
-.money-report-purchase-options { display: grid; gap: 16px; margin-top: 34px; text-align: left; }
-.money-report-purchase-options article { position: relative; display: grid; gap: 10px; padding: 24px 20px; border: 1px solid #ddcfc4; background: #fffdf9; }
-.money-report-purchase-options article>span { padding-right: 4px; font-size: 16px; font-weight: 750; line-height: 1.5; }
-.money-report-purchase-options article>strong { font-size: 29px; line-height: 1.2; }
-.money-report-purchase-options article>small { color: #9a7664; font-size: 13px; line-height: 1.5; text-decoration: line-through; }
+.money-report-workbook-hook-action { margin: 20px auto 0; color: rgba(73,60,50,.82); font-size: 16px; line-height: 1.72; word-break: keep-all; }
+.money-report-workbook-intro { margin-top: 44px; }
+.money-report-workbook-intro h4 { margin: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 25px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; }
+.money-report-workbook-intro p { margin: 16px auto 0; color: rgba(73,60,50,.78); font-size: 15px; line-height: 1.72; word-break: keep-all; }
+.money-report-workbook-intro span { display: block; margin-top: 10px; color: #9a7664; font-size: 13px; font-weight: 650; }
+.money-report-workbook-samples { display: flex; width: calc(100% + 20px); gap: 14px; margin: 30px -20px 0 0; padding-right: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; text-align: left; }
+.money-report-workbook-samples::-webkit-scrollbar { display: none; }
+.money-report-workbook-samples .money-report-workbook-sample { flex: 0 0 82%; width: auto; margin: 0; scroll-snap-align: start; }
+.money-report-purchase-options { display: grid; gap: 16px; margin-top: 38px; text-align: center; }
+.money-report-purchase-options article { position: relative; display: grid; justify-items: center; gap: 9px; padding: 26px 20px; border: 1px solid #ddcfc4; background: #fffdf9; text-align: center; }
+.money-report-purchase-options article>span { padding: 0; font-size: 19px; font-weight: 700; line-height: 1.5; }
+.money-report-purchase-options article>s { color: #9a7664; font-size: 14px; line-height: 1.5; }
+.money-report-purchase-options article>strong { font-size: 24px; line-height: 1.25; }
+.money-report-purchase-options article>strong small { margin-right: 2px; color: #9a5f49; font-size: 13px; font-weight: 700; line-height: 1.5; }
 .money-report-purchase-options article>.money-report-purchase-button { width: 100%; margin-top: 6px; }
 .money-report-purchase-option-set { border-color: #bd8b75 !important; background: #f5e8e1 !important; }
 .money-report-purchase-option-set>em { width: fit-content; padding: 6px 10px; border-radius: 999px; background: #9a5f49; color: #fff; font-size: 12px; font-style: normal; font-weight: 750; line-height: 1.3; }
-.money-report-workbook-sample--offer { margin-top: 28px; }
 
 @media (max-width: 639px) {
   .money-paid-funnel-section { margin-top: 156px; }
