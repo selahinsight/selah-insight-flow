@@ -2210,8 +2210,9 @@ function MoneyPaidDiagnosisSection({
             <header className="money-report-offer-hero">
               <span className="money-report-offer-eyebrow">SELAH MONEY REPORT</span>
               <p className="money-report-offer-product-title">셀라 머니 심층 리포트</p>
-              <h2>내 진단 결과로<br />‘나만의 맞춤 리포트’가 만들어집니다</h2>
-              <p className="money-report-result-label">나의 실제 진단 결과</p>
+              <h2>내 진단 결과로<br /><strong>‘나만의 맞춤 리포트’</strong>가 만들어집니다</h2>
+              <span className="money-report-hero-divider" aria-hidden="true" />
+              <p className="money-report-result-label">나의 진단 결과</p>
               <div className="money-report-type-combination">
                 <span>{moneyTitle}</span><strong>×</strong><span>{faithTitle}</span>
               </div>
