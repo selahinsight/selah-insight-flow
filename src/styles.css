@@ -707,22 +707,27 @@
 .money-report-hero-price s { color: rgba(73,60,50,.56); font-size: 15px; }
 .money-report-hero-price strong { color: #493c32; font-size: 25px; line-height: 1.2; }
 .money-report-section-kicker { margin: 0; color: #9a7664; font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
-.money-report-difference-section, .money-report-sample-section { padding: 72px 28px; text-align: center; scroll-margin-top: 16px; }
-.money-report-difference-section>h3, .money-report-sample-section>h3 { margin: 15px auto 0; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; line-height: 1.5; letter-spacing: -.03em; word-break: keep-all; }
-.money-report-difference-section>h3 { margin-top: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 28px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; }
+.money-report-difference-section, .money-report-sample-section { padding: 58px 20px; text-align: center; scroll-margin-top: 16px; }
+.money-report-difference-section>h3, .money-report-sample-section>h3 { margin: 15px auto 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 25px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; word-break: keep-all; }
+.money-report-difference-section>h3 { margin-top: 0; }
 .money-report-difference-section { background: #fffdf9; }
-.money-report-difference-grid { display: grid; grid-template-columns: minmax(0,.72fr) minmax(0,1.28fr); align-items: start; gap: 16px; margin-top: 36px; text-align: left; }
+.money-report-difference-grid { display: grid; grid-template-columns: 1fr; align-items: start; gap: 16px; margin-top: 36px; text-align: left; }
 .money-report-difference-grid article { padding: 27px 24px; border: 1px solid #ddcfc4; background: #f8f3ed; }
 .money-report-difference-grid .money-report-difference-paid { border-color: #bd8b75; background: #f5e8e1; }
 .money-report-difference-grid article>span { color: #765746; font-size: 16px; font-weight: 750; }
+.money-report-product-name { display: grid; gap: 4px; }
+.money-report-product-name strong { color: #493c32; font-size: 19px; line-height: 1.45; }
+.money-report-product-name small { color: #9a7664; font-size: 13px; font-weight: 650; line-height: 1.5; }
 .money-report-difference-grid ul { display: grid; gap: 12px; margin: 20px 0 0; padding: 0; list-style: none; }
-.money-report-difference-grid li { display: grid; grid-template-columns: 19px 1fr; gap: 8px; color: rgba(73,60,50,.83); font-size: 14px; line-height: 1.55; }
+.money-report-difference-grid li { display: grid; grid-template-columns: 19px 1fr; gap: 8px; color: rgba(73,60,50,.83); font-size: 15px; line-height: 1.65; }
 .money-report-difference-grid li svg { margin-top: 2px; color: #9a7664; }
 .money-report-difference-section>.money-report-purchase-button { margin-top: 32px; }
 .money-report-sample-section { background: #f3e7e1; }
-.money-report-sample-pages { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-top: 38px; text-align: left; }
-.money-report-sample-pages--report { grid-template-columns: repeat(2,minmax(0,1fr)); max-width: 470px; margin-right: auto; margin-left: auto; }
+.money-report-sample-pages { display: flex; width: calc(100% + 20px); gap: 14px; margin-top: 38px; margin-right: -20px; padding-right: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; text-align: left; }
+.money-report-sample-pages::-webkit-scrollbar { display: none; }
+.money-report-sample-pages--report { max-width: none; margin-left: 0; }
 .money-report-sample-pages article { overflow: hidden; border: 1px solid #ddcfc4; background: #fffdf9; box-shadow: 0 12px 28px rgba(74,54,44,.08); }
+.money-report-sample-pages article { flex: 0 0 82%; scroll-snap-align: start; }
 .money-report-page-image { position: relative; aspect-ratio: 595/842; overflow: hidden; border-bottom: 1px solid #e5d8ce; background: #f8f2ea; }
 .money-report-page-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .money-report-page-image--locked::after { position: absolute; inset: 47% 0 0; content: ""; background: linear-gradient(180deg,rgba(255,253,249,.1),rgba(247,240,233,.97) 32%); backdrop-filter: blur(3px); }
@@ -730,13 +735,12 @@
 .money-report-sample-copy { padding: 19px 16px 21px; }
 .money-report-sample-copy>span { color: #9a7664; font-size: 11px; font-weight: 750; letter-spacing: .08em; }
 .money-report-sample-pages h4 { margin: 10px 0 0; font-size: 16px; line-height: 1.5; word-break: keep-all; }
-.money-report-workbook-section { display: grid; grid-template-columns: minmax(0,1fr) minmax(220px,.72fr); align-items: center; gap: 38px; padding: 72px 42px; background: #fffdf9; color: #493c32; }
-.money-report-workbook-copy>span { display: inline-flex; padding: 7px 11px; border: 1px solid #bd8b75; border-radius: 999px; color: #9a664f; font-size: 12px; font-weight: 750; }
-.money-report-workbook-copy>h3 { margin: 18px 0 0; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; line-height: 1.5; letter-spacing: -.03em; word-break: keep-all; }
+.money-report-workbook-section { display: grid; grid-template-columns: 1fr; align-items: center; gap: 30px; padding: 58px 20px; background: #fffdf9; color: #493c32; }
+.money-report-workbook-copy>h3 { margin: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 25px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; word-break: keep-all; }
 .money-report-workbook-copy>p { margin: 18px 0 0; color: rgba(73,60,50,.78); font-size: 15px; line-height: 1.72; word-break: keep-all; }
-.money-report-workbook-copy>ul { display: grid; gap: 9px; margin: 22px 0 0; padding: 0; color: #765746; font-size: 13px; line-height: 1.55; list-style: none; }
-.money-report-workbook-copy>ul li::before { margin-right: 8px; color: #bd8b75; content: "✓"; font-weight: 750; }
+.money-report-workbook-meta { display: block; margin-top: 12px; color: #9a7664; font-size: 13px; font-weight: 650; line-height: 1.5; }
 .money-report-workbook-sample { overflow: hidden; margin: 0; border: 1px solid #ddcfc4; background: #fff; box-shadow: 0 14px 30px rgba(74,54,44,.1); }
+.money-report-workbook-sample { width: min(100%,320px); margin: 0 auto; }
 .money-report-workbook-sample>img { display: block; width: 100%; height: auto; }
 .money-report-workbook-sample>figcaption { display: grid; gap: 7px; padding: 16px; border-top: 1px solid #e5d8ce; background: #fffdf9; }
 .money-report-workbook-sample>figcaption span { color: #9a7664; font-size: 11px; font-weight: 750; letter-spacing: .06em; }
@@ -772,15 +776,6 @@
   .money-report-product-facts { display: grid; gap: 5px; }
   .money-report-product-facts li { justify-content: center; }
   .money-report-product-facts li+li::before { display: none; }
-  .money-report-difference-section, .money-report-sample-section { padding: 58px 20px; }
-  .money-report-difference-section>h3 { font-size: 25px; }
-  .money-report-difference-grid { grid-template-columns: 1fr; }
-  .money-report-sample-pages { display: flex; width: calc(100% + 20px); gap: 14px; margin-right: -20px; padding-right: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-  .money-report-sample-pages::-webkit-scrollbar { display: none; }
-  .money-report-sample-pages article { flex: 0 0 82%; scroll-snap-align: start; }
-  .money-report-workbook-section { grid-template-columns: 1fr; gap: 30px; padding: 58px 20px; }
-  .money-report-workbook-copy>h3 { font-size: 24px; }
-  .money-report-workbook-sample { width: min(100%,320px); margin: 0 auto; }
 }
 
 .money-funnel-item {

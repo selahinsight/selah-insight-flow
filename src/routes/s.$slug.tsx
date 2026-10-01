@@ -2239,14 +2239,15 @@ function MoneyPaidDiagnosisSection({
                   </ul>
                 </article>
                 <article className="money-report-difference-paid">
-                  <span>11페이지 맞춤 리포트</span>
+                  <span className="money-report-product-name">
+                    <strong>셀라 머니 심층 진단지</strong>
+                    <small>11페이지 개인 맞춤 리포트</small>
+                  </span>
                   <ul>
-                    <li><Check size={17} aria-hidden="true" />돈 앞에서 반복되는 생각과 행동이 일상의 선택에 나타나는 방식</li>
-                    <li><Check size={17} aria-hidden="true" />돈을 쓰고 누릴 때 드러나는 마음과 믿음</li>
-                    <li><Check size={17} aria-hidden="true" />돈 반응과 신앙 반응이 함께 선택에 미치는 영향</li>
-                    <li><Check size={17} aria-hidden="true" />내가 이미 가진 강점과 더 살펴볼 부분</li>
-                    <li><Check size={17} aria-hidden="true" />나에게 돈이 무엇이며 어떤 삶을 위해 사용할지</li>
-                    <li><Check size={17} aria-hidden="true" />말씀을 바탕으로 앞으로 세워갈 돈과 삶의 방향</li>
+                    <li><Check size={17} aria-hidden="true" />돈 앞에서 왜 늘 비슷한 생각과 행동을 반복하는지 이해합니다.</li>
+                    <li><Check size={17} aria-hidden="true" />마음과 믿음이 소비·저축 등 실제 돈 관리에 어떻게 나타나는지 살펴봅니다.</li>
+                    <li><Check size={17} aria-hidden="true" />내가 이미 가진 강점과 돈 관리를 어렵게 만드는 부분을 확인합니다.</li>
+                    <li><Check size={17} aria-hidden="true" />나에게 돈이 무엇인지 정리하고, 말씀을 바탕으로 앞으로의 돈 관리 기준과 방향을 세웁니다.</li>
                   </ul>
                 </article>
               </div>
@@ -2270,19 +2271,20 @@ function MoneyPaidDiagnosisSection({
                   </div>
                   <div className="money-report-sample-copy"><span>08 · 돈과 삶의 방향</span><h4>앞으로 세워갈 방향을 확인합니다</h4></div>
                 </article>
+                <article>
+                  <div className="money-report-page-image">
+                    <img src="/selah-money-report-preview/page-10-summary.png" alt="전체 진단 결과를 정리한 실제 리포트 페이지 예시" loading="lazy" />
+                  </div>
+                  <div className="money-report-sample-copy"><span>10 · 전체 결과 정리</span><h4>나의 결과와 기준을 한눈에 정리합니다</h4></div>
+                </article>
               </div>
             </section>
 
             <section className="money-report-workbook-section" aria-labelledby="money-report-workbook-title">
               <div className="money-report-workbook-copy">
-                <span>별도 구매 상품</span>
-                <h3 id="money-report-workbook-title">리포트 이후,<br />실제 돈 관리로 이어가고 싶다면</h3>
-                <p>별도 구매 워크북을 통해 나만의 기준을 예산과 기록에 적용할 수 있습니다.</p>
-                <ul>
-                  <li>예산·소비·저축·투자 기준 적용</li>
-                  <li>가계부와 주간 기록으로 점검</li>
-                  <li>52페이지 실행 워크북</li>
-                </ul>
+                <h3 id="money-report-workbook-title">셀라 머니 워크북</h3>
+                <p>리포트에서 찾은 방향을 실제 돈 관리에 적용해보세요.</p>
+                <span className="money-report-workbook-meta">52페이지 실천 워크북</span>
               </div>
               <figure className="money-report-workbook-sample">
                 <img src="/selah-money-workbook-preview/page-45-next-month-budget.webp" alt="다음 달 수입과 드림·세움·쓰임 예산을 작성하는 실제 워크북 45쪽 샘플" loading="lazy" />
