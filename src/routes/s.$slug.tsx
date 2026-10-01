@@ -2260,19 +2260,19 @@ function MoneyPaidDiagnosisSection({
                   <div className="money-report-page-image money-report-page-image--locked">
                     <img src="/selah-money-report-preview/page-06-integration.png" alt="두 유형을 함께 해석한 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
-                  <div className="money-report-sample-copy"><span>6쪽</span><h4>두 유형의 연결 해석</h4></div>
+                  <div className="money-report-sample-copy"><span>SELAH MONEY REPORT · 6쪽</span><h4>두 유형의 연결 해석</h4></div>
                 </article>
                 <article>
                   <div className="money-report-page-image money-report-page-image--locked">
                     <img src="/selah-money-report-preview/page-08-direction.png" alt="돈과 삶의 방향을 담은 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
-                  <div className="money-report-sample-copy"><span>8쪽</span><h4>돈과 삶의 방향</h4></div>
+                  <div className="money-report-sample-copy"><span>SELAH MONEY REPORT · 8쪽</span><h4>돈과 삶의 방향</h4></div>
                 </article>
                 <article>
                   <div className="money-report-page-image money-report-page-image--locked">
                     <img src="/selah-money-report-preview/page-10-summary.png" alt="전체 진단 결과를 정리한 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
-                  <div className="money-report-sample-copy"><span>10쪽</span><h4>전체 결과 정리</h4></div>
+                  <div className="money-report-sample-copy"><span>SELAH MONEY REPORT · 10쪽</span><h4>전체 결과 정리</h4></div>
                 </article>
               </div>
               <p className="money-report-preview-note">일부 내용은 구매 후 확인할 수 있습니다.</p>
@@ -2287,40 +2287,44 @@ function MoneyPaidDiagnosisSection({
                 </svg>
               </div>
               <div className="money-report-workbook-intro">
+                <span className="money-report-workbook-eyebrow">SELAH MONEY WORKBOOK</span>
                 <h4>셀라 머니 워크북</h4>
                 <p>돈 앞의 마음을 돌아보고 말씀의 기준을 세워,<br />나만의 예산과 소비 원칙을 실제 생활에 적용합니다.</p>
-                <span>실행 워크북 · 50페이지</span>
+                <span className="money-report-workbook-meta">실행 워크북 · 50페이지</span>
               </div>
               <div className="money-report-workbook-samples" aria-label="셀라 머니 워크북 실제 페이지 미리보기">
                 <figure className="money-report-workbook-sample">
                   <img src="/selah-money-workbook-preview/page-10-money-meaning.webp" alt="나에게 돈이 무엇인지 돌아보는 실제 워크북 10쪽 샘플" loading="lazy" />
-                  <figcaption><span>SELAH MONEY WORKBOOK 10쪽</span><strong>나에게 돈이란?</strong></figcaption>
+                  <figcaption><span>SELAH MONEY WORKBOOK · 10쪽</span><strong>나에게 돈이란?</strong></figcaption>
                 </figure>
                 <figure className="money-report-workbook-sample">
                   <img src="/selah-money-workbook-preview/page-24-money-criteria.webp" alt="말씀을 바탕으로 돈 관리 기준을 세우는 실제 워크북 24쪽 샘플" loading="lazy" />
-                  <figcaption><span>SELAH MONEY WORKBOOK 24쪽</span><strong>말씀을 바탕으로 세우는 돈 관리 기준</strong></figcaption>
+                  <figcaption><span>SELAH MONEY WORKBOOK · 24쪽</span><strong>말씀을 바탕으로 세우는 돈 관리 기준</strong></figcaption>
                 </figure>
                 <figure className="money-report-workbook-sample">
                   <img src="/selah-money-workbook-preview/page-45-next-month-budget.webp" alt="다음 달 수입과 드림·세움·쓰임 예산을 작성하는 실제 워크북 45쪽 샘플" loading="lazy" />
-                  <figcaption><span>SELAH MONEY WORKBOOK 45쪽</span><strong>다음 달 예산 정하기</strong></figcaption>
+                  <figcaption><span>SELAH MONEY WORKBOOK · 45쪽</span><strong>다음 달 예산 정하기</strong></figcaption>
                 </figure>
               </div>
-              <div className="money-report-purchase-options">
-                <article>
-                  <span>셀라 머니 심층 리포트</span>
-                  <p>11페이지 개인 맞춤 PDF</p>
-                  <s>15,000원</s>
-                  <strong><small>런칭가</small> 9,900원</strong>
-                  {purchaseButton("footer-report", "심층 리포트 구매하기")}
-                </article>
-                <article className="money-report-purchase-option-set">
-                  <em>가장 추천 · 이해부터 실행까지</em>
-                  <span>심층 리포트 + 셀라 머니 워크북 세트</span>
-                  <p>심층 리포트와 50페이지 실행 워크북</p>
-                  <s>개별 구매 38,900원</s>
-                  <strong><small>세트 런칭가</small> 34,900원</strong>
-                  <a className="money-report-purchase-button" href="https://selahinsight.co.kr/money-study" target="_blank" rel="noreferrer" data-placement="footer-set">세트 구매하기</a>
-                </article>
+              <div className="money-report-purchase-section">
+                <h4>구매 옵션을 선택해보세요</h4>
+                <div className="money-report-purchase-options">
+                  <article>
+                    <span>셀라 머니 심층 리포트</span>
+                    <p>11페이지 개인 맞춤 PDF</p>
+                    <s>15,000원</s>
+                    <strong><small>런칭가</small> 9,900원</strong>
+                    {purchaseButton("footer-report", "심층 리포트 구매하기")}
+                  </article>
+                  <article className="money-report-purchase-option-set">
+                    <em>가장 추천 · 이해부터 실행까지</em>
+                    <span>심층 리포트 + 셀라 머니 워크북 세트</span>
+                    <p>심층 리포트와 50페이지 실행 워크북</p>
+                    <s>개별 구매 38,900원</s>
+                    <strong><small>세트 런칭가</small> 34,900원</strong>
+                    <a className="money-report-purchase-button" href="https://selahinsight.co.kr/money-study" target="_blank" rel="noreferrer" data-placement="footer-set">세트 구매하기</a>
+                  </article>
+                </div>
               </div>
             </footer>
           </div>
