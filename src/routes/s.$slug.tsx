@@ -2128,6 +2128,12 @@ function MoneyPaidDiagnosisSection({
   const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_REPORT_CHECKOUT_URL as string | undefined)?.trim();
 
   useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("report") === "preview") {
+      setDetailsOpen(true);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!detailsOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -2203,12 +2209,11 @@ function MoneyPaidDiagnosisSection({
 
             <header className="money-report-offer-hero">
               <p>11페이지 개인 맞춤 리포트</p>
-              <h2>내 진단 결과로<br />이런 리포트가 만들어집니다</h2>
+              <h2>내 진단 결과로<br />‘나만의 맞춤 리포트’가 만들어집니다</h2>
               <p className="money-report-result-label">나의 실제 진단 결과</p>
               <div className="money-report-type-combination">
                 <span>{moneyTitle}</span><strong>×</strong><span>{faithTitle}</span>
               </div>
-              <p className="money-report-result-description">맞춤 리포트는 방금 완료한 무료 진단 결과를 바탕으로 제작됩니다.</p>
               <div className="money-report-hero-cover">
                 <img src="/selah-money-report-preview/page-01-cover.png" alt="나의 진단 결과로 제작되는 개인 맞춤 리포트 표지 예시" />
               </div>
@@ -2221,14 +2226,6 @@ function MoneyPaidDiagnosisSection({
                 <s>15,000원</s>
                 <strong>9,900원</strong>
               </div>
-              <button
-                className="money-report-next-button"
-                type="button"
-                onClick={() => document.getElementById("money-report-difference")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              >
-                무료 결과와 무엇이 다른지 보기
-                <ChevronDown size={20} strokeWidth={1.8} aria-hidden="true" />
-              </button>
             </header>
 
             <section id="money-report-difference" className="money-report-difference-section">
@@ -2253,23 +2250,13 @@ function MoneyPaidDiagnosisSection({
                   </ul>
                 </article>
               </div>
-              <div className="money-report-workbook-callout">
-                <span>함께 제공되는 실행 워크북</span>
-                <h4>이해에서 끝나지 않도록, 직접 쓰고 적용합니다</h4>
-                <p>나만의 돈 관리 기준을 세우고 예산·소비·저축·투자에 적용한 뒤, 가계부와 주간 점검 양식으로 실제 돈 관리를 이어가세요.</p>
-                <ul>
-                  <li>돈 앞의 상황과 감정 정리</li>
-                  <li>나만의 돈 관리 기준 수립</li>
-                  <li>가계부·주간 기록·3개월 후 점검</li>
-                </ul>
-              </div>
               {purchaseButton("after-difference", "9,900원으로 내 맞춤 리포트 받기")}
             </section>
 
             <section className="money-report-sample-section">
-              <p className="money-report-section-kicker">리포트와 실행 워크북 미리보기</p>
-              <h3>나를 이해하는 것에서<br />실제 돈 관리까지 이어집니다</h3>
-              <div className="money-report-sample-pages" aria-label="맞춤 리포트와 실행 워크북 미리보기">
+              <p className="money-report-section-kicker">맞춤 리포트 미리보기</p>
+              <h3>유형 해석부터<br />돈과 삶의 방향까지 살펴봅니다</h3>
+              <div className="money-report-sample-pages money-report-sample-pages--report" aria-label="맞춤 리포트 미리보기">
                 <article>
                   <div className="money-report-page-image money-report-page-image--locked">
                     <img src="/selah-money-report-preview/page-06-integration.png" alt="두 유형을 함께 해석한 실제 리포트 페이지 예시" loading="lazy" />
@@ -2283,17 +2270,24 @@ function MoneyPaidDiagnosisSection({
                   </div>
                   <div className="money-report-sample-copy"><span>08 · 돈과 삶의 방향</span><h4>앞으로 세워갈 방향을 확인합니다</h4></div>
                 </article>
-                <article>
-                  <div className="money-report-page-image money-report-workbook-preview" aria-label="실행 워크북 구성 미리보기">
-                    <div className="money-report-workbook-preview-header"><span>SELAH MONEY</span><strong>나만의 돈 관리 기준</strong></div>
-                    <div className="money-report-workbook-preview-question">나는 돈을 어떤 삶을 위해 사용하고 싶은가요?</div>
-                    <div className="money-report-workbook-preview-lines"><i /><i /><i /></div>
-                    <div className="money-report-workbook-preview-grid"><span>예산</span><span>소비</span><span>저축</span><span>투자</span></div>
-                    <div className="money-report-workbook-preview-check">한 주 돈 관리 기록과 점검</div>
-                  </div>
-                  <div className="money-report-sample-copy"><span>실행 워크북</span><h4>세운 기준을 기록하고 점검합니다</h4></div>
-                </article>
               </div>
+            </section>
+
+            <section className="money-report-workbook-section" aria-labelledby="money-report-workbook-title">
+              <div className="money-report-workbook-copy">
+                <span>별도 구매 상품</span>
+                <h3 id="money-report-workbook-title">리포트 이후,<br />실제 돈 관리로 이어가고 싶다면</h3>
+                <p>별도 구매 워크북을 통해 나만의 기준을 예산과 기록에 적용할 수 있습니다.</p>
+                <ul>
+                  <li>예산·소비·저축·투자 기준 적용</li>
+                  <li>가계부와 주간 기록으로 점검</li>
+                  <li>52페이지 실행 워크북</li>
+                </ul>
+              </div>
+              <figure className="money-report-workbook-sample">
+                <img src="/selah-money-workbook-preview/page-45-next-month-budget.webp" alt="다음 달 수입과 드림·세움·쓰임 예산을 작성하는 실제 워크북 45쪽 샘플" loading="lazy" />
+                <figcaption><span>실제 워크북 45쪽</span><strong>다음 달 예산을 다시 정해봅니다</strong></figcaption>
+              </figure>
             </section>
 
             <footer className="money-report-offer-footer">
@@ -2302,7 +2296,6 @@ function MoneyPaidDiagnosisSection({
               <ul>
                 <li><Check size={17} aria-hidden="true" />개인 맞춤 PDF</li>
                 <li><Check size={17} aria-hidden="true" />결제한 진단 결과를 바탕으로 제작</li>
-                <li><Check size={17} aria-hidden="true" />실행 워크북·가계부 양식 포함</li>
                 <li><Check size={17} aria-hidden="true" />24시간 이내 이메일 발송</li>
               </ul>
               <strong>9,900원</strong>
