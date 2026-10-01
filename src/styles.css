@@ -745,9 +745,12 @@
 .money-report-workbook-sample>figcaption span { color: #9a7664; font-size: 13px; font-weight: 750; letter-spacing: .05em; }
 .money-report-workbook-sample>figcaption strong { font-size: 16px; line-height: 1.5; }
 .money-report-offer-footer { padding: 68px 20px 76px; border-top: 1px solid #d8c4b7; background: #f7f0e9; color: #493c32; text-align: center; }
-.money-report-offer-footer>h3 { margin: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 22px; font-weight: 700; line-height: 1.45; letter-spacing: -.03em; word-break: keep-all; }
-.money-report-workbook-hook-action { margin: 14px auto 0; color: rgba(73,60,50,.82); font-size: 16px; font-weight: 400; line-height: 1.75; word-break: keep-all; }
-.money-report-workbook-intro { margin-top: 44px; }
+.money-report-offer-footer>h3 { margin: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 21px; font-weight: 700; line-height: 1.5; letter-spacing: -.03em; word-break: keep-all; }
+.money-report-workbook-hook-action { margin: 16px auto 0; color: rgba(73,60,50,.82); font-size: 17px; font-weight: 400; line-height: 1.75; word-break: keep-all; }
+.money-report-workbook-transition { position: relative; width: 18px; height: 42px; margin: 24px auto 28px; }
+.money-report-workbook-transition::before { position: absolute; top: 0; left: 50%; width: 1px; height: 32px; content: ""; background: #9a7664; transform: translateX(-50%); }
+.money-report-workbook-transition::after { position: absolute; bottom: 2px; left: 50%; width: 8px; height: 8px; border-right: 1.5px solid #9a7664; border-bottom: 1.5px solid #9a7664; content: ""; transform: translateX(-50%) rotate(45deg); }
+.money-report-workbook-intro { margin-top: 0; }
 .money-report-workbook-intro h4 { margin: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 25px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; }
 .money-report-workbook-intro p { margin: 16px auto 0; color: rgba(73,60,50,.78); font-size: 15px; line-height: 1.72; word-break: keep-all; }
 .money-report-workbook-intro span { display: block; margin-top: 10px; color: #9a7664; font-size: 13px; font-weight: 650; }
