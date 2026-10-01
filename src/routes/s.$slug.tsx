@@ -2202,80 +2202,108 @@ function MoneyPaidDiagnosisSection({
             </button>
 
             <header className="money-report-offer-hero">
-              <p>SELAH MONEY PERSONAL REPORT</p>
-              <h2>유형의 이름에서 끝나지 않고<br />내 실제 돈 선택까지 해석합니다.</h2>
+              <p>나의 진단 결과로 만드는 맞춤 리포트</p>
+              <h2>내 진단 결과로<br />이런 리포트가 만들어집니다</h2>
               <div className="money-report-type-combination">
                 <span>{moneyTitle}</span><strong>×</strong><span>{faithTitle}</span>
               </div>
-              <p className="money-report-offer-lead">두 반응의 연결 원인과 바꿔갈 기준을 담은 11페이지 개인 맞춤 리포트</p>
-              {purchaseButton("hero")}
-              <small>결제하신 진단 결과를 바탕으로 제작해 24시간 이내 이메일로 보내드립니다.</small>
+              <div className="money-report-hero-cover">
+                <img src="/selah-money-report-preview/page-01-cover.png" alt="나의 진단 결과로 제작되는 개인 맞춤 리포트 표지 예시" />
+              </div>
+              <ul className="money-report-product-facts" aria-label="맞춤 리포트 상품 정보">
+                <li>11페이지 개인 맞춤 PDF</li>
+                <li>결제 후 24시간 이내 이메일 발송</li>
+                <li><strong>9,900원</strong></li>
+              </ul>
+              <button
+                className="money-report-next-button"
+                type="button"
+                onClick={() => document.getElementById("money-report-difference")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              >
+                무료 결과와 무엇이 다른지 보기
+                <ChevronDown size={20} strokeWidth={1.8} aria-hidden="true" />
+              </button>
             </header>
 
+            <section id="money-report-difference" className="money-report-difference-section">
+              <p className="money-report-section-kicker">무료 결과와 무엇이 다를까요?</p>
+              <h3>유형을 아는 것에서 한 걸음 더 나아갑니다</h3>
+              <div className="money-report-difference-grid">
+                <article>
+                  <span>무료 진단 결과</span>
+                  <ul>
+                    <li><Check size={17} aria-hidden="true" />나의 돈 유형과 신앙 유형</li>
+                    <li><Check size={17} aria-hidden="true" />각 유형의 기본 특징</li>
+                  </ul>
+                </article>
+                <article className="money-report-difference-paid">
+                  <span>11페이지 맞춤 리포트</span>
+                  <ul>
+                    <li><Check size={17} aria-hidden="true" />반복되는 생각과 행동</li>
+                    <li><Check size={17} aria-hidden="true" />내가 가진 강점과 더 살펴볼 부분</li>
+                    <li><Check size={17} aria-hidden="true" />나에게 맞는 돈 관리 방향과 말씀 묵상</li>
+                  </ul>
+                </article>
+              </div>
+              {purchaseButton("after-difference", "9,900원으로 내 맞춤 리포트 받기")}
+            </section>
+
+            <section className="money-report-outcomes-section">
+              <p className="money-report-section-kicker">리포트에서 얻게 되는 것</p>
+              <h3>나를 이해하고<br />앞으로의 방향을 세웁니다</h3>
+              <div className="money-report-outcomes-grid">
+                <article><strong>01</strong><h4>반복되는 패턴을 이해합니다</h4><p>돈 앞에서 자주 나타나는 생각과 행동을 살펴봅니다.</p></article>
+                <article><strong>02</strong><h4>강점과 살펴볼 부분을 발견합니다</h4><p>현재 잘하고 있는 점과 더 점검할 부분을 구분합니다.</p></article>
+                <article><strong>03</strong><h4>나에게 맞는 방향을 세웁니다</h4><p>말씀을 바탕으로 돈과 삶에 적용할 방향을 확인합니다.</p></article>
+              </div>
+            </section>
+
             <section className="money-report-sample-section">
-              <p className="money-report-section-kicker">REPORT PREVIEW</p>
-              <h3>실제 리포트에는<br />이런 내용이 담겨요</h3>
+              <p className="money-report-section-kicker">실제 리포트 미리보기</p>
+              <h3>받게 될 리포트를<br />미리 확인해보세요</h3>
               <div className="money-report-sample-pages" aria-label="실제 리포트 페이지 미리보기">
                 <article>
                   <div className="money-report-page-image">
-                    <img src="/selah-money-report-preview/page-01-cover.png" alt="개인 이름과 돈 유형, 신앙 유형이 담긴 실제 리포트 표지 예시" loading="lazy" />
+                    <img src="/selah-money-report-preview/page-01-cover.png" alt="개인 이름과 두 유형이 담긴 실제 리포트 표지 예시" loading="lazy" />
                   </div>
-                  <div className="money-report-sample-copy"><span>01 · 개인 맞춤 표지</span><h4>나의 두 유형으로 시작해요</h4><p>이름과 돈 반응, 신앙 반응을 반영한 개인 리포트로 제작됩니다.</p></div>
+                  <div className="money-report-sample-copy"><span>01 · 개인 맞춤 표지</span><h4>나의 진단 결과로 제작됩니다</h4></div>
                 </article>
                 <article>
                   <div className="money-report-page-image money-report-page-image--locked">
-                    <img src="/selah-money-report-preview/page-06-integration.png" alt="돈 반응과 신앙 반응을 연결한 실제 리포트 페이지 예시" loading="lazy" />
-                    <div className="money-report-page-lock">개인별 연결 해석은<br />구매 후 확인할 수 있어요</div>
+                    <img src="/selah-money-report-preview/page-06-integration.png" alt="두 유형을 함께 해석한 실제 리포트 페이지 예시" loading="lazy" />
+                    <div className="money-report-page-lock">개인별 해석은<br />구매 후 확인할 수 있어요</div>
                   </div>
-                  <div className="money-report-sample-copy"><span>06 · 통합 해석</span><h4>두 마음이 함께 만드는 돈 선택</h4><p>돈 반응과 신앙 반응이 실제 선택 안에서 어떻게 함께 움직이는지 살펴봅니다.</p></div>
+                  <div className="money-report-sample-copy"><span>06 · 유형 해석</span><h4>두 유형을 함께 살펴봅니다</h4></div>
                 </article>
                 <article>
                   <div className="money-report-page-image">
-                    <img src="/selah-money-report-preview/page-08-direction.png" alt="앞으로 세워갈 돈과 삶의 방향을 제안하는 실제 리포트 페이지 예시" loading="lazy" />
+                    <img src="/selah-money-report-preview/page-08-direction.png" alt="돈과 삶의 방향을 담은 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
-                  <div className="money-report-sample-copy"><span>08 · 행동 방향</span><h4>앞으로 세워갈 돈과 삶의 방향</h4><p>오늘부터 적용할 수 있는 세 가지 기준과 실천 방향을 제안합니다.</p></div>
+                  <div className="money-report-sample-copy"><span>08 · 돈과 삶의 방향</span><h4>앞으로 세워갈 방향을 확인합니다</h4></div>
                 </article>
-                <article>
-                  <div className="money-report-page-image money-report-page-image--summary">
-                    <img src="/selah-money-report-preview/page-10-summary.png" alt="핵심 해석과 기억할 방향을 정리한 실제 리포트 페이지 예시" loading="lazy" />
-                  </div>
-                  <div className="money-report-sample-copy"><span>10 · 전체 정리</span><h4>나의 결과를 한눈에 정리해요</h4><p>11페이지의 핵심 해석과 앞으로 기억할 방향을 한 장으로 다시 확인합니다.</p></div>
-                </article>
-              </div>
-              {purchaseButton("after-samples")}
-            </section>
-
-            <section className="money-report-difference-section">
-              <div>
-                <span>무료 진단</span>
-                <h3>나에게 어떤 반응이 나타나는지 발견합니다.</h3>
-              </div>
-              <ArrowRight size={24} aria-hidden="true" />
-              <div>
-                <span>심층 리포트</span>
-                <h3>왜 함께 나타나는지 이해하고, 무엇부터 바꿀지 확인합니다.</h3>
               </div>
             </section>
 
             <section className="money-report-inclusions-section">
-              <p className="money-report-section-kicker">11-PAGE PERSONAL REPORT</p>
-              <h3>막연한 다짐 대신<br />내 마음을 이해한 뒤 세우는 돈의 기준</h3>
-              <ul>
-                <li><Check size={18} /><span>돈 앞에서 반복되는 나의 반응과 일상 속 모습</span></li>
-                <li><Check size={18} /><span>돈을 대할 때 나타나는 신앙 반응</span></li>
-                <li><Check size={18} /><span>돈 반응과 신앙 반응이 함께 만드는 선택</span></li>
-                <li><Check size={18} /><span>이 조합이 가진 강점과 살펴볼 방향</span></li>
-                <li><Check size={18} /><span>앞으로 세워갈 돈과 삶의 세 가지 방향</span></li>
-                <li><Check size={18} /><span>말씀 묵상과 나의 결과 전체 정리</span></li>
-              </ul>
+              <p className="money-report-section-kicker">11페이지 개인 맞춤 리포트</p>
+              <h3>이해에서 끝나지 않고<br />적용할 방향까지 담았습니다</h3>
+              <div className="money-report-inclusion-groups">
+                <article><span>나를 이해하는 내용</span><ul><li>돈 앞에서 나타나는 생각과 행동</li><li>돈을 대할 때 드러나는 마음과 믿음</li></ul></article>
+                <article><span>나의 결과를 해석하는 내용</span><ul><li>두 유형이 실제 돈 관리에 미치는 영향</li><li>내가 가진 강점과 더 살펴볼 부분</li></ul></article>
+                <article><span>앞으로 적용하는 내용</span><ul><li>돈과 삶에 세워갈 방향</li><li>유형에 맞는 말씀 묵상과 전체 정리</li></ul></article>
+              </div>
             </section>
 
             <footer className="money-report-offer-footer">
-              <p>LAUNCH PRICE</p>
+              <p>나의 진단 결과로 만드는</p>
+              <h3>11페이지 맞춤 리포트</h3>
+              <ul>
+                <li><Check size={17} aria-hidden="true" />개인 맞춤 PDF</li>
+                <li><Check size={17} aria-hidden="true" />결제한 진단 결과를 바탕으로 제작</li>
+                <li><Check size={17} aria-hidden="true" />24시간 이내 이메일 발송</li>
+              </ul>
               <strong>9,900원</strong>
-              <span>런칭 종료 후 12,000원</span>
-              {purchaseButton("footer")}
-              <small>개인 맞춤 11페이지 PDF · 구매 후 24시간 이내 이메일 전송</small>
+              {purchaseButton("footer", "내 맞춤 리포트 받기")}
             </footer>
           </div>
         </div>

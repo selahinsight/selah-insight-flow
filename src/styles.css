@@ -689,41 +689,58 @@
 .money-report-offer-overlay { position: fixed; z-index: 9999; inset: 0; overflow-y: auto; background: rgba(40,29,24,.72); overscroll-behavior: contain; }
 .money-report-offer-page { position: relative; width: min(100%,720px); min-height: 100svh; margin: 0 auto; background: #fffdf9; color: #493c32; }
 .money-report-offer-close { position: sticky; z-index: 3; top: 14px; display: grid; width: 42px; height: 42px; margin: 0 14px -42px auto; place-items: center; border: 1px solid #d8c4b7; border-radius: 50%; background: rgba(255,253,249,.9); color: #493c32; backdrop-filter: blur(8px); cursor: pointer; }
-.money-report-offer-hero { padding: 82px 28px 68px; background: #f3e7e1; color: #493c32; text-align: center; }
-.money-report-offer-hero>p:first-child { margin: 0; color: #9a7664; font-size: 12px; font-weight: 750; letter-spacing: .13em; }
-.money-report-offer-hero h2 { margin: 27px auto 0; max-width: 560px; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 30px; line-height: 1.5; letter-spacing: -.035em; word-break: keep-all; }
-.money-report-type-combination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin: 30px auto 0; }
+.money-report-offer-hero { padding: 76px 28px 64px; background: #f3e7e1; color: #493c32; text-align: center; }
+.money-report-offer-hero>p:first-child { margin: 0; color: #9a7664; font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
+.money-report-offer-hero h2 { margin: 18px auto 0; max-width: 560px; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 31px; line-height: 1.5; letter-spacing: -.035em; word-break: keep-all; }
+.money-report-type-combination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; margin: 25px auto 0; }
 .money-report-type-combination span { padding: 9px 15px; border: 1px solid #d8c4b7; border-radius: 999px; background: #fffdf9; font-size: 15px; font-weight: 650; }
 .money-report-type-combination strong { color: #9a7664; font-size: 17px; }
-.money-report-offer-lead { margin: 24px 0 0; color: rgba(73,60,50,.76); font-size: 16px; line-height: 1.7; }
-.money-report-offer-hero small, .money-report-offer-footer small { display: block; margin-top: 13px; color: rgba(73,60,50,.58); font-size: 12px; line-height: 1.55; }
-.money-report-sample-section, .money-report-inclusions-section { padding: 72px 28px; text-align: center; }
-.money-report-sample-section .money-report-section-kicker, .money-report-inclusions-section .money-report-section-kicker { color: #9a7664; }
-.money-report-sample-section>h3, .money-report-inclusions-section>h3 { margin: 18px auto 0; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; line-height: 1.5; letter-spacing: -.03em; }
-.money-report-sample-pages { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; margin-top: 38px; text-align: left; }
+.money-report-hero-cover { width: min(280px,76%); margin: 34px auto 0; overflow: hidden; border: 1px solid #d8c4b7; background: #fffdf9; box-shadow: 0 18px 36px rgba(74,54,44,.14); }
+.money-report-hero-cover img { display: block; width: 100%; height: auto; }
+.money-report-product-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 0; margin: 28px auto 0; padding: 0; color: rgba(73,60,50,.78); font-size: 14px; line-height: 1.5; list-style: none; }
+.money-report-product-facts li { display: flex; align-items: center; }
+.money-report-product-facts li+li::before { margin: 0 10px; color: #bda496; content: "·"; }
+.money-report-product-facts strong { color: #493c32; font-size: 16px; }
+.money-report-next-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 28px; padding: 12px 18px; border: 0; border-bottom: 1px solid #9a7664; background: transparent; color: #765746; font-family: inherit; font-size: 15px; font-weight: 650; cursor: pointer; }
+.money-report-section-kicker { margin: 0; color: #9a7664; font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
+.money-report-difference-section, .money-report-outcomes-section, .money-report-sample-section, .money-report-inclusions-section { padding: 72px 28px; text-align: center; scroll-margin-top: 16px; }
+.money-report-difference-section>h3, .money-report-outcomes-section>h3, .money-report-sample-section>h3, .money-report-inclusions-section>h3 { margin: 15px auto 0; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; line-height: 1.5; letter-spacing: -.03em; word-break: keep-all; }
+.money-report-difference-section { background: #fffdf9; }
+.money-report-difference-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin-top: 36px; text-align: left; }
+.money-report-difference-grid article { padding: 27px 24px; border: 1px solid #ddcfc4; background: #f8f3ed; }
+.money-report-difference-grid .money-report-difference-paid { border-color: #bd8b75; background: #f5e8e1; }
+.money-report-difference-grid article>span { color: #765746; font-size: 16px; font-weight: 750; }
+.money-report-difference-grid ul { display: grid; gap: 12px; margin: 20px 0 0; padding: 0; list-style: none; }
+.money-report-difference-grid li { display: grid; grid-template-columns: 19px 1fr; gap: 8px; color: rgba(73,60,50,.83); font-size: 14px; line-height: 1.55; }
+.money-report-difference-grid li svg { margin-top: 2px; color: #9a7664; }
+.money-report-difference-section>.money-report-purchase-button { margin-top: 32px; }
+.money-report-outcomes-section { background: #f3e7e1; }
+.money-report-outcomes-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; margin-top: 36px; text-align: left; }
+.money-report-outcomes-grid article { padding: 25px 20px 27px; border: 1px solid rgba(189,139,117,.42); background: rgba(255,253,249,.72); }
+.money-report-outcomes-grid strong { color: #a7735d; font-size: 12px; letter-spacing: .08em; }
+.money-report-outcomes-grid h4 { margin: 13px 0 0; font-size: 17px; line-height: 1.5; word-break: keep-all; }
+.money-report-outcomes-grid p { margin: 10px 0 0; color: rgba(73,60,50,.72); font-size: 14px; line-height: 1.7; word-break: keep-all; }
+.money-report-sample-pages { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-top: 38px; text-align: left; }
 .money-report-sample-pages article { overflow: hidden; border: 1px solid #ddcfc4; background: #fffdf9; box-shadow: 0 12px 28px rgba(74,54,44,.08); }
 .money-report-page-image { position: relative; aspect-ratio: 595/842; overflow: hidden; border-bottom: 1px solid #e5d8ce; background: #f8f2ea; }
 .money-report-page-image img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .money-report-page-image--locked::after { position: absolute; inset: 47% 0 0; content: ""; background: linear-gradient(180deg,rgba(255,253,249,.1),rgba(247,240,233,.97) 32%); backdrop-filter: blur(3px); }
 .money-report-page-lock { position: absolute; z-index: 1; right: 17px; bottom: 21px; left: 17px; padding: 13px 12px; border: 1px solid rgba(154,118,100,.28); background: rgba(255,253,249,.9); color: #8b6b5a; font-size: 12px; font-weight: 700; line-height: 1.55; text-align: center; }
-.money-report-page-image--summary { max-height: 330px; }
-.money-report-page-image--summary img { object-position: top; }
-.money-report-sample-copy { padding: 22px 20px 24px; }
+.money-report-sample-copy { padding: 19px 16px 21px; }
 .money-report-sample-copy>span { color: #9a7664; font-size: 11px; font-weight: 750; letter-spacing: .08em; }
-.money-report-sample-pages h4 { margin: 10px 0 0; font-size: 18px; line-height: 1.45; }
-.money-report-sample-pages p { margin: 10px 0 0; color: rgba(73,60,50,.75); font-size: 14px; line-height: 1.72; word-break: keep-all; }
-.money-report-difference-section { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; padding: 58px 42px; background: #f1e7dd; }
-.money-report-difference-section div { min-height: 138px; padding: 24px; border: 1px solid #d8c4b7; background: rgba(255,255,255,.56); }
-.money-report-difference-section span { color: #9a7664; font-size: 12px; font-weight: 750; letter-spacing: .08em; }
-.money-report-difference-section h3 { margin: 13px 0 0; font-size: 17px; line-height: 1.65; }
-.money-report-difference-section>svg { color: #9a7664; }
-.money-report-inclusions-section ul { display: grid; max-width: 470px; gap: 0; margin: 34px auto 0; padding: 0; list-style: none; text-align: left; }
-.money-report-inclusions-section li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; padding: 15px 0; border-bottom: 1px solid #eadfd6; font-size: 16px; line-height: 1.6; }
-.money-report-inclusions-section li svg { margin-top: 3px; color: #9a7664; }
+.money-report-sample-pages h4 { margin: 10px 0 0; font-size: 16px; line-height: 1.5; word-break: keep-all; }
+.money-report-inclusions-section { background: #f8f3ed; }
+.money-report-inclusion-groups { display: grid; max-width: 540px; gap: 14px; margin: 36px auto 0; text-align: left; }
+.money-report-inclusion-groups article { padding: 24px 26px; border: 1px solid #ddcfc4; background: #fffdf9; }
+.money-report-inclusion-groups article>span { color: #8f624f; font-size: 15px; font-weight: 750; }
+.money-report-inclusion-groups ul { display: grid; gap: 8px; margin: 14px 0 0; padding: 0 0 0 18px; color: rgba(73,60,50,.78); font-size: 15px; line-height: 1.6; }
 .money-report-offer-footer { padding: 68px 28px 76px; border-top: 1px solid #d8c4b7; background: #f7f0e9; color: #493c32; text-align: center; }
-.money-report-offer-footer>p { margin: 0; color: #9a7664; font-size: 12px; font-weight: 750; letter-spacing: .13em; }
-.money-report-offer-footer>strong { display: block; margin-top: 16px; font-size: 37px; line-height: 1.2; }
-.money-report-offer-footer>span { display: block; margin-top: 8px; color: rgba(73,60,50,.58); font-size: 13px; }
+.money-report-offer-footer>p { margin: 0; color: #9a7664; font-size: 14px; font-weight: 650; }
+.money-report-offer-footer>h3 { margin: 12px 0 0; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 29px; line-height: 1.45; }
+.money-report-offer-footer>ul { display: grid; max-width: 310px; gap: 9px; margin: 28px auto 0; padding: 0; list-style: none; text-align: left; }
+.money-report-offer-footer li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; font-size: 14px; line-height: 1.55; }
+.money-report-offer-footer li svg { margin-top: 2px; color: #9a7664; }
+.money-report-offer-footer>strong { display: block; margin-top: 28px; font-size: 37px; line-height: 1.2; }
 
 @media (max-width: 639px) {
   .money-paid-funnel-section { margin-top: 156px; }
@@ -743,15 +760,18 @@
   .money-paid-teaser-key { font-size: 16px; }
   .money-paid-teaser-benefit-panel { padding: 20px 16px; }
   .money-paid-teaser--compact .money-paid-teaser-benefits { padding-right: 4px; padding-left: 4px; }
-  .money-report-offer-hero { padding: 76px 22px 62px; }
+  .money-report-offer-hero { padding: 72px 20px 58px; }
   .money-report-offer-hero h2 { font-size: 26px; }
-  .money-report-sample-section, .money-report-inclusions-section { padding: 62px 20px; }
+  .money-report-product-facts { display: grid; gap: 5px; }
+  .money-report-product-facts li { justify-content: center; }
+  .money-report-product-facts li+li::before { display: none; }
+  .money-report-difference-section, .money-report-outcomes-section, .money-report-sample-section, .money-report-inclusions-section { padding: 58px 20px; }
+  .money-report-difference-grid, .money-report-outcomes-grid { grid-template-columns: 1fr; }
+  .money-report-outcomes-grid { gap: 10px; }
   .money-report-sample-pages { display: flex; width: calc(100% + 20px); gap: 14px; margin-right: -20px; padding-right: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .money-report-sample-pages::-webkit-scrollbar { display: none; }
   .money-report-sample-pages article { flex: 0 0 82%; scroll-snap-align: start; }
-  .money-report-difference-section { grid-template-columns: 1fr; gap: 12px; padding: 48px 20px; }
-  .money-report-difference-section div { min-height: 0; }
-  .money-report-difference-section>svg { margin: 0 auto; transform: rotate(90deg); }
+  .money-report-inclusion-groups article { padding: 22px 20px; }
 }
 
 .money-funnel-item {
