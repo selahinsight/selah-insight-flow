@@ -2180,12 +2180,14 @@ function MoneyPaidDiagnosisSection({
           <span>돈 앞에서 드러나는 나의 마음과 믿음을 살펴보고,</span>
           <span>나에게 맞는 돈 관리의 방향을 세워보세요.</span>
         </p>
-        <p className="money-paid-teaser-benefit-title">나만의 맞춤 리포트에서 확인해보세요</p>
-        <ul className="money-paid-teaser-benefits">
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>돈 앞에서 반복되는 나의 생각과 행동</span></li>
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내가 가진 강점과 더 살펴볼 부분</span></li>
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>나에게 맞는 말씀을 기반으로 앞으로 세워갈 돈과 삶의 방향</span></li>
-        </ul>
+        <div className="money-paid-teaser-benefit-panel">
+          <p className="money-paid-teaser-benefit-title">나만의 맞춤 리포트에서 확인해보세요</p>
+          <ul className="money-paid-teaser-benefits">
+            <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>돈 앞에서 반복되는 나의 생각과 행동</span></li>
+            <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내가 가진 강점과 더 살펴볼 부분</span></li>
+            <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>나에게 맞는 말씀을 기반으로 앞으로 세워갈 돈과 삶의 방향</span></li>
+          </ul>
+        </div>
         <button className="money-report-purchase-button" type="button" data-placement="free-results" onClick={() => setDetailsOpen(true)} style={{ ...btn }}>
           내 맞춤 리포트 미리보기
           <ArrowRight size={18} strokeWidth={1.9} aria-hidden="true" />
