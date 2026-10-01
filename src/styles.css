@@ -657,16 +657,19 @@
 .money-paid-teaser-benefits svg { flex: 0 0 auto; color: #9a7664; }
 .money-paid-preview-button, .money-report-purchase-button { display: inline-flex; width: 100%; max-width: 350px; align-items: center; justify-content: center; gap: 9px; margin: 32px auto 0; padding: 16px 22px !important; border-radius: 999px !important; font-size: 16px !important; font-weight: 750 !important; line-height: 1.35; text-decoration: none; cursor: pointer; }
 .money-paid-teaser-meta { margin: 14px 0 0; color: rgba(73,60,50,.58); font-size: 12.5px; }
-.money-paid-teaser.money-paid-teaser--compact { padding: 84px 24px 80px; border: 1.5px solid #D7B9A8; border-radius: 8px; background: #FAEEE7; box-shadow: 0 10px 26px rgba(85,67,56,.11); color: #503B2F; font-family: "SUIT", ui-sans-serif, system-ui, sans-serif; text-align: center; word-break: keep-all; overflow-wrap: break-word; }
-.money-paid-teaser-icon { display: flex; justify-content: center; margin: 0 auto 24px; color: #9A7664; }
+.money-paid-teaser.money-paid-teaser--compact { padding: 88px 32px 84px; border: 1px solid #C98268; border-radius: 8px; background: #FFF9F1; box-shadow: 0 8px 24px rgba(85,67,56,.07); color: #503B2F; font-family: "SUIT", ui-sans-serif, system-ui, sans-serif; text-align: center; word-break: keep-all; overflow-wrap: break-word; }
+.money-paid-teaser-reports { position: relative; width: 146px; height: 118px; margin: 0 auto 30px; }
+.money-paid-teaser-reports img { position: absolute; top: 0; width: 76px; aspect-ratio: 210 / 297; border: 1px solid rgba(180,95,67,.36); border-radius: 3px; background: #fff; box-shadow: 0 6px 16px rgba(85,67,56,.12); object-fit: cover; }
+.money-paid-teaser-reports img:first-child { left: 8px; transform: rotate(-2deg); }
+.money-paid-teaser-reports img:last-child { right: 8px; top: 8px; transform: rotate(2deg); }
 .money-paid-teaser.money-paid-teaser--compact h2 { margin: 0 auto; color: #503B2F; font-family: inherit; font-size: 28px; font-weight: 600; line-height: 1.48; letter-spacing: -.035em; }
 .money-paid-teaser.money-paid-teaser--compact h2 span { display: block; }
-.money-paid-teaser.money-paid-teaser--compact h2 span:first-child { margin-bottom: 4px; font-size: 22px; font-weight: 500; color: #765746; }
+.money-paid-teaser.money-paid-teaser--compact h2 span:first-child { margin-bottom: 4px; font-size: inherit; font-weight: inherit; color: inherit; }
 .money-paid-teaser.money-paid-teaser--compact h2 em { color: #A35F49; font-style: normal; }
 .money-paid-teaser-divider { display: flex; align-items: center; justify-content: center; gap: 10px; max-width: 180px; margin: 28px auto; color: #765746; }
 .money-paid-teaser-divider span { flex: 1; height: 1px; background: #E4CDBE; }
 .money-paid-teaser-divider svg { flex: 0 0 auto; }
-.money-paid-teaser-key { margin: 28px 0 0; color: #503B2F; font-size: 18px; font-weight: 400; line-height: 1.65; letter-spacing: -.025em; text-wrap: initial; }
+.money-paid-teaser-key { margin: 28px 0 0; color: #503B2F; font-size: 16px; font-weight: 400; line-height: 1.7; letter-spacing: -.02em; text-wrap: initial; }
 .money-paid-teaser-key span { display: block; }
 .money-paid-teaser-key strong { color: #765746; font-weight: 600; }
 .money-paid-teaser-benefit-title { margin: 32px 0 0; color: #503B2F; font-size: 17px; font-weight: 700; line-height: 1.55; }
@@ -733,9 +736,10 @@
   .money-paid-transition-arrow { width: 32px; height: 32px; margin-top: 30px; }
   .money-paid-teaser { padding: 56px 22px 52px; }
   .money-paid-teaser h2 { font-size: 25px; }
-  .money-paid-teaser.money-paid-teaser--compact { padding: 72px 18px 68px; }
+  .money-paid-teaser.money-paid-teaser--compact { padding: 76px 22px 72px; }
   .money-paid-teaser.money-paid-teaser--compact h2 { font-size: 25px; }
-  .money-paid-teaser.money-paid-teaser--compact h2 span:first-child { font-size: 20px; }
+  .money-paid-teaser.money-paid-teaser--compact h2 span:first-child { font-size: inherit; }
+  .money-paid-teaser-key { font-size: 15px; }
   .money-paid-teaser--compact .money-paid-teaser-benefits { padding-right: 10px; padding-left: 10px; }
   .money-report-offer-hero { padding: 76px 22px 62px; }
   .money-report-offer-hero h2 { font-size: 26px; }

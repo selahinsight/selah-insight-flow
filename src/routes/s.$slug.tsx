@@ -37,7 +37,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { ArrowRight, BookOpen, Check, ChevronDown, CircleDollarSign, Download, GitBranch, Heart, Instagram, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, CircleDollarSign, Download, GitBranch, Heart, Instagram, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -2163,11 +2163,14 @@ function MoneyPaidDiagnosisSection({
     <section className="money-funnel-section money-paid-funnel-section">
       <div className="money-paid-transition" aria-label="맞춤 리포트 안내">
         <span className="money-paid-transition-lead">돈 앞의 내 마음을 발견했다면,</span>
-        <span className="money-paid-transition-main">이제 그 이유와 <em>앞으로의 방향</em>을 세울 차례입니다.</span>
+        <span className="money-paid-transition-main">이제 <em>그 이유</em>와 <em>앞으로의 방향</em>을 세울 차례입니다.</span>
         <ChevronDown className="money-paid-transition-arrow" size={36} strokeWidth={1.8} aria-hidden="true" />
       </div>
       <div className="money-paid-teaser money-paid-teaser--compact">
-        <div className="money-paid-teaser-icon" aria-hidden="true"><BookOpen size={44} strokeWidth={1.5} /></div>
+        <div className="money-paid-teaser-reports" aria-label="11페이지 맞춤 리포트 샘플">
+          <img src="/selah-money-report-preview/page-01-cover.png" alt="맞춤 리포트 표지 샘플" loading="lazy" />
+          <img src="/selah-money-report-preview/page-08-direction.png" alt="돈과 삶의 방향을 담은 리포트 내부 페이지 샘플" loading="lazy" />
+        </div>
         <h2>
           <span>나는 왜 돈 앞에서</span>
           <span><em>늘 비슷한 선택</em>을 할까요?</span>
@@ -2179,11 +2182,9 @@ function MoneyPaidDiagnosisSection({
         </p>
         <p className="money-paid-teaser-benefit-title">나만의 맞춤 리포트에서 확인해보세요</p>
         <ul className="money-paid-teaser-benefits">
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>돈 앞에서 반복되는 생각과 행동</span></li>
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내 선택에 영향을 주는 마음과 믿음</span></li>
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내가 가진 강점과 살펴볼 부분</span></li>
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>앞으로 세워갈 돈과 삶의 방향</span></li>
-          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>나에게 맞는 말씀 묵상</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>돈 앞에서 반복되는 나의 생각과 행동</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>내가 가진 강점과 더 살펴볼 부분</span></li>
+          <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>나에게 맞는 말씀을 기반으로 앞으로 세워갈 돈과 삶의 방향</span></li>
         </ul>
         <button className="money-report-purchase-button" type="button" data-placement="free-results" onClick={() => setDetailsOpen(true)} style={{ ...btn }}>
           내 맞춤 리포트 미리보기
