@@ -2208,6 +2208,7 @@ function MoneyPaidDiagnosisSection({
             </button>
 
             <header className="money-report-offer-hero">
+              <span className="money-report-offer-eyebrow">SELAH MONEY REPORT</span>
               <p className="money-report-offer-product-title">셀라 머니 심층 리포트</p>
               <h2>내 진단 결과로<br />‘나만의 맞춤 리포트’가 만들어집니다</h2>
               <p className="money-report-result-label">나의 실제 진단 결과</p>
@@ -2229,6 +2230,13 @@ function MoneyPaidDiagnosisSection({
             </header>
 
             <section id="money-report-difference" className="money-report-difference-section">
+              <div className="money-report-comparison-icon" aria-hidden="true">
+                <svg viewBox="0 0 36 32" focusable="false">
+                  <rect x="2.5" y="3.5" width="13" height="24" rx="2" />
+                  <rect x="20.5" y="3.5" width="13" height="24" rx="2" />
+                  <path d="M6.5 9.5h5M6.5 14h5M24.5 9.5h5M24.5 14h5" />
+                </svg>
+              </div>
               <h3>무료 결과와 무엇이 다를까요?</h3>
               <div className="money-report-difference-grid">
                 <article>
