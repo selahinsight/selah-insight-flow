@@ -2236,10 +2236,12 @@ function MoneyPaidDiagnosisSection({
 
             <section id="money-report-difference" className="money-report-difference-section">
               <div className="money-report-comparison-icon" aria-hidden="true">
-                <svg viewBox="0 0 36 32" focusable="false">
-                  <rect x="2.5" y="3.5" width="13" height="24" rx="2" />
-                  <rect x="20.5" y="3.5" width="13" height="24" rx="2" />
-                  <path d="M6.5 9.5h5M6.5 14h5M24.5 9.5h5M24.5 14h5" />
+                <svg viewBox="0 0 52 32" focusable="false">
+                  <rect x="2" y="5" width="13" height="22" rx="2" />
+                  <path d="M6 11h5M6 15h5M18 16h9M23 12l4 4-4 4" />
+                  <rect x="34" y="2" width="14" height="22" rx="2" />
+                  <rect x="31" y="5" width="14" height="22" rx="2" />
+                  <rect x="28" y="8" width="14" height="22" rx="2" />
                 </svg>
               </div>
               <h3>무료 결과와 무엇이 다를까요?</h3>
@@ -2263,32 +2265,31 @@ function MoneyPaidDiagnosisSection({
                   </ul>
                 </article>
               </div>
-              {purchaseButton("after-difference", "9,900원으로 내 맞춤 리포트 받기")}
             </section>
 
             <section className="money-report-sample-section">
-              <h3>실제 리포트 일부를 미리 살펴보세요</h3>
+              <h3>셀라 머니 심층 리포트 미리보기</h3>
               <div className="money-report-sample-pages money-report-sample-pages--report" aria-label="맞춤 리포트 미리보기">
                 <article>
-                  <div className="money-report-page-image money-report-page-image--locked">
+                  <div className="money-report-page-image">
                     <img src="/selah-money-report-preview/page-06-integration.png" alt="두 유형을 함께 해석한 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
                   <div className="money-report-sample-copy"><span>SELAH MONEY REPORT · 6쪽</span><h4>두 유형의 연결 해석</h4></div>
                 </article>
                 <article>
-                  <div className="money-report-page-image money-report-page-image--locked">
+                  <div className="money-report-page-image">
                     <img src="/selah-money-report-preview/page-08-direction.png" alt="돈과 삶의 방향을 담은 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
                   <div className="money-report-sample-copy"><span>SELAH MONEY REPORT · 8쪽</span><h4>돈과 삶의 방향</h4></div>
                 </article>
                 <article>
-                  <div className="money-report-page-image money-report-page-image--locked">
+                  <div className="money-report-page-image">
                     <img src="/selah-money-report-preview/page-10-summary.png" alt="전체 진단 결과를 정리한 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
                   <div className="money-report-sample-copy"><span>SELAH MONEY REPORT · 10쪽</span><h4>전체 결과 정리</h4></div>
                 </article>
               </div>
-              <p className="money-report-preview-note">일부 내용은 구매 후 확인할 수 있습니다.</p>
+              {purchaseButton("after-preview", "셀라 머니 심층 리포트 구매하기 · 9,900원")}
             </section>
 
             <footer className="money-report-offer-footer">
