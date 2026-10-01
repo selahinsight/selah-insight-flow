@@ -2173,9 +2173,9 @@ function MoneyPaidDiagnosisSection({
           <span><em>늘 비슷한 선택</em>을 할까요?</span>
         </h2>
         <p className="money-paid-teaser-key">
-          <span>11페이지 개인 맞춤 리포트에서</span>
-          <span><strong>내 선택 뒤에 숨은 마음과 믿음</strong>을 살펴보고,</span>
-          <span>앞으로의 방향을 세워보세요.</span>
+          <span>11페이지 맞춤 리포트에서</span>
+          <span>돈 앞에서 드러나는 나의 마음과 믿음을 살펴보고,</span>
+          <span>나에게 맞는 돈 관리의 방향을 세워보세요.</span>
         </p>
         <p className="money-paid-teaser-benefit-title">나만의 맞춤 리포트에서 확인해보세요</p>
         <ul className="money-paid-teaser-benefits">
