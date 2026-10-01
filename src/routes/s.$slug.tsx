@@ -2241,7 +2241,6 @@ function MoneyPaidDiagnosisSection({
                 <article className="money-report-difference-paid">
                   <span className="money-report-product-name">
                     <strong>셀라 머니 심층 진단지</strong>
-                    <small>11페이지 개인 맞춤 리포트</small>
                   </span>
                   <ul>
                     <li><Check size={17} aria-hidden="true" />돈 앞에서 왜 늘 비슷한 생각과 행동을 반복하는지 이해합니다.</li>
@@ -2255,53 +2254,51 @@ function MoneyPaidDiagnosisSection({
             </section>
 
             <section className="money-report-sample-section">
-              <p className="money-report-section-kicker">맞춤 리포트 미리보기</p>
-              <h3>유형 해석부터<br />돈과 삶의 방향까지 살펴봅니다</h3>
+              <h3>실제 리포트 일부를 미리 살펴보세요</h3>
               <div className="money-report-sample-pages money-report-sample-pages--report" aria-label="맞춤 리포트 미리보기">
                 <article>
                   <div className="money-report-page-image money-report-page-image--locked">
                     <img src="/selah-money-report-preview/page-06-integration.png" alt="두 유형을 함께 해석한 실제 리포트 페이지 예시" loading="lazy" />
-                    <div className="money-report-page-lock">개인별 해석은<br />구매 후 확인할 수 있어요</div>
                   </div>
                   <div className="money-report-sample-copy"><span>06 · 유형 해석</span><h4>두 유형을 함께 살펴봅니다</h4></div>
                 </article>
                 <article>
-                  <div className="money-report-page-image">
+                  <div className="money-report-page-image money-report-page-image--locked">
                     <img src="/selah-money-report-preview/page-08-direction.png" alt="돈과 삶의 방향을 담은 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
                   <div className="money-report-sample-copy"><span>08 · 돈과 삶의 방향</span><h4>앞으로 세워갈 방향을 확인합니다</h4></div>
                 </article>
                 <article>
-                  <div className="money-report-page-image">
+                  <div className="money-report-page-image money-report-page-image--locked">
                     <img src="/selah-money-report-preview/page-10-summary.png" alt="전체 진단 결과를 정리한 실제 리포트 페이지 예시" loading="lazy" />
                   </div>
                   <div className="money-report-sample-copy"><span>10 · 전체 결과 정리</span><h4>나의 결과와 기준을 한눈에 정리합니다</h4></div>
                 </article>
               </div>
-            </section>
-
-            <section className="money-report-workbook-section" aria-labelledby="money-report-workbook-title">
-              <div className="money-report-workbook-copy">
-                <h3 id="money-report-workbook-title">셀라 머니 워크북</h3>
-                <p>리포트에서 찾은 방향을 실제 돈 관리에 적용해보세요.</p>
-                <span className="money-report-workbook-meta">52페이지 실천 워크북</span>
-              </div>
-              <figure className="money-report-workbook-sample">
-                <img src="/selah-money-workbook-preview/page-45-next-month-budget.webp" alt="다음 달 수입과 드림·세움·쓰임 예산을 작성하는 실제 워크북 45쪽 샘플" loading="lazy" />
-                <figcaption><span>실제 워크북 45쪽</span><strong>다음 달 예산을 다시 정해봅니다</strong></figcaption>
-              </figure>
+              <p className="money-report-preview-note">일부 내용은 구매 후 확인할 수 있습니다.</p>
             </section>
 
             <footer className="money-report-offer-footer">
-              <p>나의 진단 결과로 만드는</p>
-              <h3>11페이지 맞춤 리포트</h3>
-              <ul>
-                <li><Check size={17} aria-hidden="true" />개인 맞춤 PDF</li>
-                <li><Check size={17} aria-hidden="true" />결제한 진단 결과를 바탕으로 제작</li>
-                <li><Check size={17} aria-hidden="true" />24시간 이내 이메일 발송</li>
-              </ul>
-              <strong>9,900원</strong>
-              {purchaseButton("footer", "내 맞춤 리포트 받기")}
+              <h3>나를 이해했다면,<br />이제 나만의 기준으로 돈을 관리할 차례입니다.</h3>
+              <p>셀라 머니 심층 진단지가 반복되는 돈 패턴과 방향을 보여준다면,<br />셀라 머니 워크북은 그 방향을 예산·소비·저축·투자 기준과 가계부 습관으로 옮기도록 돕습니다.</p>
+              <div className="money-report-purchase-options">
+                <article>
+                  <span>셀라 머니 심층 진단지만</span>
+                  <strong>9,900원</strong>
+                  {purchaseButton("footer-report", "심층 진단지 구매하기")}
+                </article>
+                <article className="money-report-purchase-option-set">
+                  <em>가장 추천 · 이해부터 실행까지</em>
+                  <span>심층 진단지 + 셀라 머니 워크북 세트</span>
+                  <strong>34,900원</strong>
+                  <small>개별 런칭가 합계 38,900원</small>
+                  <a className="money-report-purchase-button" href="https://selahinsight.co.kr/money-study" target="_blank" rel="noreferrer" data-placement="footer-set">세트 구매하기</a>
+                </article>
+              </div>
+              <figure className="money-report-workbook-sample money-report-workbook-sample--offer">
+                <img src="/selah-money-workbook-preview/page-45-next-month-budget.webp" alt="다음 달 수입과 드림·세움·쓰임 예산을 작성하는 실제 워크북 45쪽 샘플" loading="lazy" />
+                <figcaption><span>실제 워크북 45쪽</span><strong>돈의 의미와 삶의 우선순위를 정리하고, 나만의 기준을 실제 예산과 기록에 적용해보세요.</strong></figcaption>
+              </figure>
             </footer>
           </div>
         </div>
