@@ -699,7 +699,6 @@
 .money-report-result-description { max-width: 460px; margin: 16px auto 0; color: rgba(73,60,50,.76); font-size: 14px; line-height: 1.65; word-break: keep-all; }
 .money-report-hero-cover { width: min(280px,76%); margin: 30px auto 0; overflow: hidden; border: 1px solid #d8c4b7; background: #fffdf9; box-shadow: 0 18px 36px rgba(74,54,44,.14); }
 .money-report-hero-cover img { display: block; width: 100%; height: auto; }
-.money-report-cover-caption { max-width: 430px; margin: 14px auto 0; color: rgba(73,60,50,.66); font-size: 12px; line-height: 1.6; word-break: keep-all; }
 .money-report-product-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 0; margin: 25px auto 0; padding: 0; color: rgba(73,60,50,.78); font-size: 14px; line-height: 1.5; list-style: none; }
 .money-report-product-facts li { display: flex; align-items: center; }
 .money-report-product-facts li+li::before { margin: 0 10px; color: #bda496; content: "·"; }
@@ -708,11 +707,12 @@
 .money-report-hero-price span { flex-basis: 100%; color: #9a7664; font-size: 13px; font-weight: 700; }
 .money-report-hero-price s { color: rgba(73,60,50,.56); font-size: 15px; }
 .money-report-hero-price strong { color: #493c32; font-size: 25px; line-height: 1.2; }
-.money-report-hero-price em { color: #a35f49; font-size: 13px; font-style: normal; font-weight: 700; }
 .money-report-next-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 28px; padding: 12px 18px; border: 0; border-bottom: 1px solid #9a7664; background: transparent; color: #765746; font-family: inherit; font-size: 15px; font-weight: 650; cursor: pointer; }
 .money-report-section-kicker { margin: 0; color: #9a7664; font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
 .money-report-difference-section, .money-report-outcomes-section, .money-report-sample-section, .money-report-inclusions-section { padding: 72px 28px; text-align: center; scroll-margin-top: 16px; }
 .money-report-difference-section>h3, .money-report-outcomes-section>h3, .money-report-sample-section>h3, .money-report-inclusions-section>h3 { margin: 15px auto 0; font-family: "Gowun Batang",ui-serif,Georgia,serif; font-size: 27px; line-height: 1.5; letter-spacing: -.03em; word-break: keep-all; }
+.money-report-difference-section>h3 { margin-top: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 28px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; }
+.money-report-difference-summary { margin: 12px auto 0; color: #765746; font-size: 19px; font-weight: 500; line-height: 1.6; letter-spacing: -.02em; word-break: keep-all; }
 .money-report-difference-section { background: #fffdf9; }
 .money-report-difference-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin-top: 36px; text-align: left; }
 .money-report-difference-grid article { padding: 27px 24px; border: 1px solid #ddcfc4; background: #f8f3ed; }
@@ -774,6 +774,8 @@
   .money-report-product-facts li { justify-content: center; }
   .money-report-product-facts li+li::before { display: none; }
   .money-report-difference-section, .money-report-outcomes-section, .money-report-sample-section, .money-report-inclusions-section { padding: 58px 20px; }
+  .money-report-difference-section>h3 { font-size: 25px; }
+  .money-report-difference-summary { font-size: 17px; }
   .money-report-difference-grid, .money-report-outcomes-grid { grid-template-columns: 1fr; }
   .money-report-outcomes-grid { gap: 10px; }
   .money-report-sample-pages { display: flex; width: calc(100% + 20px); gap: 14px; margin-right: -20px; padding-right: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }

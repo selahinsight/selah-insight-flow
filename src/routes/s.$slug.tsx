@@ -2212,7 +2212,6 @@ function MoneyPaidDiagnosisSection({
               <div className="money-report-hero-cover">
                 <img src="/selah-money-report-preview/page-01-cover.png" alt="나의 진단 결과로 제작되는 개인 맞춤 리포트 표지 예시" />
               </div>
-              <p className="money-report-cover-caption">리포트 구성 샘플입니다. 실제 리포트에는 구매자의 이름과 진단 결과가 반영됩니다.</p>
               <ul className="money-report-product-facts" aria-label="맞춤 리포트 상품 정보">
                 <li>11페이지 개인 맞춤 PDF</li>
                 <li>결제 후 24시간 이내 이메일 발송</li>
@@ -2221,7 +2220,6 @@ function MoneyPaidDiagnosisSection({
                 <span>런칭 이벤트가</span>
                 <s>15,000원</s>
                 <strong>9,900원</strong>
-                <em>5,100원 할인</em>
               </div>
               <button
                 className="money-report-next-button"
@@ -2234,8 +2232,8 @@ function MoneyPaidDiagnosisSection({
             </header>
 
             <section id="money-report-difference" className="money-report-difference-section">
-              <p className="money-report-section-kicker">무료 결과와 무엇이 다를까요?</p>
-              <h3>유형을 아는 것에서 한 걸음 더 나아갑니다</h3>
+              <h3>무료 결과와 무엇이 다를까요?</h3>
+              <p className="money-report-difference-summary">유형을 아는 것에서 한 걸음 더 나아갑니다</p>
               <div className="money-report-difference-grid">
                 <article>
                   <span>무료 진단 결과</span>
