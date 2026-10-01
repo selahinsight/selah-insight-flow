@@ -2233,7 +2233,6 @@ function MoneyPaidDiagnosisSection({
 
             <section id="money-report-difference" className="money-report-difference-section">
               <h3>무료 결과와 무엇이 다를까요?</h3>
-              <p className="money-report-difference-summary">유형을 아는 것에서 한 걸음 더 나아갑니다</p>
               <div className="money-report-difference-grid">
                 <article>
                   <span>무료 진단 결과</span>
@@ -2245,35 +2244,32 @@ function MoneyPaidDiagnosisSection({
                 <article className="money-report-difference-paid">
                   <span>11페이지 맞춤 리포트</span>
                   <ul>
-                    <li><Check size={17} aria-hidden="true" />반복되는 생각과 행동</li>
-                    <li><Check size={17} aria-hidden="true" />내가 가진 강점과 더 살펴볼 부분</li>
-                    <li><Check size={17} aria-hidden="true" />나에게 맞는 돈 관리 방향과 말씀 묵상</li>
+                    <li><Check size={17} aria-hidden="true" />돈 앞에서 반복되는 생각과 행동이 일상의 선택에 나타나는 방식</li>
+                    <li><Check size={17} aria-hidden="true" />돈을 쓰고 누릴 때 드러나는 마음과 믿음</li>
+                    <li><Check size={17} aria-hidden="true" />돈 반응과 신앙 반응이 함께 선택에 미치는 영향</li>
+                    <li><Check size={17} aria-hidden="true" />내가 이미 가진 강점과 더 살펴볼 부분</li>
+                    <li><Check size={17} aria-hidden="true" />나에게 돈이 무엇이며 어떤 삶을 위해 사용할지</li>
+                    <li><Check size={17} aria-hidden="true" />말씀을 바탕으로 앞으로 세워갈 돈과 삶의 방향</li>
                   </ul>
                 </article>
+              </div>
+              <div className="money-report-workbook-callout">
+                <span>함께 제공되는 실행 워크북</span>
+                <h4>이해에서 끝나지 않도록, 직접 쓰고 적용합니다</h4>
+                <p>나만의 돈 관리 기준을 세우고 예산·소비·저축·투자에 적용한 뒤, 가계부와 주간 점검 양식으로 실제 돈 관리를 이어가세요.</p>
+                <ul>
+                  <li>돈 앞의 상황과 감정 정리</li>
+                  <li>나만의 돈 관리 기준 수립</li>
+                  <li>가계부·주간 기록·3개월 후 점검</li>
+                </ul>
               </div>
               {purchaseButton("after-difference", "9,900원으로 내 맞춤 리포트 받기")}
             </section>
 
-            <section className="money-report-outcomes-section">
-              <p className="money-report-section-kicker">리포트에서 얻게 되는 것</p>
-              <h3>나를 이해하고<br />앞으로의 방향을 세웁니다</h3>
-              <div className="money-report-outcomes-grid">
-                <article><strong>01</strong><h4>반복되는 패턴을 이해합니다</h4><p>돈 앞에서 자주 나타나는 생각과 행동을 살펴봅니다.</p></article>
-                <article><strong>02</strong><h4>강점과 살펴볼 부분을 발견합니다</h4><p>현재 잘하고 있는 점과 더 점검할 부분을 구분합니다.</p></article>
-                <article><strong>03</strong><h4>나에게 맞는 방향을 세웁니다</h4><p>말씀을 바탕으로 돈과 삶에 적용할 방향을 확인합니다.</p></article>
-              </div>
-            </section>
-
             <section className="money-report-sample-section">
-              <p className="money-report-section-kicker">실제 리포트 미리보기</p>
-              <h3>받게 될 리포트를<br />미리 확인해보세요</h3>
-              <div className="money-report-sample-pages" aria-label="실제 리포트 페이지 미리보기">
-                <article>
-                  <div className="money-report-page-image">
-                    <img src="/selah-money-report-preview/page-01-cover.png" alt="개인 이름과 두 유형이 담긴 실제 리포트 표지 예시" loading="lazy" />
-                  </div>
-                  <div className="money-report-sample-copy"><span>01 · 개인 맞춤 표지</span><h4>나의 진단 결과로 제작됩니다</h4></div>
-                </article>
+              <p className="money-report-section-kicker">리포트와 실행 워크북 미리보기</p>
+              <h3>나를 이해하는 것에서<br />실제 돈 관리까지 이어집니다</h3>
+              <div className="money-report-sample-pages" aria-label="맞춤 리포트와 실행 워크북 미리보기">
                 <article>
                   <div className="money-report-page-image money-report-page-image--locked">
                     <img src="/selah-money-report-preview/page-06-integration.png" alt="두 유형을 함께 해석한 실제 리포트 페이지 예시" loading="lazy" />
@@ -2287,16 +2283,16 @@ function MoneyPaidDiagnosisSection({
                   </div>
                   <div className="money-report-sample-copy"><span>08 · 돈과 삶의 방향</span><h4>앞으로 세워갈 방향을 확인합니다</h4></div>
                 </article>
-              </div>
-            </section>
-
-            <section className="money-report-inclusions-section">
-              <p className="money-report-section-kicker">11페이지 개인 맞춤 리포트</p>
-              <h3>이해에서 끝나지 않고<br />적용할 방향까지 담았습니다</h3>
-              <div className="money-report-inclusion-groups">
-                <article><span>나를 이해하는 내용</span><ul><li>돈 앞에서 나타나는 생각과 행동</li><li>돈을 대할 때 드러나는 마음과 믿음</li></ul></article>
-                <article><span>나의 결과를 해석하는 내용</span><ul><li>두 유형이 실제 돈 관리에 미치는 영향</li><li>내가 가진 강점과 더 살펴볼 부분</li></ul></article>
-                <article><span>앞으로 적용하는 내용</span><ul><li>돈과 삶에 세워갈 방향</li><li>유형에 맞는 말씀 묵상과 전체 정리</li></ul></article>
+                <article>
+                  <div className="money-report-page-image money-report-workbook-preview" aria-label="실행 워크북 구성 미리보기">
+                    <div className="money-report-workbook-preview-header"><span>SELAH MONEY</span><strong>나만의 돈 관리 기준</strong></div>
+                    <div className="money-report-workbook-preview-question">나는 돈을 어떤 삶을 위해 사용하고 싶은가요?</div>
+                    <div className="money-report-workbook-preview-lines"><i /><i /><i /></div>
+                    <div className="money-report-workbook-preview-grid"><span>예산</span><span>소비</span><span>저축</span><span>투자</span></div>
+                    <div className="money-report-workbook-preview-check">한 주 돈 관리 기록과 점검</div>
+                  </div>
+                  <div className="money-report-sample-copy"><span>실행 워크북</span><h4>세운 기준을 기록하고 점검합니다</h4></div>
+                </article>
               </div>
             </section>
 
@@ -2306,6 +2302,7 @@ function MoneyPaidDiagnosisSection({
               <ul>
                 <li><Check size={17} aria-hidden="true" />개인 맞춤 PDF</li>
                 <li><Check size={17} aria-hidden="true" />결제한 진단 결과를 바탕으로 제작</li>
+                <li><Check size={17} aria-hidden="true" />실행 워크북·가계부 양식 포함</li>
                 <li><Check size={17} aria-hidden="true" />24시간 이내 이메일 발송</li>
               </ul>
               <strong>9,900원</strong>
