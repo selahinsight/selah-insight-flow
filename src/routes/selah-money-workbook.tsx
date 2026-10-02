@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
+import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 
 export const Route = createFileRoute("/selah-money-workbook")({
   head: () => ({
@@ -14,8 +15,6 @@ export const Route = createFileRoute("/selah-money-workbook")({
   }),
   component: SelahMoneyWorkbookPage,
 });
-
-const MONEY_STUDY_URL = "https://selahinsight.co.kr/money-study";
 
 const workbookFlow = [
   {
@@ -83,13 +82,6 @@ function SelahMoneyWorkbookPage() {
   return (
     <div className="money-workbook-page-shell">
       <main className="money-workbook-page">
-        <nav className="money-workbook-topbar" aria-label="워크북 상세페이지 탐색">
-          <a href={MONEY_STUDY_URL}>
-            <ArrowLeft size={18} strokeWidth={1.8} aria-hidden="true" />
-            셀라의 돈 공부
-          </a>
-        </nav>
-
         <header className="money-workbook-hero">
           <span className="money-workbook-eyebrow">SELAH MONEY WORKBOOK</span>
           <h1>셀라 머니 워크북</h1>
@@ -223,11 +215,7 @@ function SelahMoneyWorkbookPage() {
           </article>
         </section>
 
-        <footer className="money-workbook-footer">
-          <a href={MONEY_STUDY_URL}>
-            셀라의 돈 공부 전체 과정 보기 <ArrowRight size={16} aria-hidden="true" />
-          </a>
-        </footer>
+        <MoneyStudyCourseFooter />
       </main>
     </div>
   );

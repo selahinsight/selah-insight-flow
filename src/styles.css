@@ -2737,10 +2737,10 @@
 .money-workbook-hero h1 {
   margin: 8px 0 0;
   color: #3f342f;
-  font-family: "Noto Serif KR", serif;
-  font-size: 27px;
-  font-weight: 600;
-  line-height: 1.45;
+  font-family: "SUIT", "Noto Sans KR", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
   letter-spacing: -0.035em;
 }
 
@@ -2930,6 +2930,21 @@
   cursor: pointer;
 }
 
+.money-workbook-product-card a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 50px;
+  margin-top: 24px;
+  border-radius: 14px;
+  background: #8b5e55;
+  color: #fffaf3;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .money-workbook-product-card--set button { background: #8b5e55; }
 .money-workbook-footer { padding: 34px 24px 44px; background: #443730; text-align: center; }
 .money-workbook-footer a { color: #fffaf2; }
@@ -2943,3 +2958,66 @@
   .money-workbook-hero-hook { font-size: 20px; }
   .money-workbook-hero-pages { margin-bottom: -20px; transform: scale(0.92); }
 }
+
+.money-product-course-footer {
+  padding: 58px 24px 62px;
+  background: #443730;
+  color: #fffaf2;
+  text-align: center;
+}
+.money-product-course-footer > span { display: block; color: #d5b9aa; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; }
+.money-product-course-footer h2 { margin: 12px 0 0; font: 700 22px/1.45 "SUIT", "Noto Sans KR", sans-serif; letter-spacing: -0.025em; }
+.money-product-course-footer p { margin: 16px 0 0; color: rgba(255,250,242,.76); font-size: 15px; line-height: 1.75; }
+.money-product-course-footer a { display: inline-flex; align-items: center; justify-content: center; min-width: 210px; min-height: 50px; margin-top: 26px; gap: 8px; border: 1px solid rgba(255,250,242,.42); border-radius: 14px; color: #fffaf2; font-size: 15px; font-weight: 700; text-decoration: none; }
+
+/* Selah Money Report detail page — shares the workbook mobile product template. */
+.money-report-detail-hero { padding-top: 64px; }
+.money-report-detail-hook { margin: 24px 0 0; color: #5f4d44; font-size: 18px; font-weight: 500; line-height: 1.68; letter-spacing: -0.02em; }
+.money-report-detail-divider { display: block; width: 1px; height: 34px; margin: 24px auto; background: #b57a6c; }
+.money-report-detail-result-label { margin: 0; color: #7d675d; font-size: 14px; font-weight: 600; }
+.money-report-detail-types { margin: 10px 0 0; color: #44362f; font-size: 18px; font-weight: 700; line-height: 1.5; }
+.money-report-detail-types strong { margin: 0 5px; color: #a36f62; }
+.money-report-detail-product { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 20px; align-items: center; margin-top: 34px; text-align: left; }
+.money-report-detail-product img { display: block; width: 124px; border: 1px solid rgba(93,72,58,.14); background: #fff; box-shadow: 0 12px 26px rgba(74,56,45,.13); }
+.money-report-detail-product > div { display: flex; flex-direction: column; align-items: flex-start; }
+.money-report-detail-product span { color: #6f5b51; font-size: 14px; line-height: 1.6; }
+.money-report-detail-product s { margin-top: 15px; color: #9b8b82; font-size: 13px; }
+.money-report-detail-product strong { margin-top: 5px; color: #8b5e55; font-size: 20px; font-weight: 700; }
+.money-report-detail-difference { padding: 74px 24px; background: #fffdf9; text-align: center; }
+.money-report-detail-difference > h2,
+.money-report-detail-workbook-link h2 { margin: 0; color: #44362f; font-family: "Noto Serif KR", serif; font-size: 24px; font-weight: 600; line-height: 1.55; letter-spacing: -0.035em; }
+.money-report-detail-difference article { margin-top: 30px; padding: 26px 22px; border: 1px solid rgba(126,96,78,.2); background: #fbf8f2; text-align: left; }
+.money-report-detail-difference article + article { margin-top: 16px; }
+.money-report-detail-difference .money-report-detail-benefits { border: 2px solid #a46e62; background: #faefec; }
+.money-report-detail-difference article > span { display: block; color: #9b685c; font-size: 11px; font-weight: 500; letter-spacing: .16em; }
+.money-report-detail-difference h3 { margin: 0; color: #493a33; font-size: 19px; font-weight: 600; line-height: 1.45; }
+.money-report-detail-difference article > span + h3 { margin-top: 8px; }
+.money-report-detail-difference ul { display: grid; gap: 13px; margin: 20px 0 0; padding: 0; list-style: none; }
+.money-report-detail-difference li { display: flex; gap: 10px; align-items: flex-start; color: #665249; font-size: 15px; line-height: 1.68; }
+.money-report-detail-difference li svg { flex: 0 0 auto; margin-top: 5px; color: #a36f62; }
+.money-report-detail-samples { background: #fbf8f2; }
+.money-report-detail-purchase-strip { padding: 48px 24px; background: #efe5da; text-align: center; }
+.money-report-detail-purchase-strip > div { display: flex; align-items: baseline; justify-content: center; gap: 10px; }
+.money-report-detail-purchase-strip s { color: #99877e; font-size: 14px; }
+.money-report-detail-purchase-strip strong { color: #8b5e55; font-size: 19px; font-weight: 700; }
+.money-report-detail-purchase-strip button { width: 100%; min-height: 50px; margin-top: 20px; border: 0; border-radius: 14px; background: #665147; color: #fffaf3; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+.money-report-detail-workbook-link { padding: 74px 24px; background: #fffdf9; text-align: center; }
+.money-report-detail-workbook-link > span { color: #9b685c; font-size: 12px; font-weight: 500; letter-spacing: .17em; }
+.money-report-detail-workbook-link h2 { margin-top: 12px; }
+.money-report-detail-workbook-link p { margin: 22px 0 0; color: #69564c; font-size: 16px; line-height: 1.8; }
+.money-report-detail-workbook-link img { display: block; width: min(100%, 290px); margin: 30px auto 0; border: 1px solid rgba(91,70,58,.14); box-shadow: 0 10px 24px rgba(71,55,44,.08); }
+.money-report-detail-workbook-link a { display: inline-flex; align-items: center; justify-content: center; min-width: 240px; min-height: 50px; margin-top: 26px; border: 1px solid #8b5e55; border-radius: 14px; color: #8b5e55; font-size: 15px; font-weight: 700; text-decoration: none; }
+.money-report-detail-options { padding-top: 64px; }
+.money-report-detail-checkout { position: fixed; z-index: 1000; inset: 0; display: grid; place-items: center; padding: 22px; background: rgba(45,34,29,.68); }
+.money-report-detail-checkout > div { position: relative; width: min(100%,390px); padding: 38px 24px 28px; background: #fffdf9; box-shadow: 0 22px 60px rgba(45,34,29,.24); text-align: center; }
+.money-report-detail-checkout > div > button:first-child { position: absolute; top: 12px; right: 14px; border: 0; background: transparent; color: #6c594f; font-size: 26px; cursor: pointer; }
+.money-report-detail-checkout > div > span { color: #9b685c; font-size: 11px; font-weight: 500; letter-spacing: .16em; }
+.money-report-detail-checkout h2 { margin: 10px 0 0; font-size: 22px; font-weight: 700; }
+.money-report-detail-checkout p { display: flex; flex-direction: column; gap: 8px; margin: 24px 0 0; padding: 18px; background: #f5ede4; }
+.money-report-detail-checkout p small { color: #806a5f; font-size: 13px; }
+.money-report-detail-checkout p strong { color: #493a33; font-size: 17px; }
+.money-report-detail-checkout label { display: block; margin-top: 22px; color: #665249; font-size: 13px; font-weight: 700; text-align: left; }
+.money-report-detail-checkout input { width: 100%; min-height: 48px; margin-top: 8px; padding: 0 14px; border: 1px solid rgba(126,96,78,.25); background: #fff; color: #493a33; font: inherit; }
+.money-report-detail-checkout em { display: block; margin-top: 13px; color: #806e65; font-size: 13px; font-style: normal; line-height: 1.55; }
+.money-report-detail-checkout > div > button:not(:first-child) { width: 100%; min-height: 50px; margin-top: 20px; border: 0; border-radius: 14px; background: #665147; color: #fffaf3; font: inherit; font-weight: 700; cursor: pointer; }
+.money-report-detail-checkout a { display: inline-block; margin-top: 18px; color: #806a5f; font-size: 13px; }

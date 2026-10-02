@@ -2237,7 +2237,19 @@ function MoneyPaidDiagnosisSection({
             <li><Check size={18} strokeWidth={2.1} aria-hidden="true" /><span>나에게 맞는 말씀을 기반으로 앞으로 세워갈 돈과 삶의 방향</span></li>
           </ul>
         </div>
-        <button className="money-report-purchase-button" type="button" data-placement="free-results" onClick={() => setDetailsOpen(true)} style={{ ...btn }}>
+        <button
+          className="money-report-purchase-button"
+          type="button"
+          data-placement="free-results"
+          onClick={() => {
+            window.sessionStorage.setItem(
+              "selahMoneyReportContext",
+              JSON.stringify({ name, moneyTitle, faithTitle, email }),
+            );
+            window.location.assign("/selah-money-report");
+          }}
+          style={{ ...btn }}
+        >
           내 맞춤 리포트 미리보기
           <ArrowRight size={18} strokeWidth={1.9} aria-hidden="true" />
         </button>

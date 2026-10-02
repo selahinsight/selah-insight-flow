@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SelahMoneyWorkbookRouteImport } from './routes/selah-money-workbook'
+import { Route as SelahMoneyReportRouteImport } from './routes/selah-money-report'
 import { Route as MoneyResultsReviewRouteImport } from './routes/money-results-review'
 import { Route as DiagnosisRouteImport } from './routes/diagnosis'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -34,6 +35,11 @@ import { Route as AdminSurveysIdAnalyticsRouteImport } from './routes/admin.surv
 const SelahMoneyWorkbookRoute = SelahMoneyWorkbookRouteImport.update({
   id: '/selah-money-workbook',
   path: '/selah-money-workbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SelahMoneyReportRoute = SelahMoneyReportRouteImport.update({
+  id: '/selah-money-report',
+  path: '/selah-money-report',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MoneyResultsReviewRoute = MoneyResultsReviewRouteImport.update({
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
@@ -213,6 +222,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/selah-money-report'
     | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/selah-money-report'
     | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
@@ -257,6 +268,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/selah-money-report'
     | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
@@ -281,6 +293,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DiagnosisRoute: typeof DiagnosisRoute
   MoneyResultsReviewRoute: typeof MoneyResultsReviewRoute
+  SelahMoneyReportRoute: typeof SelahMoneyReportRoute
   SelahMoneyWorkbookRoute: typeof SelahMoneyWorkbookRoute
   SSlugRoute: typeof SSlugRoute
 }
@@ -292,6 +305,13 @@ declare module '@tanstack/react-router' {
       path: '/selah-money-workbook'
       fullPath: '/selah-money-workbook'
       preLoaderRoute: typeof SelahMoneyWorkbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/selah-money-report': {
+      id: '/selah-money-report'
+      path: '/selah-money-report'
+      fullPath: '/selah-money-report'
+      preLoaderRoute: typeof SelahMoneyReportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/money-results-review': {
@@ -509,6 +529,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DiagnosisRoute: DiagnosisRoute,
   MoneyResultsReviewRoute: MoneyResultsReviewRoute,
+  SelahMoneyReportRoute: SelahMoneyReportRoute,
   SelahMoneyWorkbookRoute: SelahMoneyWorkbookRoute,
   SSlugRoute: SSlugRoute,
 }
