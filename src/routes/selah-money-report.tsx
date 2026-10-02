@@ -52,6 +52,21 @@ const reportSamples = [
   },
 ];
 
+const workbookSamples = [
+  {
+    src: "/selah-money-workbook-preview/page-24-money-criteria.webp",
+    label: "SELAH MONEY WORKBOOK · 24쪽",
+    title: "말씀을 바탕으로 돈 관리 기준 세우기",
+    alt: "말씀을 바탕으로 돈 관리 기준을 세우는 셀라 머니 워크북 24쪽",
+  },
+  {
+    src: "/selah-money-workbook-preview/page-45-next-month-budget.webp",
+    label: "SELAH MONEY WORKBOOK · 45쪽",
+    title: "다음 달 예산 작성하기",
+    alt: "다음 달 예산을 작성하는 셀라 머니 워크북 45쪽",
+  },
+];
+
 function SelahMoneyReportPage() {
   const [context, setContext] = useState<ReportContext>({});
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -108,7 +123,7 @@ function SelahMoneyReportPage() {
             <div>
               <span>11페이지 개인 맞춤 PDF</span>
               <span>결제 후 24시간 이내 이메일 발송</span>
-              <s>15,000원</s>
+              <s>정가 15,000원</s>
               <strong>런칭가 9,900원</strong>
             </div>
           </div>
@@ -151,24 +166,38 @@ function SelahMoneyReportPage() {
         </section>
 
         <section className="money-report-detail-purchase-strip">
-          <div><s>15,000원</s><strong>런칭가 9,900원</strong></div>
+          <div><s>정가 15,000원</s><strong>런칭가 9,900원</strong></div>
           <button type="button" onClick={() => setCheckoutOpen(true)}>셀라 머니 심층 리포트 구매하기</button>
         </section>
 
         <section className="money-report-detail-workbook-link">
           <span>SELAH MONEY WORKBOOK</span>
-          <h2>이해한 내용을 실제 돈 관리로 이어가고 싶다면</h2>
+          <h2>
+            돈 앞의 내 마음과 앞으로의 방향을 알았다면,
+            <br />이제 실제 돈 관리에 적용해보세요.
+          </h2>
           <p>
-            돈의 의미를 정리하고 말씀에 비추어 기준을 세워,
-            <br />예산·소비·저축에 적용하는 50페이지 실행 워크북을 만나보세요.
+            말씀을 바탕으로 나만의 돈 관리 기준을 세우고,
+            <br />예산·소비·저축에 직접 적용해보세요.
           </p>
-          <img src="/selah-money-workbook-preview/page-45-next-month-budget.webp" alt="셀라 머니 워크북 예산 작성 페이지" loading="lazy" />
+          <small>50페이지 실행 워크북</small>
+          <div className="money-report-detail-workbook-samples">
+            {workbookSamples.map((page) => (
+              <figure key={page.src}>
+                <img src={page.src} alt={page.alt} loading="lazy" />
+                <figcaption>
+                  <span>{page.label}</span>
+                  <strong>{page.title}</strong>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
           <a href="/selah-money-workbook">셀라 머니 워크북 자세히 보기</a>
         </section>
 
         <section className="money-workbook-choice-section money-report-detail-options">
           <div className="money-workbook-choice-line" aria-hidden="true" />
-          <h2>원하는 방식으로 시작해보세요</h2>
+          <h2>구매 옵션을 선택해보세요</h2>
           <article className="money-workbook-product-card">
             <span className="money-workbook-product-eyebrow">REPORT ONLY</span>
             <h3>셀라 머니 심층 리포트</h3>
@@ -178,7 +207,7 @@ function SelahMoneyReportPage() {
             <button type="button" onClick={() => setCheckoutOpen(true)}>심층 리포트 구매하기</button>
           </article>
           <article className="money-workbook-product-card money-workbook-product-card--set">
-            <span className="money-workbook-recommend-badge">추천 · 이해부터 실행까지</span>
+            <span className="money-workbook-recommend-badge">추천</span>
             <span className="money-workbook-product-eyebrow">REPORT + WORKBOOK</span>
             <h3>심층 리포트 + 머니 워크북 세트</h3>
             <p>11페이지 리포트 + 50페이지 실행 워크북</p>
