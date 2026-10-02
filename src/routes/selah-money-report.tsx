@@ -173,7 +173,7 @@ function SelahMoneyReportPage() {
         <section className="money-report-detail-workbook-link">
           <span>SELAH MONEY WORKBOOK</span>
           <h2>
-            돈 앞의 내 마음과 앞으로의 방향을 알았다면,
+            돈 앞의 마음과 앞으로의 방향을 알았다면,
             <br />이제 실제 돈 관리에 적용해보세요.
           </h2>
           <p>
