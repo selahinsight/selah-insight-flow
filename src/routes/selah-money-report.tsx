@@ -177,14 +177,14 @@ function SelahMoneyReportPage() {
         <section className="money-report-detail-workbook-link">
           <span>SELAH MONEY WORKBOOK</span>
           <h2>
-            돈 앞의 마음과 앞으로의 방향을 알았다면,
+            돈 앞의 마음과 방향을 알았다면,
             <br />이제 실제 돈 관리에 적용해보세요.
           </h2>
+          <small>50페이지 실행 워크북</small>
           <p>
             말씀을 바탕으로 나만의 돈 관리 기준을 세우고,
             <br />예산·소비·저축에 직접 적용해보세요.
           </p>
-          <small>50페이지 실행 워크북</small>
           <div className="money-report-detail-workbook-samples">
             {workbookSamples.map((page) => (
               <figure key={page.src}>
