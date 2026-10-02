@@ -434,6 +434,19 @@ function Runner({
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
   const emailCaptureRef = useRef<HTMLDivElement>(null);
 
+  function restartDiagnosis() {
+    setI(0);
+    setAnswers({});
+    setResult(undefined);
+    setSelahResult(undefined);
+    setResponseId(undefined);
+    setEmailSaved(false);
+    setPreviewMode(false);
+    setEditorialPreview(false);
+    setPhase("intro");
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+  }
+
   useEffect(() => {
     if (survey.slug !== "selah-money-diagnosis" || typeof window === "undefined") return;
 
@@ -1417,6 +1430,9 @@ function Runner({
               faithTitle={selahResult?.primaryFaithLens
                 ? customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)
                 : "신앙 유형"}
+              email={email}
+              onEmailChange={setEmail}
+              onRestart={restartDiagnosis}
             />
           )}
           {isMoneyDiagnosis && (
@@ -2117,14 +2133,23 @@ function MoneyPaidDiagnosisSection({
   design,
   moneyTitle,
   faithTitle,
+  email,
+  onEmailChange,
+  onRestart,
 }: {
   theme: ThemeColors;
   design: DesignSettings;
   moneyTitle: string;
   faithTitle: string;
+  email: string;
+  onEmailChange: (value: string) => void;
+  onRestart: () => void;
 }) {
   const btn = buttonClasses(design.button_style, theme);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [checkoutEmail, setCheckoutEmail] = useState(email);
+  const [editingEmail, setEditingEmail] = useState(!email.trim());
   const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_REPORT_CHECKOUT_URL as string | undefined)?.trim();
 
   useEffect(() => {
@@ -2142,22 +2167,36 @@ function MoneyPaidDiagnosisSection({
     };
   }, [detailsOpen]);
 
-  const purchaseButton = (placement: string, label = "9,900원으로 내 심층 리포트 받기") => checkoutUrl ? (
-    <a
-      className="money-report-purchase-button"
-      href={checkoutUrl}
-      data-placement={placement}
-      style={{ ...btn }}
-    >
-      {label}
-      <ArrowRight size={18} strokeWidth={1.8} aria-hidden="true" />
-    </a>
-  ) : (
+  function openCheckout() {
+    setCheckoutEmail(email);
+    setEditingEmail(!email.trim());
+    setCheckoutOpen(true);
+  }
+
+  function confirmCheckout() {
+    const trimmedEmail = checkoutEmail.trim();
+    if (!trimmedEmail) {
+      toast.error("리포트를 받을 이메일을 입력해주세요.");
+      return;
+    }
+    if (!/.+@.+\..+/.test(trimmedEmail)) {
+      toast.error("이메일 형식을 확인해주세요.");
+      return;
+    }
+    onEmailChange(trimmedEmail);
+    if (checkoutUrl) {
+      window.location.assign(checkoutUrl);
+      return;
+    }
+    toast.info("결제 링크를 연결하고 있습니다.");
+  }
+
+  const purchaseButton = (placement: string, label = "9,900원으로 내 심층 리포트 받기") => (
     <button
-      className="money-report-purchase-button money-report-purchase-button-pending"
+      className="money-report-purchase-button"
       type="button"
       data-placement={placement}
-      onClick={() => toast.info("결제 링크를 연결하고 있습니다.")}
+      onClick={openCheckout}
       style={{ ...btn }}
     >
       {label}
@@ -2236,12 +2275,11 @@ function MoneyPaidDiagnosisSection({
 
             <section id="money-report-difference" className="money-report-difference-section">
               <div className="money-report-comparison-icon" aria-hidden="true">
-                <svg viewBox="0 0 52 32" focusable="false">
-                  <rect x="2" y="5" width="13" height="22" rx="2" />
-                  <path d="M6 11h5M6 15h5M18 16h9M23 12l4 4-4 4" />
-                  <rect x="34" y="2" width="14" height="22" rx="2" />
-                  <rect x="31" y="5" width="14" height="22" rx="2" />
-                  <rect x="28" y="8" width="14" height="22" rx="2" />
+                <svg viewBox="0 0 36 36" focusable="false">
+                  <path d="M8 3.5h13l6 6V20" />
+                  <path d="M21 3.5v6h6M8 3.5v27h12" />
+                  <circle cx="24" cy="24" r="6" />
+                  <path d="m28.5 28.5 4 4" />
                 </svg>
               </div>
               <h3>무료 결과와 무엇이 다를까요?</h3>
@@ -2289,7 +2327,12 @@ function MoneyPaidDiagnosisSection({
                   <div className="money-report-sample-copy"><span>SELAH MONEY REPORT · 10쪽</span><h4>전체 결과 정리</h4></div>
                 </article>
               </div>
-              {purchaseButton("after-preview", "셀라 머니 심층 리포트 구매하기 · 9,900원")}
+              <div className="money-report-preview-cta">
+                <strong>11페이지 개인 맞춤 PDF</strong>
+                <span>결제 후 24시간 이내 이메일 발송</span>
+                <div className="money-report-preview-price"><s>15,000원</s><em>런칭가 9,900원</em></div>
+                {purchaseButton("after-preview", "셀라 머니 심층 리포트 구매하기")}
+              </div>
             </section>
 
             <footer className="money-report-offer-footer">
@@ -2341,6 +2384,55 @@ function MoneyPaidDiagnosisSection({
                 </div>
               </div>
             </footer>
+
+            {checkoutOpen && (
+              <div className="money-report-checkout-overlay" role="dialog" aria-modal="true" aria-label="결제 전 확인">
+                <div className="money-report-checkout-card">
+                  <button className="money-report-checkout-close" type="button" onClick={() => setCheckoutOpen(false)} aria-label="결제 전 확인 닫기">
+                    <X size={20} />
+                  </button>
+                  <span className="money-report-checkout-eyebrow">BEFORE PAYMENT</span>
+                  <h3>결제 전에 확인해주세요</h3>
+                  <div className="money-report-checkout-result">
+                    <span>나의 진단 결과</span>
+                    <strong>{moneyTitle} × {faithTitle}</strong>
+                  </div>
+                  <div className="money-report-checkout-email">
+                    <label htmlFor="money-report-checkout-email">리포트를 받을 이메일</label>
+                    {editingEmail ? (
+                      <input
+                        id="money-report-checkout-email"
+                        type="email"
+                        value={checkoutEmail}
+                        onChange={(event) => setCheckoutEmail(event.target.value)}
+                        placeholder="이메일 주소 입력"
+                        autoComplete="email"
+                        autoFocus
+                      />
+                    ) : (
+                      <div className="money-report-checkout-email-value">
+                        <span>{checkoutEmail}</span>
+                        <button type="button" onClick={() => setEditingEmail(true)}>수정</button>
+                      </div>
+                    )}
+                  </div>
+                  <p className="money-report-checkout-note">맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</p>
+                  <button className="money-report-checkout-submit" type="button" onClick={confirmCheckout}>확인하고 결제하기</button>
+                  <button
+                    className="money-report-restart-link"
+                    type="button"
+                    onClick={() => {
+                      if (!window.confirm("다시 진단하면 현재 결과가 변경됩니다.\n다시 진행하시겠어요?")) return;
+                      setCheckoutOpen(false);
+                      setDetailsOpen(false);
+                      onRestart();
+                    }}
+                  >
+                    결과가 맞지 않나요? <strong>진단 다시하기</strong>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
