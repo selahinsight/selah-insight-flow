@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SelahMoneyWorkbookRouteImport } from './routes/selah-money-workbook'
 import { Route as MoneyResultsReviewRouteImport } from './routes/money-results-review'
 import { Route as DiagnosisRouteImport } from './routes/diagnosis'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -30,6 +31,11 @@ import { Route as AdminSurveysIdPublishRouteImport } from './routes/admin.survey
 import { Route as AdminSurveysIdEditRouteImport } from './routes/admin.surveys.$id.edit'
 import { Route as AdminSurveysIdAnalyticsRouteImport } from './routes/admin.surveys.$id.analytics'
 
+const SelahMoneyWorkbookRoute = SelahMoneyWorkbookRouteImport.update({
+  id: '/selah-money-workbook',
+  path: '/selah-money-workbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MoneyResultsReviewRoute = MoneyResultsReviewRouteImport.update({
   id: '/money-results-review',
   path: '/money-results-review',
@@ -137,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -158,6 +165,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -180,6 +188,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -204,6 +213,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -246,6 +257,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -269,11 +281,19 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DiagnosisRoute: typeof DiagnosisRoute
   MoneyResultsReviewRoute: typeof MoneyResultsReviewRoute
+  SelahMoneyWorkbookRoute: typeof SelahMoneyWorkbookRoute
   SSlugRoute: typeof SSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/selah-money-workbook': {
+      id: '/selah-money-workbook'
+      path: '/selah-money-workbook'
+      fullPath: '/selah-money-workbook'
+      preLoaderRoute: typeof SelahMoneyWorkbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/money-results-review': {
       id: '/money-results-review'
       path: '/money-results-review'
@@ -489,6 +509,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DiagnosisRoute: DiagnosisRoute,
   MoneyResultsReviewRoute: MoneyResultsReviewRoute,
+  SelahMoneyWorkbookRoute: SelahMoneyWorkbookRoute,
   SSlugRoute: SSlugRoute,
 }
 export const routeTree = rootRouteImport
