@@ -1426,6 +1426,7 @@ function Runner({
             <MoneyPaidDiagnosisSection
               theme={theme}
               design={design}
+              name={name}
               moneyTitle={result.title}
               faithTitle={selahResult?.primaryFaithLens
                 ? customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)
@@ -2131,6 +2132,7 @@ function EmailResultSection({
 function MoneyPaidDiagnosisSection({
   theme,
   design,
+  name,
   moneyTitle,
   faithTitle,
   email,
@@ -2139,6 +2141,7 @@ function MoneyPaidDiagnosisSection({
 }: {
   theme: ThemeColors;
   design: DesignSettings;
+  name: string;
   moneyTitle: string;
   faithTitle: string;
   email: string;
@@ -2151,6 +2154,7 @@ function MoneyPaidDiagnosisSection({
   const [checkoutEmail, setCheckoutEmail] = useState(email);
   const [editingEmail, setEditingEmail] = useState(!email.trim());
   const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_REPORT_CHECKOUT_URL as string | undefined)?.trim();
+  const displayName = name.trim() || "OOO";
 
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get("report") === "preview") {
@@ -2251,7 +2255,7 @@ function MoneyPaidDiagnosisSection({
               <p className="money-report-offer-product-title">셀라 머니 심층 리포트</p>
               <h2>내 진단 결과로<br /><strong>‘나만의 맞춤 리포트’</strong>가 만들어집니다</h2>
               <span className="money-report-hero-divider" aria-hidden="true" />
-              <p className="money-report-result-label">나의 진단 결과</p>
+              <p className="money-report-result-label">{displayName}님의 진단 결과</p>
               <div className="money-report-type-combination">
                 <span>{moneyTitle}</span><strong>×</strong><span>{faithTitle}</span>
               </div>
@@ -2328,8 +2332,6 @@ function MoneyPaidDiagnosisSection({
                 </article>
               </div>
               <div className="money-report-preview-cta">
-                <strong>11페이지 개인 맞춤 PDF</strong>
-                <span>결제 후 24시간 이내 이메일 발송</span>
                 <div className="money-report-preview-price"><s>15,000원</s><em>런칭가 9,900원</em></div>
                 {purchaseButton("after-preview", "셀라 머니 심층 리포트 구매하기")}
               </div>
@@ -2394,7 +2396,7 @@ function MoneyPaidDiagnosisSection({
                   <span className="money-report-checkout-eyebrow">BEFORE PAYMENT</span>
                   <h3>결제 전에 확인해주세요</h3>
                   <div className="money-report-checkout-result">
-                    <span>나의 진단 결과</span>
+                    <span>{displayName}님의 진단 결과</span>
                     <strong>{moneyTitle} × {faithTitle}</strong>
                   </div>
                   <div className="money-report-checkout-email">

@@ -712,13 +712,14 @@
 .money-report-hero-price s { color: rgba(73,60,50,.56); font-size: 15px; }
 .money-report-hero-price strong { color: #493c32; font-size: 22px; line-height: 1.2; }
 .money-report-section-kicker { margin: 0; color: #9a7664; font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
-.money-report-difference-section, .money-report-sample-section { padding: 58px 20px; text-align: center; scroll-margin-top: 16px; }
+.money-report-difference-section { padding: 58px 20px; text-align: center; scroll-margin-top: 16px; }
+.money-report-sample-section { padding: 42px 20px 58px; text-align: center; scroll-margin-top: 16px; }
 .money-report-comparison-icon { width: 30px; height: 30px; margin: 0 auto 15px; color: #9a7664; }
 .money-report-comparison-icon svg { display: block; width: 100%; height: 100%; }
 .money-report-comparison-icon rect, .money-report-comparison-icon circle, .money-report-comparison-icon path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .money-report-difference-section>h3, .money-report-sample-section>h3 { margin: 15px auto 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 25px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; word-break: keep-all; }
 .money-report-difference-section>h3 { margin-top: 0; }
-.money-report-sample-section>h3 { margin-top: 0; font-size: 20px; line-height: 1.5; }
+.money-report-sample-section>h3 { margin-top: 0; font-size: 20px; font-weight: 600; line-height: 1.5; }
 .money-report-difference-section { background: #fffdf9; }
 .money-report-difference-grid { display: grid; grid-template-columns: 1fr; align-items: start; gap: 16px; margin-top: 36px; text-align: left; }
 .money-report-difference-grid article { padding: 27px 24px; border: 1px solid #ddcfc4; background: #f8f3ed; }
@@ -730,7 +731,7 @@
 .money-report-difference-grid li { display: grid; grid-template-columns: 19px 1fr; gap: 8px; color: rgba(73,60,50,.83); font-size: 15px; line-height: 1.65; }
 .money-report-difference-grid li svg { margin-top: 2px; color: #9a7664; }
 .money-report-sample-section { background: #fffdf9; }
-.money-report-sample-pages { display: flex; width: calc(100% + 20px); gap: 14px; margin-top: 38px; margin-right: -20px; padding-right: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; text-align: center; }
+.money-report-sample-pages { display: flex; width: calc(100% + 20px); gap: 14px; margin-top: 26px; margin-right: -20px; padding-right: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; text-align: center; }
 .money-report-sample-pages::-webkit-scrollbar { display: none; }
 .money-report-sample-pages--report { max-width: none; margin-left: 0; }
 .money-report-sample-pages article { overflow: hidden; border: 1px solid #ddcfc4; background: #fffdf9; box-shadow: 0 12px 28px rgba(74,54,44,.08); }
@@ -740,12 +741,12 @@
 .money-report-sample-copy { padding: 19px 16px 21px; text-align: center; }
 .money-report-sample-copy>span { color: #9a7664; font-size: 13px; font-weight: 500; letter-spacing: .05em; }
 .money-report-sample-pages h4 { margin: 10px 0 0; font-size: 16px; line-height: 1.5; word-break: keep-all; }
-.money-report-preview-cta { display: grid; justify-items: center; margin: 40px -20px -58px; padding: 34px 20px 38px; background: #f3e7e1; text-align: center; }
+.money-report-preview-cta { display: grid; justify-items: center; margin: 40px -20px -58px; padding: 28px 20px 38px; background: #f3e7e1; text-align: center; }
 .money-report-preview-cta>strong { color: #493c32; font-size: 18px; font-weight: 700; line-height: 1.5; }
 .money-report-preview-cta>span { margin-top: 5px; color: rgba(73,60,50,.74); font-size: 14px; line-height: 1.6; }
-.money-report-preview-price { display: flex; align-items: baseline; justify-content: center; gap: 9px; margin-top: 18px; }
+.money-report-preview-price { display: flex; align-items: baseline; justify-content: center; gap: 9px; margin-top: 0; }
 .money-report-preview-price s { color: rgba(73,60,50,.56); font-size: 14px; }
-.money-report-preview-price em { color: #493c32; font-size: 22px; font-style: normal; font-weight: 700; line-height: 1.25; }
+.money-report-preview-price em { color: #493c32; font-size: 20px; font-style: normal; font-weight: 700; line-height: 1.25; }
 .money-report-preview-cta>.money-report-purchase-button { margin-top: 22px; }
 .money-report-workbook-section { display: grid; grid-template-columns: 1fr; align-items: center; gap: 30px; padding: 58px 20px; background: #fffdf9; color: #493c32; }
 .money-report-workbook-copy>h3 { margin: 0; font-family: "SUIT",ui-sans-serif,system-ui,sans-serif; font-size: 25px; font-weight: 700; line-height: 1.48; letter-spacing: -.03em; word-break: keep-all; }
