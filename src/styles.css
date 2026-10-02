@@ -2982,7 +2982,7 @@
 .money-report-detail-product > div { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .money-report-detail-product span { color: #6f5b51; font-size: 14px; line-height: 1.6; }
 .money-report-detail-hero-price { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; margin-top: 18px; text-align: center; }
-.money-report-detail-hero-price::before { width: 34px; height: 1px; margin-bottom: 9px; background: rgba(139,94,85,.32); content: ""; }
+.money-report-detail-hero-price::before { width: 34px; height: 1px; margin-bottom: 15px; background: rgba(139,94,85,.32); content: ""; }
 .money-report-detail-hero-price s { color: #765f54; font-size: 14px; font-weight: 500; line-height: 1.35; }
 .money-report-detail-hero-price strong { color: #8b5e55; font-size: 18px; font-weight: 700; line-height: 1.3; }
 .money-report-detail-difference { padding: 74px 24px; background: #fffdf9; text-align: center; }
