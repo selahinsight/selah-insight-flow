@@ -2998,6 +2998,7 @@
 .money-report-detail-purchase-strip { padding: 48px 24px; background: #efe5da; text-align: center; }
 .money-report-detail-purchase-strip > div { display: flex; align-items: baseline; justify-content: center; gap: 10px; }
 .money-report-detail-purchase-strip s { color: #765f54; font-size: 16px; font-weight: 600; }
+.money-report-detail-price-arrow { color: #a56f61; font-size: 18px; font-weight: 600; line-height: 1; }
 .money-report-detail-purchase-strip strong { color: #8b5e55; font-size: 19px; font-weight: 700; }
 .money-report-detail-purchase-strip button { width: 100%; min-height: 50px; margin-top: 20px; border: 0; border-radius: 14px; background: #665147; color: #fffaf3; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
 .money-report-detail-workbook-link { padding: 74px 24px; background: #fffdf9; text-align: center; }

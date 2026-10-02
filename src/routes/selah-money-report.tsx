@@ -166,7 +166,11 @@ function SelahMoneyReportPage() {
         </section>
 
         <section className="money-report-detail-purchase-strip">
-          <div><s>정가 15,000원</s><strong>런칭가 9,900원</strong></div>
+          <div>
+            <s>정가 15,000원</s>
+            <span className="money-report-detail-price-arrow" aria-hidden="true">→</span>
+            <strong>런칭가 9,900원</strong>
+          </div>
           <button type="button" onClick={() => setCheckoutOpen(true)}>셀라 머니 심층 리포트 구매하기</button>
         </section>
 
