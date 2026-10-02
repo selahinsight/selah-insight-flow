@@ -123,8 +123,11 @@ function SelahMoneyReportPage() {
             <div>
               <span>11페이지 개인 맞춤 PDF</span>
               <span>결제 후 24시간 이내 이메일 발송</span>
-              <s>정가 15,000원</s>
-              <strong>런칭가 9,900원</strong>
+              <div className="money-report-detail-hero-price">
+                <s>정가 15,000원</s>
+                <span aria-hidden="true">→</span>
+                <strong>런칭가 9,900원</strong>
+              </div>
             </div>
           </div>
         </header>

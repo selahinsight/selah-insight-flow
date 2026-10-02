@@ -2981,8 +2981,10 @@
 .money-report-detail-product img { display: block; width: 124px; border: 1px solid rgba(93,72,58,.14); background: #fff; box-shadow: 0 12px 26px rgba(74,56,45,.13); }
 .money-report-detail-product > div { display: flex; flex-direction: column; align-items: flex-start; }
 .money-report-detail-product span { color: #6f5b51; font-size: 14px; line-height: 1.6; }
-.money-report-detail-product s { margin-top: 20px; color: #765f54; font-size: 16px; font-weight: 600; }
-.money-report-detail-product strong { margin-top: 5px; color: #8b5e55; font-size: 20px; font-weight: 700; }
+.money-report-detail-hero-price { display: flex; align-items: baseline; justify-content: center; gap: 8px; width: 100%; margin-top: 20px; white-space: nowrap; }
+.money-report-detail-hero-price s { color: #765f54; font-size: 15px; font-weight: 600; }
+.money-report-detail-hero-price span { color: rgba(139,94,85,.62); font-size: 15px; font-weight: 500; line-height: 1; }
+.money-report-detail-hero-price strong { color: #8b5e55; font-size: 19px; font-weight: 700; }
 .money-report-detail-difference { padding: 74px 24px; background: #fffdf9; text-align: center; }
 .money-report-detail-difference > h2 { margin: 0; color: #44362f; font-family: "SUIT", "Noto Sans KR", sans-serif; font-size: 22px; font-weight: 700; line-height: 1.48; letter-spacing: -0.03em; }
 .money-report-detail-difference article { margin-top: 30px; padding: 26px 22px; border: 1px solid rgba(126,96,78,.2); background: #fbf8f2; text-align: left; }
