@@ -125,7 +125,7 @@ function SelahMoneyReportPage() {
               <span>결제 후 24시간 이내 이메일 발송</span>
               <div className="money-report-detail-hero-price">
                 <s>정가 15,000원</s>
-                <span aria-hidden="true">→</span>
+                <span aria-hidden="true">↓</span>
                 <strong>런칭가 9,900원</strong>
               </div>
             </div>
