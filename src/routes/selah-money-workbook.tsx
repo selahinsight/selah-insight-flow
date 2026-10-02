@@ -91,11 +91,6 @@ function SelahMoneyWorkbookPage() {
             선택은 더 분명해지고
             <br />돈 앞의 마음은 평안해집니다.
           </p>
-          <p className="money-workbook-hero-copy">
-            말씀을 바탕으로 나만의 기준을 세우고,
-            <br />
-            하나님이 맡기신 돈을 지혜롭게 관리해보세요.
-          </p>
 
           <div className="money-workbook-hero-pages" aria-label="셀라 머니 워크북 실제 페이지">
             <img src={samplePages[0].src} alt="" aria-hidden="true" />
@@ -105,9 +100,10 @@ function SelahMoneyWorkbookPage() {
 
           <div className="money-workbook-hero-meta">
             <span>50페이지 실행 워크북</span>
-            <strong>
-              <s>39,000원</s> 런칭가 29,000원
-            </strong>
+            <span>다운로드형 PDF</span>
+            <span className="money-workbook-hero-price-line" aria-hidden="true" />
+            <s>정가 39,000원</s>
+            <strong>런칭가 29,000원</strong>
           </div>
         </header>
 
@@ -121,6 +117,11 @@ function SelahMoneyWorkbookPage() {
           <p>
             방법을 알아도 돈 앞에서 같은 선택을 반복하는 이유는,
             <br />내 마음과 삶의 기준이 아직 정리되지 않았기 때문일 수 있습니다.
+          </p>
+          <p>
+            말씀을 바탕으로 나만의 기준을 세우고,
+            <br />
+            하나님이 맡기신 돈을 지혜롭게 관리해보세요.
           </p>
           <p>
             셀라 머니 워크북은 정답을 대신 정해주지 않습니다.
@@ -185,7 +186,7 @@ function SelahMoneyWorkbookPage() {
 
         <section className="money-workbook-choice-section">
           <div className="money-workbook-choice-line" aria-hidden="true" />
-          <h2>원하는 방식으로 시작해보세요</h2>
+          <h2>구매 옵션을 선택해보세요</h2>
 
           <article className="money-workbook-product-card">
             <span className="money-workbook-product-eyebrow">WORKBOOK ONLY</span>
@@ -201,7 +202,7 @@ function SelahMoneyWorkbookPage() {
           </article>
 
           <article className="money-workbook-product-card money-workbook-product-card--set">
-            <span className="money-workbook-recommend-badge">추천 · 이해부터 실행까지</span>
+            <span className="money-workbook-recommend-badge">추천</span>
             <span className="money-workbook-product-eyebrow">REPORT + WORKBOOK</span>
             <h3>심층 리포트 + 머니 워크북 세트</h3>
             <p>11페이지 개인 맞춤 리포트 + 50페이지 실행 워크북</p>

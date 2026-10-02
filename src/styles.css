@@ -2747,8 +2747,8 @@
 .money-workbook-hero-hook {
   margin: 34px 0 0;
   color: #4a3b35;
-  font-size: 21px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 500;
   line-height: 1.65;
   letter-spacing: -0.025em;
 }
@@ -2794,8 +2794,9 @@
 }
 
 .money-workbook-hero-meta > span { color: #766257; font-size: 15px; font-weight: 600; }
-.money-workbook-hero-meta strong { color: #8b5e55; font-size: 21px; font-weight: 700; }
-.money-workbook-hero-meta s { margin-right: 8px; color: #9b8b82; font-size: 14px; font-weight: 400; }
+.money-workbook-hero-meta .money-workbook-hero-price-line { width: 42px; height: 1px; margin: 8px 0 5px; background: rgba(117, 91, 76, 0.28); }
+.money-workbook-hero-meta strong { color: #8b5e55; font-size: 18px; font-weight: 700; }
+.money-workbook-hero-meta s { color: #765f54; font-size: 16px; font-weight: 600; }
 
 .money-workbook-intro-section,
 .money-workbook-flow-section,
@@ -2813,10 +2814,10 @@
 .money-workbook-choice-section > h2 {
   margin: 0;
   color: #44362f;
-  font-family: "Noto Serif KR", serif;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.55;
+  font-family: "SUIT", "Noto Sans KR", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.48;
   letter-spacing: -0.035em;
 }
 
@@ -2875,7 +2876,7 @@
 
 .money-workbook-includes-section li svg { flex: 0 0 auto; margin-top: 5px; color: #a36f62; }
 .money-workbook-sample-section { padding-right: 0; padding-left: 0; background: #fbf8f2; }
-.money-workbook-sample-section h2 { padding: 0 24px; text-align: center; font-size: 20px; }
+.money-workbook-sample-section h2 { padding: 0 24px; text-align: center; }
 
 .money-workbook-sample-pages {
   display: flex;
@@ -2908,12 +2909,12 @@
   background: #fffdf9;
 }
 
-.money-workbook-product-card--set { margin-top: 18px; border: 2px solid #a46e62; background: #faefec; }
+.money-workbook-product-card--set { margin-top: 24px; border: 2px solid #a46e62; background: #faefec; }
 .money-workbook-recommend-badge { margin: -49px 0 20px; padding: 7px 14px; border-radius: 999px; background: #8b5e55; color: #fffaf3; font-size: 12px; font-weight: 700; }
-.money-workbook-product-card h3 { margin: 9px 0 0; color: #44362f; font-size: 20px; font-weight: 700; line-height: 1.48; }
+.money-workbook-product-card h3 { margin: 9px 0 0; color: #44362f; font-size: 18px; font-weight: 600; line-height: 1.48; }
 .money-workbook-product-card p { margin: 10px 0 0; color: #756158; font-size: 14px; line-height: 1.55; }
-.money-workbook-product-card s { margin-top: 23px; color: #98877e; font-size: 14px; }
-.money-workbook-product-card > strong { margin-top: 8px; color: #8b5e55; font-size: 24px; font-weight: 750; }
+.money-workbook-product-card s { margin-top: 23px; color: #765f54; font-size: 16px; font-weight: 600; }
+.money-workbook-product-card > strong { margin-top: 8px; color: #8b5e55; font-size: 24px; font-weight: 700; }
 .money-workbook-product-card > strong small { margin-right: 4px; font-size: 13px; font-weight: 700; }
 
 .money-workbook-product-card button {
@@ -2955,7 +2956,7 @@
   .money-workbook-flow-section,
   .money-workbook-includes-section,
   .money-workbook-choice-section { padding-right: 20px; padding-left: 20px; }
-  .money-workbook-hero-hook { font-size: 20px; }
+  .money-workbook-hero-hook { font-size: 18px; }
   .money-workbook-hero-pages { margin-bottom: -20px; transform: scale(0.92); }
 }
 
