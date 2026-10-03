@@ -841,8 +841,9 @@ function Runner({
                 className="money-intro-description money-intro-body"
                 style={{ margin: "24px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
-                <span className="money-intro-line">30개의 질문을 통해</span>{" "}
-                <span className="money-intro-line">돈을 대하는 마음과 행동, 신앙의 흐름을 함께 살펴봅니다.</span>
+                <span className="money-intro-description-line">30개의 질문을 통해</span>
+                <span className="money-intro-description-line">돈을 대하는 마음과 행동,</span>
+                <span className="money-intro-description-line">신앙의 흐름을 함께 살펴봅니다.</span>
               </p>
               <p
                 className="money-duration"
@@ -879,7 +880,6 @@ function Runner({
               정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
             </p>
           )}
-          <div className={isMoneyDiagnosis ? "money-intro-form-panel" : undefined}>
           <div className={isMoneyDiagnosis ? "money-name-field" : undefined} style={{ marginTop: 24, maxWidth: isMoneyDiagnosis ? 380 : 320, marginLeft: "auto", marginRight: "auto" }}>
             <label
               htmlFor="respondent-name"
@@ -931,7 +931,6 @@ function Runner({
               </label>
             </div>
           )}
-          </div>
           <button
             className={isMoneyDiagnosis ? "money-start-button" : undefined}
             onClick={() => {
