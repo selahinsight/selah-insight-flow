@@ -2803,7 +2803,11 @@
 .money-workbook-sample-section,
 .money-workbook-choice-section { padding: 74px 24px; }
 
-.money-workbook-intro-section { text-align: center; background: #fffdf9; }
+.money-workbook-intro-section {
+  padding-bottom: 28px;
+  text-align: center;
+  background: #fffdf9;
+}
 .money-workbook-section-symbol { display: block; width: 1px; height: 44px; margin: 0 auto 24px; background: #b57a6c; }
 
 .money-workbook-intro-section h2,
@@ -2852,16 +2856,28 @@
 }
 
 .money-workbook-need-conclusion {
-  margin: 30px 0 0;
+  margin: 28px 0 0;
   color: #69564c;
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.75;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.65;
   letter-spacing: -0.02em;
 }
 
-.money-workbook-need-conclusion strong { color: #8b5e55; font-weight: 700; }
-.money-workbook-outcomes-section { background: #f1e8de; }
+.money-workbook-need-conclusion::before {
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin: 0 auto 22px;
+  background: #b57a6c;
+  content: "";
+}
+
+.money-workbook-need-conclusion strong { color: #a36f62; font-weight: 600; }
+.money-workbook-outcomes-section {
+  padding-top: 28px;
+  background: #f1e8de;
+}
 .money-workbook-outcomes-section h2 { margin-top: 12px; }
 .money-workbook-outcome-list { display: grid; gap: 16px; margin-top: 38px; }
 
@@ -2888,12 +2904,12 @@
 }
 
 .money-workbook-outcome-list h3 { margin: 1px 0 0; color: #493a33; font-size: 18px; font-weight: 700; line-height: 1.45; letter-spacing: -0.02em; }
-.money-workbook-outcome-list p { margin: 9px 0 0; color: #705d53; font-size: 15px; line-height: 1.68; word-break: keep-all; }
+.money-workbook-outcome-list p { margin: 9px 0 0; color: #705d53; font-size: 14px; line-height: 1.7; word-break: keep-all; }
 .money-workbook-outcome-list strong {
   display: block;
   margin-top: 17px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(139, 94, 85, 0.14);
+  padding: 12px 14px;
+  background: rgba(181, 122, 108, 0.1);
   color: #5c473e;
   font-size: 15px;
   font-weight: 700;
