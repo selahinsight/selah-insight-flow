@@ -2992,6 +2992,229 @@
   cursor: pointer;
 }
 
+/* Selah Money Set detail page — shared 440px product system. */
+.money-set-hero { padding-bottom: 72px; }
+.money-set-hero h1 { max-width: 330px; margin-right: auto; margin-left: auto; }
+.money-set-hero-hook {
+  margin: 30px 0 0;
+  color: #4a3b35;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.68;
+  letter-spacing: -0.025em;
+}
+
+.money-set-hero-products {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  margin-top: 42px;
+}
+.money-set-hero-products figure { margin: 0; }
+.money-set-hero-products img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 595 / 842;
+  object-fit: cover;
+  border: 1px solid rgba(93, 72, 58, 0.14);
+  background: #fff;
+  box-shadow: 0 15px 30px rgba(74, 56, 45, 0.13);
+}
+.money-set-hero-products > span { color: #a36f62; font-size: 24px; font-weight: 400; }
+.money-set-hero-products figcaption {
+  margin-top: 13px;
+  color: #69564c;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.money-set-hero-meta {
+  display: grid;
+  justify-items: center;
+  gap: 11px;
+  margin-top: 36px;
+}
+.money-set-hero-meta > span { color: #766257; font-size: 14px; font-weight: 500; line-height: 1.6; }
+.money-set-hero-meta > div {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  margin-top: 7px;
+  padding-top: 20px;
+}
+.money-set-hero-meta > div::before { width: 42px; height: 1px; margin-bottom: 4px; background: rgba(117, 91, 76, 0.28); content: ""; }
+.money-set-hero-meta s { color: #765f54; font-size: 16px; font-weight: 600; }
+.money-set-hero-meta strong { color: #8b5e55; font-size: 22px; font-weight: 700; }
+.money-set-hero-meta em {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(181, 122, 108, 0.12);
+  color: #9a5f52;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.money-set-need-section,
+.money-set-flow-section,
+.money-set-products-section,
+.money-set-purchase-section,
+.money-set-single-links { padding: 74px 24px; }
+
+.money-set-need-section { padding-bottom: 40px; background: #fffdf9; text-align: center; }
+.money-set-need-section h2,
+.money-set-flow-section h2,
+.money-set-products-section h2,
+.money-set-purchase-section h2 {
+  margin: 0;
+  color: #44362f;
+  font-family: "SUIT", "Noto Sans KR", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.035em;
+  word-break: keep-all;
+}
+.money-set-need-section ul {
+  display: grid;
+  gap: 12px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+.money-set-need-section li {
+  position: relative;
+  padding: 14px 16px 14px 40px;
+  border: 1px solid rgba(139, 94, 85, 0.14);
+  background: #fbf6f0;
+  color: #69564c;
+  font-size: 16px;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+.money-set-need-section li::before {
+  position: absolute;
+  top: 23px;
+  left: 20px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #a36f62;
+  content: "";
+}
+.money-set-need-section > p {
+  margin: 52px 0 0;
+  color: #69564c;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.65;
+  letter-spacing: -0.02em;
+}
+.money-set-need-section > p::before { display: block; width: 40px; height: 2px; margin: 0 auto 24px; background: #b57a6c; content: ""; }
+.money-set-need-section > p strong { color: #a36f62; font-weight: 600; }
+.money-set-need-arrow {
+  display: block;
+  width: 18px;
+  height: 10px;
+  margin: 40px auto 0;
+  overflow: visible;
+  fill: none;
+  stroke: #b57a6c;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.money-set-flow-section { padding-top: 40px; background: #f1e8de; text-align: center; }
+.money-set-flow-section h2,
+.money-set-products-section h2,
+.money-set-purchase-section h2 { margin-top: 12px; }
+.money-set-flow-section > div { display: grid; gap: 16px; margin-top: 38px; text-align: left; }
+.money-set-flow-section article {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  column-gap: 14px;
+  padding: 22px 20px;
+  border: 1px solid rgba(139, 94, 85, 0.18);
+  background: rgba(255, 253, 249, 0.78);
+}
+.money-set-flow-section article > span {
+  grid-row: 1 / span 2;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 50%;
+  background: #9a6a5e;
+  color: #fffaf2;
+  font-size: 13px;
+  font-weight: 700;
+}
+.money-set-flow-section h3 { margin: 1px 0 0; color: #493a33; font-size: 18px; font-weight: 700; line-height: 1.45; }
+.money-set-flow-section article p { margin: 8px 0 0; color: #705d53; font-size: 14px; line-height: 1.7; word-break: keep-all; }
+.money-set-flow-summary {
+  margin: 30px 0 0;
+  padding: 15px 12px;
+  background: rgba(181, 122, 108, 0.1);
+  color: #5c473e;
+  font-size: 15px;
+  font-weight: 700;
+}
+.money-set-flow-summary b { margin: 0 8px; color: #a36f62; }
+
+.money-set-products-section { background: #fffdf9; text-align: center; }
+.money-set-products-section article {
+  margin-top: 26px;
+  padding: 30px 22px;
+  border: 1px solid rgba(126, 96, 78, 0.2);
+  background: #fbf6f0;
+  text-align: left;
+}
+.money-set-products-section article > span { color: #9b685c; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; }
+.money-set-products-section h3 { margin: 8px 0 0; color: #44362f; font-size: 19px; font-weight: 700; line-height: 1.5; }
+.money-set-products-section ul { display: grid; gap: 11px; margin: 22px 0 0; padding: 0; list-style: none; }
+.money-set-products-section li { display: grid; grid-template-columns: 19px 1fr; gap: 8px; color: #69564c; font-size: 15px; line-height: 1.6; }
+.money-set-products-section li svg { margin-top: 3px; color: #a36f62; }
+.money-set-products-section article a {
+  display: inline-flex;
+  margin-top: 24px;
+  color: #8b5e55;
+  font-size: 14px;
+  font-weight: 700;
+  text-underline-offset: 4px;
+}
+
+.money-set-sample-section h2 { font-size: 22px; }
+
+.money-set-purchase-section { background: #efe5da; text-align: center; }
+.money-set-purchase-section > p { margin: 20px 0 0; color: #69564c; font-size: 16px; line-height: 1.75; word-break: keep-all; }
+.money-set-purchase-section > ul { display: grid; gap: 8px; margin: 26px 0 0; padding: 18px 16px; list-style: none; background: rgba(255, 253, 249, 0.62); color: #5c473e; font-size: 15px; font-weight: 600; }
+.money-set-purchase-price { display: grid; justify-items: center; gap: 10px; margin-top: 30px; }
+.money-set-purchase-price s { color: #765f54; font-size: 16px; font-weight: 600; }
+.money-set-purchase-price strong { color: #8b5e55; font-size: 26px; font-weight: 700; }
+.money-set-purchase-price strong small { margin-right: 4px; font-size: 13px; }
+.money-set-purchase-price em { color: #9a5f52; font-size: 13px; font-style: normal; font-weight: 700; }
+.money-set-purchase-section > button {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 26px;
+  border: 0;
+  border-radius: 14px;
+  background: #665147;
+  color: #fffaf3;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.money-set-single-links { display: grid; gap: 12px; background: #fffdf9; text-align: center; }
+.money-set-single-links p { margin: 0 0 8px; color: #69564c; font-size: 15px; line-height: 1.65; }
+.money-set-single-links a { color: #8b5e55; font-size: 14px; font-weight: 700; text-underline-offset: 4px; }
+
 .money-workbook-product-card a {
   display: inline-flex;
   align-items: center;

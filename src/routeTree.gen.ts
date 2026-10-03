@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SelahMoneyWorkbookRouteImport } from './routes/selah-money-workbook'
+import { Route as SelahMoneySetRouteImport } from './routes/selah-money-set'
 import { Route as SelahMoneyReportRouteImport } from './routes/selah-money-report'
 import { Route as MoneyResultsReviewRouteImport } from './routes/money-results-review'
 import { Route as DiagnosisRouteImport } from './routes/diagnosis'
@@ -35,6 +36,11 @@ import { Route as AdminSurveysIdAnalyticsRouteImport } from './routes/admin.surv
 const SelahMoneyWorkbookRoute = SelahMoneyWorkbookRouteImport.update({
   id: '/selah-money-workbook',
   path: '/selah-money-workbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SelahMoneySetRoute = SelahMoneySetRouteImport.update({
+  id: '/selah-money-set',
+  path: '/selah-money-set',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SelahMoneyReportRoute = SelahMoneyReportRouteImport.update({
@@ -150,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
+  '/selah-money-set': typeof SelahMoneySetRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
@@ -173,6 +180,7 @@ export interface FileRoutesByTo {
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
+  '/selah-money-set': typeof SelahMoneySetRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
+  '/selah-money-set': typeof SelahMoneySetRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/diagnosis'
     | '/money-results-review'
     | '/selah-money-report'
+    | '/selah-money-set'
     | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/diagnosis'
     | '/money-results-review'
     | '/selah-money-report'
+    | '/selah-money-set'
     | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
@@ -269,6 +280,7 @@ export interface FileRouteTypes {
     | '/diagnosis'
     | '/money-results-review'
     | '/selah-money-report'
+    | '/selah-money-set'
     | '/selah-money-workbook'
     | '/admin/customers'
     | '/admin/email-logs'
@@ -294,6 +306,7 @@ export interface RootRouteChildren {
   DiagnosisRoute: typeof DiagnosisRoute
   MoneyResultsReviewRoute: typeof MoneyResultsReviewRoute
   SelahMoneyReportRoute: typeof SelahMoneyReportRoute
+  SelahMoneySetRoute: typeof SelahMoneySetRoute
   SelahMoneyWorkbookRoute: typeof SelahMoneyWorkbookRoute
   SSlugRoute: typeof SSlugRoute
 }
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       path: '/selah-money-workbook'
       fullPath: '/selah-money-workbook'
       preLoaderRoute: typeof SelahMoneyWorkbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/selah-money-set': {
+      id: '/selah-money-set'
+      path: '/selah-money-set'
+      fullPath: '/selah-money-set'
+      preLoaderRoute: typeof SelahMoneySetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/selah-money-report': {
@@ -530,6 +550,7 @@ const rootRouteChildren: RootRouteChildren = {
   DiagnosisRoute: DiagnosisRoute,
   MoneyResultsReviewRoute: MoneyResultsReviewRoute,
   SelahMoneyReportRoute: SelahMoneyReportRoute,
+  SelahMoneySetRoute: SelahMoneySetRoute,
   SelahMoneyWorkbookRoute: SelahMoneyWorkbookRoute,
   SSlugRoute: SSlugRoute,
 }

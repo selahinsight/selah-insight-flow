@@ -1,0 +1,208 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Check } from "lucide-react";
+import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
+
+export const Route = createFileRoute("/selah-money-set")({
+  head: () => ({
+    meta: [
+      { title: "셀라 머니 리포트 + 워크북 세트 | Selah Insight" },
+      {
+        name: "description",
+        content:
+          "심층 리포트로 반복되는 돈 패턴을 이해하고, 셀라 머니 워크북으로 나만의 기준을 실제 돈 관리에 적용하는 세트입니다.",
+      },
+    ],
+  }),
+  component: SelahMoneySetPage,
+});
+
+const setSteps = [
+  {
+    step: "01",
+    title: "반복되는 돈 패턴을 이해합니다",
+    description: "심층 리포트에서 돈 앞의 생각과 행동, 마음과 믿음을 살펴봅니다.",
+  },
+  {
+    step: "02",
+    title: "나만의 돈 관리 기준을 세웁니다",
+    description: "워크북에서 말씀과 삶의 우선순위를 바탕으로 기준을 정합니다.",
+  },
+  {
+    step: "03",
+    title: "예산과 생활에 적용합니다",
+    description: "예산·소비·저축 계획을 세우고 실제 기록과 점검으로 이어갑니다.",
+  },
+];
+
+const setSamples = [
+  {
+    src: "/selah-money-report-preview/page-06-integration.png",
+    label: "SELAH MONEY REPORT · 6쪽",
+    title: "두 유형의 연결 해석",
+    alt: "두 유형을 함께 해석한 셀라 머니 심층 리포트 6쪽",
+  },
+  {
+    src: "/selah-money-report-preview/page-08-direction.png",
+    label: "SELAH MONEY REPORT · 8쪽",
+    title: "돈과 삶의 방향",
+    alt: "돈과 삶의 방향을 담은 셀라 머니 심층 리포트 8쪽",
+  },
+  {
+    src: "/selah-money-workbook-preview/page-24-money-criteria.webp",
+    label: "SELAH MONEY WORKBOOK · 24쪽",
+    title: "말씀을 바탕으로 세우는 돈 관리 기준",
+    alt: "말씀을 바탕으로 돈 관리 기준을 세우는 셀라 머니 워크북 24쪽",
+  },
+  {
+    src: "/selah-money-workbook-preview/page-45-next-month-budget.webp",
+    label: "SELAH MONEY WORKBOOK · 45쪽",
+    title: "다음 달 예산 정하기",
+    alt: "다음 달 예산을 작성하는 셀라 머니 워크북 45쪽",
+  },
+];
+
+function showCheckoutNotice() {
+  window.alert("셀라 머니 세트 결제 링크를 준비 중입니다.");
+}
+
+function SelahMoneySetPage() {
+  return (
+    <div className="money-workbook-page-shell">
+      <main className="money-workbook-page money-set-page">
+        <header className="money-workbook-hero money-set-hero">
+          <span className="money-workbook-eyebrow">SELAH MONEY SET</span>
+          <h1>셀라 머니 리포트 + 워크북 세트</h1>
+          <p className="money-set-hero-hook">
+            돈 앞의 나를 이해하고,
+            <br />나만의 기준으로 실제 돈 관리를 시작해보세요.
+          </p>
+
+          <div className="money-set-hero-products" aria-label="셀라 머니 심층 리포트와 워크북">
+            <figure>
+              <img src="/selah-money-report-preview/page-01-cover.png" alt="셀라 머니 심층 리포트 표지" />
+              <figcaption>11페이지 심층 리포트</figcaption>
+            </figure>
+            <span aria-hidden="true">+</span>
+            <figure>
+              <img src="/selah-money-workbook-preview/page-10-money-meaning.webp" alt="셀라 머니 워크북 실제 페이지" />
+              <figcaption>50페이지 실행 워크북</figcaption>
+            </figure>
+          </div>
+
+          <div className="money-set-hero-meta">
+            <span>PDF 구성 · 리포트는 24시간 이내 이메일 발송</span>
+            <div>
+              <s>개별 런칭가 38,900원</s>
+              <strong>세트 런칭가 34,900원</strong>
+            </div>
+            <em>4,000원 절약</em>
+          </div>
+        </header>
+
+        <section className="money-set-need-section">
+          <span className="money-workbook-section-symbol" aria-hidden="true" />
+          <h2>
+            이해만 하거나 기록만 해서는
+            <br />돈 관리가 쉽게 달라지지 않습니다.
+          </h2>
+          <ul>
+            <li>돈 앞에서 같은 생각과 행동이 반복되는 이유를 알고 싶은 분</li>
+            <li>나에게 맞는 돈 관리 기준을 세우고 싶은 분</li>
+            <li>예산·소비·저축까지 실제 생활에 적용하고 싶은 분</li>
+          </ul>
+          <p>
+            필요한 것은 더 많은 정보보다,
+            <br /><strong>이해와 실행이 이어지는 하나의 흐름입니다.</strong>
+          </p>
+          <svg className="money-set-need-arrow" viewBox="0 0 18 10" aria-hidden="true">
+            <path d="M3 2l6 6 6-6" />
+          </svg>
+        </section>
+
+        <section className="money-set-flow-section">
+          <span className="money-workbook-section-kicker">FROM INSIGHT TO ACTION</span>
+          <h2>이해에서 실행까지, 세 단계로 이어집니다</h2>
+          <div>
+            {setSteps.map((item) => (
+              <article key={item.step}>
+                <span>{item.step}</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
+          <p className="money-set-flow-summary">패턴 이해 <b>→</b> 기준 수립 <b>→</b> 실제 적용</p>
+        </section>
+
+        <section className="money-set-products-section">
+          <span className="money-workbook-section-kicker">WHAT'S INCLUDED</span>
+          <h2>세트에 포함된 두 가지</h2>
+
+          <article>
+            <span>SELAH MONEY REPORT</span>
+            <h3>셀라 머니 심층 리포트</h3>
+            <ul>
+              <li><Check size={17} aria-hidden="true" />11페이지 개인 맞춤 리포트</li>
+              <li><Check size={17} aria-hidden="true" />반복되는 돈 패턴과 강점 해석</li>
+              <li><Check size={17} aria-hidden="true" />돈 관리 방향과 말씀 묵상</li>
+            </ul>
+            <a href="/selah-money-report">심층 리포트 자세히 보기</a>
+          </article>
+
+          <article>
+            <span>SELAH MONEY WORKBOOK</span>
+            <h3>셀라 머니 워크북</h3>
+            <ul>
+              <li><Check size={17} aria-hidden="true" />50페이지 실행 워크북</li>
+              <li><Check size={17} aria-hidden="true" />돈의 의미와 삶의 우선순위 정리</li>
+              <li><Check size={17} aria-hidden="true" />예산·소비·저축 기준과 점검 양식</li>
+            </ul>
+            <a href="/selah-money-workbook">워크북 자세히 보기</a>
+          </article>
+        </section>
+
+        <section className="money-workbook-sample-section money-set-sample-section">
+          <h2>세트 구성 일부를 미리 살펴보세요</h2>
+          <div className="money-workbook-sample-pages">
+            {setSamples.map((page) => (
+              <figure key={page.src}>
+                <img src={page.src} alt={page.alt} loading="lazy" />
+                <figcaption>
+                  <span>{page.label}</span>
+                  <strong>{page.title}</strong>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
+        <section className="money-set-purchase-section">
+          <span className="money-workbook-section-kicker">SELAH MONEY SET</span>
+          <h2>이해부터 실행까지 한 번에 시작해보세요</h2>
+          <p>
+            심층 리포트로 반복되는 돈 패턴을 이해하고,
+            <br />워크북으로 나만의 기준을 실제 생활에 적용해보세요.
+          </p>
+          <ul>
+            <li>11페이지 개인 맞춤 리포트</li>
+            <li>50페이지 셀라 머니 워크북</li>
+          </ul>
+          <div className="money-set-purchase-price">
+            <s>개별 런칭가 38,900원</s>
+            <strong><small>세트 런칭가</small> 34,900원</strong>
+            <em>4,000원 절약</em>
+          </div>
+          <button type="button" onClick={showCheckoutNotice}>세트 구매하기</button>
+        </section>
+
+        <section className="money-set-single-links">
+          <p>세트가 아닌 단품을 먼저 살펴보고 싶다면</p>
+          <a href="/selah-money-report">심층 리포트 자세히 보기</a>
+          <a href="/selah-money-workbook">머니 워크북 자세히 보기</a>
+        </section>
+
+        <MoneyStudyCourseFooter />
+      </main>
+    </div>
+  );
+}
