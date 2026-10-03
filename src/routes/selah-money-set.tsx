@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Check } from "lucide-react";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 
 export const Route = createFileRoute("/selah-money-set")({
@@ -19,17 +18,17 @@ export const Route = createFileRoute("/selah-money-set")({
 const setSteps = [
   {
     step: "01",
-    title: "반복되는 돈 패턴을 이해합니다",
-    description: "심층 리포트에서 돈 앞의 생각과 행동, 마음과 믿음을 살펴봅니다.",
+    title: "이해",
+    description: "심층 리포트로 반복되는 돈 패턴과 마음을 살펴봅니다.",
   },
   {
     step: "02",
-    title: "나만의 돈 관리 기준을 세웁니다",
-    description: "워크북에서 말씀과 삶의 우선순위를 바탕으로 기준을 정합니다.",
+    title: "기준",
+    description: "워크북으로 말씀과 삶의 우선순위를 바탕으로 기준을 세웁니다.",
   },
   {
     step: "03",
-    title: "예산과 생활에 적용합니다",
+    title: "실행",
     description: "예산·소비·저축 계획을 세우고 실제 기록과 점검으로 이어갑니다.",
   },
 ];
@@ -92,7 +91,9 @@ function SelahMoneySetPage() {
             </figure>
           </div>
 
-          <p className="money-set-hero-flow" aria-label="이해에서 실행까지">이해 <b>→</b> 기준 <b>→</b> 실행</p>
+          <div className="money-set-hero-flow" aria-label="이해에서 실행까지">
+            <span>이해</span><b aria-hidden="true">→</b><span>기준</span><b aria-hidden="true">→</b><span>실행</span>
+          </div>
 
           <div className="money-set-hero-meta">
             <span>PDF 구성 · 리포트는 24시간 이내 이메일 발송</span>
@@ -112,18 +113,17 @@ function SelahMoneySetPage() {
           <h2>왜 함께 구매해야 할까요?</h2>
           <div className="money-set-pair-reason">
             <article>
-              <span>심층 리포트만 있으면</span>
+              <span>SELAH MONEY REPORT</span>
               <strong>나를 이해합니다</strong>
-              <p>반복되는 돈 패턴과 마음을 살펴보고 앞으로의 방향을 확인합니다.</p>
+              <p>심층 리포트로 반복되는 돈 패턴과 앞으로의 방향을 확인합니다.</p>
             </article>
             <span aria-hidden="true">+</span>
             <article>
-              <span>워크북까지 함께하면</span>
+              <span>SELAH MONEY WORKBOOK</span>
               <strong>삶에 적용합니다</strong>
-              <p>그 방향을 예산·소비·저축 기준과 기록 습관으로 옮깁니다.</p>
+              <p>워크북으로 돈 관리 기준을 세우고 예산·소비·저축에 적용합니다.</p>
             </article>
           </div>
-          <p><strong>이해에서 끝나지 않고 실행까지 이어지는 구성입니다.</strong></p>
         </section>
 
         <section className="money-set-flow-section">
@@ -138,35 +138,6 @@ function SelahMoneySetPage() {
               </article>
             ))}
           </div>
-        </section>
-
-        <section className="money-set-products-section">
-          <span className="money-workbook-section-kicker">WHAT'S INCLUDED</span>
-          <h2>두 상품의 역할은 다릅니다</h2>
-
-          <article className="money-set-product-card money-set-product-card--report">
-            <span>SELAH MONEY REPORT</span>
-            <h3>셀라 머니 심층 리포트</h3>
-            <strong>나를 이해하는 도구</strong>
-            <ul>
-              <li><Check size={17} aria-hidden="true" />11페이지 개인 맞춤 리포트</li>
-              <li><Check size={17} aria-hidden="true" />반복되는 돈 패턴과 강점 해석</li>
-              <li><Check size={17} aria-hidden="true" />돈 관리 방향과 말씀 묵상</li>
-            </ul>
-            <a href="/selah-money-report">심층 리포트 자세히 보기</a>
-          </article>
-
-          <article className="money-set-product-card money-set-product-card--workbook">
-            <span>SELAH MONEY WORKBOOK</span>
-            <h3>셀라 머니 워크북</h3>
-            <strong>삶에 적용하는 도구</strong>
-            <ul>
-              <li><Check size={17} aria-hidden="true" />50페이지 실행 워크북</li>
-              <li><Check size={17} aria-hidden="true" />돈의 의미와 삶의 우선순위 정리</li>
-              <li><Check size={17} aria-hidden="true" />예산·소비·저축 기준과 점검 양식</li>
-            </ul>
-            <a href="/selah-money-workbook">워크북 자세히 보기</a>
-          </article>
         </section>
 
         <section className="money-workbook-sample-section money-set-sample-section">
@@ -222,7 +193,7 @@ function SelahMoneySetPage() {
         <section className="money-set-single-links">
           <p>세트가 아닌 단품을 먼저 살펴보고 싶다면</p>
           <a href="/selah-money-report">심층 리포트 자세히 보기</a>
-          <a href="/selah-money-workbook">머니 워크북 자세히 보기</a>
+          <a href="/selah-money-workbook">워크북 자세히 보기</a>
         </section>
 
         <MoneyStudyCourseFooter />
