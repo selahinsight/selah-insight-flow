@@ -19,17 +19,17 @@ const setSteps = [
   {
     step: "01",
     title: "이해",
-    description: "심층 리포트로 반복되는 돈 패턴과 마음을 살펴봅니다.",
+    description: "돈 패턴",
   },
   {
     step: "02",
     title: "기준",
-    description: "워크북으로 말씀과 삶의 우선순위를 바탕으로 기준을 세웁니다.",
+    description: "삶의 원칙",
   },
   {
     step: "03",
     title: "실행",
-    description: "예산·소비·저축 계획을 세우고 실제 기록과 점검으로 이어갑니다.",
+    description: "예산과 기록",
   },
 ];
 
@@ -115,7 +115,10 @@ function SelahMoneySetPage() {
             <article>
               <span>SELAH MONEY REPORT</span>
               <strong>나를 이해합니다</strong>
-              <p>심층 리포트로 반복되는 돈 패턴과 앞으로의 방향을 확인합니다.</p>
+              <p>
+                심층 리포트로 반복되는 돈 패턴과
+                <br />앞으로의 방향을 확인합니다.
+              </p>
             </article>
             <span aria-hidden="true">+</span>
             <article>
@@ -191,9 +194,17 @@ function SelahMoneySetPage() {
         </section>
 
         <section className="money-set-single-links">
-          <p>세트가 아닌 단품을 먼저 살펴보고 싶다면</p>
-          <a href="/selah-money-report">심층 리포트 자세히 보기</a>
-          <a href="/selah-money-workbook">워크북 자세히 보기</a>
+          <div className="money-set-single-panel">
+            <p>각 상품을 자세히 보고 싶다면</p>
+            <div>
+              <span>셀라 머니 심층 리포트</span>
+              <a href="/selah-money-report">상세보기 →</a>
+            </div>
+            <div>
+              <span>셀라 머니 워크북</span>
+              <a href="/selah-money-workbook">상세보기 →</a>
+            </div>
+          </div>
         </section>
 
         <MoneyStudyCourseFooter />

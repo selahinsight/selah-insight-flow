@@ -3325,33 +3325,56 @@
 
 .money-set-flow-section { padding-top: 72px; padding-bottom: 72px; }
 .money-set-timeline {
-  position: relative;
   display: grid;
-  gap: 0 !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px !important;
   margin-top: 40px !important;
-}
-.money-set-timeline::before {
-  position: absolute;
-  top: 20px;
-  bottom: 20px;
-  left: 20px;
-  width: 1px;
-  background: rgba(163, 111, 98, 0.42);
-  content: "";
 }
 .money-set-flow-section .money-set-timeline article {
   position: relative;
-  grid-template-columns: 42px 1fr;
-  padding: 20px 16px 24px 0;
-  border: 0;
-  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 18px 7px 20px;
+  border: 1px solid rgba(139, 94, 85, 0.14);
+  background: rgba(255, 253, 249, 0.72);
+  text-align: center;
 }
 .money-set-flow-section .money-set-timeline article:nth-child(1) { background: rgba(255, 253, 249, 0.34); }
 .money-set-flow-section .money-set-timeline article:nth-child(2) { background: rgba(255, 250, 245, 0.54); }
 .money-set-flow-section .money-set-timeline article:nth-child(3) { background: rgba(239, 225, 215, 0.58); }
-.money-set-flow-section .money-set-timeline article:last-child { padding-bottom: 20px; }
-.money-set-flow-section article > span { z-index: 1; border: 4px solid #f1e8de; }
-.money-set-flow-section h3 { font-size: 19px; }
+.money-set-flow-section .money-set-timeline article:not(:last-child)::after {
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  z-index: 2;
+  color: #b98d81;
+  font-size: 14px;
+  content: "→";
+  transform: translateY(-50%);
+}
+.money-set-flow-section .money-set-timeline article > span {
+  display: inline-grid;
+  width: auto;
+  height: 25px;
+  padding: 0 9px;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: #9a6a5e;
+  color: #fffaf2;
+  font-size: 11px;
+  font-weight: 700;
+}
+.money-set-flow-section .money-set-timeline h3 { margin-top: 12px; font-size: 19px; }
+.money-set-flow-section .money-set-timeline article p {
+  margin-top: 7px;
+  color: #7a6459;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+}
 
 .money-set-products-section { padding-top: 72px; padding-bottom: 72px; }
 .money-set-product-card { position: relative; overflow: hidden; }
@@ -3377,7 +3400,8 @@
 }
 
 .money-set-sample-section { padding-top: 72px; padding-bottom: 72px; background: #f7f0e9; }
-.money-set-sample-group { margin-top: 38px; }
+.money-set-sample-section > h2 { padding-right: 24px; padding-left: 24px; text-align: center; }
+.money-set-sample-group { margin-top: 38px; text-align: center; }
 .money-set-sample-group > span {
   color: #9b685c;
   font-size: 12px;
@@ -3391,6 +3415,7 @@
   font-weight: 700;
 }
 .money-set-sample-group .money-workbook-sample-pages {
+  width: 100%;
   box-sizing: border-box;
   margin: 0;
   padding-right: 24px;
@@ -3400,7 +3425,12 @@
 }
 .money-set-sample-group .money-workbook-sample-pages figure {
   flex-basis: 78%;
-  scroll-snap-align: start;
+  scroll-snap-align: center;
+}
+.money-set-sample-group .money-workbook-sample-pages figcaption span {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 .money-set-sample-plus {
   display: grid;
@@ -3424,6 +3454,33 @@
   background: rgba(181, 122, 108, 0.14);
 }
 .money-set-single-links { padding-top: 58px; padding-bottom: 58px; }
+.money-set-single-panel {
+  padding: 24px 18px;
+  border: 1px solid rgba(139, 94, 85, 0.15);
+  background: #f8f1ea;
+}
+.money-set-single-panel > p { margin-bottom: 18px; }
+.money-set-single-panel > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 13px 0;
+  border-top: 1px solid rgba(139, 94, 85, 0.12);
+  color: #514039;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+.money-set-single-panel a {
+  width: auto;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 13px;
+  white-space: nowrap;
+}
 
 .money-workbook-product-card a {
   display: inline-flex;
