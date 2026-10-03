@@ -34,7 +34,7 @@ const setSteps = [
   },
 ];
 
-const setSamples = [
+const reportSamples = [
   {
     src: "/selah-money-report-preview/page-06-integration.png",
     label: "SELAH MONEY REPORT · 6쪽",
@@ -47,6 +47,9 @@ const setSamples = [
     title: "돈과 삶의 방향",
     alt: "돈과 삶의 방향을 담은 셀라 머니 심층 리포트 8쪽",
   },
+];
+
+const workbookSamples = [
   {
     src: "/selah-money-workbook-preview/page-24-money-criteria.webp",
     label: "SELAH MONEY WORKBOOK · 24쪽",
@@ -77,7 +80,7 @@ function SelahMoneySetPage() {
             <br />나만의 기준으로 실제 돈 관리를 시작해보세요.
           </p>
 
-          <div className="money-set-hero-products" aria-label="셀라 머니 심층 리포트와 워크북">
+          <div className="money-set-hero-products" aria-label="셀라 머니 심층 리포트와 워크북 세트 구성">
             <figure>
               <img src="/selah-money-report-preview/page-01-cover.png" alt="셀라 머니 심층 리포트 표지" />
               <figcaption>11페이지 심층 리포트</figcaption>
@@ -89,6 +92,8 @@ function SelahMoneySetPage() {
             </figure>
           </div>
 
+          <p className="money-set-hero-flow" aria-label="이해에서 실행까지">이해 <b>→</b> 기준 <b>→</b> 실행</p>
+
           <div className="money-set-hero-meta">
             <span>PDF 구성 · 리포트는 24시간 이내 이메일 발송</span>
             <div>
@@ -97,32 +102,34 @@ function SelahMoneySetPage() {
             </div>
             <em>4,000원 절약</em>
           </div>
+          <button className="money-set-hero-cta" type="button" onClick={showCheckoutNotice}>
+            리포트 + 워크북 세트 구매하기
+          </button>
         </header>
 
         <section className="money-set-need-section">
-          <span className="money-workbook-section-symbol" aria-hidden="true" />
-          <h2>
-            이해만 하거나 기록만 해서는
-            <br />돈 관리가 쉽게 달라지지 않습니다.
-          </h2>
-          <ul>
-            <li>돈 앞에서 같은 생각과 행동이 반복되는 이유를 알고 싶은 분</li>
-            <li>나에게 맞는 돈 관리 기준을 세우고 싶은 분</li>
-            <li>예산·소비·저축까지 실제 생활에 적용하고 싶은 분</li>
-          </ul>
-          <p>
-            필요한 것은 더 많은 정보보다,
-            <br /><strong>이해와 실행이 이어지는 하나의 흐름입니다.</strong>
-          </p>
-          <svg className="money-set-need-arrow" viewBox="0 0 18 10" aria-hidden="true">
-            <path d="M3 2l6 6 6-6" />
-          </svg>
+          <span className="money-workbook-section-kicker">WHY TOGETHER</span>
+          <h2>왜 함께 구매해야 할까요?</h2>
+          <div className="money-set-pair-reason">
+            <article>
+              <span>심층 리포트만 있으면</span>
+              <strong>나를 이해합니다</strong>
+              <p>반복되는 돈 패턴과 마음을 살펴보고 앞으로의 방향을 확인합니다.</p>
+            </article>
+            <span aria-hidden="true">+</span>
+            <article>
+              <span>워크북까지 함께하면</span>
+              <strong>삶에 적용합니다</strong>
+              <p>그 방향을 예산·소비·저축 기준과 기록 습관으로 옮깁니다.</p>
+            </article>
+          </div>
+          <p><strong>이해에서 끝나지 않고 실행까지 이어지는 구성입니다.</strong></p>
         </section>
 
         <section className="money-set-flow-section">
           <span className="money-workbook-section-kicker">FROM INSIGHT TO ACTION</span>
-          <h2>이해에서 실행까지, 세 단계로 이어집니다</h2>
-          <div>
+          <h2>이해에서 실행까지 이어집니다</h2>
+          <div className="money-set-timeline">
             {setSteps.map((item) => (
               <article key={item.step}>
                 <span>{item.step}</span>
@@ -131,16 +138,16 @@ function SelahMoneySetPage() {
               </article>
             ))}
           </div>
-          <p className="money-set-flow-summary">패턴 이해 <b>→</b> 기준 수립 <b>→</b> 실제 적용</p>
         </section>
 
         <section className="money-set-products-section">
           <span className="money-workbook-section-kicker">WHAT'S INCLUDED</span>
-          <h2>세트에 포함된 두 가지</h2>
+          <h2>두 상품의 역할은 다릅니다</h2>
 
-          <article>
+          <article className="money-set-product-card money-set-product-card--report">
             <span>SELAH MONEY REPORT</span>
             <h3>셀라 머니 심층 리포트</h3>
+            <strong>나를 이해하는 도구</strong>
             <ul>
               <li><Check size={17} aria-hidden="true" />11페이지 개인 맞춤 리포트</li>
               <li><Check size={17} aria-hidden="true" />반복되는 돈 패턴과 강점 해석</li>
@@ -149,9 +156,10 @@ function SelahMoneySetPage() {
             <a href="/selah-money-report">심층 리포트 자세히 보기</a>
           </article>
 
-          <article>
+          <article className="money-set-product-card money-set-product-card--workbook">
             <span>SELAH MONEY WORKBOOK</span>
             <h3>셀라 머니 워크북</h3>
+            <strong>삶에 적용하는 도구</strong>
             <ul>
               <li><Check size={17} aria-hidden="true" />50페이지 실행 워크북</li>
               <li><Check size={17} aria-hidden="true" />돈의 의미와 삶의 우선순위 정리</li>
@@ -162,9 +170,12 @@ function SelahMoneySetPage() {
         </section>
 
         <section className="money-workbook-sample-section money-set-sample-section">
-          <h2>세트 구성 일부를 미리 살펴보세요</h2>
-          <div className="money-workbook-sample-pages">
-            {setSamples.map((page) => (
+          <h2>실제 구성 일부를 미리 살펴보세요</h2>
+          <div className="money-set-sample-group">
+            <span>SELAH MONEY REPORT</span>
+            <h3>심층 리포트 미리보기</h3>
+            <div className="money-workbook-sample-pages">
+            {reportSamples.map((page) => (
               <figure key={page.src}>
                 <img src={page.src} alt={page.alt} loading="lazy" />
                 <figcaption>
@@ -173,16 +184,29 @@ function SelahMoneySetPage() {
                 </figcaption>
               </figure>
             ))}
+            </div>
+          </div>
+          <div className="money-set-sample-plus" aria-hidden="true">+</div>
+          <div className="money-set-sample-group">
+            <span>SELAH MONEY WORKBOOK</span>
+            <h3>워크북 미리보기</h3>
+            <div className="money-workbook-sample-pages">
+            {workbookSamples.map((page) => (
+              <figure key={page.src}>
+                <img src={page.src} alt={page.alt} loading="lazy" />
+                <figcaption>
+                  <span>{page.label}</span>
+                  <strong>{page.title}</strong>
+                </figcaption>
+              </figure>
+            ))}
+            </div>
           </div>
         </section>
 
         <section className="money-set-purchase-section">
           <span className="money-workbook-section-kicker">SELAH MONEY SET</span>
           <h2>이해부터 실행까지 한 번에 시작해보세요</h2>
-          <p>
-            심층 리포트로 반복되는 돈 패턴을 이해하고,
-            <br />워크북으로 나만의 기준을 실제 생활에 적용해보세요.
-          </p>
           <ul>
             <li>11페이지 개인 맞춤 리포트</li>
             <li>50페이지 셀라 머니 워크북</li>
