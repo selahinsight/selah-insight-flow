@@ -113,10 +113,10 @@ function SelahMoneyWorkbookPage() {
           </p>
           <svg
             className="money-workbook-need-arrow"
-            viewBox="0 0 18 38"
+            viewBox="0 0 18 10"
             aria-hidden="true"
           >
-            <path d="M9 1v33M4 29l5 5 5-5" />
+            <path d="M3 2l6 6 6-6" />
           </svg>
         </section>
 
