@@ -111,6 +111,13 @@ function SelahMoneyWorkbookPage() {
             <br />
             <strong>나에게 맞는 분명한 기준입니다.</strong>
           </p>
+          <svg
+            className="money-workbook-need-arrow"
+            viewBox="0 0 18 38"
+            aria-hidden="true"
+          >
+            <path d="M9 1v33M4 29l5 5 5-5" />
+          </svg>
         </section>
 
         <section className="money-workbook-outcomes-section">
