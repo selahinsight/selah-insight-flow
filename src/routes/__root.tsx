@@ -77,31 +77,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "설문제작" },
-      { name: "description", content: "Selah Insight Lab is a self-diagnosis survey web app for understanding personal patterns." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "설문제작" },
-      { property: "og:description", content: "Selah Insight Lab is a self-diagnosis survey web app for understanding personal patterns." },
+      { title: "무료 돈 × 신앙 진단 | Selah Insight" },
+      { name: "description", content: "30개의 질문으로 돈을 대하는 마음과 행동, 신앙의 흐름을 함께 살펴보는 무료 진단입니다." },
+      { name: "author", content: "Selah Insight" },
+      { property: "og:title", content: "무료 돈 × 신앙 진단 | Selah Insight" },
+      { property: "og:description", content: "30개의 질문으로 돈을 대하는 마음과 행동, 신앙의 흐름을 함께 살펴보세요." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "설문제작" },
-      { name: "twitter:description", content: "Selah Insight Lab is a self-diagnosis survey web app for understanding personal patterns." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2e8ed4bc-866c-4c7e-8df2-ed133352025c/id-preview-6382f91a--462fdd2e-b4a7-4a96-a5f6-827de32916ed.lovable.app-1781145104396.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2e8ed4bc-866c-4c7e-8df2-ed133352025c/id-preview-6382f91a--462fdd2e-b4a7-4a96-a5f6-827de32916ed.lovable.app-1781145104396.png" },
+      { name: "twitter:title", content: "무료 돈 × 신앙 진단 | Selah Insight" },
+      { name: "twitter:description", content: "30개의 질문으로 돈을 대하는 마음과 행동, 신앙의 흐름을 함께 살펴보세요." },
+      { property: "og:image", content: "https://selahinsight-selah-insight-flow.selahinsight.workers.dev/selah-insight-logo-transparent.png" },
+      { name: "twitter:image", content: "https://selahinsight-selah-insight-flow.selahinsight.workers.dev/selah-insight-logo-transparent.png" },
     ],
     links: [
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=Noto+Serif+KR:wght@400;500;600;700&display=swap",
       },
       {
         rel: "stylesheet",
         href: "https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://cdn.jsdelivr.net/gh/innks/NanumSquareRound@master/nanumsquareround.min.css",
       },
       {
         rel: "stylesheet",
@@ -117,7 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <head>
         <HeadContent />
       </head>

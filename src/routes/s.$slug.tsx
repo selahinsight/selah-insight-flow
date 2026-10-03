@@ -829,8 +829,8 @@ function Runner({
           >
             {isMoneyDiagnosis ? (
               <>
-                <span className="money-intro-line">돈 때문에</span>{" "}
-                <span className="money-intro-line">마음이 불편한가요?</span>
+                <span className="money-intro-line">나는 돈 앞에서</span>{" "}
+                <span className="money-intro-line">어떤 마음과 기준을 갖고 있을까요?</span>
               </>
             ) : survey.title}
           </h1>
@@ -838,17 +838,17 @@ function Runner({
           {isMoneyDiagnosis ? (
             <>
               <p
-                className="money-intro-description money-intro-lead"
+                className="money-intro-description money-intro-body"
                 style={{ margin: "24px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
-                그 불편함에는 이유가 있습니다.
+                <span className="money-intro-line">30개의 질문을 통해</span>{" "}
+                <span className="money-intro-line">돈을 대하는 마음과 행동, 신앙의 흐름을 함께 살펴봅니다.</span>
               </p>
               <p
-                className="money-intro-description money-intro-flow money-intro-body"
-                style={{ margin: "16px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
+                className="money-duration"
+                style={{ margin: "14px auto 0", fontSize: 13, color: theme.muted, textAlign: "center" }}
               >
-                  <span className="money-intro-line">셀라 머니 진단을 통해</span>{" "}
-                  <span className="money-intro-line">돈을 대하는 내 마음과 행동을 확인해보세요.</span>
+                30문항 · 약 3~4분
               </p>
             </>
           ) : (
@@ -879,6 +879,7 @@ function Runner({
               정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
             </p>
           )}
+          <div className={isMoneyDiagnosis ? "money-intro-form-panel" : undefined}>
           <div className={isMoneyDiagnosis ? "money-name-field" : undefined} style={{ marginTop: 24, maxWidth: isMoneyDiagnosis ? 380 : 320, marginLeft: "auto", marginRight: "auto" }}>
             <label
               htmlFor="respondent-name"
@@ -930,6 +931,7 @@ function Runner({
               </label>
             </div>
           )}
+          </div>
           <button
             className={isMoneyDiagnosis ? "money-start-button" : undefined}
             onClick={() => {
@@ -947,13 +949,8 @@ function Runner({
               opacity: !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent)) ? 0.5 : 1,
             }}
           >
-            {starting ? "준비 중..." : isMoneyDiagnosis ? "진단 시작하기" : "시작하기"}
+            {starting ? "준비 중..." : isMoneyDiagnosis ? "진단 안내 확인하기" : "시작하기"}
           </button>
-          {isMoneyDiagnosis && (
-            <p className="money-duration" style={{ marginTop: 14, fontSize: 13, color: theme.muted, textAlign: "center" }}>
-              총 30문항 · 약 3~4분 소요
-            </p>
-          )}
           {isMoneyDiagnosis && (
             <details className="money-intro-privacy-details" style={{ color: theme.muted }}>
               <summary>개인정보 및 민감정보 수집·이용 안내 보기</summary>
@@ -1043,7 +1040,7 @@ function Runner({
               cursor: "pointer",
             }}
           >
-            진단 시작하기
+            30문항 진단 시작하기
           </button>
         </div>
       </Wrap>
