@@ -2799,8 +2799,7 @@
 .money-workbook-hero-meta s { color: #765f54; font-size: 16px; font-weight: 600; }
 
 .money-workbook-intro-section,
-.money-workbook-flow-section,
-.money-workbook-includes-section,
+.money-workbook-outcomes-section,
 .money-workbook-sample-section,
 .money-workbook-choice-section { padding: 74px 24px; }
 
@@ -2808,8 +2807,7 @@
 .money-workbook-section-symbol { display: block; width: 1px; height: 44px; margin: 0 auto 24px; background: #b57a6c; }
 
 .money-workbook-intro-section h2,
-.money-workbook-flow-section h2,
-.money-workbook-includes-section h2,
+.money-workbook-outcomes-section h2,
 .money-workbook-sample-section h2,
 .money-workbook-choice-section > h2 {
   margin: 0;
@@ -2821,22 +2819,53 @@
   letter-spacing: -0.035em;
 }
 
-.money-workbook-intro-section p {
-  margin: 30px 0 0;
+.money-workbook-need-list {
+  display: grid;
+  gap: 12px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.money-workbook-need-list li {
+  position: relative;
+  padding: 14px 16px 14px 40px;
+  border: 1px solid rgba(139, 94, 85, 0.14);
+  background: #fbf6f0;
   color: #69564c;
   font-size: 16px;
-  line-height: 1.82;
+  line-height: 1.65;
   letter-spacing: -0.015em;
   word-break: keep-all;
 }
 
-.money-workbook-intro-section p + p { margin-top: 22px; }
-.money-workbook-flow-section { background: #f1e8de; }
-.money-workbook-flow-section h2,
-.money-workbook-includes-section h2 { margin-top: 12px; }
-.money-workbook-flow-list { display: grid; gap: 14px; margin-top: 38px; }
+.money-workbook-need-list li::before {
+  position: absolute;
+  top: 23px;
+  left: 20px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #a36f62;
+  content: "";
+}
 
-.money-workbook-flow-list article {
+.money-workbook-need-conclusion {
+  margin: 30px 0 0;
+  color: #69564c;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: -0.02em;
+}
+
+.money-workbook-need-conclusion strong { color: #8b5e55; font-weight: 700; }
+.money-workbook-outcomes-section { background: #f1e8de; }
+.money-workbook-outcomes-section h2 { margin-top: 12px; }
+.money-workbook-outcome-list { display: grid; gap: 16px; margin-top: 38px; }
+
+.money-workbook-outcome-list article {
   display: grid;
   grid-template-columns: 44px 1fr;
   gap: 14px;
@@ -2846,7 +2875,7 @@
   background: rgba(255, 253, 249, 0.76);
 }
 
-.money-workbook-flow-list article > span {
+.money-workbook-outcome-list article > span {
   display: grid;
   width: 40px;
   height: 40px;
@@ -2858,23 +2887,27 @@
   font-weight: 700;
 }
 
-.money-workbook-flow-list h3 { margin: 1px 0 0; color: #493a33; font-size: 18px; font-weight: 700; line-height: 1.45; letter-spacing: -0.02em; }
-.money-workbook-flow-list p { margin: 9px 0 0; color: #705d53; font-size: 15px; line-height: 1.68; word-break: keep-all; }
-.money-workbook-includes-section { background: #fffdf9; }
-.money-workbook-includes-section ul { display: grid; gap: 0; margin: 34px 0 0; padding: 0; list-style: none; }
-
-.money-workbook-includes-section li {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 15px 0;
-  border-bottom: 1px solid rgba(105, 83, 69, 0.12);
-  color: #5e4c43;
-  font-size: 16px;
-  line-height: 1.65;
+.money-workbook-outcome-list h3 { margin: 1px 0 0; color: #493a33; font-size: 18px; font-weight: 700; line-height: 1.45; letter-spacing: -0.02em; }
+.money-workbook-outcome-list p { margin: 9px 0 0; color: #705d53; font-size: 15px; line-height: 1.68; word-break: keep-all; }
+.money-workbook-outcome-list strong {
+  display: block;
+  margin-top: 17px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(139, 94, 85, 0.14);
+  color: #5c473e;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
 }
 
-.money-workbook-includes-section li svg { flex: 0 0 auto; margin-top: 5px; color: #a36f62; }
+.money-workbook-outcome-list strong small {
+  display: block;
+  margin-bottom: 4px;
+  color: #9b6a5f;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
 .money-workbook-sample-section { padding-right: 0; padding-left: 0; background: #fbf8f2; }
 .money-workbook-sample-section h2 { padding: 0 24px; text-align: center; }
 
@@ -2953,8 +2986,7 @@
 @media (max-width: 360px) {
   .money-workbook-hero,
   .money-workbook-intro-section,
-  .money-workbook-flow-section,
-  .money-workbook-includes-section,
+  .money-workbook-outcomes-section,
   .money-workbook-choice-section { padding-right: 20px; padding-left: 20px; }
   .money-workbook-hero-hook { font-size: 18px; }
   .money-workbook-hero-pages { margin-bottom: -20px; transform: scale(0.92); }

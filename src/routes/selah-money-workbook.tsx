@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Check } from "lucide-react";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 
 export const Route = createFileRoute("/selah-money-workbook")({
@@ -16,39 +15,28 @@ export const Route = createFileRoute("/selah-money-workbook")({
   component: SelahMoneyWorkbookPage,
 });
 
-const workbookFlow = [
+const workbookOutcomes = [
   {
     step: "01",
-    title: "돈 앞의 마음을 돌아봅니다",
+    title: "돈 앞의 마음을 이해합니다",
     description:
-      "돈과 관련된 상황에서 반복되는 생각과 감정을 살펴보고, 지금까지의 돈 이야기를 차분히 정리합니다.",
+      "반복되는 상황·생각·감정을 돌아보고, 나에게 돈이 어떤 의미인지 정리합니다.",
+    result: "나의 돈 이야기와 반복 패턴",
   },
   {
     step: "02",
-    title: "말씀 안에서 기준을 세웁니다",
+    title: "나만의 돈 관리 기준을 세웁니다",
     description:
-      "나에게 돈이 무엇인지, 어떤 삶을 위해 사용하고 싶은지 돌아보며 나만의 돈 관리 기준을 세웁니다.",
+      "말씀과 삶의 우선순위를 바탕으로 예산·소비·저축·투자의 기준을 정합니다.",
+    result: "나만의 돈 관리 원칙",
   },
   {
     step: "03",
-    title: "실제 예산과 선택에 적용합니다",
-    description: "세운 기준을 예산·소비·저축·투자에 연결하고, 다음 달 돈의 흐름을 직접 계획합니다.",
-  },
-  {
-    step: "04",
-    title: "기록하고 다시 점검합니다",
+    title: "실제 계획에 적용하고 점검합니다",
     description:
-      "한 주의 돈 관리를 기록하고 조정할 부분을 찾으며, 꾸준히 이어갈 작은 실천을 정합니다.",
+      "다음 달 예산을 세우고, 한 주의 돈 관리를 기록하며 조정할 행동을 정합니다.",
+    result: "월간 예산과 지속 가능한 점검 습관",
   },
-];
-
-const workbookIncludes = [
-  "돈 이야기와 반복되는 마음·행동 돌아보기",
-  "돈의 의미와 삶의 우선순위 정리하기",
-  "말씀을 바탕으로 나만의 돈 관리 기준 세우기",
-  "예산·소비·저축·투자 기준을 실제 계획에 적용하기",
-  "한 주 돈 관리 기록과 점검, 다음 실천 정하기",
-  "3개월 후 다시 돌아보며 변화 확인하기",
 ];
 
 const samplePages = [
@@ -86,10 +74,9 @@ function SelahMoneyWorkbookPage() {
           <span className="money-workbook-eyebrow">SELAH MONEY WORKBOOK</span>
           <h1>셀라 머니 워크북</h1>
           <p className="money-workbook-hero-hook">
-            나만의 돈 관리 기준이 생기면,
+            돈 앞의 마음을 돌아보고,
             <br />
-            선택은 더 분명해지고
-            <br />돈 앞의 마음은 평안해집니다.
+            나만의 기준으로 실제 돈 관리를 시작해보세요.
           </p>
 
           <div className="money-workbook-hero-pages" aria-label="셀라 머니 워크북 실제 페이지">
@@ -110,63 +97,40 @@ function SelahMoneyWorkbookPage() {
         <section className="money-workbook-intro-section">
           <span className="money-workbook-section-symbol" aria-hidden="true" />
           <h2>
-            돈 관리는 숫자보다
+            돈 관리 방법을 알아도
             <br />
-            기준에서 시작됩니다
+            같은 선택이 반복되나요?
           </h2>
-          <p>
-            방법을 알아도 돈 앞에서 같은 선택을 반복하는 이유는,
-            <br />내 마음과 삶의 기준이 아직 정리되지 않았기 때문일 수 있습니다.
-          </p>
-          <p>
-            말씀을 바탕으로 나만의 기준을 세우고,
+          <ul className="money-workbook-need-list">
+            <li>가계부를 시작해도 오래 이어지지 않을 때</li>
+            <li>소비·저축의 기준이 상황에 따라 흔들릴 때</li>
+            <li>신앙의 기준을 실제 돈 관리에 적용하기 어려울 때</li>
+          </ul>
+          <p className="money-workbook-need-conclusion">
+            필요한 것은 더 많은 정보보다,
             <br />
-            하나님이 맡기신 돈을 지혜롭게 관리해보세요.
-          </p>
-          <p>
-            셀라 머니 워크북은 정답을 대신 정해주지 않습니다.
-            <br />
-            돈 앞의 마음을 돌아보고 말씀에 비추어,
-            <br />
-            스스로 기준을 세워 실제 생활에 적용하도록 돕습니다.
+            <strong>나에게 맞는 분명한 기준입니다.</strong>
           </p>
         </section>
 
-        <section className="money-workbook-flow-section">
-          <span className="money-workbook-section-kicker">WORKBOOK FLOW</span>
-          <h2>
-            마음에서 시작해
-            <br />
-            실제 돈 관리까지 이어갑니다
-          </h2>
-          <div className="money-workbook-flow-list">
-            {workbookFlow.map((item) => (
+        <section className="money-workbook-outcomes-section">
+          <span className="money-workbook-section-kicker">WORKBOOK RESULTS</span>
+          <h2>워크북으로 완성하는 세 가지</h2>
+          <div className="money-workbook-outcome-list">
+            {workbookOutcomes.map((item) => (
               <article key={item.step}>
                 <span>{item.step}</span>
                 <div>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
+                  <strong>
+                    <small>완성되는 결과</small>
+                    {item.result}
+                  </strong>
                 </div>
               </article>
             ))}
           </div>
-        </section>
-
-        <section className="money-workbook-includes-section">
-          <span className="money-workbook-section-kicker">50-PAGE WORKBOOK</span>
-          <h2>
-            워크북에서 직접
-            <br />
-            정리하고 결정합니다
-          </h2>
-          <ul>
-            {workbookIncludes.map((item) => (
-              <li key={item}>
-                <Check size={17} strokeWidth={2} aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
         </section>
 
         <section className="money-workbook-sample-section">
@@ -205,7 +169,10 @@ function SelahMoneyWorkbookPage() {
             <span className="money-workbook-recommend-badge">추천</span>
             <span className="money-workbook-product-eyebrow">REPORT + WORKBOOK</span>
             <h3>심층 리포트 + 머니 워크북 세트</h3>
-            <p>11페이지 개인 맞춤 리포트 + 50페이지 실행 워크북</p>
+            <p>
+              반복되는 돈 패턴을 이해하고,
+              <br />나만의 기준으로 실제 돈 관리까지 이어가는 구성
+            </p>
             <s>개별 런칭가 38,900원</s>
             <strong>
               <small>세트 런칭가</small> 34,900원
