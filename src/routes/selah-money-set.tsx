@@ -181,8 +181,9 @@ function SelahMoneySetPage() {
         <section className="money-set-purchase-section">
           <span className="money-workbook-section-kicker">SELAH MONEY SET</span>
           <h2>이해부터 실행까지 한 번에 시작해보세요</h2>
-          <ul>
+          <ul className="money-set-purchase-items">
             <li>11페이지 개인 맞춤 리포트</li>
+            <li className="money-set-purchase-plus" aria-hidden="true">+</li>
             <li>50페이지 셀라 머니 워크북</li>
           </ul>
           <div className="money-set-purchase-price">
@@ -194,17 +195,17 @@ function SelahMoneySetPage() {
         </section>
 
         <section className="money-set-single-links">
-          <div className="money-set-single-panel">
-            <p>각 상품을 자세히 보고 싶다면</p>
-            <div>
+          <h2>각 상품을 자세히 보고 싶다면</h2>
+          <nav className="money-set-single-nav" aria-label="단품 상세페이지">
+            <a href="/selah-money-report">
               <span>셀라 머니 심층 리포트</span>
-              <a href="/selah-money-report">상세보기 →</a>
-            </div>
-            <div>
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="/selah-money-workbook">
               <span>셀라 머니 워크북</span>
-              <a href="/selah-money-workbook">상세보기 →</a>
-            </div>
-          </div>
+              <span aria-hidden="true">→</span>
+            </a>
+          </nav>
         </section>
 
         <MoneyStudyCourseFooter />

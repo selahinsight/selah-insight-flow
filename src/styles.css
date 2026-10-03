@@ -3193,6 +3193,20 @@
 .money-set-purchase-section { background: #efe5da; text-align: center; }
 .money-set-purchase-section > p { margin: 20px 0 0; color: #69564c; font-size: 16px; line-height: 1.75; word-break: keep-all; }
 .money-set-purchase-section > ul { display: grid; gap: 8px; margin: 26px 0 0; padding: 18px 16px; list-style: none; background: rgba(255, 253, 249, 0.62); color: #5c473e; font-size: 15px; font-weight: 600; }
+.money-set-purchase-items { justify-items: center; gap: 13px !important; }
+.money-set-purchase-plus {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  margin: 2px 0;
+  border-radius: 50%;
+  background: #b57a6c;
+  color: #fffdf9;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  place-items: center;
+}
 .money-set-purchase-price { display: grid; justify-items: center; gap: 10px; margin-top: 30px; }
 .money-set-purchase-price s { color: #765f54; font-size: 16px; font-weight: 600; }
 .money-set-purchase-price strong { color: #8b5e55; font-size: 26px; font-weight: 700; }
@@ -3453,7 +3467,46 @@
   border-radius: 999px;
   background: rgba(181, 122, 108, 0.14);
 }
-.money-set-single-links { padding-top: 58px; padding-bottom: 58px; }
+.money-set-single-links {
+  padding-top: 54px;
+  padding-bottom: 58px;
+  background: #fffdf9;
+  text-align: center;
+}
+.money-set-single-links > h2 {
+  margin: 0;
+  color: #44362f;
+  font-family: "SUIT", "Noto Sans KR", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+.money-set-single-nav {
+  display: grid;
+  margin-top: 24px;
+  border-top: 1px solid rgba(139, 94, 85, 0.16);
+}
+.money-set-single-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 4px;
+  border: 0;
+  border-bottom: 1px solid rgba(139, 94, 85, 0.16);
+  border-radius: 0;
+  background: transparent;
+  color: #5c473e;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.money-set-single-nav a span:last-child {
+  color: #a36f62;
+  font-size: 18px;
+  font-weight: 500;
+}
 .money-set-single-panel {
   padding: 24px 18px;
   border: 1px solid rgba(139, 94, 85, 0.15);
