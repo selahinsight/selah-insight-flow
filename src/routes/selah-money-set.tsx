@@ -91,10 +91,6 @@ function SelahMoneySetPage() {
             </figure>
           </div>
 
-          <div className="money-set-hero-flow" aria-label="이해에서 실행까지">
-            <span>이해</span><b aria-hidden="true">→</b><span>기준</span><b aria-hidden="true">→</b><span>실행</span>
-          </div>
-
           <div className="money-set-hero-meta">
             <span>PDF 구성 · 리포트는 24시간 이내 이메일 발송</span>
             <div>

@@ -3060,14 +3060,12 @@
 
 .money-set-need-section,
 .money-set-flow-section,
-.money-set-products-section,
 .money-set-purchase-section,
 .money-set-single-links { padding: 74px 24px; }
 
 .money-set-need-section { padding-bottom: 40px; background: #fffdf9; text-align: center; }
 .money-set-need-section h2,
 .money-set-flow-section h2,
-.money-set-products-section h2,
 .money-set-purchase-section h2 {
   margin: 0;
   color: #44362f;
@@ -3078,60 +3076,8 @@
   letter-spacing: -0.035em;
   word-break: keep-all;
 }
-.money-set-need-section ul {
-  display: grid;
-  gap: 12px;
-  margin: 32px 0 0;
-  padding: 0;
-  list-style: none;
-  text-align: left;
-}
-.money-set-need-section li {
-  position: relative;
-  padding: 14px 16px 14px 40px;
-  border: 1px solid rgba(139, 94, 85, 0.14);
-  background: #fbf6f0;
-  color: #69564c;
-  font-size: 16px;
-  line-height: 1.65;
-  word-break: keep-all;
-}
-.money-set-need-section li::before {
-  position: absolute;
-  top: 23px;
-  left: 20px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #a36f62;
-  content: "";
-}
-.money-set-need-section > p {
-  margin: 52px 0 0;
-  color: #69564c;
-  font-size: 19px;
-  font-weight: 600;
-  line-height: 1.65;
-  letter-spacing: -0.02em;
-}
-.money-set-need-section > p::before { display: block; width: 40px; height: 2px; margin: 0 auto 24px; background: #b57a6c; content: ""; }
-.money-set-need-section > p strong { color: #a36f62; font-weight: 600; }
-.money-set-need-arrow {
-  display: block;
-  width: 18px;
-  height: 10px;
-  margin: 40px auto 0;
-  overflow: visible;
-  fill: none;
-  stroke: #b57a6c;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 .money-set-flow-section { padding-top: 40px; background: #f1e8de; text-align: center; }
 .money-set-flow-section h2,
-.money-set-products-section h2,
 .money-set-purchase-section h2 { margin-top: 12px; }
 .money-set-flow-section > div { display: grid; gap: 16px; margin-top: 38px; text-align: left; }
 .money-set-flow-section article {
@@ -3156,38 +3102,6 @@
 }
 .money-set-flow-section h3 { margin: 1px 0 0; color: #493a33; font-size: 18px; font-weight: 700; line-height: 1.45; }
 .money-set-flow-section article p { margin: 8px 0 0; color: #705d53; font-size: 14px; line-height: 1.7; word-break: keep-all; }
-.money-set-flow-summary {
-  margin: 30px 0 0;
-  padding: 15px 12px;
-  background: rgba(181, 122, 108, 0.1);
-  color: #5c473e;
-  font-size: 15px;
-  font-weight: 700;
-}
-.money-set-flow-summary b { margin: 0 8px; color: #a36f62; }
-
-.money-set-products-section { background: #fffdf9; text-align: center; }
-.money-set-products-section article {
-  margin-top: 26px;
-  padding: 30px 22px;
-  border: 1px solid rgba(126, 96, 78, 0.2);
-  background: #fbf6f0;
-  text-align: left;
-}
-.money-set-products-section article > span { color: #9b685c; font-size: 12px; font-weight: 500; letter-spacing: 0.15em; }
-.money-set-products-section h3 { margin: 8px 0 0; color: #44362f; font-size: 19px; font-weight: 700; line-height: 1.5; }
-.money-set-products-section ul { display: grid; gap: 11px; margin: 22px 0 0; padding: 0; list-style: none; }
-.money-set-products-section li { display: grid; grid-template-columns: 19px 1fr; gap: 8px; color: #69564c; font-size: 15px; line-height: 1.6; }
-.money-set-products-section li svg { margin-top: 3px; color: #a36f62; }
-.money-set-products-section article a {
-  display: inline-flex;
-  margin-top: 24px;
-  color: #8b5e55;
-  font-size: 14px;
-  font-weight: 700;
-  text-underline-offset: 4px;
-}
-
 .money-set-sample-section h2 { font-size: 22px; }
 
 .money-set-purchase-section { background: #efe5da; text-align: center; }
@@ -3227,22 +3141,6 @@
 }
 
 .money-set-single-links { display: grid; gap: 12px; background: #fffdf9; text-align: center; }
-.money-set-single-links p { margin: 0 0 10px; color: #69564c; font-size: 15px; line-height: 1.65; }
-.money-set-single-links a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 50px;
-  border: 1px solid #a36f62;
-  border-radius: 14px;
-  background: #fffaf5;
-  color: #8b5e55;
-  font-size: 15px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
 /* Set-only composition: combination, connection and bundle value. */
 .money-set-hero { padding-bottom: 68px; background: linear-gradient(180deg, #f8eee8 0%, #fffaf5 100%); }
 .money-set-hero-products { margin-top: 36px; }
@@ -3258,29 +3156,6 @@
   box-shadow: 0 4px 12px rgba(74, 56, 45, 0.1);
   font-size: 21px;
 }
-.money-set-hero-flow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 34px 0 0;
-  color: #44362f;
-}
-.money-set-hero-flow span {
-  min-width: 66px;
-  padding: 9px 11px;
-  border: 1px solid rgba(163, 111, 98, 0.2);
-  border-radius: 999px;
-  background: #fffaf5;
-  color: #8b5e55;
-  font-size: 19px;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-}
-.money-set-hero-flow span:nth-of-type(2) { background: #f5e9e3; }
-.money-set-hero-flow span:nth-of-type(3) { background: #ead8d0; }
-.money-set-hero-flow b { color: #bd9589; font-size: 15px; font-weight: 500; }
 .money-set-hero-meta { margin-top: 28px; }
 .money-set-hero-cta {
   width: 100%;
@@ -3334,9 +3209,6 @@
   font-size: 22px;
   font-weight: 500;
 }
-.money-set-need-section > p { margin-top: 44px; }
-.money-set-need-section > p::before { margin-bottom: 24px; }
-
 .money-set-flow-section { padding-top: 72px; padding-bottom: 72px; }
 .money-set-timeline {
   display: grid;
@@ -3388,29 +3260,6 @@
   font-size: 12px;
   font-weight: 600;
   line-height: 1.45;
-}
-
-.money-set-products-section { padding-top: 72px; padding-bottom: 72px; }
-.money-set-product-card { position: relative; overflow: hidden; }
-.money-set-product-card::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 5px;
-  height: 100%;
-  background: #b57a6c;
-  content: "";
-}
-.money-set-product-card--workbook { background: #f3ece2 !important; }
-.money-set-product-card--workbook::before { background: #8a7462; }
-.money-set-product-card > strong {
-  display: inline-flex;
-  margin-top: 16px;
-  padding: 7px 11px;
-  background: rgba(181, 122, 108, 0.1);
-  color: #8b5e55;
-  font-size: 14px;
-  font-weight: 700;
 }
 
 .money-set-sample-section { padding-top: 72px; padding-bottom: 72px; background: #f7f0e9; }
@@ -3507,34 +3356,6 @@
   font-size: 18px;
   font-weight: 500;
 }
-.money-set-single-panel {
-  padding: 24px 18px;
-  border: 1px solid rgba(139, 94, 85, 0.15);
-  background: #f8f1ea;
-}
-.money-set-single-panel > p { margin-bottom: 18px; }
-.money-set-single-panel > div {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: center;
-  padding: 13px 0;
-  border-top: 1px solid rgba(139, 94, 85, 0.12);
-  color: #514039;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: left;
-}
-.money-set-single-panel a {
-  width: auto;
-  min-height: 36px;
-  padding: 0 12px;
-  border-radius: 10px;
-  background: transparent;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
 .money-workbook-product-card a {
   display: inline-flex;
   align-items: center;
