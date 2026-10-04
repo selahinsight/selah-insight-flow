@@ -814,13 +814,13 @@ function Runner({
             SELAH MONEY DIAGNOSIS
           </p>
           <h1
-            className={isMoneyDiagnosis ? "money-intro-title" : undefined}
+            className={isMoneyDiagnosis ? "money-intro-title money-entry-title" : undefined}
             style={{
               marginTop: 18,
               maxWidth: 620,
               marginLeft: "auto",
               marginRight: "auto",
-              fontSize: "clamp(30px, 6vw, 44px)",
+              fontSize: isMoneyDiagnosis ? "clamp(24px, 6vw, 27px)" : "clamp(30px, 6vw, 44px)",
               lineHeight: 1.28,
               color: theme.text,
               fontFamily: isMoneyDiagnosis ? undefined : headingFont,
@@ -842,8 +842,8 @@ function Runner({
                 style={{ margin: "24px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
                 <span className="money-intro-description-line">30개의 질문을 통해</span>
-                <span className="money-intro-description-line">돈을 대하는 마음과 행동,</span>
-                <span className="money-intro-description-line">신앙의 흐름을 함께 살펴봅니다.</span>
+                <span className="money-intro-description-line">돈을 대하는 마음과 신앙의 흐름을</span>
+                <span className="money-intro-description-line">함께 살펴봅니다.</span>
               </p>
               <p
                 className="money-duration"

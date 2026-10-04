@@ -143,7 +143,7 @@
 }
 
 .money-intro-title {
-  font-family: "Noto Serif KR", ui-serif, Georgia, serif;
+  font-family: "Gowun Batang", "Noto Serif KR", ui-serif, Georgia, serif;
   font-weight: 700;
   letter-spacing: -0.025em;
 }
@@ -2327,6 +2327,10 @@
     font-weight: 700 !important;
     color: #493c32 !important;
     letter-spacing: -0.025em !important;
+  }
+
+  .money-intro-title.money-entry-title {
+    font-size: clamp(24px, 6.6vw, 27px) !important;
   }
 
   .money-intro-description {
