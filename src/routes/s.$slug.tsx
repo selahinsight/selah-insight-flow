@@ -820,7 +820,7 @@ function Runner({
               maxWidth: 620,
               marginLeft: "auto",
               marginRight: "auto",
-              fontSize: isMoneyDiagnosis ? "clamp(24px, 6vw, 27px)" : "clamp(30px, 6vw, 44px)",
+              fontSize: isMoneyDiagnosis ? "clamp(26px, 6.4vw, 29px)" : "clamp(30px, 6vw, 44px)",
               lineHeight: 1.28,
               color: theme.text,
               fontFamily: isMoneyDiagnosis ? undefined : headingFont,
@@ -839,11 +839,10 @@ function Runner({
             <>
               <p
                 className="money-intro-description money-intro-body"
-                style={{ margin: "36px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
+                style={{ margin: "50px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
-                <span className="money-intro-description-line">30개의 질문을 통해</span>
-                <span className="money-intro-description-line">돈을 대하는 마음과 신앙의 흐름을</span>
-                <span className="money-intro-description-line">함께 살펴봅니다.</span>
+                <span className="money-intro-description-line">돈을 대하는 마음과</span>
+                <span className="money-intro-description-line">신앙의 흐름을 함께 살펴봅니다.</span>
               </p>
               <p
                 className="money-duration"
@@ -948,12 +947,7 @@ function Runner({
               opacity: !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent)) ? 0.5 : 1,
             }}
           >
-            {starting ? "준비 중..." : isMoneyDiagnosis ? (
-              <>
-                <span className="money-start-button-line">돈 앞의 내 마음과 기준</span>
-                <span className="money-start-button-line">알아보기</span>
-              </>
-            ) : "시작하기"}
+            {starting ? "준비 중..." : isMoneyDiagnosis ? "내 마음과 기준 알아보기" : "시작하기"}
           </button>
           {isMoneyDiagnosis && (
             <details className="money-intro-privacy-details" style={{ color: theme.muted }}>
