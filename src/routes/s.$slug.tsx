@@ -816,7 +816,7 @@ function Runner({
           <h1
             className={isMoneyDiagnosis ? "money-intro-title money-entry-title" : undefined}
             style={{
-              marginTop: 18,
+              marginTop: isMoneyDiagnosis ? 14 : 18,
               maxWidth: 620,
               marginLeft: "auto",
               marginRight: "auto",
@@ -829,7 +829,7 @@ function Runner({
           >
             {isMoneyDiagnosis ? (
               <>
-                <span className="money-intro-line">돈 앞의 내 마음은</span>{" "}
+                <span className="money-intro-line">돈 앞에서 나는</span>{" "}
                 <span className="money-intro-line">어떤 모습일까요?</span>
               </>
             ) : survey.title}
@@ -839,14 +839,14 @@ function Runner({
             <>
               <p
                 className="money-intro-description money-intro-body"
-                style={{ margin: "34px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
+                style={{ margin: "16px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
                 <span className="money-intro-description-line">돈을 대하는 내 마음과</span>
                 <span className="money-intro-description-line">선택의 기준을 함께 살펴봅니다.</span>
               </p>
               <p
                 className="money-duration"
-                style={{ margin: "14px auto 0", fontSize: 13, color: theme.muted, textAlign: "center" }}
+                style={{ margin: "6px auto 0", fontSize: 13, color: theme.muted, textAlign: "center" }}
               >
                 30문항 · 약 3~4분
               </p>
@@ -879,7 +879,7 @@ function Runner({
               정답은 없습니다. 지금의 상태와 가장 가까운 답을 선택해주세요.
             </p>
           )}
-          <div className={isMoneyDiagnosis ? "money-name-field" : undefined} style={{ marginTop: 24, maxWidth: isMoneyDiagnosis ? 380 : 320, marginLeft: "auto", marginRight: "auto" }}>
+          <div className={isMoneyDiagnosis ? "money-name-field" : undefined} style={{ marginTop: isMoneyDiagnosis ? 32 : 24, maxWidth: isMoneyDiagnosis ? 380 : 320, marginLeft: "auto", marginRight: "auto" }}>
             <label
               htmlFor="respondent-name"
               style={{

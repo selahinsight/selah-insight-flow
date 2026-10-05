@@ -2342,6 +2342,7 @@
 
   .money-intro-title.money-entry-title {
     width: 100%;
+    margin-top: 14px !important;
     margin-right: auto !important;
     margin-left: auto !important;
     font-size: clamp(26px, 6.4vw, 29px) !important;
@@ -2349,7 +2350,7 @@
   }
 
   .money-intro-description {
-    margin-top: 34px !important;
+    margin-top: 16px !important;
     font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
     font-size: 16px !important;
     line-height: 1.72 !important;
@@ -2385,7 +2386,7 @@
   }
 
   .money-name-field {
-    margin-top: 18px !important;
+    margin-top: 32px !important;
     padding-top: 0;
     width: 100%;
     max-width: 380px !important;
@@ -2422,7 +2423,7 @@
     box-sizing: border-box;
     white-space: nowrap;
     line-height: 1.4;
-    margin-top: 16px !important;
+    margin-top: 18px !important;
     margin-right: auto !important;
     margin-left: auto !important;
     padding: 9px 24px !important;
@@ -2468,7 +2469,7 @@
   .money-intro-consent-block {
     width: 100%;
     max-width: 380px;
-    margin: 14px auto 0;
+    margin: 18px auto 0;
     text-align: left;
   }
 
@@ -2479,8 +2480,8 @@
   .money-intro-privacy-details {
     width: 100%;
     max-width: 380px;
-    margin: 24px auto 0;
-    padding-top: 16px;
+    margin: 30px auto 0;
+    padding-top: 14px;
     border-top: 1px solid rgba(154, 118, 100, 0.18);
     font-size: 12px;
     line-height: 1.65;
