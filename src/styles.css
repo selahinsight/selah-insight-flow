@@ -2416,12 +2416,15 @@
 
   .money-start-button {
     width: min(100%, 300px);
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
     white-space: nowrap;
     line-height: 1.4;
     margin-top: 16px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
     padding: 9px 24px !important;
     min-height: 52px;
     font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
@@ -2430,7 +2433,7 @@
   }
 
   .money-duration {
-    margin-top: 12px !important;
+    margin-top: 6px !important;
     font-size: 13px !important;
   }
 
