@@ -948,7 +948,12 @@ function Runner({
               opacity: !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent)) ? 0.5 : 1,
             }}
           >
-            {starting ? "준비 중..." : isMoneyDiagnosis ? "돈 앞의 내 마음과 기준 알아보기" : "시작하기"}
+            {starting ? "준비 중..." : isMoneyDiagnosis ? (
+              <>
+                <span className="money-start-button-line">돈 앞의 내 마음과 기준</span>
+                <span className="money-start-button-line">알아보기</span>
+              </>
+            ) : "시작하기"}
           </button>
           {isMoneyDiagnosis && (
             <details className="money-intro-privacy-details" style={{ color: theme.muted }}>
