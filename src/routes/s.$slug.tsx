@@ -839,10 +839,10 @@ function Runner({
             <>
               <p
                 className="money-intro-description money-intro-body"
-                style={{ margin: "50px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
+                style={{ margin: "34px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
-                <span className="money-intro-description-line">돈을 대하는 마음과</span>
-                <span className="money-intro-description-line">신앙의 흐름을 함께 살펴봅니다.</span>
+                <span className="money-intro-description-line">돈을 대하는 내 마음과</span>
+                <span className="money-intro-description-line">선택의 기준을 함께 살펴봅니다.</span>
               </p>
               <p
                 className="money-duration"
@@ -947,7 +947,7 @@ function Runner({
               opacity: !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent)) ? 0.5 : 1,
             }}
           >
-            {starting ? "준비 중..." : isMoneyDiagnosis ? "내 마음과 기준 알아보기" : "시작하기"}
+            {starting ? "준비 중..." : isMoneyDiagnosis ? "무료 진단 시작하기" : "시작하기"}
           </button>
           {isMoneyDiagnosis && (
             <details className="money-intro-privacy-details" style={{ color: theme.muted }}>

@@ -152,6 +152,7 @@
   width: 100%;
   max-width: 620px !important;
   font-size: 26px !important;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
 }
 
 .money-diagnosis-label {
@@ -2344,10 +2345,11 @@
     margin-right: auto !important;
     margin-left: auto !important;
     font-size: clamp(26px, 6.4vw, 29px) !important;
+    font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
   }
 
   .money-intro-description {
-    margin-top: 48px !important;
+    margin-top: 34px !important;
     font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
     font-size: 16px !important;
     line-height: 1.72 !important;
@@ -2414,6 +2416,9 @@
 
   .money-start-button {
     width: min(100%, 300px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     white-space: nowrap;
     line-height: 1.4;
     margin-top: 16px !important;
