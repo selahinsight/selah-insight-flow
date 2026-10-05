@@ -829,8 +829,8 @@ function Runner({
           >
             {isMoneyDiagnosis ? (
               <>
-                <span className="money-intro-line">나는 돈 앞에서</span>{" "}
-                <span className="money-intro-line">어떤 마음과 기준을 갖고 있을까요?</span>
+                <span className="money-intro-line">돈 앞의 내 마음은</span>{" "}
+                <span className="money-intro-line">어떤 모습일까요?</span>
               </>
             ) : survey.title}
           </h1>
@@ -839,7 +839,7 @@ function Runner({
             <>
               <p
                 className="money-intro-description money-intro-body"
-                style={{ margin: "24px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
+                style={{ margin: "36px auto 0", maxWidth: 540, fontSize: 16, lineHeight: 1.8, color: theme.text, opacity: 0.78 }}
               >
                 <span className="money-intro-description-line">30개의 질문을 통해</span>
                 <span className="money-intro-description-line">돈을 대하는 마음과 신앙의 흐름을</span>
@@ -948,7 +948,7 @@ function Runner({
               opacity: !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent)) ? 0.5 : 1,
             }}
           >
-            {starting ? "준비 중..." : isMoneyDiagnosis ? "진단 안내 확인하기" : "시작하기"}
+            {starting ? "준비 중..." : isMoneyDiagnosis ? "돈 앞의 내 마음과 기준 알아보기" : "시작하기"}
           </button>
           {isMoneyDiagnosis && (
             <details className="money-intro-privacy-details" style={{ color: theme.muted }}>
