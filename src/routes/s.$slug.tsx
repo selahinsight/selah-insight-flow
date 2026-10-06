@@ -2531,7 +2531,7 @@ function Wrap({
     <div
       className={introMode ? "money-intro-wrap" : undefined}
       style={{
-        minHeight: "100vh",
+        minHeight: introMode ? "100dvh" : "100vh",
         backgroundColor: theme.bg,
         color: theme.text,
         fontFamily: fontFamilyOf(design.font_mood),
