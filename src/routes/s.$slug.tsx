@@ -930,6 +930,25 @@ function Runner({
               </label>
             </div>
           )}
+          <button
+            className={isMoneyDiagnosis ? "money-start-button" : undefined}
+            onClick={() => {
+              void startSurvey();
+            }}
+            disabled={starting || !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent))}
+            style={{
+              ...btnPrimary,
+              marginTop: 24,
+              padding: "13px 34px",
+              borderRadius: 8,
+              fontSize: 14,
+              fontWeight: 500,
+              cursor: starting ? "wait" : "pointer",
+              opacity: !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent)) ? 0.5 : 1,
+            }}
+          >
+            {starting ? "준비 중..." : isMoneyDiagnosis ? "무료 진단 시작하기" : "시작하기"}
+          </button>
           {isMoneyDiagnosis && (
             <details className="money-intro-privacy-details" style={{ color: theme.muted }}>
               <summary>개인정보 및 민감정보 수집·이용 안내 보기</summary>
@@ -950,25 +969,6 @@ function Runner({
               </div>
             </details>
           )}
-          <button
-            className={isMoneyDiagnosis ? "money-start-button" : undefined}
-            onClick={() => {
-              void startSurvey();
-            }}
-            disabled={starting || !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent))}
-            style={{
-              ...btnPrimary,
-              marginTop: 24,
-              padding: "13px 34px",
-              borderRadius: 8,
-              fontSize: 14,
-              fontWeight: 500,
-              cursor: starting ? "wait" : "pointer",
-              opacity: !name.trim() || (isMoneyDiagnosis && (!privacyConsent || !sensitiveInfoConsent)) ? 0.5 : 1,
-            }}
-          >
-            {starting ? "준비 중..." : isMoneyDiagnosis ? "무료 진단 시작하기" : "시작하기"}
-          </button>
         </div>
       </Wrap>
     );
