@@ -800,7 +800,6 @@ function Runner({
             border: `1px solid ${theme.border}`,
           }}
         >
-          <div className={isMoneyDiagnosis ? "money-intro-heading-block" : undefined}>
           <p
             className={isMoneyDiagnosis ? "money-diagnosis-label money-intro-sans" : undefined}
             style={{
@@ -859,8 +858,6 @@ function Runner({
               <p style={{ marginTop: 22, fontSize: 13, color: theme.muted }}>{survey.estimated_time}</p>
             </>
           )}
-          </div>
-          <div className={isMoneyDiagnosis ? "money-intro-form-block" : undefined}>
           {survey.audience_type === "christian" && survey.bible_verse && (
             <div
               style={{
@@ -953,7 +950,6 @@ function Runner({
               </div>
             </details>
           )}
-          </div>
           <button
             className={isMoneyDiagnosis ? "money-start-button" : undefined}
             onClick={() => {

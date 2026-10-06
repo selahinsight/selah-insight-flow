@@ -162,8 +162,7 @@
   letter-spacing: 0.05em !important;
 }
 
-.money-intro-card > .money-diagnosis-label,
-.money-intro-heading-block > .money-diagnosis-label {
+.money-intro-card > .money-diagnosis-label {
   font-size: 12px !important;
 }
 
@@ -2207,37 +2206,7 @@
     padding: 34px 18px 28px !important;
   }
 
-  .money-intro-heading-block,
-  .money-intro-form-block {
-    width: 100%;
-  }
-
-  .money-intro-card > .money-intro-heading-block,
-  .money-intro-card > .money-intro-form-block,
-  .money-intro-card > .money-start-button {
-    flex: 0 0 auto;
-  }
-
-  .money-intro-card > .money-intro-heading-block:first-child {
-    margin-top: auto;
-  }
-
-  .money-intro-card > .money-start-button:last-child {
-    margin-bottom: auto;
-  }
-
-  .money-intro-card > .money-intro-heading-block,
-  .money-intro-card > .money-intro-form-block {
-    margin-bottom: clamp(70px, calc(26.8dvh - 156px), 100px);
-  }
-
-  .money-intro-form-block .money-name-field,
-  .money-intro-card > .money-start-button {
-    margin-top: 0 !important;
-  }
-
-  .money-intro-card > .money-diagnosis-label,
-  .money-intro-heading-block > .money-diagnosis-label {
+  .money-intro-card > .money-diagnosis-label {
     margin-top: 0 !important;
     font-size: 12px !important;
   }
@@ -2448,14 +2417,14 @@
   }
 
   .money-start-button {
-    width: min(100%, 380px);
+    width: min(100%, 300px);
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
     white-space: nowrap;
     line-height: 1.4;
-    margin-top: 14px !important;
+    margin-top: 18px !important;
     margin-right: auto !important;
     margin-left: auto !important;
     padding: 9px 24px !important;
@@ -2512,8 +2481,8 @@
   .money-intro-privacy-details {
     width: 100%;
     max-width: 380px;
-    margin: 16px auto 0;
-    padding-top: 12px;
+    margin: 30px auto 0;
+    padding-top: 14px;
     border-top: 1px solid rgba(154, 118, 100, 0.18);
     font-size: 13px;
     line-height: 1.65;
@@ -2630,10 +2599,6 @@
     padding-bottom: 16px !important;
   }
 
-  .money-intro-card > .money-intro-heading-block,
-  .money-intro-card > .money-intro-form-block {
-    margin-bottom: clamp(28px, 5dvh, 35px);
-  }
 }
 
 @media (max-width: 640px) {
