@@ -162,7 +162,8 @@
   letter-spacing: 0.05em !important;
 }
 
-.money-intro-card > .money-diagnosis-label {
+.money-intro-card > .money-diagnosis-label,
+.money-intro-heading-block > .money-diagnosis-label {
   font-size: 12px !important;
 }
 
@@ -2206,7 +2207,37 @@
     padding: 34px 18px 28px !important;
   }
 
-  .money-intro-card > .money-diagnosis-label {
+  .money-intro-heading-block,
+  .money-intro-form-block {
+    width: 100%;
+  }
+
+  .money-intro-card > .money-intro-heading-block,
+  .money-intro-card > .money-intro-form-block,
+  .money-intro-card > .money-start-button {
+    flex: 0 0 auto;
+  }
+
+  .money-intro-card > .money-intro-heading-block:first-child {
+    margin-top: auto;
+  }
+
+  .money-intro-card > .money-start-button:last-child {
+    margin-bottom: auto;
+  }
+
+  .money-intro-card > .money-intro-heading-block,
+  .money-intro-card > .money-intro-form-block {
+    margin-bottom: clamp(70px, calc(26.8dvh - 156px), 100px);
+  }
+
+  .money-intro-form-block .money-name-field,
+  .money-intro-card > .money-start-button {
+    margin-top: 0 !important;
+  }
+
+  .money-intro-card > .money-diagnosis-label,
+  .money-intro-heading-block > .money-diagnosis-label {
     margin-top: 0 !important;
     font-size: 12px !important;
   }
@@ -2597,6 +2628,11 @@
   .money-intro-card {
     padding-top: 18px !important;
     padding-bottom: 16px !important;
+  }
+
+  .money-intro-card > .money-intro-heading-block,
+  .money-intro-card > .money-intro-form-block {
+    margin-bottom: clamp(28px, 5dvh, 35px);
   }
 }
 
