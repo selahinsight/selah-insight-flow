@@ -151,7 +151,7 @@
 .money-intro-title.money-entry-title {
   width: 100%;
   max-width: 620px !important;
-  font-size: 26px !important;
+  font-size: 28px !important;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -2377,7 +2377,7 @@
     margin-top: 14px !important;
     margin-right: auto !important;
     margin-left: auto !important;
-    font-size: clamp(26px, 6.4vw, 29px) !important;
+    font-size: clamp(28px, 6.4vw, 29px) !important;
     font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
   }
 
@@ -2476,7 +2476,7 @@
     grid-template-columns: 18px minmax(0, 1fr);
     align-items: start;
     column-gap: 8px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.55;
     margin: 0;
   }
@@ -2515,7 +2515,7 @@
     margin: 16px auto 0;
     padding-top: 12px;
     border-top: 1px solid rgba(154, 118, 100, 0.18);
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.65;
     text-align: center;
   }
