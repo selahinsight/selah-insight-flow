@@ -451,6 +451,16 @@ function Runner({
     if (survey.slug !== "selah-money-diagnosis" || typeof window === "undefined") return;
 
     const params = new URLSearchParams(window.location.search);
+    if (params.get("preview") !== "prep") return;
+
+    setPhase("prep");
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+  }, [survey.slug]);
+
+  useEffect(() => {
+    if (survey.slug !== "selah-money-diagnosis" || typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
     const isShortResultPreview =
       window.location.pathname.replace(/\/+$/, "").endsWith("/s/selah-money-d");
     if (!isShortResultPreview && params.get("preview") !== "result") return;
