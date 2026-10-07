@@ -2085,18 +2085,25 @@
 }
 
 .money-prep-title-lead {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  column-gap: 8px;
+  width: 100%;
 }
 
 .money-prep-title-lead svg {
+  grid-column: 1;
+  justify-self: end;
   width: 19px;
   height: 19px;
   flex: 0 0 auto;
   color: #9a7664;
   stroke-width: 1.8;
+}
+
+.money-prep-title-lead > span {
+  grid-column: 2;
 }
 
 .money-prep-research {
