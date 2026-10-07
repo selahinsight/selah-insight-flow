@@ -1672,6 +1672,7 @@ function Runner({
               return (
                 <button
                   key={`${label}-${oi}`}
+                  className={isMoneyDiagnosis ? "money-question-option" : undefined}
                   onClick={() => {
                     if (isMulti) {
                       const arr = Array.isArray(current) ? [...current] : [];

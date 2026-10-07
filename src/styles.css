@@ -154,6 +154,13 @@
   width: 100%;
 }
 
+.money-question-option {
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
 .money-intro-title {
   font-family: "Gowun Batang", "Noto Serif KR", ui-serif, Georgia, serif;
   font-weight: 700;
