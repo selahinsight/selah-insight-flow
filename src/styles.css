@@ -2066,16 +2066,6 @@
   width: 100%;
 }
 
-.money-prep-step-label {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 0 12px;
-  border: 1px solid rgba(154, 118, 100, 0.34);
-  border-radius: 999px;
-  background: rgba(154, 118, 100, 0.06);
-}
-
 .money-prep-card p {
   max-width: 480px;
   margin-right: auto;
@@ -2086,7 +2076,7 @@
   margin: 18px auto 0 !important;
   max-width: 620px;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
-  font-size: 30px !important;
+  font-size: 28px !important;
   line-height: 1.28 !important;
   color: #493c32 !important;
   font-weight: 700 !important;
@@ -2094,8 +2084,8 @@
 
 .money-prep-research {
   margin-top: 18px;
-  font-size: 17px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.75;
   color: #493c32;
   opacity: 0.72;
 }
@@ -2112,7 +2102,7 @@
 .money-prep-guidance h2 {
   margin: 0;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.55;
   font-weight: 600;
   color: #493c32;
@@ -2120,8 +2110,8 @@
 
 .money-prep-guidance p {
   margin-top: 8px;
-  font-size: 17px;
-  line-height: 1.7;
+  font-size: 16px;
+  line-height: 1.72;
   color: #493c32;
   opacity: 0.82;
 }
@@ -2135,30 +2125,22 @@
   width: 360px;
   max-width: 100%;
   margin: 18px auto 0;
-  grid-template-columns: 18px minmax(0, 1fr);
+  grid-template-columns: 16px minmax(0, 1fr);
   align-items: start;
   column-gap: 9px;
   color: #6f6259;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.65;
   text-align: left;
   cursor: pointer;
 }
 
 .money-prep-commitment input {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   margin: 1px 0 0;
   accent-color: #9a7664;
-}
-
-.money-prep-card > .money-start-button {
-  width: 300px;
-  max-width: 100%;
-  min-height: 52px;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 @media (max-width: 639px) {
@@ -2579,13 +2561,13 @@
 
   .money-prep-title {
     margin-top: 18px !important;
-    font-size: 30px !important;
+    font-size: 28px !important;
     line-height: 1.28 !important;
   }
 
   .money-prep-research {
     margin-top: 18px !important;
-    font-size: 17px !important;
+    font-size: 16px !important;
     line-height: 1.7 !important;
   }
 
@@ -2595,11 +2577,11 @@
   }
 
   .money-prep-guidance h2 {
-    font-size: 18px !important;
+    font-size: 16px !important;
   }
 
   .money-prep-guidance p {
-    font-size: 17px !important;
+    font-size: 16px !important;
     line-height: 1.72 !important;
   }
 
