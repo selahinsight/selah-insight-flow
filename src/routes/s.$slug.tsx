@@ -426,6 +426,7 @@ function Runner({
   const [prepCommitment, setPrepCommitment] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
+  const [emailSendError, setEmailSendError] = useState<string | null>(null);
   const [starting, setStarting] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const [editorialPreview, setEditorialPreview] = useState(false);
@@ -442,6 +443,7 @@ function Runner({
     setSelahResult(undefined);
     setResponseId(undefined);
     setEmailSaved(false);
+    setEmailSendError(null);
     setPrepCommitment(false);
     setPreviewMode(false);
     setEditorialPreview(false);
@@ -670,6 +672,7 @@ function Runner({
       return;
     }
 
+    setEmailSendError(null);
     setSubmitting(true);
     try {
       let resultImage: { dataUrl: string; filename: string } | undefined;
@@ -743,15 +746,19 @@ function Runner({
 
       if (studioRes.status !== "sent") {
         console.warn("[selah] Selah Studio intake was not completed", studioRes);
-        toast.error("이메일을 보내지 못했어요. 잠시 후 다시 시도해 주세요.");
+        const message = "이메일을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.";
+        setEmailSendError(message);
+        toast.error(message);
         return;
       }
 
       setEmailSaved(true);
-      toast.success("전체 결과를 이메일로 보내드렸습니다.");
+      toast.success("이메일 발송이 완료되었습니다.");
     } catch (err) {
       console.error("[selah] submitEmailRequest failed", err);
-      toast.error("이메일을 보내지 못했어요. 잠시 후 다시 시도해 주세요.");
+      const message = "이메일을 보내지 못했습니다. 잠시 후 다시 시도해 주세요.";
+      setEmailSendError(message);
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }
@@ -1459,9 +1466,13 @@ function Runner({
                 marketingConsent={marketingConsent}
                 submitting={submitting}
                 saved={emailSaved}
+                errorMessage={emailSendError}
                 theme={theme}
                 design={design}
-                onEmailChange={setEmail}
+                onEmailChange={(value) => {
+                  setEmail(value);
+                  setEmailSendError(null);
+                }}
                 onPrivacyConsentChange={setPrivacyConsent}
                 onMarketingConsentChange={setMarketingConsent}
                 onSubmit={() => {
@@ -1975,6 +1986,7 @@ function EmailResultSection({
   marketingConsent,
   submitting,
   saved,
+  errorMessage,
   theme,
   design,
   onEmailChange,
@@ -1989,6 +2001,7 @@ function EmailResultSection({
   marketingConsent: boolean;
   submitting: boolean;
   saved: boolean;
+  errorMessage: string | null;
   theme: ThemeColors;
   design: DesignSettings;
   onEmailChange: (value: string) => void;
@@ -2107,29 +2120,51 @@ function EmailResultSection({
             : <><strong>선택</strong><span>셀라 소식과 자료 안내를 이메일로 받아봅니다.</span></>}
         </label>
       </div>
-      <button
-        className={isMoneyDiagnosis ? "money-email-submit-button" : undefined}
-        onClick={onSubmit}
-        disabled={submitting || saved || !privacyConsent || !email.trim()}
-        style={{
-          ...btn,
-          width: isMoneyDiagnosis ? "100%" : undefined,
-          maxWidth: isMoneyDiagnosis ? 340 : undefined,
-          marginTop: isMoneyDiagnosis ? 32 : 18,
-          padding: isMoneyDiagnosis ? "14px 22px" : "12px 26px",
-          borderRadius: 999,
-          fontSize: isMoneyDiagnosis ? 16 : 13,
-          fontWeight: isMoneyDiagnosis ? 700 : 500,
-          cursor: submitting ? "wait" : "pointer",
-          opacity: saved ? 0.82 : 1,
-        }}
-      >
-        {submitting
-          ? "보내는 중..."
-          : saved
-          ? isMoneyDiagnosis ? "결과를 저장했어요. 이메일에서 확인해주세요." : "이메일 정보가 저장되었습니다"
-          : isMoneyDiagnosis ? "무료 결과 이메일로 받기" : "이메일 정보 저장하기"}
-      </button>
+      {(!saved || !isMoneyDiagnosis) && (
+        <button
+          className={isMoneyDiagnosis ? "money-email-submit-button" : undefined}
+          onClick={onSubmit}
+          disabled={submitting || saved || !privacyConsent || !email.trim()}
+          style={{
+            ...btn,
+            width: isMoneyDiagnosis ? "100%" : undefined,
+            maxWidth: isMoneyDiagnosis ? 340 : undefined,
+            marginTop: isMoneyDiagnosis ? 32 : 18,
+            padding: isMoneyDiagnosis ? "14px 22px" : "12px 26px",
+            borderRadius: 999,
+            fontSize: isMoneyDiagnosis ? 16 : 13,
+            fontWeight: isMoneyDiagnosis ? 700 : 500,
+            cursor: submitting ? "wait" : "pointer",
+            opacity: saved ? 0.82 : 1,
+          }}
+        >
+          {submitting
+            ? "보내는 중..."
+            : saved
+            ? "이메일 정보가 저장되었습니다"
+            : isMoneyDiagnosis ? "무료 결과 이메일로 받기" : "이메일 정보 저장하기"}
+        </button>
+      )}
+      {isMoneyDiagnosis && (submitting || saved || errorMessage) && (
+        <p
+          role={errorMessage ? "alert" : "status"}
+          aria-live="polite"
+          style={{
+            margin: "12px auto 0",
+            maxWidth: 360,
+            color: errorMessage ? "#9a3f36" : theme.text,
+            fontSize: 14,
+            lineHeight: 1.6,
+            fontWeight: saved ? 700 : 500,
+          }}
+        >
+          {submitting
+            ? "이메일을 전송하고 있습니다. 약 1~2분 정도 걸릴 수 있어요. 창을 닫지 말고 기다려 주세요."
+            : saved
+            ? "이메일 발송이 완료되었습니다."
+            : errorMessage}
+        </p>
+      )}
     </div>
   );
 }
