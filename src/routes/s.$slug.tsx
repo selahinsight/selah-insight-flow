@@ -1004,17 +1004,17 @@ function Runner({
         >
           <div className="money-prep-content">
           <p
-            className="money-diagnosis-label money-intro-sans"
+            className="money-diagnosis-label money-intro-sans money-prep-step-label"
             style={{
               margin: 0,
-              fontSize: 15,
+              fontSize: 13,
               fontWeight: 700,
-              letterSpacing: "0.18em",
+              letterSpacing: "0.14em",
               color: theme.accent,
               textTransform: "uppercase",
             }}
           >
-            SELAH MONEY DIAGNOSIS
+            BEFORE YOU START
           </p>
           <h1 className="money-intro-title money-prep-title">
             <span className="money-prep-line">진단 전,</span>
