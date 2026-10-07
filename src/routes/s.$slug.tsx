@@ -423,6 +423,7 @@ function Runner({
   const [privacyConsent, setPrivacyConsent] = useState(false);
   const [sensitiveInfoConsent, setSensitiveInfoConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
+  const [prepCommitment, setPrepCommitment] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
   const [starting, setStarting] = useState(false);
@@ -441,6 +442,7 @@ function Runner({
     setSelahResult(undefined);
     setResponseId(undefined);
     setEmailSaved(false);
+    setPrepCommitment(false);
     setPreviewMode(false);
     setEditorialPreview(false);
     setPhase("intro");
@@ -1029,26 +1031,32 @@ function Runner({
               <span className="money-prep-line">나의 실제 모습을 떠올려주세요.</span>
             </h2>
             <p>
-              <span className="money-prep-line">좋아 보이는 답이 아니라,</span>
-              <span className="money-prep-line">실제로 자주 했던 선택에 따라 답해주세요.</span>
+              <span className="money-prep-line">솔직하게 답할수록 지금의 나를</span>
+              <span className="money-prep-line">더 정확하게 이해할 수 있습니다.</span>
             </p>
           </div>
-          <p className="money-prep-final">
-            <span className="money-prep-line">솔직하게 답할수록 돈·신앙 유형을</span>
-            <span className="money-prep-line">더 정확히 알 수 있습니다.</span>
-          </p>
           </div>
+          <label className="money-prep-commitment">
+            <input
+              type="checkbox"
+              checked={prepCommitment}
+              onChange={(event) => setPrepCommitment(event.target.checked)}
+            />
+            <span>네, 최근 6개월의 실제 모습을 기준으로 솔직하게 답하겠습니다.</span>
+          </label>
           <button
             className="money-start-button"
             onClick={() => setPhase("questions")}
+            disabled={!prepCommitment}
             style={{
               ...btnPrimary,
-              marginTop: 24,
+              marginTop: 14,
               padding: "13px 34px",
               borderRadius: 8,
-              fontSize: 14,
+              fontSize: 17,
               fontWeight: 500,
-              cursor: "pointer",
+              cursor: prepCommitment ? "pointer" : "not-allowed",
+              opacity: prepCommitment ? 1 : 0.5,
             }}
           >
             30문항 진단 시작하기

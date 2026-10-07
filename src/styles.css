@@ -2064,12 +2064,6 @@
 
 .money-prep-content {
   width: 100%;
-  transform: translateY(-15px);
-}
-
-.money-prep-content + .money-start-button {
-  margin-top: 18px !important;
-  transform: translateY(4px);
 }
 
 .money-prep-card p {
@@ -2081,34 +2075,26 @@
 .money-prep-title {
   margin: 18px auto 0 !important;
   max-width: 620px;
-  font-size: clamp(28px, 5vw, 36px) !important;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 28px !important;
   line-height: 1.28 !important;
   color: #493c32 !important;
   font-weight: 700 !important;
 }
 
-.money-prep-final {
-  margin-top: 18px;
-  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif !important;
-  font-size: 18px;
-  line-height: 1.62;
-  font-weight: 400 !important;
-  color: #493c32;
-}
-
 .money-prep-research {
   margin-top: 18px;
-  font-size: 16px;
-  line-height: 1.8;
+  font-size: 15px;
+  line-height: 1.7;
   color: #493c32;
-  opacity: 0.78;
+  opacity: 0.72;
 }
 
 .money-prep-guidance {
   width: 100%;
   max-width: none;
-  margin: 22px auto 0;
-  padding: 22px 20px;
+  margin: 20px auto 0;
+  padding: 18px 20px;
   border-top: 1px solid rgba(154, 118, 100, 0.28);
   border-bottom: 1px solid rgba(154, 118, 100, 0.28);
 }
@@ -2116,7 +2102,7 @@
 .money-prep-guidance h2 {
   margin: 0;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.55;
   font-weight: 600;
   color: #493c32;
@@ -2124,14 +2110,45 @@
 
 .money-prep-guidance p {
   margin-top: 8px;
-  font-size: 16px;
-  line-height: 1.75;
+  font-size: 15px;
+  line-height: 1.65;
   color: #493c32;
   opacity: 0.82;
 }
 
 .money-prep-line {
   display: block;
+}
+
+.money-prep-commitment {
+  display: grid;
+  width: 300px;
+  max-width: 100%;
+  margin: 18px auto 0;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: start;
+  column-gap: 9px;
+  color: #6f6259;
+  font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: left;
+  cursor: pointer;
+}
+
+.money-prep-commitment input {
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: #9a7664;
+}
+
+.money-prep-card > .money-start-button {
+  width: 300px;
+  max-width: 100%;
+  min-height: 52px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 @media (max-width: 639px) {
@@ -2542,7 +2559,7 @@
     min-height: calc(100svh - 24px);
     flex-direction: column;
     justify-content: center;
-    padding: 34px 22px 28px !important;
+    padding: 28px 22px !important;
     transform: none;
   }
 
@@ -2558,7 +2575,7 @@
 
   .money-prep-research {
     margin-top: 18px !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     line-height: 1.7 !important;
   }
 
@@ -2574,17 +2591,6 @@
   .money-prep-guidance p {
     font-size: 15px !important;
     line-height: 1.72 !important;
-  }
-
-  .money-prep-final {
-    margin-top: 16px !important;
-    font-size: 16px !important;
-    line-height: 1.7 !important;
-  }
-
-  .money-prep-content + .money-start-button {
-    margin-top: 18px !important;
-    transform: translateY(4px);
   }
 
 }
