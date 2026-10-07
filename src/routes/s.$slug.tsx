@@ -743,7 +743,7 @@ function Runner({
 
       if (studioRes.status !== "sent") {
         console.warn("[selah] Selah Studio intake was not completed", studioRes);
-        toast.error("결과 저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        toast.error("이메일을 보내지 못했어요. 잠시 후 다시 시도해 주세요.");
         return;
       }
 
@@ -751,7 +751,7 @@ function Runner({
       toast.success("전체 결과를 이메일로 보내드렸습니다.");
     } catch (err) {
       console.error("[selah] submitEmailRequest failed", err);
-      toast.error("저장 중 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      toast.error("이메일을 보내지 못했어요. 잠시 후 다시 시도해 주세요.");
     } finally {
       setSubmitting(false);
     }
@@ -2128,7 +2128,9 @@ function EmailResultSection({
           opacity: saved ? 0.82 : 1,
         }}
       >
-        {saved
+        {submitting
+          ? "보내는 중..."
+          : saved
           ? isMoneyDiagnosis ? "결과를 저장했어요. 이메일에서 확인해주세요." : "이메일 정보가 저장되었습니다"
           : isMoneyDiagnosis ? "무료 결과 이메일로 받기" : "이메일 정보 저장하기"}
       </button>
