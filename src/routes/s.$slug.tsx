@@ -1484,7 +1484,7 @@ function Runner({
     }
 
     return (
-      <Wrap theme={theme} design={design}>
+      <Wrap theme={theme} design={design} introMode={isMoneyDiagnosis}>
         <div
           style={{
             ...cardStyle,
@@ -1534,7 +1534,7 @@ function Runner({
 
   // questions
   return (
-    <Wrap theme={theme} design={design}>
+    <Wrap theme={theme} design={design} introMode={isMoneyDiagnosis}>
       <div style={{ marginBottom: 24 }}>
         <div
           className={isMoneyDiagnosis ? "money-question-progress-meta" : undefined}
