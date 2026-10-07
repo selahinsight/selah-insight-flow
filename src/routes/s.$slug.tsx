@@ -880,25 +880,28 @@ function Runner({
             </p>
           )}
           <div className={isMoneyDiagnosis ? "money-name-field" : undefined} style={{ marginTop: isMoneyDiagnosis ? 32 : 24, maxWidth: isMoneyDiagnosis ? 380 : 320, marginLeft: "auto", marginRight: "auto" }}>
-            <label
-              htmlFor="respondent-name"
-              style={{
-                display: "block",
-                fontSize: 12,
-                letterSpacing: isMoneyDiagnosis ? 0 : "0.14em",
-                color: theme.muted,
-                marginBottom: 8,
-                textAlign: isMoneyDiagnosis ? "center" : "left",
-                textTransform: "uppercase",
-              }}
-            >
-              이름 또는 닉네임을 적어주세요
-            </label>
+            {!isMoneyDiagnosis && (
+              <label
+                htmlFor="respondent-name"
+                style={{
+                  display: "block",
+                  fontSize: 12,
+                  letterSpacing: "0.14em",
+                  color: theme.muted,
+                  marginBottom: 8,
+                  textAlign: "left",
+                  textTransform: "uppercase",
+                }}
+              >
+                이름 또는 닉네임을 적어주세요
+              </label>
+            )}
             <input
               id="respondent-name"
+              aria-label={isMoneyDiagnosis ? "이름 또는 닉네임" : undefined}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder={isMoneyDiagnosis ? "이름 또는 닉네임 입력" : "예: 지혜 / 회복중인 사람"}
+              placeholder={isMoneyDiagnosis ? "이름 또는 닉네임을 입력해주세요" : "예: 지혜 / 회복중인 사람"}
               autoComplete="off"
               style={{
                 width: "100%",

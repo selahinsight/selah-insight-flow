@@ -2387,7 +2387,7 @@
   }
 
   .money-name-field {
-    margin-top: 32px !important;
+    margin-top: 24px !important;
     padding-top: 0;
     width: 100%;
     max-width: 380px !important;
@@ -2470,7 +2470,7 @@
   .money-intro-consent-block {
     width: 100%;
     max-width: 380px;
-    margin: 18px auto 0;
+    margin: 14px auto 0;
     text-align: left;
   }
 
