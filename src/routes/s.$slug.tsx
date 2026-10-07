@@ -1081,7 +1081,7 @@ function Runner({
                   fontWeight: 700,
                 }}
               >
-                관리자 결과 미리보기 · 데이터가 저장되지 않습니다
+                관리자 결과 미리보기 · 이메일 발송 테스트 가능
               </p>
             )}
             <p
@@ -1465,10 +1465,6 @@ function Runner({
                 onPrivacyConsentChange={setPrivacyConsent}
                 onMarketingConsentChange={setMarketingConsent}
                 onSubmit={() => {
-                  if (previewMode) {
-                    toast.info("미리보기에서는 데이터를 저장하지 않습니다.");
-                    return;
-                  }
                   void submitEmailRequest();
                 }}
               />
