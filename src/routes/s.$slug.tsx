@@ -1003,27 +1003,12 @@ function Runner({
           }}
         >
           <div className="money-prep-content">
-          <p
-            className="money-diagnosis-label money-intro-sans"
-            style={{
-              margin: 0,
-              fontSize: 15,
-              fontWeight: 700,
-              letterSpacing: "0.18em",
-              color: theme.accent,
-              textTransform: "uppercase",
-            }}
-          >
-            SELAH MONEY DIAGNOSIS
-          </p>
           <h1 className="money-intro-title money-prep-title">
             <span className="money-prep-line">진단 전,</span>
             <span className="money-prep-line">이것만 기억해주세요</span>
           </h1>
           <p className="money-prep-research">
-            <span className="money-prep-line">이 진단지는 돈에 대한 태도와 크리스천의 돈·신앙</span>
-            <span className="money-prep-line">인식을 다룬 국내외 연구와 통계자료를 바탕으로</span>
-              <span className="money-prep-line">구성되었습니다.</span>
+            이 진단지는 돈에 대한 태도와 크리스천의 돈·신앙 인식을 다룬 국내외 연구와 통계자료를 바탕으로 구성되었습니다.
           </p>
           <div className="money-prep-guidance">
             <h2>
@@ -1031,8 +1016,8 @@ function Runner({
               <span className="money-prep-line">나의 실제 모습을 떠올려주세요.</span>
             </h2>
             <p>
-              <span className="money-prep-line">솔직하게 답할수록 지금의 나를</span>
-              <span className="money-prep-line">더 정확하게 이해할 수 있습니다.</span>
+              <span className="money-prep-line">솔직하게 답할수록</span>
+              <span className="money-prep-line">지금의 나를 더 정확하게 이해할 수 있습니다.</span>
             </p>
           </div>
           </div>
