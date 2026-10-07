@@ -37,7 +37,7 @@ import { ResultDiagnosisCard } from "@/components/survey/result-diagnosis-card";
 import { SelahMoneyResultTemplate } from "@/components/survey/selah-money-result-template";
 import { SelahMoneyEditorialResult } from "@/components/survey/selah-money-editorial-result";
 import { SELAH_MONEY_RESULT_TEMPLATE_CONTENT } from "@/lib/selah-money-result-template";
-import { ArrowRight, Check, ChevronDown, CircleDollarSign, Download, GitBranch, Heart, Instagram, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, CircleDollarSign, Download, GitBranch, Heart, Info, Instagram, Mail, ScanSearch, Share2, Sprout, X, Youtube } from "lucide-react";
 import { toast } from "sonner";
 
 
@@ -1004,11 +1004,16 @@ function Runner({
         >
           <div className="money-prep-content">
           <h1 className="money-intro-title money-prep-title">
-            <span className="money-prep-line">진단 전,</span>
+            <span className="money-prep-title-lead">
+              <Info aria-hidden="true" />
+              <span>진단 전,</span>
+            </span>
             <span className="money-prep-line">이것만 기억해주세요</span>
           </h1>
           <p className="money-prep-research">
-            이 진단지는 돈에 대한 태도와 크리스천의 돈·신앙 인식을 다룬 국내외 연구와 통계자료를 바탕으로 구성되었습니다.
+            <span className="money-prep-line">이 진단지는 돈에 대한 태도와 크리스천의 돈, 신앙</span>
+            <span className="money-prep-line">인식을 다룬 국내외 연구와 통계자료를 바탕으로</span>
+            <span className="money-prep-line">구성되었습니다.</span>
           </p>
           <div className="money-prep-guidance">
             <h2>

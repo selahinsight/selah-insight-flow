@@ -2057,6 +2057,8 @@
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
+  padding-right: 22px !important;
+  padding-left: 22px !important;
   overflow-wrap: anywhere;
   border-radius: 1px !important;
   box-shadow: 0 18px 48px rgba(85, 67, 56, 0.14), 0 4px 14px rgba(85, 67, 56, 0.08) !important;
@@ -2080,6 +2082,21 @@
   line-height: 1.38 !important;
   color: #493c32 !important;
   font-weight: 700 !important;
+}
+
+.money-prep-title-lead {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.money-prep-title-lead svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  color: #9a7664;
+  stroke-width: 1.8;
 }
 
 .money-prep-research {
@@ -2126,7 +2143,7 @@
   max-width: 100%;
   margin: 18px auto 0;
   grid-template-columns: 16px minmax(0, 1fr);
-  align-items: center;
+  align-items: start;
   column-gap: 9px;
   color: #6f6259;
   font-family: "SUIT", ui-sans-serif, system-ui, sans-serif;
@@ -2139,7 +2156,7 @@
 .money-prep-commitment input {
   width: 16px;
   height: 16px;
-  margin: 0;
+  margin: 4px 0 0;
   accent-color: #9a7664;
 }
 
