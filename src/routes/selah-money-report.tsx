@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
+import { DigitalContentRefundConsent, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 
 export const Route = createFileRoute("/selah-money-report")({
@@ -70,6 +71,7 @@ const workbookSamples = [
 function SelahMoneyReportPage() {
   const [context, setContext] = useState<ReportContext>({});
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [refundConsent, setRefundConsent] = useState(false);
   const [email, setEmail] = useState("");
   const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_REPORT_CHECKOUT_URL as string | undefined)?.trim();
 
@@ -89,12 +91,25 @@ function SelahMoneyReportPage() {
   const moneyTitle = context.moneyTitle?.trim() || "회피위로형";
   const faithTitle = context.faithTitle?.trim() || "신앙연결형";
 
+  function openCheckout() {
+    setRefundConsent(false);
+    setCheckoutOpen(true);
+  }
+
   function confirmCheckout() {
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
       window.alert("리포트를 받을 이메일 주소를 확인해주세요.");
       return;
     }
+    if (!refundConsent) {
+      window.alert("디지털 콘텐츠 제공 및 청약철회 제한에 동의해주세요.");
+      return;
+    }
+    window.sessionStorage.setItem(
+      "selahMoneyCheckoutConsent",
+      JSON.stringify({ product: "report", consentAt: new Date().toISOString(), email: trimmedEmail }),
+    );
     if (checkoutUrl) {
       window.location.assign(checkoutUrl);
       return;
@@ -173,7 +188,8 @@ function SelahMoneyReportPage() {
             <span className="money-report-detail-price-arrow" aria-hidden="true">→</span>
             <strong>런칭가 9,900원</strong>
           </div>
-          <button type="button" onClick={() => setCheckoutOpen(true)}>셀라 머니 심층 리포트 구매하기</button>
+          <DigitalContentRefundNotice />
+          <button type="button" onClick={openCheckout}>셀라 머니 심층 리포트 구매하기</button>
         </section>
 
         <section className="money-report-detail-workbook-link">
@@ -210,7 +226,8 @@ function SelahMoneyReportPage() {
             <p>11페이지 개인 맞춤 PDF</p>
             <s>정가 15,000원</s>
             <strong><small>런칭가</small> 9,900원</strong>
-            <button type="button" onClick={() => setCheckoutOpen(true)}>심층 리포트 구매하기</button>
+            <DigitalContentRefundNotice />
+            <button type="button" onClick={openCheckout}>심층 리포트 구매하기</button>
           </article>
           <article className="money-workbook-product-card money-workbook-product-card--set">
             <span className="money-workbook-recommend-badge">추천</span>
@@ -219,6 +236,7 @@ function SelahMoneyReportPage() {
             <p>11페이지 리포트 + 50페이지 실행 워크북</p>
             <s>개별 런칭가 38,900원</s>
             <strong><small>세트 런칭가</small> 34,900원</strong>
+            <DigitalContentRefundNotice bundle />
             <a href="https://selahinsight.co.kr/money-study">세트 구매하기</a>
           </article>
         </section>
@@ -231,11 +249,12 @@ function SelahMoneyReportPage() {
               <button type="button" onClick={() => setCheckoutOpen(false)} aria-label="결제 전 확인 닫기">×</button>
               <span>BEFORE PAYMENT</span>
               <h2>결제 전에 확인해주세요</h2>
-              <p><small>{displayName}님의 진단 결과</small><strong>{moneyTitle} × {faithTitle}</strong></p>
+              <p className="money-checkout-product-summary"><small>{displayName}님의 진단 결과</small><strong>{moneyTitle} × {faithTitle}</strong></p>
               <label htmlFor="report-detail-email">리포트를 받을 이메일</label>
               <input id="report-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
               <em>맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
-              <button type="button" onClick={confirmCheckout}>확인하고 결제하기</button>
+              <DigitalContentRefundConsent id="report-refund-consent" checked={refundConsent} onChange={setRefundConsent} />
+              <button type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
               <a href="/s/selah-money-d">진단 다시하기</a>
             </div>
           </div>

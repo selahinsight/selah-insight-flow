@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { DigitalContentRefundConsent, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 
 export const Route = createFileRoute("/selah-money-set")({
@@ -63,11 +65,30 @@ const workbookSamples = [
   },
 ];
 
-function showCheckoutNotice() {
-  window.alert("셀라 머니 세트 결제 링크를 준비 중입니다.");
-}
-
 function SelahMoneySetPage() {
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [refundConsent, setRefundConsent] = useState(false);
+  const [email, setEmail] = useState("");
+
+  function openCheckout() {
+    setRefundConsent(false);
+    setCheckoutOpen(true);
+  }
+
+  function confirmCheckout() {
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
+      window.alert("리포트를 받을 이메일 주소를 확인해주세요.");
+      return;
+    }
+    if (!refundConsent) return;
+    window.sessionStorage.setItem(
+      "selahMoneyCheckoutConsent",
+      JSON.stringify({ product: "set", consentAt: new Date().toISOString(), email: trimmedEmail }),
+    );
+    window.alert("셀라 머니 세트 결제 링크를 준비 중입니다.");
+  }
+
   return (
     <div className="money-workbook-page-shell">
       <main className="money-workbook-page money-set-page">
@@ -99,7 +120,8 @@ function SelahMoneySetPage() {
             </div>
             <em>4,000원 절약</em>
           </div>
-          <button className="money-set-hero-cta" type="button" onClick={showCheckoutNotice}>
+          <DigitalContentRefundNotice bundle />
+          <button className="money-set-hero-cta" type="button" onClick={openCheckout}>
             리포트 + 워크북 세트 구매하기
           </button>
         </header>
@@ -187,7 +209,8 @@ function SelahMoneySetPage() {
             <strong><small>세트 런칭가</small> 34,900원</strong>
             <em>4,000원 절약</em>
           </div>
-          <button type="button" onClick={showCheckoutNotice}>세트 구매하기</button>
+          <DigitalContentRefundNotice bundle />
+          <button type="button" onClick={openCheckout}>세트 구매하기</button>
         </section>
 
         <section className="money-set-single-links">
@@ -205,6 +228,22 @@ function SelahMoneySetPage() {
         </section>
 
         <MoneyStudyCourseFooter />
+
+        {checkoutOpen && (
+          <div className="money-report-detail-checkout" role="dialog" aria-modal="true" aria-label="결제 전 확인">
+            <div>
+              <button type="button" onClick={() => setCheckoutOpen(false)} aria-label="결제 전 확인 닫기">×</button>
+              <span>BEFORE PAYMENT</span>
+              <h2>결제 전에 확인해주세요</h2>
+              <p className="money-checkout-product-summary"><small>REPORT + WORKBOOK</small><strong>심층 리포트 + 머니 워크북 세트</strong></p>
+              <label htmlFor="set-detail-email">리포트를 받을 이메일</label>
+              <input id="set-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
+              <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
+              <DigitalContentRefundConsent id="set-refund-consent" bundle checked={refundConsent} onChange={setRefundConsent} />
+              <button type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

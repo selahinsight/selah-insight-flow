@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { DigitalContentRefundConsent, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 
 export const Route = createFileRoute("/selah-money-workbook")({
@@ -60,13 +62,31 @@ const samplePages = [
   },
 ];
 
-function showCheckoutNotice(product: "workbook" | "set") {
-  const productName =
-    product === "workbook" ? "셀라 머니 워크북" : "심층 리포트 + 머니 워크북 세트";
-  window.alert(`${productName} 결제 링크를 준비 중입니다.`);
-}
-
 function SelahMoneyWorkbookPage() {
+  const [checkoutProduct, setCheckoutProduct] = useState<"workbook" | "set" | null>(null);
+  const [refundConsent, setRefundConsent] = useState(false);
+  const [email, setEmail] = useState("");
+
+  function openCheckout(product: "workbook" | "set") {
+    setCheckoutProduct(product);
+    setRefundConsent(false);
+  }
+
+  function confirmCheckout() {
+    if (!checkoutProduct || !refundConsent) return;
+    const trimmedEmail = email.trim();
+    if (checkoutProduct === "set" && (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail))) {
+      window.alert("리포트를 받을 이메일 주소를 확인해주세요.");
+      return;
+    }
+    window.sessionStorage.setItem(
+      "selahMoneyCheckoutConsent",
+      JSON.stringify({ product: checkoutProduct, consentAt: new Date().toISOString(), email: trimmedEmail || undefined }),
+    );
+    const productName = checkoutProduct === "workbook" ? "셀라 머니 워크북" : "심층 리포트 + 머니 워크북 세트";
+    window.alert(`${productName} 결제 링크를 준비 중입니다.`);
+  }
+
   return (
     <div className="money-workbook-page-shell">
       <main className="money-workbook-page">
@@ -167,7 +187,8 @@ function SelahMoneyWorkbookPage() {
             <strong>
               <small>런칭가</small> 29,000원
             </strong>
-            <button type="button" onClick={() => showCheckoutNotice("workbook")}>
+            <DigitalContentRefundNotice />
+            <button type="button" onClick={() => openCheckout("workbook")}>
               워크북 구매하기
             </button>
           </article>
@@ -184,13 +205,37 @@ function SelahMoneyWorkbookPage() {
             <strong>
               <small>세트 런칭가</small> 34,900원
             </strong>
-            <button type="button" onClick={() => showCheckoutNotice("set")}>
+            <DigitalContentRefundNotice bundle />
+            <button type="button" onClick={() => openCheckout("set")}>
               세트 구매하기
             </button>
           </article>
         </section>
 
         <MoneyStudyCourseFooter />
+
+        {checkoutProduct && (
+          <div className="money-report-detail-checkout" role="dialog" aria-modal="true" aria-label="결제 전 확인">
+            <div>
+              <button type="button" onClick={() => setCheckoutProduct(null)} aria-label="결제 전 확인 닫기">×</button>
+              <span>BEFORE PAYMENT</span>
+              <h2>결제 전에 확인해주세요</h2>
+              <p className="money-checkout-product-summary">
+                <small>{checkoutProduct === "workbook" ? "WORKBOOK ONLY" : "REPORT + WORKBOOK"}</small>
+                <strong>{checkoutProduct === "workbook" ? "셀라 머니 워크북" : "심층 리포트 + 머니 워크북 세트"}</strong>
+              </p>
+              {checkoutProduct === "set" && (
+                <>
+                  <label htmlFor="workbook-set-email">리포트를 받을 이메일</label>
+                  <input id="workbook-set-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
+                </>
+              )}
+              <em>{checkoutProduct === "workbook" ? "워크북 PDF는 결제 완료 후 즉시 제공됩니다." : "워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다."}</em>
+              <DigitalContentRefundConsent id="workbook-refund-consent" bundle={checkoutProduct === "set"} checked={refundConsent} onChange={setRefundConsent} />
+              <button type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
