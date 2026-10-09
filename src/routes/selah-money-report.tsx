@@ -188,8 +188,8 @@ function SelahMoneyReportPage() {
             <span className="money-report-detail-price-arrow" aria-hidden="true">→</span>
             <strong>런칭가 9,900원</strong>
           </div>
-          <DigitalContentRefundNotice />
           <button type="button" onClick={openCheckout}>셀라 머니 심층 리포트 구매하기</button>
+          <DigitalContentRefundNotice />
         </section>
 
         <section className="money-report-detail-workbook-link">
@@ -226,8 +226,8 @@ function SelahMoneyReportPage() {
             <p>11페이지 개인 맞춤 PDF</p>
             <s>정가 15,000원</s>
             <strong><small>런칭가</small> 9,900원</strong>
-            <DigitalContentRefundNotice />
             <button type="button" onClick={openCheckout}>심층 리포트 구매하기</button>
+            <DigitalContentRefundNotice />
           </article>
           <article className="money-workbook-product-card money-workbook-product-card--set">
             <span className="money-workbook-recommend-badge">추천</span>
@@ -236,8 +236,8 @@ function SelahMoneyReportPage() {
             <p>11페이지 리포트 + 50페이지 실행 워크북</p>
             <s>개별 런칭가 38,900원</s>
             <strong><small>세트 런칭가</small> 34,900원</strong>
-            <DigitalContentRefundNotice bundle />
             <a href="https://selahinsight.co.kr/money-study">세트 구매하기</a>
+            <DigitalContentRefundNotice bundle />
           </article>
         </section>
 
@@ -255,6 +255,7 @@ function SelahMoneyReportPage() {
               <em>맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
               <DigitalContentRefundConsent id="report-refund-consent" checked={refundConsent} onChange={setRefundConsent} />
               <button type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
+              <DigitalContentRefundNotice />
               <a href="/s/selah-money-d">진단 다시하기</a>
             </div>
           </div>

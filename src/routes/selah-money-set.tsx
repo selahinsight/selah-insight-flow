@@ -120,10 +120,10 @@ function SelahMoneySetPage() {
             </div>
             <em>4,000원 절약</em>
           </div>
-          <DigitalContentRefundNotice bundle />
           <button className="money-set-hero-cta" type="button" onClick={openCheckout}>
             리포트 + 워크북 세트 구매하기
           </button>
+          <DigitalContentRefundNotice bundle />
         </header>
 
         <section className="money-set-need-section">
@@ -209,8 +209,8 @@ function SelahMoneySetPage() {
             <strong><small>세트 런칭가</small> 34,900원</strong>
             <em>4,000원 절약</em>
           </div>
-          <DigitalContentRefundNotice bundle />
           <button type="button" onClick={openCheckout}>세트 구매하기</button>
+          <DigitalContentRefundNotice bundle />
         </section>
 
         <section className="money-set-single-links">
@@ -241,6 +241,7 @@ function SelahMoneySetPage() {
               <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
               <DigitalContentRefundConsent id="set-refund-consent" bundle checked={refundConsent} onChange={setRefundConsent} />
               <button type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
+              <DigitalContentRefundNotice bundle />
             </div>
           </div>
         )}

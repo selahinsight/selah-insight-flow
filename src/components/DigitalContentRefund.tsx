@@ -17,15 +17,17 @@ export const BUNDLE_PARTIAL_REFUND_NOTICE =
 
 export function DigitalContentRefundNotice({ bundle = false, className = "" }: RefundNoticeProps) {
   return (
-    <div className={`money-digital-refund-notice ${className}`.trim()}>
-      <p>{DIGITAL_CONTENT_REFUND_NOTICE}</p>
-      {bundle && <p>{BUNDLE_PARTIAL_REFUND_NOTICE}</p>}
-    </div>
+    <details className={`money-digital-refund-notice ${className}`.trim()}>
+      <summary>환불안내</summary>
+      <div>
+        <p>{DIGITAL_CONTENT_REFUND_NOTICE}</p>
+        {bundle && <p>{BUNDLE_PARTIAL_REFUND_NOTICE}</p>}
+      </div>
+    </details>
   );
 }
 
 export function DigitalContentRefundConsent({
-  bundle = false,
   checked,
   className = "",
   id,
@@ -33,7 +35,6 @@ export function DigitalContentRefundConsent({
 }: RefundConsentProps) {
   return (
     <div className={`money-digital-refund-consent ${className}`.trim()}>
-      <DigitalContentRefundNotice bundle={bundle} />
       <label htmlFor={id}>
         <input
           id={id}

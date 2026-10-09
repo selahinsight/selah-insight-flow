@@ -3060,7 +3060,12 @@
 .money-workbook-product-card > strong { margin-top: 8px; color: #8b5e55; font-size: 24px; font-weight: 700; }
 .money-workbook-product-card > strong small { margin-right: 4px; font-size: 13px; font-weight: 700; }
 
-.money-digital-refund-notice { width: 100%; margin-top: 18px; color: #756158; font-size: 12px; line-height: 1.65; text-align: left; word-break: keep-all; }
+.money-digital-refund-notice { width: 100%; margin-top: 14px; color: #756158; font-size: 12px; line-height: 1.65; text-align: left; word-break: keep-all; }
+.money-digital-refund-notice summary { display: flex; align-items: center; justify-content: space-between; min-height: 34px; color: #665147; font-size: 13px; font-weight: 700; cursor: pointer; list-style: none; }
+.money-digital-refund-notice summary::-webkit-details-marker { display: none; }
+.money-digital-refund-notice summary::after { content: "⌄"; margin-left: 12px; font-size: 16px; line-height: 1; transition: transform .2s ease; }
+.money-digital-refund-notice[open] summary::after { transform: rotate(180deg); }
+.money-digital-refund-notice > div { padding: 4px 0 2px; }
 .money-digital-refund-notice p { margin: 0; }
 .money-digital-refund-notice p + p { margin-top: 8px; }
 
@@ -3256,8 +3261,7 @@
   font-weight: 700;
   cursor: pointer;
 }
-.money-set-hero > .money-digital-refund-notice { margin-top: 26px; }
-.money-set-hero > .money-digital-refund-notice + .money-set-hero-cta { margin-top: 12px; }
+.money-set-hero > .money-digital-refund-notice { margin-top: 14px; }
 
 .money-set-need-section { padding-top: 70px; padding-bottom: 70px; }
 .money-set-need-section h2 { margin-top: 12px; }
@@ -3515,7 +3519,7 @@
 .money-report-detail-purchase-strip s { color: #765f54; font-size: 16px; font-weight: 600; }
 .money-report-detail-price-arrow { color: #a56f61; font-size: 18px; font-weight: 600; line-height: 1; }
 .money-report-detail-purchase-strip strong { color: #8b5e55; font-size: 19px; font-weight: 700; }
-.money-report-detail-purchase-strip > .money-digital-refund-notice { margin-top: 18px; }
+.money-report-detail-purchase-strip > .money-digital-refund-notice { margin-top: 14px; }
 .money-report-detail-purchase-strip button { width: 100%; min-height: 50px; margin-top: 20px; border: 0; border-radius: 14px; background: #665147; color: #fffaf3; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
 .money-report-detail-workbook-link { padding: 74px 24px; background: #fffdf9; text-align: center; }
 .money-report-detail-workbook-link > span { color: #9b685c; font-size: 12px; font-weight: 500; letter-spacing: .17em; }
@@ -3550,6 +3554,5 @@
 .money-report-detail-checkout > div > button:not(:first-child):disabled { cursor: not-allowed; opacity: .45; }
 .money-report-detail-checkout a { display: inline-block; margin-top: 18px; color: #806a5f; font-size: 13px; }
 .money-digital-refund-consent { margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(126,96,78,.18); }
-.money-digital-refund-consent > .money-digital-refund-notice { margin-top: 0; }
-.money-digital-refund-consent > label { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; color: #493a33; font-size: 13px; font-weight: 700; line-height: 1.55; cursor: pointer; }
+.money-digital-refund-consent > label { display: flex; gap: 10px; align-items: flex-start; color: #493a33; font-size: 13px; font-weight: 700; line-height: 1.55; cursor: pointer; }
 .money-digital-refund-consent input[type="checkbox"] { flex: 0 0 auto; width: 18px; height: 18px; margin: 1px 0 0; accent-color: #8b5e55; }

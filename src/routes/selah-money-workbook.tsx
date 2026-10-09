@@ -187,10 +187,10 @@ function SelahMoneyWorkbookPage() {
             <strong>
               <small>런칭가</small> 29,000원
             </strong>
-            <DigitalContentRefundNotice />
             <button type="button" onClick={() => openCheckout("workbook")}>
               워크북 구매하기
             </button>
+            <DigitalContentRefundNotice />
           </article>
 
           <article className="money-workbook-product-card money-workbook-product-card--set">
@@ -205,10 +205,10 @@ function SelahMoneyWorkbookPage() {
             <strong>
               <small>세트 런칭가</small> 34,900원
             </strong>
-            <DigitalContentRefundNotice bundle />
             <button type="button" onClick={() => openCheckout("set")}>
               세트 구매하기
             </button>
+            <DigitalContentRefundNotice bundle />
           </article>
         </section>
 
@@ -233,6 +233,7 @@ function SelahMoneyWorkbookPage() {
               <em>{checkoutProduct === "workbook" ? "워크북 PDF는 결제 완료 후 즉시 제공됩니다." : "워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다."}</em>
               <DigitalContentRefundConsent id="workbook-refund-consent" bundle={checkoutProduct === "set"} checked={refundConsent} onChange={setRefundConsent} />
               <button type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
+              <DigitalContentRefundNotice bundle={checkoutProduct === "set"} />
             </div>
           </div>
         )}
