@@ -189,7 +189,6 @@ function SelahMoneyReportPage() {
             <strong>런칭가 9,900원</strong>
           </div>
           <button type="button" onClick={openCheckout}>셀라 머니 심층 리포트 구매하기</button>
-          <DigitalContentRefundNotice />
         </section>
 
         <section className="money-report-detail-workbook-link">
@@ -227,7 +226,6 @@ function SelahMoneyReportPage() {
             <s>정가 15,000원</s>
             <strong><small>런칭가</small> 9,900원</strong>
             <button type="button" onClick={openCheckout}>심층 리포트 구매하기</button>
-            <DigitalContentRefundNotice />
           </article>
           <article className="money-workbook-product-card money-workbook-product-card--set">
             <span className="money-workbook-recommend-badge">추천</span>
@@ -237,7 +235,6 @@ function SelahMoneyReportPage() {
             <s>개별 런칭가 38,900원</s>
             <strong><small>세트 런칭가</small> 34,900원</strong>
             <a href="https://selahinsight.co.kr/money-study">세트 구매하기</a>
-            <DigitalContentRefundNotice bundle />
           </article>
         </section>
 

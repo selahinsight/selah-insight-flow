@@ -123,7 +123,6 @@ function SelahMoneySetPage() {
           <button className="money-set-hero-cta" type="button" onClick={openCheckout}>
             리포트 + 워크북 세트 구매하기
           </button>
-          <DigitalContentRefundNotice bundle />
         </header>
 
         <section className="money-set-need-section">
@@ -210,7 +209,6 @@ function SelahMoneySetPage() {
             <em>4,000원 절약</em>
           </div>
           <button type="button" onClick={openCheckout}>세트 구매하기</button>
-          <DigitalContentRefundNotice bundle />
         </section>
 
         <section className="money-set-single-links">

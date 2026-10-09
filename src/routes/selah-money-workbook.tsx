@@ -190,7 +190,6 @@ function SelahMoneyWorkbookPage() {
             <button type="button" onClick={() => openCheckout("workbook")}>
               워크북 구매하기
             </button>
-            <DigitalContentRefundNotice />
           </article>
 
           <article className="money-workbook-product-card money-workbook-product-card--set">
@@ -208,7 +207,6 @@ function SelahMoneyWorkbookPage() {
             <button type="button" onClick={() => openCheckout("set")}>
               세트 구매하기
             </button>
-            <DigitalContentRefundNotice bundle />
           </article>
         </section>
 
