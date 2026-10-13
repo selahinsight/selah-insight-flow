@@ -2191,6 +2191,7 @@ function MoneyPaidDiagnosisSection({
   const btn = buttonClasses(design.button_style, theme);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [checkoutEmail, setCheckoutEmail] = useState(email);
   const [editingEmail, setEditingEmail] = useState(!email.trim());
   const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_REPORT_CHECKOUT_URL as string | undefined)?.trim();
@@ -2214,6 +2215,7 @@ function MoneyPaidDiagnosisSection({
   function openCheckout() {
     setCheckoutEmail(email);
     setEditingEmail(!email.trim());
+    setRestartConfirmOpen(false);
     setCheckoutOpen(true);
   }
 
@@ -2442,48 +2444,63 @@ function MoneyPaidDiagnosisSection({
             {checkoutOpen && (
               <div className="money-report-checkout-overlay" role="dialog" aria-modal="true" aria-label="결제 전 확인">
                 <div className="money-report-checkout-card">
-                  <button className="money-report-checkout-close" type="button" onClick={() => setCheckoutOpen(false)} aria-label="결제 전 확인 닫기">
+                  <button className="money-report-checkout-close" type="button" onClick={() => { setCheckoutOpen(false); setRestartConfirmOpen(false); }} aria-label="결제 전 확인 닫기">
                     <X size={20} />
                   </button>
-                  <span className="money-report-checkout-eyebrow">BEFORE PAYMENT</span>
-                  <h3>결제 전에 확인해주세요</h3>
-                  <div className="money-report-checkout-result">
-                    <span>{displayName}님의 진단 결과</span>
-                    <strong>{moneyTitle} × {faithTitle}</strong>
-                  </div>
-                  <div className="money-report-checkout-email">
-                    <label htmlFor="money-report-checkout-email">리포트를 받을 이메일</label>
-                    {editingEmail ? (
-                      <input
-                        id="money-report-checkout-email"
-                        type="email"
-                        value={checkoutEmail}
-                        onChange={(event) => setCheckoutEmail(event.target.value)}
-                        placeholder="이메일 주소 입력"
-                        autoComplete="email"
-                        autoFocus
-                      />
-                    ) : (
-                      <div className="money-report-checkout-email-value">
-                        <span>{checkoutEmail}</span>
-                        <button type="button" onClick={() => setEditingEmail(true)}>수정</button>
+                  {restartConfirmOpen ? (
+                    <>
+                      <span className="money-report-checkout-eyebrow">RESTART CHECK</span>
+                      <h3>검사를 다시 하시겠어요?</h3>
+                      <p className="money-report-restart-confirm-copy">검사를 다시 하면 현재 결과 대신 새 검사 결과가 심층 리포트에 반영됩니다.</p>
+                      <div className="money-report-restart-actions">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCheckoutEmail("");
+                            setEditingEmail(true);
+                            setCheckoutOpen(false);
+                            setRestartConfirmOpen(false);
+                            setDetailsOpen(false);
+                            onRestart();
+                          }}
+                        >
+                          검사 다시하기
+                        </button>
+                        <button type="button" onClick={() => setRestartConfirmOpen(false)}>현재 결과 유지</button>
                       </div>
-                    )}
-                  </div>
-                  <p className="money-report-checkout-note">맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</p>
-                  <button className="money-report-checkout-submit" type="button" onClick={confirmCheckout}>확인하고 결제하기</button>
-                  <button
-                    className="money-report-restart-link"
-                    type="button"
-                    onClick={() => {
-                      if (!window.confirm("다시 진단하면 현재 결과가 변경됩니다.\n다시 진행하시겠어요?")) return;
-                      setCheckoutOpen(false);
-                      setDetailsOpen(false);
-                      onRestart();
-                    }}
-                  >
-                    결과가 맞지 않나요? <strong>진단 다시하기</strong>
-                  </button>
+                    </>
+                  ) : (
+                    <>
+                      <span className="money-report-checkout-eyebrow">BEFORE PAYMENT</span>
+                      <h3>결제 전에 확인해주세요</h3>
+                      <div className="money-report-checkout-result">
+                        <span>{displayName}님의 진단 결과</span>
+                        <strong>{moneyTitle} × {faithTitle}</strong>
+                      </div>
+                      <div className="money-report-checkout-email">
+                        <label htmlFor="money-report-checkout-email">리포트를 받을 이메일</label>
+                        {editingEmail ? (
+                          <input
+                            id="money-report-checkout-email"
+                            type="email"
+                            value={checkoutEmail}
+                            onChange={(event) => setCheckoutEmail(event.target.value)}
+                            placeholder="이메일 주소 입력"
+                            autoComplete="email"
+                            autoFocus
+                          />
+                        ) : (
+                          <div className="money-report-checkout-email-value">
+                            <span>{checkoutEmail}</span>
+                            <button type="button" onClick={() => setEditingEmail(true)}>수정</button>
+                          </div>
+                        )}
+                      </div>
+                      <p className="money-report-checkout-note">맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</p>
+                      <button className="money-report-checkout-submit" type="button" onClick={confirmCheckout}>이 결과로 결제하기</button>
+                      <button className="money-report-restart-link" type="button" onClick={() => setRestartConfirmOpen(true)}>검사 다시하기</button>
+                    </>
+                  )}
                 </div>
               </div>
             )}

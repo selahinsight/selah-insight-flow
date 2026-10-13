@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DigitalContentRefundConsent, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 
@@ -66,12 +66,32 @@ const workbookSamples = [
 ];
 
 function SelahMoneySetPage() {
+  const [context, setContext] = useState<{ name?: string; moneyTitle?: string; faithTitle?: string; email?: string }>({});
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [refundConsent, setRefundConsent] = useState(false);
+  const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_SET_CHECKOUT_URL as string | undefined)?.trim();
+
+  useEffect(() => {
+    try {
+      const saved = window.sessionStorage.getItem("selahMoneyReportContext");
+      if (!saved) return;
+      const parsed = JSON.parse(saved) as { name?: string; moneyTitle?: string; faithTitle?: string; email?: string };
+      setContext(parsed);
+      setEmail(parsed.email ?? "");
+    } catch {
+      // Direct visits use the sample state below.
+    }
+  }, []);
+
+  const displayName = context.name?.trim() || "OOO";
+  const moneyTitle = context.moneyTitle?.trim() || "회피위로형";
+  const faithTitle = context.faithTitle?.trim() || "신앙연결형";
 
   function openCheckout() {
     setRefundConsent(false);
+    setRestartConfirmOpen(false);
     setCheckoutOpen(true);
   }
 
@@ -86,7 +106,17 @@ function SelahMoneySetPage() {
       "selahMoneyCheckoutConsent",
       JSON.stringify({ product: "set", consentAt: new Date().toISOString(), email: trimmedEmail }),
     );
+    if (checkoutUrl) {
+      window.location.assign(checkoutUrl);
+      return;
+    }
     window.alert("셀라 머니 세트 결제 링크를 준비 중입니다.");
+  }
+
+  function restartDiagnosis() {
+    setEmail("");
+    window.sessionStorage.removeItem("selahMoneyReportContext");
+    window.location.assign("/s/selah-money-d");
   }
 
   return (
@@ -238,18 +268,33 @@ function SelahMoneySetPage() {
         <MoneyStudyCourseFooter />
 
         {checkoutOpen && (
-          <div className="money-report-detail-checkout" role="dialog" aria-modal="true" aria-label="결제 전 확인">
+          <div className="money-report-detail-checkout" role="dialog" aria-modal="true" aria-label="세트 결제 전 확인">
             <div>
-              <button type="button" onClick={() => setCheckoutOpen(false)} aria-label="결제 전 확인 닫기">×</button>
-              <span>BEFORE PAYMENT</span>
-              <h2>결제 전에 확인해주세요</h2>
-              <p className="money-checkout-product-summary"><small>REPORT + WORKBOOK</small><strong>심층 리포트 + 머니 워크북 세트</strong></p>
-              <label htmlFor="set-detail-email">리포트를 받을 이메일</label>
-              <input id="set-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
-              <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
-              <DigitalContentRefundConsent id="set-refund-consent" bundle checked={refundConsent} onChange={setRefundConsent} />
-              <button type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
-              <DigitalContentRefundNotice bundle />
+              <button className="money-report-detail-checkout-close" type="button" onClick={() => { setCheckoutOpen(false); setRestartConfirmOpen(false); }} aria-label="결제 전 확인 닫기">×</button>
+              {restartConfirmOpen ? (
+                <>
+                  <span>RESTART CHECK</span>
+                  <h2>검사를 다시 하시겠어요?</h2>
+                  <div className="money-report-detail-restart-copy">검사를 다시 하면 현재 결과 대신 새 검사 결과가 심층 리포트에 반영됩니다.</div>
+                  <div className="money-report-detail-restart-actions">
+                    <button type="button" onClick={restartDiagnosis}>검사 다시하기</button>
+                    <button type="button" onClick={() => setRestartConfirmOpen(false)}>현재 결과 유지</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span>BEFORE PAYMENT</span>
+                  <h2>결제 전에 확인해주세요</h2>
+                  <p className="money-checkout-product-summary"><small>{displayName}님의 진단 결과</small><strong>{moneyTitle} × {faithTitle}</strong></p>
+                  <label htmlFor="set-detail-email">리포트를 받을 이메일</label>
+                  <input id="set-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
+                  <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
+                  <DigitalContentRefundConsent id="set-refund-consent" bundle checked={refundConsent} onChange={setRefundConsent} />
+                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>이 결과로 결제하기</button>
+                  <DigitalContentRefundNotice bundle />
+                  <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>검사 다시하기</button>
+                </>
+              )}
             </div>
           </div>
         )}
