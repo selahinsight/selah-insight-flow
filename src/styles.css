@@ -3487,6 +3487,63 @@
 .money-product-course-footer p { margin: 16px 0 0; color: rgba(255,250,242,.76); font-size: 15px; line-height: 1.75; }
 .money-product-course-footer a { display: inline-flex; align-items: center; justify-content: center; min-width: 210px; min-height: 50px; margin-top: 26px; gap: 8px; border: 1px solid rgba(255,250,242,.42); border-radius: 14px; color: #fffaf2; font-size: 15px; font-weight: 700; text-decoration: none; }
 
+.money-refund-jump-link {
+  display: block;
+  width: fit-content;
+  margin: 13px auto 0;
+  color: #756158;
+  font-size: 12px;
+  line-height: 1.6;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.money-workbook-product-card .money-refund-jump-link {
+  display: block;
+  width: fit-content;
+  min-height: 0;
+  margin: 13px auto 0;
+  border-radius: 0;
+  background: transparent;
+  color: #756158;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.money-product-refund-section {
+  scroll-margin-top: 24px;
+  padding: 52px 24px 56px;
+  border-top: 1px solid rgba(91,70,58,.12);
+  background: #fbf8f2;
+  text-align: left;
+}
+.money-product-refund-section > span {
+  display: block;
+  color: #9b685c;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-align: center;
+}
+.money-product-refund-section h2 {
+  margin: 10px 0 0;
+  color: #44362f;
+  font: 700 22px/1.48 "SUIT", "Noto Sans KR", sans-serif;
+  letter-spacing: -.03em;
+  text-align: center;
+}
+.money-product-refund-section p {
+  margin: 24px 0 0;
+  padding: 20px;
+  border: 1px solid rgba(139,94,85,.16);
+  background: #fffdf9;
+  color: #665249;
+  font-size: 14px;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
 /* Selah Money Report detail page — shares the workbook mobile product template. */
 .money-report-detail-hero { padding-top: 64px; }
 .money-report-detail-hook { margin: 24px 0 0; color: #5f4d44; font-size: 18px; font-weight: 500; line-height: 1.68; letter-spacing: -0.02em; }
