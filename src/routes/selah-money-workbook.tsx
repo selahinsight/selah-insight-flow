@@ -125,7 +125,7 @@ function SelahMoneyWorkbookPage() {
 
           <div className="money-workbook-hero-meta">
             <span>50페이지 실행 워크북</span>
-            <span>다운로드형 PDF</span>
+            <span>결제 후 즉시 다운로드 · PDF</span>
             <span className="money-workbook-hero-price-line" aria-hidden="true" />
             <s>정가 39,000원</s>
             <strong>런칭가 29,000원</strong>

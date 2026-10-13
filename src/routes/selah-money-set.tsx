@@ -166,7 +166,7 @@ function SelahMoneySetPage() {
           </div>
 
           <div className="money-set-hero-meta">
-            <span>PDF 구성 · 리포트는 24시간 이내 이메일 발송</span>
+            <span>워크북 즉시 다운로드 · 리포트 24시간 이내 이메일 발송</span>
             <div>
               <s>개별 런칭가 38,900원</s>
               <strong>세트 런칭가 34,900원</strong>
