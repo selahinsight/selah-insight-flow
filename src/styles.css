@@ -3068,6 +3068,22 @@
 .money-digital-refund-notice > div { padding: 4px 0 2px; }
 .money-digital-refund-notice p { margin: 0; }
 .money-digital-refund-notice p + p { margin-top: 8px; }
+.money-inline-refund-notice { margin-top: 13px; }
+.money-inline-refund-notice summary {
+  display: block;
+  width: fit-content;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 0;
+  color: #756158;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.money-inline-refund-notice summary::after { content: none; }
+.money-workbook-product-card .money-inline-refund-notice summary { font-weight: 500; }
 
 .money-workbook-product-card button {
   width: 100%;
