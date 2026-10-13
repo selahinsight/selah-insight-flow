@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { DigitalContentRefundConsent, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
+import { DigitalContentCheckoutConsents, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 import { createMoneyOrder } from "../lib/money-orders.functions";
 
@@ -69,7 +69,9 @@ const workbookSamples = [
 function SelahMoneySetPage() {
   const [context, setContext] = useState<{ name?: string; moneyTitle?: string; faithTitle?: string; email?: string; responseId?: string }>({});
   const [checkoutOpen, setCheckoutOpen] = useState(false);
-  const [refundConsent, setRefundConsent] = useState(false);
+  const [termsConsent, setTermsConsent] = useState(false);
+  const [digitalConsent, setDigitalConsent] = useState(false);
+  const [customConsent, setCustomConsent] = useState(false);
   const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
@@ -92,7 +94,9 @@ function SelahMoneySetPage() {
   const faithTitle = context.faithTitle?.trim() || "신앙연결형";
 
   function openCheckout() {
-    setRefundConsent(false);
+    setTermsConsent(false);
+    setDigitalConsent(false);
+    setCustomConsent(false);
     setRestartConfirmOpen(false);
     setCheckoutOpen(true);
   }
@@ -103,7 +107,7 @@ function SelahMoneySetPage() {
       window.alert("리포트를 받을 이메일 주소를 확인해주세요.");
       return;
     }
-    if (!refundConsent) return;
+    if (!termsConsent || !digitalConsent || !customConsent) return;
     const consentAt = new Date().toISOString();
     setCreatingOrder(true);
     try {
@@ -305,8 +309,17 @@ function SelahMoneySetPage() {
                   <input id="set-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
                   <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간<br />이내 이메일로 보내드립니다.</em>
                   <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
-                  <DigitalContentRefundConsent id="set-refund-consent" bundle checked={refundConsent} onChange={setRefundConsent} />
-                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "이 결과로 결제하기"}</button>
+                  <DigitalContentCheckoutConsents
+                    idPrefix="set-checkout"
+                    customProduct
+                    termsChecked={termsConsent}
+                    digitalChecked={digitalConsent}
+                    customChecked={customConsent}
+                    onTermsChange={setTermsConsent}
+                    onDigitalChange={setDigitalConsent}
+                    onCustomChange={setCustomConsent}
+                  />
+                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || !customConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "이 결과로 결제하기"}</button>
                   <DigitalContentRefundNotice bundle />
                 </>
               )}

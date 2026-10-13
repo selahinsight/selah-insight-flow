@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { DigitalContentRefundConsent, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
+import { DigitalContentCheckoutConsents, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 import { createMoneyOrder } from "../lib/money-orders.functions";
 
@@ -65,17 +65,21 @@ const samplePages = [
 
 function SelahMoneyWorkbookPage() {
   const [checkoutProduct, setCheckoutProduct] = useState<"workbook" | "set" | null>(null);
-  const [refundConsent, setRefundConsent] = useState(false);
+  const [termsConsent, setTermsConsent] = useState(false);
+  const [digitalConsent, setDigitalConsent] = useState(false);
+  const [customConsent, setCustomConsent] = useState(false);
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
 
   function openCheckout(product: "workbook" | "set") {
     setCheckoutProduct(product);
-    setRefundConsent(false);
+    setTermsConsent(false);
+    setDigitalConsent(false);
+    setCustomConsent(false);
   }
 
   async function confirmCheckout() {
-    if (!checkoutProduct || !refundConsent) return;
+    if (!checkoutProduct || !termsConsent || !digitalConsent || (checkoutProduct === "set" && !customConsent)) return;
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
       window.alert(checkoutProduct === "workbook" ? "워크북을 받을 이메일 주소를 확인해주세요." : "리포트와 워크북을 받을 이메일 주소를 확인해주세요.");
@@ -244,8 +248,17 @@ function SelahMoneyWorkbookPage() {
               <label htmlFor="workbook-checkout-email">{checkoutProduct === "workbook" ? "워크북을 받을 이메일" : "리포트와 워크북을 받을 이메일"}</label>
               <input id="workbook-checkout-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
               <em>{checkoutProduct === "workbook" ? "워크북은 결제 완료 후 입력하신 이메일로 보내드립니다." : "워크북은 결제 완료 후 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다."}</em>
-              <DigitalContentRefundConsent id="workbook-refund-consent" bundle={checkoutProduct === "set"} checked={refundConsent} onChange={setRefundConsent} />
-              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "확인하고 결제하기"}</button>
+              <DigitalContentCheckoutConsents
+                idPrefix="workbook-checkout"
+                customProduct={checkoutProduct === "set"}
+                termsChecked={termsConsent}
+                digitalChecked={digitalConsent}
+                customChecked={customConsent}
+                onTermsChange={setTermsConsent}
+                onDigitalChange={setDigitalConsent}
+                onCustomChange={setCustomConsent}
+              />
+              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || (checkoutProduct === "set" && !customConsent) || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "확인하고 결제하기"}</button>
               <DigitalContentRefundNotice bundle={checkoutProduct === "set"} />
             </div>
           </div>

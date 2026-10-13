@@ -9,9 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SelahMoneyWorkbookRouteImport } from './routes/selah-money-workbook'
 import { Route as SelahMoneySetRouteImport } from './routes/selah-money-set'
 import { Route as SelahMoneyReportRouteImport } from './routes/selah-money-report'
+import { Route as RefundRouteImport } from './routes/refund'
 import { Route as MoneyResultsReviewRouteImport } from './routes/money-results-review'
 import { Route as DiagnosisRouteImport } from './routes/diagnosis'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -33,6 +35,11 @@ import { Route as AdminSurveysIdPublishRouteImport } from './routes/admin.survey
 import { Route as AdminSurveysIdEditRouteImport } from './routes/admin.surveys.$id.edit'
 import { Route as AdminSurveysIdAnalyticsRouteImport } from './routes/admin.surveys.$id.analytics'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SelahMoneyWorkbookRoute = SelahMoneyWorkbookRouteImport.update({
   id: '/selah-money-workbook',
   path: '/selah-money-workbook',
@@ -46,6 +53,11 @@ const SelahMoneySetRoute = SelahMoneySetRouteImport.update({
 const SelahMoneyReportRoute = SelahMoneyReportRouteImport.update({
   id: '/selah-money-report',
   path: '/selah-money-report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundRoute = RefundRouteImport.update({
+  id: '/refund',
+  path: '/refund',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MoneyResultsReviewRoute = MoneyResultsReviewRouteImport.update({
@@ -155,9 +167,11 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/refund': typeof RefundRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-set': typeof SelahMoneySetRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
+  '/terms': typeof TermsRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -179,9 +193,11 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/refund': typeof RefundRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-set': typeof SelahMoneySetRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
+  '/terms': typeof TermsRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -204,9 +220,11 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/refund': typeof RefundRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-set': typeof SelahMoneySetRoute
   '/selah-money-workbook': typeof SelahMoneyWorkbookRoute
+  '/terms': typeof TermsRoute
   '/admin/customers': typeof AdminCustomersRouteWithChildren
   '/admin/email-logs': typeof AdminEmailLogsRoute
   '/admin/money-results-review': typeof AdminMoneyResultsReviewRoute
@@ -231,9 +249,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/refund'
     | '/selah-money-report'
     | '/selah-money-set'
     | '/selah-money-workbook'
+    | '/terms'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -255,9 +275,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/refund'
     | '/selah-money-report'
     | '/selah-money-set'
     | '/selah-money-workbook'
+    | '/terms'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -279,9 +301,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/refund'
     | '/selah-money-report'
     | '/selah-money-set'
     | '/selah-money-workbook'
+    | '/terms'
     | '/admin/customers'
     | '/admin/email-logs'
     | '/admin/money-results-review'
@@ -305,14 +329,23 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DiagnosisRoute: typeof DiagnosisRoute
   MoneyResultsReviewRoute: typeof MoneyResultsReviewRoute
+  RefundRoute: typeof RefundRoute
   SelahMoneyReportRoute: typeof SelahMoneyReportRoute
   SelahMoneySetRoute: typeof SelahMoneySetRoute
   SelahMoneyWorkbookRoute: typeof SelahMoneyWorkbookRoute
+  TermsRoute: typeof TermsRoute
   SSlugRoute: typeof SSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/selah-money-workbook': {
       id: '/selah-money-workbook'
       path: '/selah-money-workbook'
@@ -332,6 +365,13 @@ declare module '@tanstack/react-router' {
       path: '/selah-money-report'
       fullPath: '/selah-money-report'
       preLoaderRoute: typeof SelahMoneyReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund': {
+      id: '/refund'
+      path: '/refund'
+      fullPath: '/refund'
+      preLoaderRoute: typeof RefundRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/money-results-review': {
@@ -549,9 +589,11 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DiagnosisRoute: DiagnosisRoute,
   MoneyResultsReviewRoute: MoneyResultsReviewRoute,
+  RefundRoute: RefundRoute,
   SelahMoneyReportRoute: SelahMoneyReportRoute,
   SelahMoneySetRoute: SelahMoneySetRoute,
   SelahMoneyWorkbookRoute: SelahMoneyWorkbookRoute,
+  TermsRoute: TermsRoute,
   SSlugRoute: SSlugRoute,
 }
 export const routeTree = rootRouteImport
