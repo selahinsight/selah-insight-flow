@@ -233,10 +233,6 @@ function SelahMoneyReportPage() {
             <s>정가 15,000원</s>
             <strong><small>런칭가</small> 9,900원</strong>
             <button type="button" onClick={openCheckout}>심층 리포트 구매하기</button>
-            <DigitalContentRefundNotice
-              className="money-inline-refund-notice"
-              label="결제 전 취소·환불 안내를 확인해 주세요."
-            />
           </article>
           <article className="money-workbook-product-card money-workbook-product-card--set">
             <span className="money-workbook-recommend-badge">추천</span>
