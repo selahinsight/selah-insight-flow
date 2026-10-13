@@ -200,10 +200,7 @@ function SelahMoneyReportPage() {
             <strong>런칭가 9,900원</strong>
           </div>
           <button type="button" onClick={openCheckout}>셀라 머니 심층 리포트 구매하기</button>
-          <DigitalContentRefundNotice
-            className="money-inline-refund-notice"
-            label="결제 전 취소·환불 안내를 확인해 주세요."
-          />
+          <DigitalContentRefundNotice />
         </section>
 
         <section className="money-report-detail-workbook-link">
@@ -279,8 +276,8 @@ function SelahMoneyReportPage() {
                   <em>맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
                   <DigitalContentRefundConsent id="report-refund-consent" checked={refundConsent} onChange={setRefundConsent} />
                   <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>이 결과로 결제하기</button>
+                  <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentRefundNotice />
-                  <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>검사 다시하기</button>
                 </>
               )}
             </div>

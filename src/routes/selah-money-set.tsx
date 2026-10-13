@@ -153,11 +153,7 @@ function SelahMoneySetPage() {
           <button className="money-set-hero-cta" type="button" onClick={openCheckout}>
             리포트 + 워크북 세트 구매하기
           </button>
-          <DigitalContentRefundNotice
-            bundle
-            className="money-inline-refund-notice"
-            label="결제 전 취소·환불 안내를 확인해 주세요."
-          />
+          <DigitalContentRefundNotice bundle />
         </header>
 
         <section className="money-set-need-section">
@@ -244,11 +240,7 @@ function SelahMoneySetPage() {
             <em>4,000원 절약</em>
           </div>
           <button type="button" onClick={openCheckout}>세트 구매하기</button>
-          <DigitalContentRefundNotice
-            bundle
-            className="money-inline-refund-notice"
-            label="결제 전 취소·환불 안내를 확인해 주세요."
-          />
+          <DigitalContentRefundNotice bundle />
         </section>
 
         <section className="money-set-single-links">
@@ -291,8 +283,8 @@ function SelahMoneySetPage() {
                   <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
                   <DigitalContentRefundConsent id="set-refund-consent" bundle checked={refundConsent} onChange={setRefundConsent} />
                   <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>이 결과로 결제하기</button>
+                  <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentRefundNotice bundle />
-                  <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>검사 다시하기</button>
                 </>
               )}
             </div>

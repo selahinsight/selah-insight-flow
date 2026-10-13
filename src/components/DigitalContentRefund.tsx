@@ -18,8 +18,8 @@ export const BUNDLE_PARTIAL_REFUND_NOTICE =
 
 export function DigitalContentRefundNotice({
   bundle = false,
-  className = "",
-  label = "환불안내",
+  className = "money-inline-refund-notice",
+  label = "취소·환불 안내 보기",
 }: RefundNoticeProps) {
   return (
     <details className={`money-digital-refund-notice ${className}`.trim()}>

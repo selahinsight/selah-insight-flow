@@ -2498,7 +2498,7 @@ function MoneyPaidDiagnosisSection({
                       </div>
                       <p className="money-report-checkout-note">맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</p>
                       <button className="money-report-checkout-submit" type="button" onClick={confirmCheckout}>이 결과로 결제하기</button>
-                      <button className="money-report-restart-link" type="button" onClick={() => setRestartConfirmOpen(true)}>검사 다시하기</button>
+                      <button className="money-report-restart-link" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                     </>
                   )}
                 </div>
