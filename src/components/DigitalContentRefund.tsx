@@ -1,6 +1,7 @@
 type RefundNoticeProps = {
   bundle?: boolean;
   className?: string;
+  label?: string;
 };
 
 type RefundConsentProps = RefundNoticeProps & {
@@ -15,10 +16,14 @@ export const DIGITAL_CONTENT_REFUND_NOTICE =
 export const BUNDLE_PARTIAL_REFUND_NOTICE =
   "세트상품의 일부만 환불되는 경우, 환불되지 않는 상품은 결제 당시의 개별 판매가로 재산정하며, 세트 결제금액에서 해당 금액을 차감한 잔액을 환불합니다.";
 
-export function DigitalContentRefundNotice({ bundle = false, className = "" }: RefundNoticeProps) {
+export function DigitalContentRefundNotice({
+  bundle = false,
+  className = "",
+  label = "환불안내",
+}: RefundNoticeProps) {
   return (
     <details className={`money-digital-refund-notice ${className}`.trim()}>
-      <summary>환불안내</summary>
+      <summary>{label}</summary>
       <div>
         <p>{DIGITAL_CONTENT_REFUND_NOTICE}</p>
         {bundle && <p>{BUNDLE_PARTIAL_REFUND_NOTICE}</p>}

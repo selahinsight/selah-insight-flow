@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
-  DIGITAL_CONTENT_REFUND_NOTICE,
   DigitalContentRefundConsent,
   DigitalContentRefundNotice,
 } from "../components/DigitalContentRefund";
@@ -193,9 +192,7 @@ function SelahMoneyReportPage() {
             <strong>런칭가 9,900원</strong>
           </div>
           <button type="button" onClick={openCheckout}>셀라 머니 심층 리포트 구매하기</button>
-          <a className="money-refund-jump-link" href="#report-refund-policy">
-            결제 전 취소·환불 안내를 확인해 주세요.
-          </a>
+          <DigitalContentRefundNotice className="money-inline-refund-notice" label="취소·환불 안내" />
         </section>
 
         <section className="money-report-detail-workbook-link">
@@ -233,9 +230,7 @@ function SelahMoneyReportPage() {
             <s>정가 15,000원</s>
             <strong><small>런칭가</small> 9,900원</strong>
             <button type="button" onClick={openCheckout}>심층 리포트 구매하기</button>
-            <a className="money-refund-jump-link" href="#report-refund-policy">
-              결제 전 취소·환불 안내를 확인해 주세요.
-            </a>
+            <DigitalContentRefundNotice className="money-inline-refund-notice" label="취소·환불 안내" />
           </article>
           <article className="money-workbook-product-card money-workbook-product-card--set">
             <span className="money-workbook-recommend-badge">추천</span>
@@ -246,16 +241,6 @@ function SelahMoneyReportPage() {
             <strong><small>세트 런칭가</small> 34,900원</strong>
             <a href="https://selahinsight.co.kr/money-study">세트 구매하기</a>
           </article>
-        </section>
-
-        <section
-          id="report-refund-policy"
-          className="money-product-refund-section"
-          aria-labelledby="report-refund-policy-title"
-        >
-          <span>REFUND POLICY</span>
-          <h2 id="report-refund-policy-title">취소·환불 안내</h2>
-          <p>{DIGITAL_CONTENT_REFUND_NOTICE}</p>
         </section>
 
         <MoneyStudyCourseFooter />
