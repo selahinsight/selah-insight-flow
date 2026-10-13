@@ -75,8 +75,8 @@ function SelahMoneyWorkbookPage() {
   function confirmCheckout() {
     if (!checkoutProduct || !refundConsent) return;
     const trimmedEmail = email.trim();
-    if (checkoutProduct === "set" && (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail))) {
-      window.alert("리포트를 받을 이메일 주소를 확인해주세요.");
+    if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
+      window.alert(checkoutProduct === "workbook" ? "워크북을 받을 이메일 주소를 확인해주세요." : "리포트와 워크북을 받을 이메일 주소를 확인해주세요.");
       return;
     }
     window.sessionStorage.setItem(
@@ -214,24 +214,20 @@ function SelahMoneyWorkbookPage() {
         <MoneyStudyCourseFooter />
 
         {checkoutProduct && (
-          <div className="money-report-detail-checkout" role="dialog" aria-modal="true" aria-label="결제 전 확인">
+          <div className="money-report-detail-checkout money-report-detail-checkout--report" role="dialog" aria-modal="true" aria-label="결제 전 확인">
             <div>
-              <button type="button" onClick={() => setCheckoutProduct(null)} aria-label="결제 전 확인 닫기">×</button>
+              <button className="money-report-detail-checkout-close" type="button" onClick={() => setCheckoutProduct(null)} aria-label="결제 전 확인 닫기">×</button>
               <span>BEFORE PAYMENT</span>
               <h2>결제 전에 확인해주세요</h2>
               <p className="money-checkout-product-summary">
                 <small>{checkoutProduct === "workbook" ? "WORKBOOK ONLY" : "REPORT + WORKBOOK"}</small>
                 <strong>{checkoutProduct === "workbook" ? "셀라 머니 워크북" : "심층 리포트 + 머니 워크북 세트"}</strong>
               </p>
-              {checkoutProduct === "set" && (
-                <>
-                  <label htmlFor="workbook-set-email">리포트를 받을 이메일</label>
-                  <input id="workbook-set-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
-                </>
-              )}
-              <em>{checkoutProduct === "workbook" ? "워크북 PDF는 결제 완료 후 즉시 제공됩니다." : "워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다."}</em>
+              <label htmlFor="workbook-checkout-email">{checkoutProduct === "workbook" ? "워크북을 받을 이메일" : "리포트와 워크북을 받을 이메일"}</label>
+              <input id="workbook-checkout-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
+              <em>{checkoutProduct === "workbook" ? "워크북 PDF는 결제 완료 후 입력하신 이메일로 보내드립니다." : "워크북은 결제 완료 후 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다."}</em>
               <DigitalContentRefundConsent id="workbook-refund-consent" bundle={checkoutProduct === "set"} checked={refundConsent} onChange={setRefundConsent} />
-              <button type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
+              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
               <DigitalContentRefundNotice bundle={checkoutProduct === "set"} />
             </div>
           </div>
