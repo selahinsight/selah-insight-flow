@@ -225,7 +225,7 @@ function SelahMoneyWorkbookPage() {
               </p>
               <label htmlFor="workbook-checkout-email">{checkoutProduct === "workbook" ? "워크북을 받을 이메일" : "리포트와 워크북을 받을 이메일"}</label>
               <input id="workbook-checkout-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
-              <em>{checkoutProduct === "workbook" ? "워크북 PDF는 결제 완료 후 입력하신 이메일로 보내드립니다." : "워크북은 결제 완료 후 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다."}</em>
+              <em>{checkoutProduct === "workbook" ? "워크북은 결제 완료 후 입력하신 이메일로 보내드립니다." : "워크북은 결제 완료 후 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다."}</em>
               <DigitalContentRefundConsent id="workbook-refund-consent" bundle={checkoutProduct === "set"} checked={refundConsent} onChange={setRefundConsent} />
               <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
               <DigitalContentRefundNotice bundle={checkoutProduct === "set"} />
