@@ -3577,6 +3577,10 @@
 .money-report-detail-checkout-primary:disabled { cursor: not-allowed; opacity: .45; }
 .money-report-detail-restart { display: block; width: fit-content; min-height: 0; margin: 16px auto 0; padding: 5px 7px; border: 0; background: transparent; color: #806e65; font: inherit; font-size: 13px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .money-report-detail-restart:hover { color: #665147; }
+.money-report-detail-checkout--report > div > label { padding-left: 7px; }
+.money-report-detail-checkout--report .money-report-detail-restart { width: 100%; min-height: 46px; margin-top: 14px; padding: 0 18px; border: 1px solid rgba(102,81,71,.42); border-radius: 999px; background: #fffdf9; color: #665147; font-size: 14px; font-weight: 700; text-decoration: none; }
+.money-report-detail-checkout--report .money-report-detail-restart:hover { border-color: #665147; background: #f8f1e9; }
+.money-report-detail-checkout--report .money-digital-refund-consent { margin-top: 14px; padding-top: 9px; }
 .money-report-detail-restart-copy { margin-top: 24px; padding: 18px; background: #f5ede4; color: #665249; font-size: 14px; line-height: 1.65; word-break: keep-all; }
 .money-report-detail-restart-actions { display: grid; gap: 10px; margin-top: 22px; }
 .money-report-detail-restart-actions button { width: 100%; min-height: 50px; border: 1px solid #665147; border-radius: 14px; background: #665147; color: #fffaf3; font: inherit; font-weight: 700; cursor: pointer; }

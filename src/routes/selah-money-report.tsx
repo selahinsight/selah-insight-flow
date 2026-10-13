@@ -253,7 +253,7 @@ function SelahMoneyReportPage() {
         <MoneyStudyCourseFooter />
 
         {checkoutOpen && (
-          <div className="money-report-detail-checkout" role="dialog" aria-modal="true" aria-label="결제 전 확인">
+          <div className="money-report-detail-checkout money-report-detail-checkout--report" role="dialog" aria-modal="true" aria-label="결제 전 확인">
             <div>
               <button className="money-report-detail-checkout-close" type="button" onClick={() => { setCheckoutOpen(false); setRestartConfirmOpen(false); }} aria-label="결제 전 확인 닫기">×</button>
               {restartConfirmOpen ? (
@@ -274,9 +274,9 @@ function SelahMoneyReportPage() {
                   <label htmlFor="report-detail-email">리포트를 받을 이메일</label>
                   <input id="report-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
                   <em>맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
+                  <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentRefundConsent id="report-refund-consent" checked={refundConsent} onChange={setRefundConsent} />
                   <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>이 결과로 결제하기</button>
-                  <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentRefundNotice />
                 </>
               )}
