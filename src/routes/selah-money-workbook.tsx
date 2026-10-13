@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { DigitalContentRefundConsent, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
+import { createMoneyOrder } from "../lib/money-orders.functions";
 
 export const Route = createFileRoute("/selah-money-workbook")({
   head: () => ({
@@ -66,25 +67,42 @@ function SelahMoneyWorkbookPage() {
   const [checkoutProduct, setCheckoutProduct] = useState<"workbook" | "set" | null>(null);
   const [refundConsent, setRefundConsent] = useState(false);
   const [email, setEmail] = useState("");
+  const [creatingOrder, setCreatingOrder] = useState(false);
 
   function openCheckout(product: "workbook" | "set") {
     setCheckoutProduct(product);
     setRefundConsent(false);
   }
 
-  function confirmCheckout() {
+  async function confirmCheckout() {
     if (!checkoutProduct || !refundConsent) return;
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
       window.alert(checkoutProduct === "workbook" ? "워크북을 받을 이메일 주소를 확인해주세요." : "리포트와 워크북을 받을 이메일 주소를 확인해주세요.");
       return;
     }
-    window.sessionStorage.setItem(
-      "selahMoneyCheckoutConsent",
-      JSON.stringify({ product: checkoutProduct, consentAt: new Date().toISOString(), email: trimmedEmail || undefined }),
-    );
-    const productName = checkoutProduct === "workbook" ? "셀라 머니 워크북" : "심층 리포트 + 머니 워크북 세트";
-    window.alert(`${productName} 결제 링크를 준비 중입니다.`);
+    const consentAt = new Date().toISOString();
+    setCreatingOrder(true);
+    try {
+      const order = await createMoneyOrder({
+        data: {
+          productCode: checkoutProduct,
+          email: trimmedEmail,
+          refundConsentAt: consentAt,
+          sourcePath: window.location.pathname,
+        },
+      });
+      window.sessionStorage.setItem(
+        "selahMoneyCheckoutConsent",
+        JSON.stringify({ product: checkoutProduct, consentAt, email: trimmedEmail }),
+      );
+      window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
+      window.alert(`주문 정보가 저장되었습니다.\n주문번호: ${order.orderNumber}\n결제 채널 연결 후 이 주문으로 결제가 진행됩니다.`);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "주문 정보를 저장하지 못했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setCreatingOrder(false);
+    }
   }
 
   return (
@@ -227,7 +245,7 @@ function SelahMoneyWorkbookPage() {
               <input id="workbook-checkout-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
               <em>{checkoutProduct === "workbook" ? "워크북은 결제 완료 후 입력하신 이메일로 보내드립니다." : "워크북은 결제 완료 후 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다."}</em>
               <DigitalContentRefundConsent id="workbook-refund-consent" bundle={checkoutProduct === "set"} checked={refundConsent} onChange={setRefundConsent} />
-              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>확인하고 결제하기</button>
+              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "확인하고 결제하기"}</button>
               <DigitalContentRefundNotice bundle={checkoutProduct === "set"} />
             </div>
           </div>

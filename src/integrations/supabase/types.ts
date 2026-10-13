@@ -153,6 +153,95 @@ export type Database = {
           },
         ]
       }
+      money_orders: {
+        Row: {
+          amount: number
+          cancelled_at: string | null
+          created_at: string
+          currency: string
+          customer_email: string
+          customer_name: string | null
+          faith_type: string | null
+          failure_code: string | null
+          failure_message: string | null
+          fulfilled_at: string | null
+          id: string
+          metadata: Json
+          money_type: string | null
+          order_number: string
+          paid_at: string | null
+          payment_provider: string | null
+          portone_payment_id: string | null
+          portone_transaction_id: string | null
+          product_code: string
+          product_name: string
+          refund_consent_at: string
+          status: string
+          survey_response_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          cancelled_at?: string | null
+          created_at?: string
+          currency?: string
+          customer_email: string
+          customer_name?: string | null
+          faith_type?: string | null
+          failure_code?: string | null
+          failure_message?: string | null
+          fulfilled_at?: string | null
+          id?: string
+          metadata?: Json
+          money_type?: string | null
+          order_number: string
+          paid_at?: string | null
+          payment_provider?: string | null
+          portone_payment_id?: string | null
+          portone_transaction_id?: string | null
+          product_code: string
+          product_name: string
+          refund_consent_at: string
+          status?: string
+          survey_response_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          cancelled_at?: string | null
+          created_at?: string
+          currency?: string
+          customer_email?: string
+          customer_name?: string | null
+          faith_type?: string | null
+          failure_code?: string | null
+          failure_message?: string | null
+          fulfilled_at?: string | null
+          id?: string
+          metadata?: Json
+          money_type?: string | null
+          order_number?: string
+          paid_at?: string | null
+          payment_provider?: string | null
+          portone_payment_id?: string | null
+          portone_transaction_id?: string | null
+          product_code?: string
+          product_name?: string
+          refund_consent_at?: string
+          status?: string
+          survey_response_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "money_orders_survey_response_id_fkey"
+            columns: ["survey_response_id"]
+            isOneToOne: false
+            referencedRelation: "survey_responses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       survey_questions: {
         Row: {
           created_at: string

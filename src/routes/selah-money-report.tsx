@@ -6,6 +6,7 @@ import {
   DigitalContentRefundNotice,
 } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
+import { createMoneyOrder } from "../lib/money-orders.functions";
 
 export const Route = createFileRoute("/selah-money-report")({
   head: () => ({
@@ -26,6 +27,7 @@ type ReportContext = {
   moneyTitle?: string;
   faithTitle?: string;
   email?: string;
+  responseId?: string;
 };
 
 const reportBenefits = [
@@ -77,6 +79,7 @@ function SelahMoneyReportPage() {
   const [refundConsent, setRefundConsent] = useState(false);
   const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [creatingOrder, setCreatingOrder] = useState(false);
   const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_REPORT_CHECKOUT_URL as string | undefined)?.trim();
 
   useEffect(() => {
@@ -107,7 +110,7 @@ function SelahMoneyReportPage() {
     window.location.assign("/s/selah-money-d");
   }
 
-  function confirmCheckout() {
+  async function confirmCheckout() {
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
       window.alert("리포트를 받을 이메일 주소를 확인해주세요.");
@@ -117,15 +120,36 @@ function SelahMoneyReportPage() {
       window.alert("디지털 콘텐츠 제공 및 청약철회 제한에 동의해주세요.");
       return;
     }
-    window.sessionStorage.setItem(
-      "selahMoneyCheckoutConsent",
-      JSON.stringify({ product: "report", consentAt: new Date().toISOString(), email: trimmedEmail }),
-    );
-    if (checkoutUrl) {
-      window.location.assign(checkoutUrl);
-      return;
+    const consentAt = new Date().toISOString();
+    setCreatingOrder(true);
+    try {
+      const order = await createMoneyOrder({
+        data: {
+          productCode: "report",
+          email: trimmedEmail,
+          customerName: context.name,
+          surveyResponseId: context.responseId,
+          moneyType: context.moneyTitle,
+          faithType: context.faithTitle,
+          refundConsentAt: consentAt,
+          sourcePath: window.location.pathname,
+        },
+      });
+      window.sessionStorage.setItem(
+        "selahMoneyCheckoutConsent",
+        JSON.stringify({ product: "report", consentAt, email: trimmedEmail }),
+      );
+      window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
+      if (checkoutUrl) {
+        window.location.assign(checkoutUrl);
+        return;
+      }
+      window.alert(`주문 정보가 저장되었습니다.\n주문번호: ${order.orderNumber}\n결제 채널 연결 후 이 주문으로 결제가 진행됩니다.`);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "주문 정보를 저장하지 못했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setCreatingOrder(false);
     }
-    window.alert("결제 링크를 준비 중입니다.");
   }
 
   return (
@@ -276,7 +300,7 @@ function SelahMoneyReportPage() {
                   <em>맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
                   <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentRefundConsent id="report-refund-consent" checked={refundConsent} onChange={setRefundConsent} />
-                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>이 결과로 결제하기</button>
+                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "이 결과로 결제하기"}</button>
                   <DigitalContentRefundNotice />
                 </>
               )}

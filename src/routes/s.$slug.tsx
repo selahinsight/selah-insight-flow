@@ -2286,7 +2286,7 @@ function MoneyPaidDiagnosisSection({
           onClick={() => {
             window.sessionStorage.setItem(
               "selahMoneyReportContext",
-              JSON.stringify({ name, moneyTitle, faithTitle, email }),
+              JSON.stringify({ name, moneyTitle, faithTitle, email, responseId }),
             );
             window.location.assign("/selah-money-report");
           }}

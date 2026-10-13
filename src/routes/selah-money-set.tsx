@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { DigitalContentRefundConsent, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
+import { createMoneyOrder } from "../lib/money-orders.functions";
 
 export const Route = createFileRoute("/selah-money-set")({
   head: () => ({
@@ -66,18 +67,19 @@ const workbookSamples = [
 ];
 
 function SelahMoneySetPage() {
-  const [context, setContext] = useState<{ name?: string; moneyTitle?: string; faithTitle?: string; email?: string }>({});
+  const [context, setContext] = useState<{ name?: string; moneyTitle?: string; faithTitle?: string; email?: string; responseId?: string }>({});
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [refundConsent, setRefundConsent] = useState(false);
   const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [creatingOrder, setCreatingOrder] = useState(false);
   const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_SET_CHECKOUT_URL as string | undefined)?.trim();
 
   useEffect(() => {
     try {
       const saved = window.sessionStorage.getItem("selahMoneyReportContext");
       if (!saved) return;
-      const parsed = JSON.parse(saved) as { name?: string; moneyTitle?: string; faithTitle?: string; email?: string };
+      const parsed = JSON.parse(saved) as { name?: string; moneyTitle?: string; faithTitle?: string; email?: string; responseId?: string };
       setContext(parsed);
       setEmail(parsed.email ?? "");
     } catch {
@@ -95,22 +97,43 @@ function SelahMoneySetPage() {
     setCheckoutOpen(true);
   }
 
-  function confirmCheckout() {
+  async function confirmCheckout() {
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !/.+@.+\..+/.test(trimmedEmail)) {
       window.alert("리포트를 받을 이메일 주소를 확인해주세요.");
       return;
     }
     if (!refundConsent) return;
-    window.sessionStorage.setItem(
-      "selahMoneyCheckoutConsent",
-      JSON.stringify({ product: "set", consentAt: new Date().toISOString(), email: trimmedEmail }),
-    );
-    if (checkoutUrl) {
-      window.location.assign(checkoutUrl);
-      return;
+    const consentAt = new Date().toISOString();
+    setCreatingOrder(true);
+    try {
+      const order = await createMoneyOrder({
+        data: {
+          productCode: "set",
+          email: trimmedEmail,
+          customerName: context.name,
+          surveyResponseId: context.responseId,
+          moneyType: context.moneyTitle,
+          faithType: context.faithTitle,
+          refundConsentAt: consentAt,
+          sourcePath: window.location.pathname,
+        },
+      });
+      window.sessionStorage.setItem(
+        "selahMoneyCheckoutConsent",
+        JSON.stringify({ product: "set", consentAt, email: trimmedEmail }),
+      );
+      window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
+      if (checkoutUrl) {
+        window.location.assign(checkoutUrl);
+        return;
+      }
+      window.alert(`주문 정보가 저장되었습니다.\n주문번호: ${order.orderNumber}\n결제 채널 연결 후 이 주문으로 결제가 진행됩니다.`);
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "주문 정보를 저장하지 못했습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setCreatingOrder(false);
     }
-    window.alert("셀라 머니 세트 결제 링크를 준비 중입니다.");
   }
 
   function restartDiagnosis() {
@@ -283,7 +306,7 @@ function SelahMoneySetPage() {
                   <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간<br />이내 이메일로 보내드립니다.</em>
                   <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentRefundConsent id="set-refund-consent" bundle checked={refundConsent} onChange={setRefundConsent} />
-                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent}>이 결과로 결제하기</button>
+                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!refundConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "이 결과로 결제하기"}</button>
                   <DigitalContentRefundNotice bundle />
                 </>
               )}
