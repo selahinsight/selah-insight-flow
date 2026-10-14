@@ -3503,6 +3503,59 @@
 .money-product-course-footer p { margin: 16px 0 0; color: rgba(255,250,242,.76); font-size: 15px; line-height: 1.75; }
 .money-product-course-footer a { display: inline-flex; align-items: center; justify-content: center; min-width: 210px; min-height: 50px; margin-top: 26px; gap: 8px; border: 1px solid rgba(255,250,242,.42); border-radius: 14px; color: #fffaf2; font-size: 15px; font-weight: 700; text-decoration: none; }
 
+.money-business-footer {
+  padding: 0 24px 38px;
+  background: #443730;
+  color: rgba(255, 250, 242, 0.72);
+  font-family: "SUIT", "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+}
+.money-business-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 250, 242, 0.28);
+}
+.money-business-footer-links a { color: #fffaf2; font-weight: 700; text-decoration: none; }
+.money-business-footer-info { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 12px; margin-top: 18px; }
+.money-business-footer-info span,
+.money-business-footer-info a { color: rgba(255, 250, 242, 0.68); text-decoration: none; }
+.money-business-footer-info strong { color: rgba(255, 250, 242, 0.86); font-weight: 700; }
+
+/* Preserve the source page ratio on every report preview. */
+.money-report-detail-page .money-workbook-sample-pages img,
+.money-report-detail-product img,
+.money-set-page img[src*="selah-money-report-preview"] {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 595 / 842;
+  object-fit: contain;
+  background: #fff;
+}
+
+/* Policy pages use the same centered mobile canvas at every viewport width. */
+.money-legal-page-shell { min-height: 100vh; background: #eee7df; color: #3f342f; font-family: "SUIT", "Noto Sans KR", sans-serif; }
+.money-legal-page { width: min(100%, 440px); min-height: 100vh; margin: 0 auto; overflow: hidden; background: #fbf8f2; }
+.money-legal-header { padding: 52px 24px 34px; border-bottom: 1px solid rgba(107, 88, 72, 0.14); }
+.money-legal-header > a { color: #9b685c; font-size: 12px; font-weight: 700; letter-spacing: .15em; text-decoration: none; }
+.money-legal-header h1 { margin: 15px 0 0; color: #3f342f; font-family: "SUIT", "Noto Sans KR", sans-serif; font-size: 28px; font-weight: 700; line-height: 1.4; letter-spacing: -.035em; }
+.money-legal-header p { margin: 10px 0 0; color: #806e65; font-size: 13px; }
+.money-legal-content { padding: 18px 24px 52px; }
+.money-legal-content section { padding: 28px 0; border-bottom: 1px solid rgba(107, 88, 72, 0.12); }
+.money-legal-content section:last-child { border-bottom: 0; }
+.money-legal-content h2 { margin: 0; color: #493a33; font-family: "SUIT", "Noto Sans KR", sans-serif; font-size: 18px; font-weight: 700; line-height: 1.5; }
+.money-legal-content p,
+.money-legal-content li { color: #665249; font-size: 14px; line-height: 1.8; word-break: keep-all; }
+.money-legal-content p { margin: 13px 0 0; }
+.money-legal-content ul { margin: 13px 0 0; padding-left: 20px; }
+.money-legal-content li + li { margin-top: 7px; }
+.money-legal-content a { color: #8b5e55; font-weight: 700; text-underline-offset: 3px; }
+.money-legal-page > .money-business-footer { padding-top: 34px; }
+
 .money-inline-refund-notice > div {
   margin-top: 4px;
   padding: 14px 16px;

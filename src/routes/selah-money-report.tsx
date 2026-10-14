@@ -6,6 +6,7 @@ import {
   DigitalContentRefundNotice,
 } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
+import { BusinessFooter } from "../components/BusinessFooter";
 import { createMoneyOrder } from "../lib/money-orders.functions";
 
 export const Route = createFileRoute("/selah-money-report")({
@@ -275,6 +276,7 @@ function SelahMoneyReportPage() {
         </section>
 
         <MoneyStudyCourseFooter />
+        <BusinessFooter />
 
         {checkoutOpen && (
           <div className="money-report-detail-checkout money-report-detail-checkout--report" role="dialog" aria-modal="true" aria-label="결제 전 확인">
