@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { BusinessInformation } from "./BusinessInformation";
 
 const MONEY_STUDY_URL = "https://selahinsight.co.kr/money-study";
 
@@ -18,6 +19,7 @@ export function MoneyStudyCourseFooter() {
         <a href="/terms">이용약관</a>
         <a href="/refund">취소·환불 규정</a>
       </nav>
+      <BusinessInformation />
     </footer>
   );
 }
