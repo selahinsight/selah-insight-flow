@@ -14,6 +14,7 @@ import { Route as SelahMoneyWorkbookRouteImport } from './routes/selah-money-wor
 import { Route as SelahMoneySetRouteImport } from './routes/selah-money-set'
 import { Route as SelahMoneyReportRouteImport } from './routes/selah-money-report'
 import { Route as RefundRouteImport } from './routes/refund'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MoneyResultsReviewRouteImport } from './routes/money-results-review'
 import { Route as DiagnosisRouteImport } from './routes/diagnosis'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -58,6 +59,11 @@ const SelahMoneyReportRoute = SelahMoneyReportRouteImport.update({
 const RefundRoute = RefundRouteImport.update({
   id: '/refund',
   path: '/refund',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MoneyResultsReviewRoute = MoneyResultsReviewRouteImport.update({
@@ -167,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-set': typeof SelahMoneySetRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-set': typeof SelahMoneySetRoute
@@ -220,6 +228,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/diagnosis': typeof DiagnosisRoute
   '/money-results-review': typeof MoneyResultsReviewRoute
+  '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/selah-money-report': typeof SelahMoneyReportRoute
   '/selah-money-set': typeof SelahMoneySetRoute
@@ -249,6 +258,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/privacy'
     | '/refund'
     | '/selah-money-report'
     | '/selah-money-set'
@@ -275,6 +285,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/privacy'
     | '/refund'
     | '/selah-money-report'
     | '/selah-money-set'
@@ -301,6 +312,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/diagnosis'
     | '/money-results-review'
+    | '/privacy'
     | '/refund'
     | '/selah-money-report'
     | '/selah-money-set'
@@ -329,6 +341,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DiagnosisRoute: typeof DiagnosisRoute
   MoneyResultsReviewRoute: typeof MoneyResultsReviewRoute
+  PrivacyRoute: typeof PrivacyRoute
   RefundRoute: typeof RefundRoute
   SelahMoneyReportRoute: typeof SelahMoneyReportRoute
   SelahMoneySetRoute: typeof SelahMoneySetRoute
@@ -372,6 +385,13 @@ declare module '@tanstack/react-router' {
       path: '/refund'
       fullPath: '/refund'
       preLoaderRoute: typeof RefundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/money-results-review': {
@@ -589,6 +609,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DiagnosisRoute: DiagnosisRoute,
   MoneyResultsReviewRoute: MoneyResultsReviewRoute,
+  PrivacyRoute: PrivacyRoute,
   RefundRoute: RefundRoute,
   SelahMoneyReportRoute: SelahMoneyReportRoute,
   SelahMoneySetRoute: SelahMoneySetRoute,

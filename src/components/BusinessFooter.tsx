@@ -1,14 +1,10 @@
-type BusinessFooterProps = {
-  showPrivacy?: boolean;
-};
-
-export function BusinessFooter({ showPrivacy = false }: BusinessFooterProps) {
+export function BusinessFooter() {
   return (
     <footer className="money-business-footer">
       <nav className="money-business-footer-links" aria-label="정책 안내">
         <a href="/terms">이용약관</a>
         <a href="/refund">취소·환불 규정</a>
-        {showPrivacy && <a href="https://selahinsight.co.kr/privacy">개인정보처리방침</a>}
+        <a href="/privacy">개인정보처리방침</a>
       </nav>
       <div className="money-business-footer-info">
         <span><strong>상호</strong> 셀라인사이트</span>
