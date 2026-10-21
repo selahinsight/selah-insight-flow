@@ -28,6 +28,7 @@ import { Route as AdminMoneyResultsReviewRouteImport } from './routes/admin.mone
 import { Route as AdminEmailLogsRouteImport } from './routes/admin.email-logs'
 import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
 import { Route as AdminSurveysIndexRouteImport } from './routes/admin.surveys.index'
+import { Route as ApiPortoneWebhookRouteImport } from './routes/api.portone.webhook'
 import { Route as AdminSurveysIdRouteImport } from './routes/admin.surveys.$id'
 import { Route as AdminCustomersIdRouteImport } from './routes/admin.customers.$id'
 import { Route as AdminSurveysIdResultRouteImport } from './routes/admin.surveys.$id.result'
@@ -130,6 +131,11 @@ const AdminSurveysIndexRoute = AdminSurveysIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminSurveysRoute,
 } as any)
+const ApiPortoneWebhookRoute = ApiPortoneWebhookRouteImport.update({
+  id: '/api/portone/webhook',
+  path: '/api/portone/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminSurveysIdRoute = AdminSurveysIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/api/portone/webhook': typeof ApiPortoneWebhookRoute
   '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
@@ -207,6 +214,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/api/portone/webhook': typeof ApiPortoneWebhookRoute
   '/admin/surveys': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
@@ -235,6 +243,7 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
+  '/api/portone/webhook': typeof ApiPortoneWebhookRoute
   '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
@@ -264,6 +273,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/admin/customers/$id'
     | '/admin/surveys/$id'
+    | '/api/portone/webhook'
     | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/customers/$id'
     | '/admin/surveys/$id'
+    | '/api/portone/webhook'
     | '/admin/surveys'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
@@ -316,6 +327,7 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/admin/customers/$id'
     | '/admin/surveys/$id'
+    | '/api/portone/webhook'
     | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
@@ -335,6 +347,7 @@ export interface RootRouteChildren {
   SelahMoneyWorkbookRoute: typeof SelahMoneyWorkbookRoute
   TermsRoute: typeof TermsRoute
   SSlugRoute: typeof SSlugRoute
+  ApiPortoneWebhookRoute: typeof ApiPortoneWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -472,6 +485,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSurveysIndexRouteImport
       parentRoute: typeof AdminSurveysRoute
     }
+    '/api/portone/webhook': {
+      id: '/api/portone/webhook'
+      path: '/api/portone/webhook'
+      fullPath: '/api/portone/webhook'
+      preLoaderRoute: typeof ApiPortoneWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/surveys/$id': {
       id: '/admin/surveys/$id'
       path: '/$id'
@@ -595,6 +615,7 @@ const rootRouteChildren: RootRouteChildren = {
   SelahMoneyWorkbookRoute: SelahMoneyWorkbookRoute,
   TermsRoute: TermsRoute,
   SSlugRoute: SSlugRoute,
+  ApiPortoneWebhookRoute: ApiPortoneWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

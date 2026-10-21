@@ -1,13 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DigitalContentCheckoutConsents, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
-import { createMoneyOrder } from "../lib/money-orders.functions";
-import {
-  createFallbackMoneyPaymentOrder,
-  isMissingOrderStorageConfiguration,
-  requestMoneyPayment,
-} from "../lib/portone-payment";
+import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
+import { requestMoneyPayment } from "../lib/portone-payment";
 
 export const Route = createFileRoute("/selah-money-workbook")({
   head: () => ({
@@ -76,6 +72,22 @@ function SelahMoneyWorkbookPage() {
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
 
+  useEffect(() => {
+    const paymentId = new URLSearchParams(window.location.search).get("paymentId");
+    if (!paymentId) return;
+    const marker = `selahMoneyVerified:${paymentId}`;
+    if (window.sessionStorage.getItem(marker)) return;
+    void verifyMoneyPayment({ data: { paymentId } })
+      .then(() => {
+        window.sessionStorage.setItem(marker, "1");
+        window.alert("결제가 확인되었습니다. 입력하신 이메일로 상품을 보내드립니다.");
+      })
+      .catch((error) => {
+        window.alert(error instanceof Error ? error.message : "결제 확인 중 오류가 발생했습니다.");
+      });
+  }, []);
+
+
   function openCheckout(product: "workbook" | "set") {
     setCheckoutProduct(product);
     setTermsConsent(false);
@@ -100,9 +112,6 @@ function SelahMoneyWorkbookPage() {
           refundConsentAt: consentAt,
           sourcePath: window.location.pathname,
         },
-      }).catch((error) => {
-        if (!isMissingOrderStorageConfiguration(error)) throw error;
-        return createFallbackMoneyPaymentOrder(checkoutProduct, trimmedEmail);
       });
       window.sessionStorage.setItem(
         "selahMoneyCheckoutConsent",
@@ -111,6 +120,7 @@ function SelahMoneyWorkbookPage() {
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
       const payment = await requestMoneyPayment(order);
       if (payment.completed) {
+        await verifyMoneyPayment({ data: { paymentId: payment.paymentId } });
         window.alert(checkoutProduct === "workbook"
           ? "결제가 완료되었습니다. 워크북은 입력하신 이메일로 보내드립니다."
           : "결제가 완료되었습니다. 워크북은 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다.");

@@ -153,6 +153,159 @@ export type Database = {
           },
         ]
       }
+      products: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          delivery_type: string
+          id: string
+          name: string
+          price_krw: number
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          delivery_type?: string
+          id?: string
+          name: string
+          price_krw?: number
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          delivery_type?: string
+          id?: string
+          name?: string
+          price_krw?: number
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          amount_krw: number
+          buyer_email: string | null
+          buyer_name: string | null
+          buyer_phone: string | null
+          cancelled_at: string | null
+          created_at: string
+          delivery_status: string
+          delivered_at: string | null
+          external_payment_id: string | null
+          failure_code: string | null
+          failure_message: string | null
+          id: string
+          metadata: Json
+          order_number: string | null
+          paid_at: string | null
+          payment_method: string | null
+          payment_provider: string | null
+          payment_status: string
+          portone_transaction_id: string | null
+          product_id: string | null
+          refund_amount_krw: number
+          refund_consent_at: string | null
+          refunded_at: string | null
+          requested_at: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount_krw?: number
+          buyer_email?: string | null
+          buyer_name?: string | null
+          buyer_phone?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          delivery_status?: string
+          delivered_at?: string | null
+          external_payment_id?: string | null
+          failure_code?: string | null
+          failure_message?: string | null
+          id?: string
+          metadata?: Json
+          order_number?: string | null
+          paid_at?: string | null
+          payment_method?: string | null
+          payment_provider?: string | null
+          payment_status?: string
+          portone_transaction_id?: string | null
+          product_id?: string | null
+          refund_amount_krw?: number
+          refund_consent_at?: string | null
+          refunded_at?: string | null
+          requested_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount_krw?: number
+          buyer_email?: string | null
+          buyer_name?: string | null
+          buyer_phone?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          delivery_status?: string
+          delivered_at?: string | null
+          external_payment_id?: string | null
+          failure_code?: string | null
+          failure_message?: string | null
+          id?: string
+          metadata?: Json
+          order_number?: string | null
+          paid_at?: string | null
+          payment_method?: string | null
+          payment_provider?: string | null
+          payment_status?: string
+          portone_transaction_id?: string | null
+          product_id?: string | null
+          refund_amount_krw?: number
+          refund_consent_at?: string | null
+          refunded_at?: string | null
+          requested_at?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      payment_events: {
+        Row: {
+          event_type: string
+          id: string
+          order_id: string
+          payload: Json
+          payment_id: string
+          processed_at: string | null
+          processing_error: string | null
+          provider_event_id: string
+          received_at: string
+        }
+        Insert: {
+          event_type: string
+          id?: string
+          order_id: string
+          payload?: Json
+          payment_id: string
+          processed_at?: string | null
+          processing_error?: string | null
+          provider_event_id: string
+          received_at?: string
+        }
+        Update: {
+          event_type?: string
+          id?: string
+          order_id?: string
+          payload?: Json
+          payment_id?: string
+          processed_at?: string | null
+          processing_error?: string | null
+          provider_event_id?: string
+          received_at?: string
+        }
+        Relationships: []
+      }
       money_orders: {
         Row: {
           amount: number

@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { MONEY_PRODUCTS } from "@/lib/money-products";
+import { syncPortOnePayment } from "@/lib/portone-payment.server";
 
 const createMoneyOrderInput = z.object({
   productCode: z.enum(["report", "workbook", "set"]),
@@ -26,25 +27,40 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
     const product = MONEY_PRODUCTS[data.productCode];
     const orderNumber = createOrderNumber();
 
+    const { data: studioProduct, error: productError } = await supabaseAdmin
+      .from("products")
+      .select("id, code, name, price_krw, active")
+      .eq("code", product.studioCode)
+      .eq("active", true)
+      .maybeSingle();
+
+    if (productError || !studioProduct || studioProduct.price_krw <= 0) {
+      console.error("[Selah Money] Failed to load active product", productError);
+      throw new Error("판매 상품 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.");
+    }
+
     const { data: order, error } = await supabaseAdmin
-      .from("money_orders")
+      .from("orders")
       .insert({
         order_number: orderNumber,
-        product_code: product.code,
-        product_name: product.name,
-        amount: product.amount,
-        currency: product.currency,
-        customer_email: data.email.toLowerCase(),
-        customer_name: data.customerName || null,
-        survey_response_id: data.surveyResponseId || null,
-        money_type: data.moneyType || null,
-        faith_type: data.faithType || null,
+        product_id: studioProduct.id,
+        amount_krw: studioProduct.price_krw,
+        buyer_email: data.email.toLowerCase(),
+        buyer_name: data.customerName || null,
         refund_consent_at: data.refundConsentAt,
-        status: "pending",
-        portone_payment_id: orderNumber,
-        metadata: { sourcePath: data.sourcePath || null },
+        requested_at: new Date().toISOString(),
+        status: "pending_payment",
+        payment_status: "pending",
+        external_payment_id: orderNumber,
+        metadata: {
+          sourcePath: data.sourcePath || null,
+          surveyResponseId: data.surveyResponseId || null,
+          moneyType: data.moneyType || null,
+          faithType: data.faithType || null,
+          productCode: product.code,
+        },
       })
-      .select("id, order_number, product_code, product_name, amount, currency, customer_email, status, created_at")
+      .select("id, order_number, amount_krw, buyer_email, status, created_at")
       .single();
 
     if (error || !order) {
@@ -54,15 +70,23 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
 
     return {
       orderId: order.id,
-      orderNumber: order.order_number,
-      paymentId: order.order_number,
-      productCode: order.product_code,
-      productName: order.product_name,
-      amount: order.amount,
-      currency: order.currency,
-      customerEmail: order.customer_email,
+      orderNumber,
+      paymentId: orderNumber,
+      productCode: product.code,
+      productName: studioProduct.name,
+      amount: order.amount_krw,
+      currency: "KRW",
+      customerEmail: data.email.toLowerCase(),
       status: order.status,
       createdAt: order.created_at,
     };
   });
+
+const verifyMoneyPaymentInput = z.object({
+  paymentId: z.string().trim().min(1).max(80),
+});
+
+export const verifyMoneyPayment = createServerFn({ method: "POST" })
+  .inputValidator((data: unknown) => verifyMoneyPaymentInput.parse(data))
+  .handler(async ({ data }) => syncPortOnePayment(data.paymentId, "browser"));
 
