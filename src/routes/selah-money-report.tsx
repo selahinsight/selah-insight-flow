@@ -7,6 +7,11 @@ import {
 } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 import { createMoneyOrder } from "../lib/money-orders.functions";
+import {
+  createFallbackMoneyPaymentOrder,
+  isMissingOrderStorageConfiguration,
+  requestMoneyPayment,
+} from "../lib/portone-payment";
 
 export const Route = createFileRoute("/selah-money-report")({
   head: () => ({
@@ -82,7 +87,6 @@ function SelahMoneyReportPage() {
   const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
-  const checkoutUrl = (import.meta.env.VITE_SELAH_MONEY_REPORT_CHECKOUT_URL as string | undefined)?.trim();
 
   useEffect(() => {
     try {
@@ -138,17 +142,20 @@ function SelahMoneyReportPage() {
           refundConsentAt: consentAt,
           sourcePath: window.location.pathname,
         },
+      }).catch((error) => {
+        if (!isMissingOrderStorageConfiguration(error)) throw error;
+        return createFallbackMoneyPaymentOrder("report", trimmedEmail);
       });
       window.sessionStorage.setItem(
         "selahMoneyCheckoutConsent",
         JSON.stringify({ product: "report", consentAt, email: trimmedEmail }),
       );
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
-      if (checkoutUrl) {
-        window.location.assign(checkoutUrl);
-        return;
+      const payment = await requestMoneyPayment(order, context.name);
+      if (payment.completed) {
+        window.alert("결제가 완료되었습니다. 맞춤 리포트는 24시간 이내 입력하신 이메일로 보내드립니다.");
+        setCheckoutOpen(false);
       }
-      window.alert(`주문 정보가 저장되었습니다.\n주문번호: ${order.orderNumber}\n결제 채널 연결 후 이 주문으로 결제가 진행됩니다.`);
     } catch (error) {
       window.alert(error instanceof Error ? error.message : "주문 정보를 저장하지 못했습니다. 잠시 후 다시 시도해주세요.");
     } finally {
@@ -274,7 +281,7 @@ function SelahMoneyReportPage() {
             <p>11페이지 리포트 + 50페이지 실행 워크북</p>
             <s>개별 런칭가 38,900원</s>
             <strong><small>세트 런칭가</small> 34,900원</strong>
-            <a href="https://selahinsight.co.kr/money-study">세트 구매하기</a>
+            <a href="/selah-money-set">세트 구매하기</a>
           </article>
         </section>
 

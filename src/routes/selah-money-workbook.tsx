@@ -3,6 +3,11 @@ import { useState } from "react";
 import { DigitalContentCheckoutConsents, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 import { createMoneyOrder } from "../lib/money-orders.functions";
+import {
+  createFallbackMoneyPaymentOrder,
+  isMissingOrderStorageConfiguration,
+  requestMoneyPayment,
+} from "../lib/portone-payment";
 
 export const Route = createFileRoute("/selah-money-workbook")({
   head: () => ({
@@ -95,13 +100,22 @@ function SelahMoneyWorkbookPage() {
           refundConsentAt: consentAt,
           sourcePath: window.location.pathname,
         },
+      }).catch((error) => {
+        if (!isMissingOrderStorageConfiguration(error)) throw error;
+        return createFallbackMoneyPaymentOrder(checkoutProduct, trimmedEmail);
       });
       window.sessionStorage.setItem(
         "selahMoneyCheckoutConsent",
         JSON.stringify({ product: checkoutProduct, consentAt, email: trimmedEmail }),
       );
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
-      window.alert(`주문 정보가 저장되었습니다.\n주문번호: ${order.orderNumber}\n결제 채널 연결 후 이 주문으로 결제가 진행됩니다.`);
+      const payment = await requestMoneyPayment(order);
+      if (payment.completed) {
+        window.alert(checkoutProduct === "workbook"
+          ? "결제가 완료되었습니다. 워크북은 입력하신 이메일로 보내드립니다."
+          : "결제가 완료되었습니다. 워크북은 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다.");
+        setCheckoutProduct(null);
+      }
     } catch (error) {
       window.alert(error instanceof Error ? error.message : "주문 정보를 저장하지 못했습니다. 잠시 후 다시 시도해주세요.");
     } finally {

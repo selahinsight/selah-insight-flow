@@ -1445,6 +1445,7 @@ function Runner({
                 ? customerFaithResultTitle(selahResult.primaryFaithLens.id, selahResult.primaryFaithLens.title)
                 : "신앙 유형"}
               email={email}
+                responseId={responseId}
               onEmailChange={setEmail}
               onRestart={restartDiagnosis}
             />
@@ -2176,6 +2177,7 @@ function MoneyPaidDiagnosisSection({
   moneyTitle,
   faithTitle,
   email,
+  responseId,
   onEmailChange,
   onRestart,
 }: {
@@ -2185,6 +2187,7 @@ function MoneyPaidDiagnosisSection({
   moneyTitle: string;
   faithTitle: string;
   email: string;
+  responseId?: string;
   onEmailChange: (value: string) => void;
   onRestart: () => void;
 }) {
@@ -2230,11 +2233,11 @@ function MoneyPaidDiagnosisSection({
       return;
     }
     onEmailChange(trimmedEmail);
-    if (checkoutUrl) {
-      window.location.assign(checkoutUrl);
-      return;
-    }
-    toast.info("결제 링크를 연결하고 있습니다.");
+    window.sessionStorage.setItem(
+      "selahMoneyReportContext",
+      JSON.stringify({ name, moneyTitle, faithTitle, email: trimmedEmail, responseId }),
+    );
+    window.location.assign(checkoutUrl || "/selah-money-report");
   }
 
   const purchaseButton = (placement: string, label = "9,900원으로 내 심층 리포트 받기") => (
@@ -2435,7 +2438,7 @@ function MoneyPaidDiagnosisSection({
                     <p>심층 리포트와 50페이지 실행 워크북</p>
                     <s>개별 구매 38,900원</s>
                     <strong><small>세트 런칭가</small> 34,900원</strong>
-                    <a className="money-report-purchase-button" href="https://selahinsight.co.kr/money-study" target="_blank" rel="noreferrer" data-placement="footer-set">세트 구매하기</a>
+                    <a className="money-report-purchase-button" href="/selah-money-set" data-placement="footer-set">세트 구매하기</a>
                   </article>
                 </div>
               </div>
