@@ -59,6 +59,7 @@ export async function requestMoneyPayment(
       email: order.customerEmail,
       ...(customerName?.trim() ? { fullName: customerName.trim() } : {}),
     },
+    noticeUrls: [`${window.location.origin}/api/portone/webhook`],
     redirectUrl: `${window.location.origin}${window.location.pathname}?paymentId=${encodeURIComponent(order.paymentId)}`,
   });
 
