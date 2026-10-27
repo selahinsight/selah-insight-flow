@@ -3504,6 +3504,10 @@
 .money-product-course-footer > a { display: inline-flex; align-items: center; justify-content: center; min-width: 210px; min-height: 50px; margin-top: 26px; gap: 8px; border: 1px solid rgba(255,250,242,.42); border-radius: 14px; color: #fffaf2; font-size: 15px; font-weight: 700; text-decoration: none; }
 .money-product-policy-links { display: flex; justify-content: center; gap: 18px; margin-top: 28px; }
 .money-product-policy-links a { color: rgba(255,250,242,.72); font-size: 12px; line-height: 1.5; text-underline-offset: 3px; }
+.money-product-business-info { display: flex; flex-wrap: wrap; justify-content: center; gap: 3px 12px; max-width: 390px; margin: 24px auto 0; padding-top: 20px; border-top: 1px solid rgba(255,250,242,.24); color: rgba(255,250,242,.68); font-size: 12px; line-height: 1.7; }
+.money-product-business-info span,
+.money-product-business-info a { color: rgba(255,250,242,.68); text-decoration: none; }
+.money-product-business-info strong { color: rgba(255,250,242,.88); font-weight: 700; }
 
 .money-inline-refund-notice > div {
   margin-top: 4px;
