@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { appendKakaoContactToEmail } from "@/lib/selah-contact";
 
 const studioIntakeInput = z.object({
   email: z.string().email().optional().nullable(),
@@ -29,6 +30,9 @@ const studioIntakeInput = z.object({
 export const sendStudioIntake = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => studioIntakeInput.parse(data))
   .handler(async ({ data }) => {
+    const emailContent = data.emailContent
+      ? { ...data.emailContent, ...appendKakaoContactToEmail(data.emailContent.html, data.emailContent.text) }
+      : null;
     const endpoint =
       process.env.SELAH_STUDIO_INTAKE_URL ||
       "https://selah-studio-ivy.ivy-girl.chatgpt.site/api/intake/survey-response";
@@ -68,7 +72,7 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
         privacy_consent: data.privacyConsent ?? true,
         result_email_consent: Boolean(data.email),
         marketing_consent: data.marketingConsent ?? false,
-        email_content: data.emailContent || null,
+        email_content: emailContent,
       }),
     });
 

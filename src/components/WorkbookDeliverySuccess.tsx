@@ -1,3 +1,5 @@
+import { KakaoContactLink } from "./SelahKakaoContact";
+
 type WorkbookDeliverySuccessProps = {
   downloadUrl: string;
   includesReport?: boolean;
@@ -17,6 +19,7 @@ export function WorkbookDeliverySuccess({ downloadUrl, includesReport = false, e
           {emailSent ? "입력하신 이메일로도 다운로드 링크를 보내드렸습니다." : "아래 다운로드 버튼은 결제 확인이 완료된 고객만 이용할 수 있습니다."}
           {includesReport && <><br />맞춤 리포트는 24시간 이내 이메일로 보내드립니다.</>}
         </small>
+        <KakaoContactLink variant="checkout" />
         <button type="button" onClick={onClose}>닫기</button>
       </div>
     </div>

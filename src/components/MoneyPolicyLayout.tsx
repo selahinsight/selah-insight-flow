@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { KakaoContactLink } from "./SelahKakaoContact";
 
 type MoneyPolicyLayoutProps = {
   children: ReactNode;
@@ -15,9 +16,12 @@ export function MoneyPolicyLayout({ children, title }: MoneyPolicyLayoutProps) {
       </header>
       <main>{children}</main>
       <footer>
-        <a href="/terms">이용약관</a>
-        <a href="/refund">취소·환불 규정</a>
-        <a href="https://selahinsight.co.kr/privacy">개인정보처리방침</a>
+        <KakaoContactLink variant="policy" />
+        <nav aria-label="이용 정책">
+          <a href="/terms">이용약관</a>
+          <a href="/refund">취소·환불 규정</a>
+          <a href="https://selahinsight.co.kr/privacy">개인정보처리방침</a>
+        </nav>
       </footer>
     </div>
   );

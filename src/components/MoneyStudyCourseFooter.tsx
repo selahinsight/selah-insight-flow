@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { KakaoContactLink } from "./SelahKakaoContact";
 
 const MONEY_STUDY_URL = "https://selahinsight.co.kr/money-study";
 
@@ -14,6 +15,7 @@ export function MoneyStudyCourseFooter() {
       <a href={MONEY_STUDY_URL}>
         전체 과정 보기 <ArrowRight size={17} strokeWidth={1.8} aria-hidden="true" />
       </a>
+      <KakaoContactLink />
       <nav className="money-product-policy-links" aria-label="이용 정책">
         <a href="/terms">이용약관</a>
         <a href="/refund">취소·환불 규정</a>

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { MoneyPolicyLayout } from "../components/MoneyPolicyLayout";
+import { SELAH_KAKAO_CHANNEL_URL } from "@/lib/selah-contact";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -55,7 +56,7 @@ function TermsPage() {
       </section>
       <section>
         <h2>제8조 분쟁 해결</h2>
-        <p>상품 이용과 관련한 문의 및 이의 제기는 <a href="mailto:contact@selahinsight.co.kr">contact@selahinsight.co.kr</a>로 접수할 수 있습니다. 회사와 이용자 사이에 분쟁이 발생한 경우 관계 법령 및 민사소송법상 관할법원에 따릅니다.</p>
+        <p>상품 이용과 관련한 문의 및 이의 제기는 <a href={SELAH_KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">셀라 인사이트 카카오톡 채널</a>로 접수할 수 있습니다. 회사와 이용자 사이에 분쟁이 발생한 경우 관계 법령 및 민사소송법상 관할법원에 따릅니다.</p>
       </section>
       <section>
         <h2>부칙</h2>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { DigitalContentCheckoutConsents, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 import { WorkbookDeliverySuccess } from "../components/WorkbookDeliverySuccess";
+import { KakaoContactLink } from "../components/SelahKakaoContact";
 import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
@@ -344,6 +345,7 @@ function SelahMoneySetPage() {
                   />
                   <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || !customConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "신용카드로 결제하기"}</button>
                   <DigitalContentRefundNotice bundle />
+                  <KakaoContactLink variant="checkout" />
                 </>
               )}
             </div>

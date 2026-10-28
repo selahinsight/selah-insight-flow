@@ -11,6 +11,7 @@ import { z } from "zod";
 import { requireAdmin } from "@/lib/require-admin";
 import { allSelahMoneyResults, customerFaithResultTitle } from "@/lib/selah-money-results";
 import type { ResultType as SurveyResultType } from "@/lib/survey-store";
+import { kakaoEmailContactHtml, kakaoEmailContactText } from "@/lib/selah-contact";
 
 // ---------- Public: free result email ----------
 
@@ -84,6 +85,8 @@ function buildEmailHtml(args: {
     ``,
     `이 메일은 진단 결과 저장 시점에 안내를 위해 발송되었습니다.`,
     `이 결과는 참고용이며 의료적 진단이나 치료를 대신하지 않습니다.`,
+    ``,
+    kakaoEmailContactText(),
   ]
     .filter(Boolean)
     .join("\n");
@@ -117,6 +120,7 @@ function buildEmailHtml(args: {
 
   <hr style="border:none;border-top:1px solid #ece3d6;margin:24px 0;" />
   <p style="font-size:11px;line-height:1.6;color:#8a7a6c;margin:0;">이 메일은 진단 결과 저장 시점에 안내를 위해 발송되었습니다. 이 결과는 참고용이며, 의료적 진단이나 치료를 대신하지 않습니다.</p>
+  ${kakaoEmailContactHtml()}
 </div></body></html>`;
 
   return { subject, html, text };

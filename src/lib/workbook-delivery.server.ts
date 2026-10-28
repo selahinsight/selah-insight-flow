@@ -1,3 +1,5 @@
+import { kakaoEmailContactHtml, kakaoEmailContactText } from "@/lib/selah-contact";
+
 const WORKBOOK_BUCKET = "paid-content";
 const WORKBOOK_PATH = "selah-money-workbook/selah-money-workbook.pdf";
 const PUBLIC_SITE_URL = "https://money.selahinsight.co.kr";
@@ -61,8 +63,8 @@ async function sendDeliveryEmail(order: DeliveryOrder, downloadUrl: string) {
       from,
       to: [order.buyer_email],
       subject: "[셀라인사이트] 셀라 머니 워크북 다운로드 안내",
-      html: `<!doctype html><html lang="ko"><body style="margin:0;background:#f7f4ee;color:#3a2f27;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"><main style="max-width:560px;margin:0 auto;padding:36px 24px;background:#fff"><p style="margin:0 0 10px;color:#9a7664;font-size:12px;letter-spacing:.16em">SELAH MONEY WORKBOOK</p><h1 style="margin:0 0 18px;font-size:24px;line-height:1.45">워크북이 준비되었습니다.</h1><p style="margin:0 0 24px;font-size:15px;line-height:1.8">아래 버튼을 눌러 셀라 머니 워크북 PDF를 열고 저장해주세요.</p><a href="${safeUrl}" style="display:inline-block;padding:14px 22px;border-radius:12px;background:#8b5e55;color:#fff;font-size:15px;font-weight:700;text-decoration:none">워크북 다운로드</a><p style="margin:24px 0 0;color:#766257;font-size:12px;line-height:1.7">버튼이 열리지 않으면 다음 주소를 복사해 브라우저에서 열어주세요.<br><a href="${safeUrl}" style="color:#8b5e55;word-break:break-all">${safeUrl}</a></p></main></body></html>`,
-      text: `셀라 머니 워크북이 준비되었습니다.\n\n다운로드: ${downloadUrl}\n\n링크를 브라우저에서 열어 PDF를 저장해주세요.`,
+      html: `<!doctype html><html lang="ko"><body style="margin:0;background:#f7f4ee;color:#3a2f27;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif"><main style="max-width:560px;margin:0 auto;padding:36px 24px;background:#fff"><p style="margin:0 0 10px;color:#9a7664;font-size:12px;letter-spacing:.16em">SELAH MONEY WORKBOOK</p><h1 style="margin:0 0 18px;font-size:24px;line-height:1.45">워크북이 준비되었습니다.</h1><p style="margin:0 0 24px;font-size:15px;line-height:1.8">아래 버튼을 눌러 셀라 머니 워크북 PDF를 열고 저장해주세요.</p><a href="${safeUrl}" style="display:inline-block;padding:14px 22px;border-radius:12px;background:#8b5e55;color:#fff;font-size:15px;font-weight:700;text-decoration:none">워크북 다운로드</a><p style="margin:24px 0 0;color:#766257;font-size:12px;line-height:1.7">버튼이 열리지 않으면 다음 주소를 복사해 브라우저에서 열어주세요.<br><a href="${safeUrl}" style="color:#8b5e55;word-break:break-all">${safeUrl}</a></p>${kakaoEmailContactHtml()}</main></body></html>`,
+      text: `셀라 머니 워크북이 준비되었습니다.\n\n다운로드: ${downloadUrl}\n\n링크를 브라우저에서 열어 PDF를 저장해주세요.\n\n${kakaoEmailContactText()}`,
     }),
   });
 
