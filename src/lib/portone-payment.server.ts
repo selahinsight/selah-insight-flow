@@ -35,7 +35,7 @@ export async function syncPortOnePayment(paymentId: string, source: "browser" | 
 
   const { data: order, error: orderError } = await supabaseAdmin
     .from("orders")
-    .select("id, order_number, amount_krw, status, payment_status")
+    .select("id, order_number, amount_krw, status, payment_status, buyer_email, delivery_status, metadata")
     .eq("external_payment_id", paymentId)
     .maybeSingle();
 
@@ -101,5 +101,24 @@ export async function syncPortOnePayment(paymentId: string, source: "browser" | 
   }
   if (source === "browser" && !paid) throw new Error(`결제 상태가 완료가 아닙니다: ${paymentStatus}`);
 
-  return { verified: paid, orderId: order.id, orderNumber: order.order_number, status };
+  let delivery: { downloadUrl: string; emailStatus: string } | null = null;
+  if (paid) {
+    const { provisionWorkbookDelivery } = await import("@/lib/workbook-delivery.server");
+    delivery = await provisionWorkbookDelivery({
+      id: order.id,
+      buyer_email: order.buyer_email,
+      delivery_status: order.delivery_status,
+      metadata: order.metadata,
+    });
+  }
+
+  return {
+    verified: paid,
+    orderId: order.id,
+    orderNumber: order.order_number,
+    status,
+    downloadUrl: delivery?.downloadUrl || null,
+    deliveryEmailSent: delivery?.emailStatus === "sent",
+    productCode: typeof order.metadata?.productCode === "string" ? order.metadata.productCode : null,
+  };
 }

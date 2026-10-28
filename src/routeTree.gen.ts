@@ -28,6 +28,7 @@ import { Route as AdminMoneyResultsReviewRouteImport } from './routes/admin.mone
 import { Route as AdminEmailLogsRouteImport } from './routes/admin.email-logs'
 import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
 import { Route as AdminSurveysIndexRouteImport } from './routes/admin.surveys.index'
+import { Route as ApiWorkbookDownloadRouteImport } from './routes/api.workbook.download'
 import { Route as ApiPortoneWebhookRouteImport } from './routes/api.portone.webhook'
 import { Route as AdminSurveysIdRouteImport } from './routes/admin.surveys.$id'
 import { Route as AdminCustomersIdRouteImport } from './routes/admin.customers.$id'
@@ -131,6 +132,11 @@ const AdminSurveysIndexRoute = AdminSurveysIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminSurveysRoute,
 } as any)
+const ApiWorkbookDownloadRoute = ApiWorkbookDownloadRouteImport.update({
+  id: '/api/workbook/download',
+  path: '/api/workbook/download',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPortoneWebhookRoute = ApiPortoneWebhookRouteImport.update({
   id: '/api/portone/webhook',
   path: '/api/portone/webhook',
@@ -189,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
   '/api/portone/webhook': typeof ApiPortoneWebhookRoute
+  '/api/workbook/download': typeof ApiWorkbookDownloadRoute
   '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
@@ -215,6 +222,7 @@ export interface FileRoutesByTo {
   '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
   '/api/portone/webhook': typeof ApiPortoneWebhookRoute
+  '/api/workbook/download': typeof ApiWorkbookDownloadRoute
   '/admin/surveys': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
@@ -244,6 +252,7 @@ export interface FileRoutesById {
   '/admin/customers/$id': typeof AdminCustomersIdRoute
   '/admin/surveys/$id': typeof AdminSurveysIdRouteWithChildren
   '/api/portone/webhook': typeof ApiPortoneWebhookRoute
+  '/api/workbook/download': typeof ApiWorkbookDownloadRoute
   '/admin/surveys/': typeof AdminSurveysIndexRoute
   '/admin/surveys/$id/analytics': typeof AdminSurveysIdAnalyticsRoute
   '/admin/surveys/$id/edit': typeof AdminSurveysIdEditRoute
@@ -274,6 +283,7 @@ export interface FileRouteTypes {
     | '/admin/customers/$id'
     | '/admin/surveys/$id'
     | '/api/portone/webhook'
+    | '/api/workbook/download'
     | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
@@ -300,6 +310,7 @@ export interface FileRouteTypes {
     | '/admin/customers/$id'
     | '/admin/surveys/$id'
     | '/api/portone/webhook'
+    | '/api/workbook/download'
     | '/admin/surveys'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
@@ -328,6 +339,7 @@ export interface FileRouteTypes {
     | '/admin/customers/$id'
     | '/admin/surveys/$id'
     | '/api/portone/webhook'
+    | '/api/workbook/download'
     | '/admin/surveys/'
     | '/admin/surveys/$id/analytics'
     | '/admin/surveys/$id/edit'
@@ -348,6 +360,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   SSlugRoute: typeof SSlugRoute
   ApiPortoneWebhookRoute: typeof ApiPortoneWebhookRoute
+  ApiWorkbookDownloadRoute: typeof ApiWorkbookDownloadRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -485,6 +498,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSurveysIndexRouteImport
       parentRoute: typeof AdminSurveysRoute
     }
+    '/api/workbook/download': {
+      id: '/api/workbook/download'
+      path: '/api/workbook/download'
+      fullPath: '/api/workbook/download'
+      preLoaderRoute: typeof ApiWorkbookDownloadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/portone/webhook': {
       id: '/api/portone/webhook'
       path: '/api/portone/webhook'
@@ -616,6 +636,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   SSlugRoute: SSlugRoute,
   ApiPortoneWebhookRoute: ApiPortoneWebhookRoute,
+  ApiWorkbookDownloadRoute: ApiWorkbookDownloadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

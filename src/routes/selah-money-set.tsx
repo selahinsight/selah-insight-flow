@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { DigitalContentCheckoutConsents, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
+import { WorkbookDeliverySuccess } from "../components/WorkbookDeliverySuccess";
+import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 
@@ -76,6 +78,7 @@ function SelahMoneySetPage() {
   const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
+  const [delivery, setDelivery] = useState<{ downloadUrl: string; emailSent: boolean } | null>(null);
 
   useEffect(() => {
     try {
@@ -95,9 +98,10 @@ function SelahMoneySetPage() {
     const marker = `selahMoneyVerified:${paymentId}`;
     if (window.sessionStorage.getItem(marker)) return;
     void verifyMoneyPayment({ data: { paymentId } })
-      .then(() => {
+      .then((result) => {
         window.sessionStorage.setItem(marker, "1");
-        window.alert("결제가 확인되었습니다. 입력하신 이메일로 상품을 보내드립니다.");
+        if (result.downloadUrl) setDelivery({ downloadUrl: result.downloadUrl, emailSent: result.deliveryEmailSent });
+        else window.alert("결제가 확인되었습니다.");
       })
       .catch((error) => {
         window.alert(error instanceof Error ? error.message : "결제 확인 중 오류가 발생했습니다.");
@@ -146,8 +150,9 @@ function SelahMoneySetPage() {
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
       const payment = await requestMoneyPayment(order, context.name);
       if (payment.completed) {
-        await verifyMoneyPayment({ data: { paymentId: payment.paymentId } });
-        window.alert("결제가 완료되었습니다. 워크북은 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다.");
+        const result = await verifyMoneyPayment({ data: { paymentId: payment.paymentId } });
+        if (!result.downloadUrl) throw new Error("워크북 다운로드 주소를 준비하지 못했습니다.");
+        setDelivery({ downloadUrl: result.downloadUrl, emailSent: result.deliveryEmailSent });
         setCheckoutOpen(false);
       }
     } catch (error) {
@@ -325,6 +330,7 @@ function SelahMoneySetPage() {
                   <label htmlFor="set-detail-email">리포트를 받을 이메일</label>
                   <input id="set-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
                   <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간<br />이내 이메일로 보내드립니다.</em>
+                  <CreditCardPaymentMethod />
                   <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentCheckoutConsents
                     idPrefix="set-checkout"
@@ -336,13 +342,14 @@ function SelahMoneySetPage() {
                     onDigitalChange={setDigitalConsent}
                     onCustomChange={setCustomConsent}
                   />
-                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || !customConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "이 결과로 결제하기"}</button>
+                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || !customConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "신용카드로 결제하기"}</button>
                   <DigitalContentRefundNotice bundle />
                 </>
               )}
             </div>
           </div>
         )}
+        {delivery && <WorkbookDeliverySuccess downloadUrl={delivery.downloadUrl} includesReport emailSent={delivery.emailSent} onClose={() => setDelivery(null)} />}
       </main>
     </div>
   );

@@ -58,6 +58,9 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
           moneyType: data.moneyType || null,
           faithType: data.faithType || null,
           productCode: product.code,
+          downloadToken: product.code === "workbook" || product.code === "set"
+            ? crypto.randomUUID().replaceAll("-", "")
+            : null,
         },
       })
       .select("id, order_number, amount_krw, buyer_email, status, created_at")

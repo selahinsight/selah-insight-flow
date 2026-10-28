@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { DigitalContentCheckoutConsents, DigitalContentRefundNotice } from "../components/DigitalContentRefund";
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
+import { WorkbookDeliverySuccess } from "../components/WorkbookDeliverySuccess";
+import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 
@@ -71,6 +73,7 @@ function SelahMoneyWorkbookPage() {
   const [customConsent, setCustomConsent] = useState(false);
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
+  const [delivery, setDelivery] = useState<{ downloadUrl: string; includesReport: boolean; emailSent: boolean } | null>(null);
 
   useEffect(() => {
     const paymentId = new URLSearchParams(window.location.search).get("paymentId");
@@ -78,9 +81,10 @@ function SelahMoneyWorkbookPage() {
     const marker = `selahMoneyVerified:${paymentId}`;
     if (window.sessionStorage.getItem(marker)) return;
     void verifyMoneyPayment({ data: { paymentId } })
-      .then(() => {
+      .then((result) => {
         window.sessionStorage.setItem(marker, "1");
-        window.alert("결제가 확인되었습니다. 입력하신 이메일로 상품을 보내드립니다.");
+        if (result.downloadUrl) setDelivery({ downloadUrl: result.downloadUrl, includesReport: result.productCode === "set", emailSent: result.deliveryEmailSent });
+        else window.alert("결제가 확인되었습니다.");
       })
       .catch((error) => {
         window.alert(error instanceof Error ? error.message : "결제 확인 중 오류가 발생했습니다.");
@@ -120,10 +124,9 @@ function SelahMoneyWorkbookPage() {
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
       const payment = await requestMoneyPayment(order);
       if (payment.completed) {
-        await verifyMoneyPayment({ data: { paymentId: payment.paymentId } });
-        window.alert(checkoutProduct === "workbook"
-          ? "결제가 완료되었습니다. 워크북은 입력하신 이메일로 보내드립니다."
-          : "결제가 완료되었습니다. 워크북은 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다.");
+        const result = await verifyMoneyPayment({ data: { paymentId: payment.paymentId } });
+        if (!result.downloadUrl) throw new Error("워크북 다운로드 주소를 준비하지 못했습니다.");
+        setDelivery({ downloadUrl: result.downloadUrl, includesReport: checkoutProduct === "set", emailSent: result.deliveryEmailSent });
         setCheckoutProduct(null);
       }
     } catch (error) {
@@ -271,7 +274,8 @@ function SelahMoneyWorkbookPage() {
               </p>
               <label htmlFor="workbook-checkout-email">{checkoutProduct === "workbook" ? "워크북을 받을 이메일" : "리포트와 워크북을 받을 이메일"}</label>
               <input id="workbook-checkout-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
-              <em>{checkoutProduct === "workbook" ? "워크북은 결제 완료 후 입력하신 이메일로 보내드립니다." : "워크북은 결제 완료 후 이메일로 제공되며, 맞춤 리포트는 24시간 이내 보내드립니다."}</em>
+              <em>{checkoutProduct === "workbook" ? "워크북은 결제 완료 후 바로 다운로드할 수 있으며, 이메일로도 링크를 보내드립니다." : "워크북은 결제 완료 후 바로 다운로드할 수 있으며, 맞춤 리포트는 24시간 이내 이메일로 보내드립니다."}</em>
+              <CreditCardPaymentMethod />
               <DigitalContentCheckoutConsents
                 idPrefix="workbook-checkout"
                 customProduct={checkoutProduct === "set"}
@@ -282,11 +286,12 @@ function SelahMoneyWorkbookPage() {
                 onDigitalChange={setDigitalConsent}
                 onCustomChange={setCustomConsent}
               />
-              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || (checkoutProduct === "set" && !customConsent) || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "확인하고 결제하기"}</button>
+              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || (checkoutProduct === "set" && !customConsent) || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "신용카드로 결제하기"}</button>
               <DigitalContentRefundNotice bundle={checkoutProduct === "set"} />
             </div>
           </div>
         )}
+        {delivery && <WorkbookDeliverySuccess downloadUrl={delivery.downloadUrl} includesReport={delivery.includesReport} emailSent={delivery.emailSent} onClose={() => setDelivery(null)} />}
       </main>
     </div>
   );

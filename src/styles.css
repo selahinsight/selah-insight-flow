@@ -3483,6 +3483,23 @@
 .money-workbook-footer { padding: 34px 24px 44px; background: #443730; text-align: center; }
 .money-workbook-footer a { color: #fffaf2; }
 
+.workbook-delivery-success { position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center; padding: 24px; background: rgba(49,39,34,.58); }
+.workbook-delivery-success > div { width: min(100%,460px); border: 1px solid #e1d2c5; border-radius: 22px; background: #fffdf9; padding: 34px 28px 28px; box-shadow: 0 24px 64px rgba(49,39,34,.22); text-align: center; }
+.workbook-delivery-success span { color: #9b6a5f; font-size: 12px; font-weight: 700; letter-spacing: .15em; }
+.workbook-delivery-success h2 { margin: 12px 0 0; color: #44362f; font-size: 24px; line-height: 1.45; }
+.workbook-delivery-success p { margin: 14px 0 0; color: #705d53; font-size: 15px; line-height: 1.7; }
+.workbook-delivery-success a { display: flex; min-height: 52px; align-items: center; justify-content: center; margin-top: 24px; border-radius: 14px; background: #8b5e55; color: #fffaf3; font-size: 16px; font-weight: 700; text-decoration: none; }
+.workbook-delivery-success small { display: block; margin-top: 16px; color: #766257; font-size: 13px; line-height: 1.7; }
+.workbook-delivery-success button { margin-top: 20px; border: 0; background: transparent; color: #766257; font-size: 14px; text-decoration: underline; cursor: pointer; }
+
+.money-payment-method { margin: 22px 0 0; padding: 0; border: 0; text-align: left; }
+.money-payment-method legend { margin-bottom: 10px; color: #493a33; font-size: 14px; font-weight: 700; }
+.money-payment-method label { display: flex; align-items: center; gap: 12px; padding: 14px 15px; border: 2px solid #8b5e55; border-radius: 13px; background: #fffaf4; cursor: default; }
+.money-payment-method input { width: 18px; height: 18px; margin: 0; accent-color: #8b5e55; }
+.money-payment-method span { display: grid; gap: 3px; }
+.money-payment-method strong { color: #44362f; font-size: 15px; }
+.money-payment-method small { color: #766257; font-size: 12px; line-height: 1.5; }
+
 @media (max-width: 360px) {
   .money-workbook-hero,
   .money-workbook-intro-section,
