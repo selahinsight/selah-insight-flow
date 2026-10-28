@@ -3642,28 +3642,31 @@
 /* Selah Kakao contact */
 .selah-kakao-floating {
   position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 120;
-  display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 48px; padding: 0 17px;
-  border: 1px solid rgba(25,22,0,.08); border-radius: 999px; background: #fee500; color: #191600;
-  box-shadow: 0 10px 28px rgba(58,47,39,.22); font: 700 13px/1 "SUIT", "Noto Sans KR", sans-serif; text-decoration: none;
+  display: inline-flex; width: 46px; height: 46px; align-items: center; justify-content: center;
+  border: 1px solid rgba(76,62,54,.18); border-radius: 50%; background: rgba(255,253,249,.96); color: #4b3f38;
+  box-shadow: 0 7px 22px rgba(58,47,39,.15); text-decoration: none;
   transition: transform .18s ease, box-shadow .18s ease;
 }
-.selah-kakao-floating:hover { transform: translateY(-2px); box-shadow: 0 13px 32px rgba(58,47,39,.26); }
-.selah-kakao-contact { width: min(100%, 520px); margin: 28px auto 0; padding: 20px; border-radius: 16px; text-align: center; }
-.selah-kakao-contact p { margin: 0 0 13px; font-size: 13px; line-height: 1.7; word-break: keep-all; }
-.selah-kakao-contact a { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 0 17px; border: 0; border-radius: 11px; background: #fee500; color: #191600 !important; font-size: 13px !important; font-weight: 700; text-decoration: none; }
-.money-product-course-footer .selah-kakao-contact { margin-top: 34px; border: 1px solid rgba(255,250,242,.16); background: rgba(255,250,242,.07); }
+.selah-kakao-floating:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(58,47,39,.2); }
+.selah-kakao-contact { width: min(100%, 520px); margin: 28px auto 0; padding-top: 20px; border-top: 1px solid rgba(76,62,54,.14); text-align: center; }
+.selah-kakao-contact p { margin: 0 0 12px; color: #695e57; font-size: 12px; line-height: 1.7; word-break: keep-all; }
+.selah-kakao-contact a { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; gap: 7px; padding: 0 15px; border: 1px solid rgba(76,62,54,.22); border-radius: 999px; background: transparent; color: #493e37 !important; font-size: 12px !important; font-weight: 600; text-decoration: none; }
+.selah-kakao-contact a:hover { border-color: rgba(76,62,54,.4); background: rgba(255,253,249,.08); }
+.money-product-course-footer .selah-kakao-contact { margin-top: 34px; border-top-color: rgba(255,250,242,.16); }
 .money-product-course-footer .selah-kakao-contact p { color: rgba(255,250,242,.8); }
-.selah-kakao-contact--checkout { width: auto; margin-top: 18px; padding: 16px; background: #f7f2ea; }
+.money-product-course-footer .selah-kakao-contact a,
+.money-policy-page > footer .selah-kakao-contact a { border-color: rgba(255,250,242,.26); color: rgba(255,250,242,.9) !important; }
+.selah-kakao-contact--checkout { width: auto; margin-top: 18px; padding-top: 16px; }
 .selah-kakao-contact--checkout p { color: #69584e; font-size: 12px; }
 .money-policy-page > footer { display: block; }
 .money-policy-page > footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-top: 22px; }
-.money-policy-page > footer .selah-kakao-contact { margin-top: 0; border: 1px solid rgba(255,250,242,.16); background: rgba(255,250,242,.07); }
+.money-policy-page > footer .selah-kakao-contact { margin-top: 0; border-top-color: rgba(255,250,242,.16); }
 .money-policy-page > footer .selah-kakao-contact p { color: rgba(255,250,242,.8); }
 .workbook-delivery-success .selah-kakao-contact { margin-top: 20px; }
 
 @media (max-width: 520px) {
-  .selah-kakao-floating { right: 14px; bottom: 14px; min-height: 46px; padding: 0 15px; }
-  .selah-kakao-contact { padding: 17px 15px; }
+  .selah-kakao-floating { right: 14px; bottom: 14px; width: 43px; height: 43px; }
+  .selah-kakao-contact { padding-top: 17px; }
 }
 
 @media (min-width: 720px) {

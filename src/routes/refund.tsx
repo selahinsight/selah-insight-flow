@@ -42,7 +42,7 @@ function RefundPage() {
       </section>
       <section>
         <h2>4. 환불 신청 방법</h2>
-        <p>환불을 요청할 때는 다음 정보를 <a href={SELAH_KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">셀라 인사이트 카카오톡 채널</a>로 보내주시기 바랍니다.</p>
+        <p>환불을 요청할 때는 다음 정보를 <a href={SELAH_KAKAO_CHANNEL_URL} target="_blank" rel="noreferrer">셀라인사이트 카카오톡 채널</a>로 보내주시기 바랍니다.</p>
         <ul>
           <li>구매자 이름</li>
           <li>결제일</li>
