@@ -3663,6 +3663,7 @@
 .money-policy-page > footer .selah-kakao-contact { margin-top: 0; border-top-color: rgba(255,250,242,.16); }
 .money-policy-page > footer .selah-kakao-contact p { color: rgba(255,250,242,.8); }
 .workbook-delivery-success .selah-kakao-contact { margin-top: 20px; }
+.workbook-delivery-success .selah-kakao-contact p { margin-bottom: 8px; }
 
 @media (max-width: 520px) {
   .selah-kakao-floating { right: 14px; bottom: 14px; width: 43px; height: 43px; }
