@@ -2547,7 +2547,7 @@ function FunnelCtas({
   }
   const links = [
     { label: "셀라 머니 진단 리포트 보기", href: "#" },
-    { label: "셀라 머니 라운지 입장하기", href: "#" },
+    { label: "셀라 머니 라운지 입장하기", href: "https://open.kakao.com/o/p6g0mZUi" },
     { label: "셀라 유튜브에서 더 알아보기", href: "#" },
     { label: "셀라 인스타그램에서 팁 받아보기", href: "#" },
   ];

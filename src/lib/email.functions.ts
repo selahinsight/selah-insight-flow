@@ -11,6 +11,8 @@ import { z } from "zod";
 import { requireAdmin } from "@/lib/require-admin";
 import { allSelahMoneyResults, customerFaithResultTitle } from "@/lib/selah-money-results";
 import type { ResultType as SurveyResultType } from "@/lib/survey-store";
+
+const SELAH_MONEY_LOUNGE_URL = "https://open.kakao.com/o/p6g0mZUi";
 import { kakaoEmailContactHtml, kakaoEmailContactText } from "@/lib/selah-contact";
 
 // ---------- Public: free result email ----------
@@ -83,6 +85,8 @@ function buildEmailHtml(args: {
     `언제든 다시 진단 페이지에 방문해 결과를 확인하실 수 있어요.`,
     `유료 상세 리포트는 준비 중입니다. 준비되는 대로 다시 안내드릴게요.`,
     ``,
+    `셀라 머니 라운지 입장하기: ${SELAH_MONEY_LOUNGE_URL}`,
+    ``,
     `이 메일은 진단 결과 저장 시점에 안내를 위해 발송되었습니다.`,
     `이 결과는 참고용이며 의료적 진단이나 치료를 대신하지 않습니다.`,
     ``,
@@ -117,6 +121,10 @@ function buildEmailHtml(args: {
 
   <p style="font-size:13px;line-height:1.7;margin:20px 0 6px;color:#4a3f37;">언제든 다시 진단 페이지에 방문하시면 이 결과를 다시 확인하실 수 있어요.</p>
   <p style="font-size:12.5px;line-height:1.7;margin:0 0 24px;color:#6b5c50;">유료 상세 리포트는 준비 중입니다. 준비되는 대로 안내드릴게요.</p>
+
+  <div style="margin:0 0 24px;text-align:center;">
+    <a href="${SELAH_MONEY_LOUNGE_URL}" target="_blank" rel="noreferrer" style="display:inline-block;background:#7f6655;color:#ffffff;text-decoration:none;border-radius:999px;padding:13px 24px;font-size:13px;font-weight:600;line-height:1.4;">셀라 머니 라운지 입장하기</a>
+  </div>
 
   <hr style="border:none;border-top:1px solid #ece3d6;margin:24px 0;" />
   <p style="font-size:11px;line-height:1.6;color:#8a7a6c;margin:0;">이 메일은 진단 결과 저장 시점에 안내를 위해 발송되었습니다. 이 결과는 참고용이며, 의료적 진단이나 치료를 대신하지 않습니다.</p>
