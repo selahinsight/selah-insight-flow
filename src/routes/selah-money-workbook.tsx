@@ -6,6 +6,7 @@ import { WorkbookDeliverySuccess } from "../components/WorkbookDeliverySuccess";
 import { KakaoContactLink } from "../components/SelahKakaoContact";
 import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
 import { LimitedLaunchPrice } from "../components/LimitedLaunchPrice";
+import { MoneyCouponField, type AppliedMoneyCoupon } from "../components/MoneyCouponField";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 
@@ -76,6 +77,7 @@ function SelahMoneyWorkbookPage() {
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
   const [delivery, setDelivery] = useState<{ downloadUrl: string; includesReport: boolean; emailSent: boolean } | null>(null);
+  const [coupon, setCoupon] = useState<AppliedMoneyCoupon | null>(null);
 
   useEffect(() => {
     const paymentId = new URLSearchParams(window.location.search).get("paymentId");
@@ -99,6 +101,7 @@ function SelahMoneyWorkbookPage() {
     setTermsConsent(false);
     setDigitalConsent(false);
     setCustomConsent(false);
+    setCoupon(null);
   }
 
   async function confirmCheckout() {
@@ -117,6 +120,8 @@ function SelahMoneyWorkbookPage() {
           email: trimmedEmail,
           refundConsentAt: consentAt,
           sourcePath: window.location.pathname,
+          couponCode: coupon?.code || null,
+          couponPhone: coupon?.phone || null,
         },
       });
       window.sessionStorage.setItem(
@@ -124,6 +129,13 @@ function SelahMoneyWorkbookPage() {
         JSON.stringify({ product: checkoutProduct, consentAt, email: trimmedEmail }),
       );
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
+      if (order.amount === 0) {
+        window.alert(checkoutProduct === "workbook"
+          ? "100% 쿠폰이 적용되었습니다. 결제 없이 주문이 완료되었으며, 워크북은 입력하신 이메일로 보내드립니다."
+          : "100% 쿠폰이 적용되었습니다. 결제 없이 주문이 완료되었으며, 워크북은 이메일로 제공되고 맞춤 리포트는 24시간 이내 보내드립니다.");
+        setCheckoutProduct(null);
+        return;
+      }
       const payment = await requestMoneyPayment(order);
       if (payment.completed) {
         const result = await verifyMoneyPayment({ data: { paymentId: payment.paymentId } });
@@ -270,7 +282,8 @@ function SelahMoneyWorkbookPage() {
               <label htmlFor="workbook-checkout-email">{checkoutProduct === "workbook" ? "워크북을 받을 이메일" : "리포트와 워크북을 받을 이메일"}</label>
               <input id="workbook-checkout-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
               <em>{checkoutProduct === "workbook" ? "워크북은 결제 완료 후 바로 다운로드할 수 있으며, 이메일로도 링크를 보내드립니다." : "워크북은 결제 완료 후 바로 다운로드할 수 있으며, 맞춤 리포트는 24시간 이내 이메일로 보내드립니다."}</em>
-              <CreditCardPaymentMethod />
+              {coupon?.finalAmount !== 0 && <CreditCardPaymentMethod />}
+              <MoneyCouponField key={checkoutProduct} productCode={checkoutProduct} onChange={setCoupon} />
               <DigitalContentCheckoutConsents
                 idPrefix="workbook-checkout"
                 customProduct={checkoutProduct === "set"}
@@ -281,7 +294,7 @@ function SelahMoneyWorkbookPage() {
                 onDigitalChange={setDigitalConsent}
                 onCustomChange={setCustomConsent}
               />
-              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || (checkoutProduct === "set" && !customConsent) || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "신용카드로 결제하기"}</button>
+              <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || (checkoutProduct === "set" && !customConsent) || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : coupon?.finalAmount === 0 ? "무료로 받기" : coupon ? `${coupon.finalAmount.toLocaleString("ko-KR")}원 결제하기` : "신용카드로 결제하기"}</button>
               <DigitalContentRefundNotice bundle={checkoutProduct === "set"} />
               <KakaoContactLink variant="checkout" />
             </div>

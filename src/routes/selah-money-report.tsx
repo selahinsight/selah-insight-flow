@@ -11,6 +11,7 @@ import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
 import { LimitedLaunchPrice } from "../components/LimitedLaunchPrice";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
+import { validateMoneyCoupon } from "../lib/coupon.functions";
 
 export const Route = createFileRoute("/selah-money-report")({
   head: () => ({
@@ -88,6 +89,12 @@ function SelahMoneyReportPage() {
   const [creatingOrder, setCreatingOrder] = useState(false);
   const [reportSampleIndex, setReportSampleIndex] = useState(0);
   const reportSamplesRef = useRef<HTMLDivElement>(null);
+  const [couponOpen, setCouponOpen] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [couponPhone, setCouponPhone] = useState("");
+  const [couponApplying, setCouponApplying] = useState(false);
+  const [couponResult, setCouponResult] = useState<null | { code: string; discountRate: number | null; discountAmount: number; originalAmount: number; finalAmount: number }>(null);
+  const [couponMessage, setCouponMessage] = useState("");
 
   useEffect(() => {
     try {
@@ -115,7 +122,6 @@ function SelahMoneyReportPage() {
         window.alert(error instanceof Error ? error.message : "결제 확인 중 오류가 발생했습니다.");
       });
   }, []);
-
 
   const displayName = context.name?.trim() || "OOO";
   const moneyTitle = context.moneyTitle?.trim() || "회피위로형";
@@ -153,6 +159,39 @@ function SelahMoneyReportPage() {
     setReportSampleIndex(nearestIndex);
   }
 
+  async function applyCoupon() {
+    if (couponResult) {
+      setCouponResult(null);
+      setCouponMessage("");
+      return;
+    }
+    if (!couponCode.trim()) {
+      setCouponMessage("쿠폰 코드를 입력해주세요.");
+      return;
+    }
+    const normalizedPhone = couponPhone.replace(/\D/g, "");
+    if (!/^010\d{8}$/.test(normalizedPhone)) {
+      setCouponMessage("휴대폰번호를 정확히 입력해주세요.");
+      return;
+    }
+    setCouponApplying(true);
+    setCouponMessage("");
+    try {
+      const result = await validateMoneyCoupon({ data: { code: couponCode, productCode: "report", phone: normalizedPhone } });
+      if (!result.valid) {
+        setCouponMessage(result.message);
+        return;
+      }
+      setCouponCode(result.code);
+      setCouponResult(result);
+      setCouponMessage("쿠폰이 적용되었습니다.");
+    } catch (error) {
+      setCouponMessage(error instanceof Error ? error.message : "쿠폰을 확인하지 못했습니다.");
+    } finally {
+      setCouponApplying(false);
+    }
+  }
+
   function restartDiagnosis() {
     setEmail("");
     window.sessionStorage.removeItem("selahMoneyReportContext");
@@ -182,6 +221,8 @@ function SelahMoneyReportPage() {
           faithType: context.faithTitle,
           refundConsentAt: consentAt,
           sourcePath: window.location.pathname,
+          couponCode: couponResult?.code || null,
+          couponPhone: couponResult ? couponPhone : null,
         },
       });
       window.sessionStorage.setItem(
@@ -189,6 +230,11 @@ function SelahMoneyReportPage() {
         JSON.stringify({ product: "report", consentAt, email: trimmedEmail }),
       );
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
+      if (order.amount === 0) {
+        window.alert("100% 쿠폰이 적용되었습니다. 결제 없이 주문이 완료되었으며, 맞춤 리포트는 24시간 이내 입력하신 이메일로 보내드립니다.");
+        setCheckoutOpen(false);
+        return;
+      }
       const payment = await requestMoneyPayment(order, context.name);
       if (payment.completed) {
         await verifyMoneyPayment({ data: { paymentId: payment.paymentId } });
@@ -375,7 +421,63 @@ function SelahMoneyReportPage() {
                   <label htmlFor="report-detail-email">리포트를 받을 이메일</label>
                   <input id="report-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
                   <em>맞춤 리포트는 결제 후 24시간 이내 이메일로 보내드립니다.</em>
-                  <CreditCardPaymentMethod />
+                  <section className="money-checkout-coupon" aria-label="할인쿠폰">
+                      <button
+                        className="money-checkout-coupon-toggle"
+                        type="button"
+                        onClick={() => setCouponOpen((open) => !open)}
+                        aria-expanded={couponOpen}
+                      >
+                        <span>쿠폰이 있으신가요?</span>
+                        <span aria-hidden="true">{couponOpen ? "−" : "+"}</span>
+                      </button>
+                      {couponOpen && (
+                        <div className="money-checkout-coupon-body">
+                          <label className="money-checkout-coupon-phone-label">
+                            휴대폰번호
+                            <input
+                              type="tel"
+                              inputMode="numeric"
+                              autoComplete="tel"
+                              value={couponPhone}
+                              onChange={(event) => {
+                                setCouponPhone(event.target.value.replace(/[^0-9-]/g, ""));
+                                setCouponResult(null);
+                                setCouponMessage("");
+                              }}
+                              placeholder="010-1234-5678"
+                              maxLength={13}
+                            />
+                          </label>
+                          <div className="money-checkout-coupon-form">
+                            <input
+                              type="text"
+                              value={couponCode}
+                              onChange={(event) => {
+                                setCouponCode(event.target.value.toUpperCase());
+                                setCouponResult(null);
+                                setCouponMessage("");
+                              }}
+                              placeholder="쿠폰 코드를 입력하세요"
+                              autoComplete="off"
+                            />
+                            <button type="button" onClick={applyCoupon} disabled={couponApplying}>{couponResult ? "취소" : couponApplying ? "확인 중" : "적용"}</button>
+                          </div>
+                          <p className="money-checkout-coupon-notice">본 쿠폰은 휴대폰번호당 1회 사용할 수 있습니다.</p>
+                          {couponMessage && <p className={couponResult ? "money-checkout-coupon-success" : "money-checkout-coupon-error"}>{couponMessage}</p>}
+                          {couponResult && (
+                            <>
+                              <dl className="money-checkout-price-summary">
+                                <div><dt>상품금액</dt><dd>{couponResult.originalAmount.toLocaleString("ko-KR")}원</dd></div>
+                                <div className="money-checkout-price-discount"><dt>쿠폰 할인{couponResult.discountRate ? ` (${couponResult.discountRate}%)` : ""}</dt><dd>-{couponResult.discountAmount.toLocaleString("ko-KR")}원</dd></div>
+                                <div className="money-checkout-price-total"><dt>최종 결제금액</dt><dd>{couponResult.finalAmount.toLocaleString("ko-KR")}원</dd></div>
+                              </dl>
+                            </>
+                          )}
+                        </div>
+                      )}
+                  </section>
+                  {couponResult?.finalAmount !== 0 && <CreditCardPaymentMethod />}
                   <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentCheckoutConsents
                     idPrefix="report-checkout"
@@ -387,7 +489,14 @@ function SelahMoneyReportPage() {
                     onDigitalChange={setDigitalConsent}
                     onCustomChange={setCustomConsent}
                   />
-                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || !customConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "신용카드로 결제하기"}</button>
+                  <button
+                    className="money-report-detail-checkout-primary"
+                    type="button"
+                    onClick={confirmCheckout}
+                    disabled={!termsConsent || !digitalConsent || !customConsent || creatingOrder}
+                  >
+                    {creatingOrder ? "주문 정보 저장 중..." : couponResult?.finalAmount === 0 ? "무료로 받기" : couponResult ? `${couponResult.finalAmount.toLocaleString("ko-KR")}원 결제하기` : "신용카드로 결제하기"}
+                  </button>
                   <DigitalContentRefundNotice />
                   <KakaoContactLink variant="checkout" />
                 </>

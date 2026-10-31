@@ -3626,6 +3626,27 @@
 .money-report-detail-checkout label { display: block; margin-top: 22px; color: #665249; font-size: 13px; font-weight: 700; text-align: left; }
 .money-report-detail-checkout input[type="email"] { width: 100%; min-height: 48px; margin-top: 8px; padding: 0 14px; border: 1px solid rgba(126,96,78,.25); background: #fff; color: #493a33; font: inherit; }
 .money-report-detail-checkout em { display: block; margin-top: 13px; color: #806e65; font-size: 13px; font-style: normal; line-height: 1.55; }
+.money-checkout-coupon { margin-top: 16px; border-top: 1px solid rgba(126,96,78,.16); border-bottom: 1px solid rgba(126,96,78,.16); text-align: left; }
+.money-checkout-coupon-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 44px; padding: 0 4px; border: 0; background: transparent; color: #665249; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.money-checkout-coupon-toggle span:last-child { color: #8b756a; font-size: 19px; font-weight: 400; line-height: 1; }
+.money-checkout-coupon-body { padding: 0 0 14px; }
+.money-report-detail-checkout .money-checkout-coupon-phone-label { display: block; margin: 0 0 10px; color: #665249; font-size: 12px; font-weight: 700; }
+.money-report-detail-checkout .money-checkout-coupon-phone-label input { box-sizing: border-box; width: 100%; min-height: 44px; margin: 6px 0 0; padding: 0 12px; border: 1px solid rgba(126,96,78,.28); border-radius: 9px; background: #fff; color: #493a33; font: inherit; font-size: 13px; }
+.money-checkout-coupon-form { display: grid; grid-template-columns: minmax(0,1fr) 66px; gap: 8px; }
+.money-report-detail-checkout .money-checkout-coupon-form input { box-sizing: border-box; width: 100%; min-width: 0; min-height: 44px; margin: 0; padding: 0 12px; border: 1px solid rgba(126,96,78,.28); border-radius: 9px; background: #fff; color: #493a33; font: inherit; font-size: 13px; text-transform: uppercase; }
+.money-checkout-coupon-form button { min-height: 44px; border: 1px solid #8b5e55; border-radius: 9px; background: #8b5e55; color: #fff; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.money-checkout-coupon-success { margin: 9px 0 0; color: #6d6a3f; font-size: 12px; font-weight: 700; }
+.money-checkout-coupon-error { margin: 9px 0 0; color: #a04f47; font-size: 12px; font-weight: 700; }
+.money-checkout-coupon-notice { margin: 8px 0 0; color: #806e65; font-size: 11px; line-height: 1.5; }
+.money-checkout-coupon-form button:disabled { cursor: wait; opacity: .65; }
+.money-checkout-price-summary { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid rgba(126,96,78,.16); }
+.money-checkout-price-summary div { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.money-checkout-price-summary div + div { margin-top: 8px; }
+.money-checkout-price-summary dt, .money-checkout-price-summary dd { margin: 0; color: #725f55; font-size: 13px; }
+.money-checkout-price-summary .money-checkout-price-discount dt, .money-checkout-price-summary .money-checkout-price-discount dd { color: #a04f47; }
+.money-checkout-price-summary .money-checkout-price-total { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(126,96,78,.16); }
+.money-checkout-price-summary .money-checkout-price-total dt { color: #493a33; font-weight: 700; }
+.money-checkout-price-summary .money-checkout-price-total dd { color: #8b5e55; font-size: 18px; font-weight: 800; }
 .money-report-detail-checkout-primary { width: 100%; min-height: 50px; margin-top: 20px; border: 0; border-radius: 14px; background: #665147; color: #fffaf3; font: inherit; font-weight: 700; cursor: pointer; }
 .money-report-detail-checkout-primary:disabled { cursor: not-allowed; opacity: .45; }
 .money-report-detail-restart { display: block; width: fit-content; min-height: 0; margin: 16px auto 0; padding: 5px 7px; border: 0; background: transparent; color: #806e65; font: inherit; font-size: 13px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }

@@ -6,6 +6,7 @@ import { WorkbookDeliverySuccess } from "../components/WorkbookDeliverySuccess";
 import { KakaoContactLink } from "../components/SelahKakaoContact";
 import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
 import { LimitedLaunchPrice } from "../components/LimitedLaunchPrice";
+import { MoneyCouponField, type AppliedMoneyCoupon } from "../components/MoneyCouponField";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 
@@ -81,6 +82,7 @@ function SelahMoneySetPage() {
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
   const [delivery, setDelivery] = useState<{ downloadUrl: string; emailSent: boolean } | null>(null);
+  const [coupon, setCoupon] = useState<AppliedMoneyCoupon | null>(null);
 
   useEffect(() => {
     try {
@@ -120,6 +122,7 @@ function SelahMoneySetPage() {
     setDigitalConsent(false);
     setCustomConsent(false);
     setRestartConfirmOpen(false);
+    setCoupon(null);
     setCheckoutOpen(true);
   }
 
@@ -143,6 +146,8 @@ function SelahMoneySetPage() {
           faithType: context.faithTitle,
           refundConsentAt: consentAt,
           sourcePath: window.location.pathname,
+          couponCode: coupon?.code || null,
+          couponPhone: coupon?.phone || null,
         },
       });
       window.sessionStorage.setItem(
@@ -150,6 +155,11 @@ function SelahMoneySetPage() {
         JSON.stringify({ product: "set", consentAt, email: trimmedEmail }),
       );
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
+      if (order.amount === 0) {
+        window.alert("100% 쿠폰이 적용되었습니다. 결제 없이 주문이 완료되었으며, 워크북은 이메일로 제공되고 맞춤 리포트는 24시간 이내 보내드립니다.");
+        setCheckoutOpen(false);
+        return;
+      }
       const payment = await requestMoneyPayment(order, context.name);
       if (payment.completed) {
         const result = await verifyMoneyPayment({ data: { paymentId: payment.paymentId } });
@@ -328,7 +338,8 @@ function SelahMoneySetPage() {
                   <label htmlFor="set-detail-email">리포트를 받을 이메일</label>
                   <input id="set-detail-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="이메일 주소 입력" autoComplete="email" />
                   <em>워크북은 즉시 제공되며, 맞춤 리포트는 결제 후 24시간<br />이내 이메일로 보내드립니다.</em>
-                  <CreditCardPaymentMethod />
+                  {coupon?.finalAmount !== 0 && <CreditCardPaymentMethod />}
+                  <MoneyCouponField productCode="set" onChange={setCoupon} />
                   <button className="money-report-detail-restart" type="button" onClick={() => setRestartConfirmOpen(true)}>↻ 검사 다시하기</button>
                   <DigitalContentCheckoutConsents
                     idPrefix="set-checkout"
@@ -340,7 +351,7 @@ function SelahMoneySetPage() {
                     onDigitalChange={setDigitalConsent}
                     onCustomChange={setCustomConsent}
                   />
-                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || !customConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : "신용카드로 결제하기"}</button>
+                  <button className="money-report-detail-checkout-primary" type="button" onClick={confirmCheckout} disabled={!termsConsent || !digitalConsent || !customConsent || creatingOrder}>{creatingOrder ? "주문 정보 저장 중..." : coupon?.finalAmount === 0 ? "무료로 받기" : coupon ? `${coupon.finalAmount.toLocaleString("ko-KR")}원 결제하기` : "신용카드로 결제하기"}</button>
                   <DigitalContentRefundNotice bundle />
                   <KakaoContactLink variant="checkout" />
                 </>

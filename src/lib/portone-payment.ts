@@ -6,6 +6,7 @@ export type MoneyPaymentOrder = {
   amount: number;
   currency: string;
   customerEmail: string;
+  customerPhone?: string | null;
 };
 
 const FALLBACK_PRODUCTS = {
@@ -58,6 +59,7 @@ export async function requestMoneyPayment(
     customer: {
       email: order.customerEmail,
       ...(customerName?.trim() ? { fullName: customerName.trim() } : {}),
+      ...(order.customerPhone ? { phoneNumber: order.customerPhone } : {}),
     },
     noticeUrls: [`${window.location.origin}/api/portone/webhook`],
     redirectUrl: `${window.location.origin}${window.location.pathname}?paymentId=${encodeURIComponent(order.paymentId)}`,

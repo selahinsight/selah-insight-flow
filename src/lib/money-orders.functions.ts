@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { MONEY_PRODUCTS } from "@/lib/money-products";
 import { syncPortOnePayment } from "@/lib/portone-payment.server";
+import { resolveMoneyCoupon } from "@/lib/coupon.functions";
 
 const createMoneyOrderInput = z.object({
   productCode: z.enum(["report", "workbook", "set"]),
@@ -19,6 +20,8 @@ const createMoneyOrderInput = z.object({
   faithType: z.string().trim().max(100).optional().nullable(),
   refundConsentAt: z.string().datetime({ offset: true }),
   sourcePath: z.string().trim().max(200).optional(),
+  couponCode: z.string().trim().max(40).optional().nullable(),
+  couponPhone: z.string().trim().max(30).optional().nullable(),
 });
 
 function createOrderNumber(now = new Date()): string {
@@ -46,19 +49,31 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
       throw new Error("판매 상품 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.");
     }
 
+    const coupon = data.couponCode
+      ? await resolveMoneyCoupon(data.couponCode, data.productCode, studioProduct.price_krw, data.couponPhone || "")
+      : null;
+    if (coupon && !coupon.valid) throw new Error(coupon.message);
+    const finalAmount = coupon?.valid ? coupon.finalAmount : studioProduct.price_krw;
+
+    const freeOrder = finalAmount === 0;
+    const now = new Date().toISOString();
     const { data: order, error } = await supabaseAdmin
       .from("orders")
       .insert({
         order_number: orderNumber,
         product_id: studioProduct.id,
-        amount_krw: studioProduct.price_krw,
+        amount_krw: finalAmount,
         buyer_email: data.email.toLowerCase(),
         buyer_name: data.customerName || null,
+        buyer_phone: coupon?.valid ? coupon.phone : null,
         refund_consent_at: data.refundConsentAt,
-        requested_at: new Date().toISOString(),
-        status: "pending_payment",
-        payment_status: "pending",
+        requested_at: now,
+        status: freeOrder ? "paid" : "pending_payment",
+        payment_status: freeOrder ? "paid" : "pending",
         external_payment_id: orderNumber,
+        payment_provider: freeOrder ? "coupon" : null,
+        payment_method: freeOrder ? "coupon" : null,
+        paid_at: freeOrder ? now : null,
         metadata: {
           sourcePath: data.sourcePath || null,
           surveyResponseId: data.surveyResponseId || null,
@@ -68,6 +83,11 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
           downloadToken: product.code === "workbook" || product.code === "set"
             ? crypto.randomUUID().replaceAll("-", "")
             : null,
+          originalAmount: studioProduct.price_krw,
+          couponId: coupon?.valid ? coupon.couponId : null,
+          couponCode: coupon?.valid ? coupon.code : null,
+          couponDiscountRate: coupon?.valid ? coupon.discountRate : null,
+          couponDiscountAmount: coupon?.valid ? coupon.discountAmount : 0,
         },
       })
       .select("id, order_number, amount_krw, buyer_email, status, created_at")
@@ -87,6 +107,7 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
       amount: order.amount_krw,
       currency: "KRW",
       customerEmail: data.email.toLowerCase(),
+      customerPhone: coupon?.valid ? coupon.phone : null,
       status: order.status,
       createdAt: order.created_at,
     };
