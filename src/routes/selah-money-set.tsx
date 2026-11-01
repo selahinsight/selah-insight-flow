@@ -5,6 +5,7 @@ import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 import { WorkbookDeliverySuccess } from "../components/WorkbookDeliverySuccess";
 import { KakaoContactLink } from "../components/SelahKakaoContact";
 import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
+import { LimitedLaunchPrice } from "../components/LimitedLaunchPrice";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 
@@ -194,10 +195,7 @@ function SelahMoneySetPage() {
 
           <div className="money-set-hero-meta">
             <span>워크북 즉시 다운로드 · 리포트 24시간 이내 이메일 발송</span>
-            <div>
-              <s>개별 런칭가 38,900원</s>
-              <strong>세트 런칭가 34,900원</strong>
-            </div>
+            <LimitedLaunchPrice current="34,900원" original="38,900원" currentLabel="세트 런칭가" originalLabel="개별 런칭가" />
             <em>4,000원 절약</em>
           </div>
           <button className="money-set-hero-cta" type="button" onClick={openCheckout}>
@@ -285,8 +283,7 @@ function SelahMoneySetPage() {
             <li>50페이지 셀라 머니 워크북</li>
           </ul>
           <div className="money-set-purchase-price">
-            <s>개별 런칭가 38,900원</s>
-            <strong><small>세트 런칭가</small> 34,900원</strong>
+            <LimitedLaunchPrice current="34,900원" original="38,900원" currentLabel="세트 런칭가" originalLabel="개별 런칭가" />
             <em>4,000원 절약</em>
           </div>
           <button type="button" onClick={openCheckout}>세트 구매하기</button>

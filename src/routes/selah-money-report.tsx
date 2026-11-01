@@ -8,6 +8,7 @@ import {
 import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 import { KakaoContactLink } from "../components/SelahKakaoContact";
 import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
+import { LimitedLaunchPrice } from "../components/LimitedLaunchPrice";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 
@@ -196,10 +197,7 @@ function SelahMoneyReportPage() {
             <div>
               <span>11페이지 개인 맞춤 PDF</span>
               <span>결제 후 24시간 이내 이메일 발송</span>
-              <div className="money-report-detail-hero-price">
-                <s>정가 15,000원</s>
-                <strong>런칭가 9,900원</strong>
-              </div>
+              <LimitedLaunchPrice current="9,900원" original="15,000원" className="money-report-detail-hero-price" />
             </div>
           </div>
         </header>
@@ -241,11 +239,7 @@ function SelahMoneyReportPage() {
         </section>
 
         <section className="money-report-detail-purchase-strip">
-          <div>
-            <s>정가 15,000원</s>
-            <span className="money-report-detail-price-arrow" aria-hidden="true">→</span>
-            <strong>런칭가 9,900원</strong>
-          </div>
+          <LimitedLaunchPrice current="9,900원" original="15,000원" />
           <button type="button" onClick={openCheckout}>셀라 머니 심층 리포트 구매하기</button>
           <DigitalContentRefundNotice />
         </section>
@@ -282,8 +276,7 @@ function SelahMoneyReportPage() {
             <span className="money-workbook-product-eyebrow">REPORT ONLY</span>
             <h3>셀라 머니 심층 리포트</h3>
             <p>11페이지 개인 맞춤 PDF</p>
-            <s>정가 15,000원</s>
-            <strong><small>런칭가</small> 9,900원</strong>
+            <LimitedLaunchPrice current="9,900원" original="15,000원" />
             <button type="button" onClick={openCheckout}>심층 리포트 구매하기</button>
           </article>
           <article className="money-workbook-product-card money-workbook-product-card--set">
@@ -291,8 +284,7 @@ function SelahMoneyReportPage() {
             <span className="money-workbook-product-eyebrow">REPORT + WORKBOOK</span>
             <h3>심층 리포트 + 머니 워크북 세트</h3>
             <p>11페이지 리포트 + 50페이지 실행 워크북</p>
-            <s>개별 런칭가 38,900원</s>
-            <strong><small>세트 런칭가</small> 34,900원</strong>
+            <LimitedLaunchPrice current="34,900원" original="38,900원" currentLabel="세트 런칭가" originalLabel="개별 런칭가" />
             <a href="/selah-money-set">세트 구매하기</a>
           </article>
         </section>

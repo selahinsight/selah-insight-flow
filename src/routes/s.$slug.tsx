@@ -18,6 +18,7 @@ import {
 } from "@/lib/survey-store";
 import { supabase } from "@/integrations/supabase/client";
 import { sendStudioIntake } from "@/lib/studio-intake.functions";
+import { LimitedLaunchPrice } from "@/components/LimitedLaunchPrice";
 import { allSelahMoneyResults, classifySelahMoneyDiagnosis, customerFaithResultTitle } from "@/lib/selah-money-results";
 
 
@@ -2325,11 +2326,7 @@ function MoneyPaidDiagnosisSection({
                     <li>11페이지 개인 맞춤 PDF</li>
                     <li>결제 후 24시간 이내 이메일 발송</li>
                   </ul>
-                  <div className="money-report-hero-price" aria-label="런칭 이벤트 가격">
-                    <span>런칭 이벤트가</span>
-                    <s>15,000원</s>
-                    <strong>9,900원</strong>
-                  </div>
+                  <LimitedLaunchPrice current="9,900원" original="15,000원" className="money-report-hero-price" />
                 </div>
               </div>
             </header>
@@ -2389,7 +2386,7 @@ function MoneyPaidDiagnosisSection({
                 </article>
               </div>
               <div className="money-report-preview-cta">
-                <div className="money-report-preview-price"><s>15,000원</s><em>런칭가 9,900원</em></div>
+                <LimitedLaunchPrice current="9,900원" original="15,000원" className="money-report-preview-price" />
                 {purchaseButton("after-preview", "셀라 머니 심층 리포트 구매하기")}
               </div>
             </section>
@@ -2428,16 +2425,14 @@ function MoneyPaidDiagnosisSection({
                   <article>
                     <span>셀라 머니 심층 리포트</span>
                     <p>11페이지 개인 맞춤 PDF</p>
-                    <s>15,000원</s>
-                    <strong><small>런칭가</small> 9,900원</strong>
+                    <LimitedLaunchPrice current="9,900원" original="15,000원" />
                     {purchaseButton("footer-report", "심층 리포트 구매하기")}
                   </article>
                   <article className="money-report-purchase-option-set">
                     <em>가장 추천 · 이해부터 실행까지</em>
                     <span>심층 리포트 + 셀라 머니 워크북 세트</span>
                     <p>심층 리포트와 50페이지 실행 워크북</p>
-                    <s>개별 구매 38,900원</s>
-                    <strong><small>세트 런칭가</small> 34,900원</strong>
+                    <LimitedLaunchPrice current="34,900원" original="38,900원" currentLabel="세트 런칭가" originalLabel="개별 구매" />
                     <a className="money-report-purchase-button" href="/selah-money-set" data-placement="footer-set">세트 구매하기</a>
                   </article>
                 </div>

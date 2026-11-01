@@ -5,6 +5,7 @@ import { MoneyStudyCourseFooter } from "../components/MoneyStudyCourseFooter";
 import { WorkbookDeliverySuccess } from "../components/WorkbookDeliverySuccess";
 import { KakaoContactLink } from "../components/SelahKakaoContact";
 import { CreditCardPaymentMethod } from "../components/CreditCardPaymentMethod";
+import { LimitedLaunchPrice } from "../components/LimitedLaunchPrice";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 
@@ -159,8 +160,7 @@ function SelahMoneyWorkbookPage() {
             <span>50페이지 실행 워크북</span>
             <span>결제 후 즉시 다운로드 · PDF</span>
             <span className="money-workbook-hero-price-line" aria-hidden="true" />
-            <s>정가 39,000원</s>
-            <strong>런칭가 29,000원</strong>
+            <LimitedLaunchPrice current="29,000원" original="39,000원" />
           </div>
         </header>
 
@@ -233,10 +233,7 @@ function SelahMoneyWorkbookPage() {
             <span className="money-workbook-product-eyebrow">WORKBOOK ONLY</span>
             <h3>셀라 머니 워크북</h3>
             <p>50페이지 실행 워크북</p>
-            <s>정가 39,000원</s>
-            <strong>
-              <small>런칭가</small> 29,000원
-            </strong>
+            <LimitedLaunchPrice current="29,000원" original="39,000원" />
             <button type="button" onClick={() => openCheckout("workbook")}>
               워크북 구매하기
             </button>
@@ -251,10 +248,7 @@ function SelahMoneyWorkbookPage() {
               반복되는 돈 패턴을 이해하고,
               <br />나만의 기준으로 실제 돈 관리까지 이어가는 구성
             </p>
-            <s>개별 런칭가 38,900원</s>
-            <strong>
-              <small>세트 런칭가</small> 34,900원
-            </strong>
+            <LimitedLaunchPrice current="34,900원" original="38,900원" currentLabel="세트 런칭가" originalLabel="개별 런칭가" />
             <button type="button" onClick={() => openCheckout("set")}>
               세트 구매하기
             </button>
