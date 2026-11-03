@@ -7,7 +7,14 @@ const createMoneyOrderInput = z.object({
   productCode: z.enum(["report", "workbook", "set"]),
   email: z.string().trim().email().max(254),
   customerName: z.string().trim().max(100).optional().nullable(),
-  surveyResponseId: z.string().uuid().optional().nullable(),
+  surveyResponseId: z
+    .string()
+    .trim()
+    .min(1)
+    .max(100)
+    .regex(/^[A-Za-z0-9_-]+$/)
+    .optional()
+    .nullable(),
   moneyType: z.string().trim().max(100).optional().nullable(),
   faithType: z.string().trim().max(100).optional().nullable(),
   refundConsentAt: z.string().datetime({ offset: true }),
