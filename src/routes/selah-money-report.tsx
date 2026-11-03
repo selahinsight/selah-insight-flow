@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Check } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import {
   DigitalContentCheckoutConsents,
   DigitalContentRefundNotice,
@@ -86,6 +86,8 @@ function SelahMoneyReportPage() {
   const [restartConfirmOpen, setRestartConfirmOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [creatingOrder, setCreatingOrder] = useState(false);
+  const [reportSampleIndex, setReportSampleIndex] = useState(0);
+  const reportSamplesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     try {
@@ -125,6 +127,30 @@ function SelahMoneyReportPage() {
     setCustomConsent(false);
     setRestartConfirmOpen(false);
     setCheckoutOpen(true);
+  }
+
+  function moveReportPreview(nextIndex: number) {
+    const index = Math.max(0, Math.min(reportSamples.length - 1, nextIndex));
+    const page = reportSamplesRef.current?.children.item(index);
+    if (!(page instanceof HTMLElement)) return;
+    page.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    setReportSampleIndex(index);
+  }
+
+  function syncReportPreviewIndex() {
+    const container = reportSamplesRef.current;
+    if (!container) return;
+    const center = container.scrollLeft + container.clientWidth / 2;
+    const pages = Array.from(container.children).filter(
+      (page): page is HTMLElement => page instanceof HTMLElement,
+    );
+    const nearestIndex = pages.reduce((nearest, page, index) => {
+      const pageCenter = page.offsetLeft + page.offsetWidth / 2;
+      const nearestPage = pages[nearest];
+      const nearestCenter = nearestPage.offsetLeft + nearestPage.offsetWidth / 2;
+      return Math.abs(pageCenter - center) < Math.abs(nearestCenter - center) ? index : nearest;
+    }, 0);
+    setReportSampleIndex(nearestIndex);
   }
 
   function restartDiagnosis() {
@@ -225,15 +251,51 @@ function SelahMoneyReportPage() {
 
         <section className="money-workbook-sample-section money-report-detail-samples">
           <h2>셀라 머니 심층 리포트 미리보기</h2>
-          <div className="money-workbook-sample-pages">
-            {reportSamples.map((page) => (
-              <figure key={page.src}>
-                <img src={page.src} alt={page.alt} loading="lazy" />
-                <figcaption>
-                  <span>{page.label}</span>
-                  <strong>{page.title}</strong>
-                </figcaption>
-              </figure>
+          <div className="money-report-preview-carousel">
+            <button
+              className="money-report-preview-arrow money-report-preview-arrow--previous"
+              type="button"
+              onClick={() => moveReportPreview(reportSampleIndex - 1)}
+              disabled={reportSampleIndex === 0}
+              aria-label="이전 리포트 미리보기"
+            >
+              <ChevronLeft aria-hidden="true" />
+            </button>
+            <div
+              ref={reportSamplesRef}
+              className="money-workbook-sample-pages"
+              onScroll={syncReportPreviewIndex}
+            >
+              {reportSamples.map((page) => (
+                <figure key={page.src}>
+                  <img src={page.src} alt={page.alt} loading="lazy" />
+                  <figcaption>
+                    <span>{page.label}</span>
+                    <strong>{page.title}</strong>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <button
+              className="money-report-preview-arrow money-report-preview-arrow--next"
+              type="button"
+              onClick={() => moveReportPreview(reportSampleIndex + 1)}
+              disabled={reportSampleIndex === reportSamples.length - 1}
+              aria-label="다음 리포트 미리보기"
+            >
+              <ChevronRight aria-hidden="true" />
+            </button>
+          </div>
+          <div className="money-report-preview-pagination" aria-live="polite">
+            {reportSamples.map((page, index) => (
+              <button
+                key={page.src}
+                type="button"
+                className={index === reportSampleIndex ? "is-active" : ""}
+                onClick={() => moveReportPreview(index)}
+                aria-label={`${index + 1}번째 리포트 미리보기`}
+                aria-current={index === reportSampleIndex ? "true" : undefined}
+              />
             ))}
           </div>
         </section>

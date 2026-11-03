@@ -3560,6 +3560,36 @@
 .money-report-detail-difference li { display: flex; gap: 10px; align-items: flex-start; color: #665249; font-size: 15px; line-height: 1.68; }
 .money-report-detail-difference li svg { flex: 0 0 auto; margin-top: 5px; color: #a36f62; }
 .money-report-detail-samples { background: #fbf8f2; }
+.money-report-preview-carousel { position: relative; }
+.money-report-preview-arrow {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  display: none;
+  width: 46px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 1px solid rgba(102,81,71,.2);
+  border-radius: 999px;
+  background: rgba(255,253,249,.96);
+  color: #665147;
+  box-shadow: 0 8px 24px rgba(71,55,44,.14);
+  cursor: pointer;
+}
+.money-report-preview-arrow--previous { left: 8px; }
+.money-report-preview-arrow--next { right: 8px; }
+.money-report-preview-arrow:disabled { opacity: .32; cursor: default; }
+.money-report-preview-arrow svg { width: 24px; height: 24px; }
+.money-report-preview-pagination { display: flex; justify-content: center; gap: 9px; margin-top: 12px; }
+.money-report-preview-pagination button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; background: rgba(102,81,71,.24); cursor: pointer; }
+.money-report-preview-pagination button.is-active { width: 24px; background: #8b5e55; }
+@media (min-width: 640px) {
+  .money-report-preview-arrow { display: flex; }
+  .money-report-detail-samples .money-workbook-sample-pages { padding-right: 70px; padding-left: 70px; }
+}
 .money-report-detail-purchase-strip { padding: 48px 24px; background: #efe5da; text-align: center; }
 .money-report-detail-purchase-strip > div { display: flex; align-items: baseline; justify-content: center; gap: 10px; }
 .money-report-detail-purchase-strip s { color: #765f54; font-size: 16px; font-weight: 600; }
