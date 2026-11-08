@@ -18,6 +18,7 @@ import {
 } from "@/lib/survey-store";
 import { supabase } from "@/integrations/supabase/client";
 import { sendStudioIntake } from "@/lib/studio-intake.functions";
+import { loadStudioSurveyResult } from "@/lib/studio-result-access.functions";
 import { LimitedLaunchPrice } from "@/components/LimitedLaunchPrice";
 import { allSelahMoneyResults, classifySelahMoneyDiagnosis, customerFaithResultTitle } from "@/lib/selah-money-results";
 
@@ -277,6 +278,10 @@ function escapeEmailHtml(value: string): string {
   })[character] ?? character);
 }
 
+function newResultId(): string {
+  return `r_${crypto.randomUUID().replaceAll("-", "")}`;
+}
+
 function buildResultEmailContent(args: {
   name: string;
   surveyTitle: string;
@@ -431,6 +436,8 @@ function Runner({
   const [starting, setStarting] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const [editorialPreview, setEditorialPreview] = useState(false);
+  const [resultRestoreState, setResultRestoreState] = useState<"idle" | "loading" | "error">("idle");
+  const [resultRestoreError, setResultRestoreError] = useState("");
   const [customerContact, setCustomerContact] = useState<
     { id: string; contactToken: string } | null
   >(null);
@@ -466,6 +473,7 @@ function Runner({
     if (survey.slug !== "selah-money-diagnosis" || typeof window === "undefined") return;
 
     const params = new URLSearchParams(window.location.search);
+    if (params.get("result") && params.get("token")) return;
     const isShortResultPreview =
       window.location.pathname.replace(/\/+$/, "").endsWith("/s/selah-money-d");
     if (!isShortResultPreview && params.get("preview") !== "result") return;
@@ -525,6 +533,65 @@ function Runner({
       setPhase("done");
     })();
 
+    return () => {
+      cancelled = true;
+    };
+  }, [survey]);
+
+  useEffect(() => {
+    if (survey.slug !== "selah-money-diagnosis" || typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const resultNumber = params.get("result")?.trim() || "";
+    const token = params.get("token")?.trim() || "";
+    if (!resultNumber || !token) return;
+
+    let cancelled = false;
+    setResultRestoreState("loading");
+    setResultRestoreError("");
+    void loadStudioSurveyResult({ data: { resultNumber, token } })
+      .then((restored) => {
+        if (cancelled) return;
+        const resultTypes = allSelahMoneyResults(survey.resultTypes ?? []);
+        const diagnosis = restored.answers.__diagnosis_result && typeof restored.answers.__diagnosis_result === "object"
+          ? restored.answers.__diagnosis_result as Record<string, unknown>
+          : {};
+        const moneyTypeId = restored.primaryMoneyTypeId || restored.resultTypeId || String(diagnosis.moneyResultCode || "");
+        const faithTypeId = restored.primaryFaithLensId || String(diagnosis.faithResultCode || "");
+        const moneyType = resultTypes.find((item) => item.id === moneyTypeId);
+        const faithType = resultTypes.find((item) => item.id === faithTypeId);
+        if (!moneyType || !faithType) throw new Error("저장된 진단 유형을 확인하지 못했습니다.");
+
+        const rawScores = diagnosis.scores && typeof diagnosis.scores === "object"
+          ? diagnosis.scores as Record<string, { total: number; average: number }>
+          : {};
+        const includedMoneyTypeIds = Array.isArray(diagnosis.includedMoneyTypeIds)
+          ? diagnosis.includedMoneyTypeIds.filter((id): id is string => typeof id === "string")
+          : [];
+
+        setName(restored.name || "고객");
+        setResponseId(restored.responseId);
+        setResult(moneyType);
+        setSelahResult({
+          primaryMoneyType: moneyType,
+          primaryMoneyTypes: [moneyType],
+          secondaryMoneyType: restored.secondaryMoneyTypeId
+            ? resultTypes.find((item) => item.id === restored.secondaryMoneyTypeId)
+            : undefined,
+          faithLenses: [faithType],
+          primaryFaithLens: faithType,
+          scores: rawScores,
+          includedMoneyTypeIds,
+          hasMoneyTie: diagnosis.hasMoneyTie === true,
+        });
+        setPhase("done");
+        setResultRestoreState("idle");
+        window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+      })
+      .catch((error) => {
+        if (cancelled) return;
+        setResultRestoreError(error instanceof Error ? error.message : "진단 결과를 불러오지 못했습니다.");
+        setResultRestoreState("error");
+      });
     return () => {
       cancelled = true;
     };
@@ -608,7 +675,7 @@ function Runner({
         answers,
         lastPickRef.current ? [lastPickRef.current] : undefined,
       );
-    const id = uid("r");
+    const id = newResultId();
     setResponseId(id);
     setResult(rt);
     setSelahResult(selah);
@@ -711,7 +778,7 @@ function Runner({
         data: {
           email: trimmedEmail,
           name: name.trim() || undefined,
-          responseId: responseId ?? uid("r"),
+          responseId: responseId ?? newResultId(),
           surveyId: survey.id || survey.slug,
           surveySlug: survey.slug,
           surveyTitle: survey.title,
@@ -806,6 +873,34 @@ function Runner({
   const isMoneyDiagnosis = survey.slug === "selah-money-diagnosis";
   const [introSubtitle, ...introBodyParts] = (survey.description ?? "").split(/\n\n+/);
   const introBody = introBodyParts.join("\n\n");
+
+  if (resultRestoreState === "loading") {
+    return (
+      <div className="money-loading">
+        <img src="/selah-insight-logo-transparent.png" alt="Selah Insight" />
+        <p>저장된 진단 결과를 불러오는 중입니다.</p>
+      </div>
+    );
+  }
+
+  if (resultRestoreState === "error") {
+    return (
+      <Wrap theme={theme} design={design} introMode={isMoneyDiagnosis}>
+        <div className="money-intro-card" style={{ ...cardStyle, padding: "48px 32px", textAlign: "center" }}>
+          <h1 style={{ margin: 0, color: theme.text, fontSize: 25 }}>진단 결과를 연결하지 못했습니다</h1>
+          <p style={{ margin: "18px auto 0", maxWidth: 440, color: theme.text, lineHeight: 1.7 }}>{resultRestoreError}</p>
+          <button
+            type="button"
+            className="money-report-purchase-button"
+            style={{ ...btnPrimary, marginTop: 28 }}
+            onClick={() => window.location.assign("/s/selah-money-d")}
+          >
+            무료 진단 다시하기
+          </button>
+        </div>
+      </Wrap>
+    );
+  }
 
   if (phase === "intro") {
     return (

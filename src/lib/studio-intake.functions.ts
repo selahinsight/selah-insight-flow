@@ -30,7 +30,7 @@ const studioIntakeInput = z.object({
 export const sendStudioIntake = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => studioIntakeInput.parse(data))
   .handler(async ({ data }) => {
-    const emailContent = data.emailContent
+    let emailContent = data.emailContent
       ? { ...data.emailContent, ...appendKakaoContactToEmail(data.emailContent.html, data.emailContent.text) }
       : null;
     const endpoint =
@@ -42,6 +42,21 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
 
     if (!secret) {
       return { status: "not_configured" as const };
+    }
+
+    let resultAccessTokenHash: string | null = null;
+    let resultExpiresAt: string | null = null;
+    if (data.email && emailContent && /^r_[A-Za-z0-9_-]{7,80}$/.test(data.responseId)) {
+      const resultAccessToken = crypto.randomUUID().replaceAll("-", "") + crypto.randomUUID().replaceAll("-", "");
+      const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(resultAccessToken));
+      resultAccessTokenHash = Array.from(new Uint8Array(digest))
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+      resultExpiresAt = new Date(Date.now() + 90 * 86400000).toISOString();
+      const previewUrl = new URL("https://money.selahinsight.co.kr/s/selah-money-diagnosis");
+      previewUrl.searchParams.set("result", data.responseId);
+      previewUrl.searchParams.set("token", resultAccessToken);
+      emailContent = { ...emailContent, previewUrl: previewUrl.toString() };
     }
 
     const url = new URL(endpoint);
@@ -73,6 +88,9 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
         result_email_consent: Boolean(data.email),
         marketing_consent: data.marketingConsent ?? false,
         email_content: emailContent,
+        result_access_token_hash: resultAccessTokenHash,
+        result_expires_at: resultExpiresAt,
+        result_status: resultAccessTokenHash ? "temporary" : null,
       }),
     });
 

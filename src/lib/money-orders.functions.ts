@@ -77,6 +77,8 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
         metadata: {
           sourcePath: data.sourcePath || null,
           surveyResponseId: data.surveyResponseId || null,
+          survey_response_id: data.surveyResponseId || null,
+          result_number: data.surveyResponseId || null,
           moneyType: data.moneyType || null,
           faithType: data.faithType || null,
           productCode: product.code,
