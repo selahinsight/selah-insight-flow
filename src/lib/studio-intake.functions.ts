@@ -24,6 +24,10 @@ const studioIntakeInput = z.object({
       dataUrl: z.string().regex(/^data:image\/(?:png|jpeg);base64,/),
       filename: z.string().min(1).max(120),
     }).optional(),
+    emailResultImage: z.object({
+      dataUrl: z.string().regex(/^data:image\/(?:png|jpeg);base64,/),
+      filename: z.string().min(1).max(120),
+    }).optional(),
   }).optional(),
 });
 
@@ -31,7 +35,12 @@ export const sendStudioIntake = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => studioIntakeInput.parse(data))
   .handler(async ({ data }) => {
     let emailContent = data.emailContent
-      ? { ...data.emailContent, ...appendKakaoContactToEmail(data.emailContent.html, data.emailContent.text) }
+      ? {
+          ...data.emailContent,
+          ...(data.emailContent.emailResultImage
+            ? {}
+            : appendKakaoContactToEmail(data.emailContent.html, data.emailContent.text)),
+        }
       : null;
     const endpoint =
       process.env.SELAH_STUDIO_INTAKE_URL ||

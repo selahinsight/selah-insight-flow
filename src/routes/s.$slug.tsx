@@ -743,11 +743,11 @@ function Runner({
     setEmailSendError(null);
     setSubmitting(true);
     try {
-      let resultImage: { dataUrl: string; filename: string } | undefined;
+      let emailResultImage: { dataUrl: string; filename: string } | undefined;
       if (isMoneyDiagnosis && emailCaptureRef.current) {
         await document.fonts?.ready;
         const node = emailCaptureRef.current;
-        node.setAttribute("data-capturing-email", "true");
+        node.setAttribute("data-capturing-email", "content-only");
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
         let dataUrl: string;
         try {
@@ -764,7 +764,7 @@ function Runner({
         if (dataUrl.length > 24_000_000) {
           throw new Error("결과 이미지 용량이 너무 큽니다.");
         }
-        resultImage = { dataUrl, filename: "selah-money-result.png" };
+        emailResultImage = { dataUrl, filename: "selah-money-email-result.png" };
       }
 
       const emailContent = buildResultEmailContent({
@@ -808,7 +808,7 @@ function Runner({
           primaryFaithLensId: selahResult?.primaryFaithLens?.id,
           privacyConsent: true,
           marketingConsent,
-          emailContent: { ...emailContent, resultImage },
+          emailContent: { ...emailContent, emailResultImage },
         },
       });
 
