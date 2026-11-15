@@ -20,6 +20,7 @@ const studioIntakeInput = z.object({
     subject: z.string().min(1),
     html: z.string().min(1),
     text: z.string().min(1),
+    previewUrl: z.string().url().optional(),
     resultImage: z.object({
       dataUrl: z.string().regex(/^data:image\/(?:png|jpeg);base64,/),
       filename: z.string().min(1).max(120),
@@ -27,6 +28,8 @@ const studioIntakeInput = z.object({
     emailResultImage: z.object({
       dataUrl: z.string().regex(/^data:image\/(?:png|jpeg);base64,/),
       filename: z.string().min(1).max(120),
+      imageRole: z.literal("result_body"),
+      sourceVersion: z.literal("body-only-v2"),
     }).optional(),
   }).optional(),
 });

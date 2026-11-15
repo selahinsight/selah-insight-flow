@@ -487,11 +487,8 @@
   display: block;
 }
 
-.money-email-capture-content[data-capturing-email="content-only"] .money-paid-teaser--compact {
-  padding-bottom: 28px;
-}
-
-.money-email-capture-content[data-capturing-email="content-only"] .money-paid-teaser--compact .money-report-purchase-button[data-placement="free-results"] {
+.money-email-capture-content[data-capturing-email="body-only-v2"] .money-paid-funnel-section,
+.money-email-capture-content[data-capturing-email="body-only-v2"] .money-email-social-capture {
   display: none;
 }
 
