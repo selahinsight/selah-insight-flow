@@ -752,20 +752,16 @@ function Runner({
       if (isMoneyDiagnosis && emailCaptureRef.current) {
         await document.fonts?.ready;
         const node = emailCaptureRef.current;
-        node.setAttribute("data-capturing-email", "body-only-v2");
-        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-        let dataUrl: string;
-        try {
-          dataUrl = await toPng(node, {
-            cacheBust: true,
-            pixelRatio: 2,
-            backgroundColor: theme.bg,
-            width: node.scrollWidth,
-            height: node.scrollHeight,
-          });
-        } finally {
-          node.removeAttribute("data-capturing-email");
+        if (node.dataset.emailResultBody !== "true") {
+          throw new Error("이메일 결과 이미지 캡처 대상이 개인 결과 카드가 아닙니다.");
         }
+        const dataUrl = await toPng(node, {
+          cacheBust: true,
+          pixelRatio: 2,
+          backgroundColor: theme.bg,
+          width: node.scrollWidth,
+          height: node.scrollHeight,
+        });
         if (dataUrl.length > 24_000_000) {
           throw new Error("결과 이미지 용량이 너무 큽니다.");
         }
@@ -1174,8 +1170,9 @@ function Runner({
     if (result) {
       return (
         <Wrap theme={theme} design={design} introMode>
-          <div ref={isMoneyDiagnosis ? emailCaptureRef : undefined} className={isMoneyDiagnosis ? "money-email-capture-content" : undefined}>
           <div
+            ref={isMoneyDiagnosis ? emailCaptureRef : undefined}
+            data-email-result-body={isMoneyDiagnosis ? "true" : undefined}
             className={`money-result-card${editorialPreview ? " money-editorial-result-shell" : ""}`}
             style={{
               ...cardStyle,
@@ -1556,12 +1553,6 @@ function Runner({
               onRestart={restartDiagnosis}
             />
           )}
-          {isMoneyDiagnosis && (
-            <div className="money-email-social-capture" aria-hidden="true">
-              <FunnelCtas theme={theme} design={design} isMoneyDiagnosis />
-            </div>
-          )}
-          </div>
 
           {!(result.id === "money_no_clear_pattern" && selahResult?.primaryFaithLens?.id === "faith_low") && (
             <>
