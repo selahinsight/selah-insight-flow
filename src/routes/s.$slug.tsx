@@ -597,7 +597,9 @@ function Runner({
         const captureNonce = params.get("captureNonce") || "";
         const captureOrigin = params.get("captureOrigin") || "";
         if (params.get("capture") === "email-result-body-v3" && captureNonce && captureOrigin === "https://studio.selahinsight.co.kr") {
-          window.parent.postMessage({ type: "selah-email-result-body-v3-error", captureNonce, error: message }, captureOrigin);
+          const captureTarget = window.opener && !window.opener.closed ? window.opener : window.parent;
+          captureTarget.postMessage({ type: "selah-email-result-body-v3-error", captureNonce, error: message }, captureOrigin);
+          if (captureTarget === window.opener) window.setTimeout(() => window.close(), 250);
         }
         setResultRestoreError(message);
         setResultRestoreState("error");
@@ -813,10 +815,18 @@ function Runner({
     let cancelled = false;
     void captureCurrentResultImage()
       .then((image) => {
-        if (!cancelled) window.parent.postMessage({ type: "selah-email-result-body-v3", captureNonce, image }, captureOrigin);
+        if (!cancelled) {
+          const captureTarget = window.opener && !window.opener.closed ? window.opener : window.parent;
+          captureTarget.postMessage({ type: "selah-email-result-body-v3", captureNonce, image }, captureOrigin);
+          if (captureTarget === window.opener) window.setTimeout(() => window.close(), 250);
+        }
       })
       .catch((error) => {
-        if (!cancelled) window.parent.postMessage({ type: "selah-email-result-body-v3-error", captureNonce, error: error instanceof Error ? error.message : "개인 결과 이미지를 생성하지 못했습니다." }, captureOrigin);
+        if (!cancelled) {
+          const captureTarget = window.opener && !window.opener.closed ? window.opener : window.parent;
+          captureTarget.postMessage({ type: "selah-email-result-body-v3-error", captureNonce, error: error instanceof Error ? error.message : "개인 결과 이미지를 생성하지 못했습니다." }, captureOrigin);
+          if (captureTarget === window.opener) window.setTimeout(() => window.close(), 250);
+        }
       });
     return () => { cancelled = true; };
   }, [captureCurrentResultImage, phase, resultRestoreState, survey.slug]);
