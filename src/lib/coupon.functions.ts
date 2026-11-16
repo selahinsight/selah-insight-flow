@@ -18,6 +18,26 @@ type CouponContent = {
   maxUses?: number | null;
 };
 
+type CouponOrderMetadata = {
+  productCode?: string;
+  couponUsageCancelledAt?: string | null;
+};
+
+function productEntitlements(productCode?: string) {
+  if (productCode === "set") return ["report", "workbook"];
+  if (productCode === "workbook") return ["workbook"];
+  return ["report"];
+}
+
+function isActiveCouponUsage(metadata: CouponOrderMetadata | null | undefined) {
+  return !metadata?.couponUsageCancelledAt;
+}
+
+function usesAnyEntitlement(metadata: CouponOrderMetadata | null | undefined, requestedProductCode: string) {
+  const previous = new Set(productEntitlements(metadata?.productCode));
+  return productEntitlements(requestedProductCode).some((entitlement) => previous.has(entitlement));
+}
+
 export async function resolveMoneyCoupon(
   code: string,
   productCode: "report" | "workbook" | "set",
@@ -65,9 +85,9 @@ export async function resolveMoneyCoupon(
     return { valid: false as const, message: "현재 결제금액에는 사용할 수 없는 쿠폰입니다." };
   }
 
-  const { count: phoneUseCount, error: phoneUseError } = await supabaseAdmin
+  const { data: phoneUses, error: phoneUseError } = await supabaseAdmin
     .from("orders")
-    .select("id", { count: "exact", head: true })
+    .select("metadata")
     .eq("buyer_phone", normalizedPhone)
     .contains("metadata", { couponId: coupon.id })
     .in("status", ["paid", "delivered"]);
@@ -75,21 +95,28 @@ export async function resolveMoneyCoupon(
     console.error("[Selah Money] Coupon phone usage lookup failed", phoneUseError);
     throw new Error("쿠폰 사용 가능 여부를 확인하지 못했습니다.");
   }
-  if ((phoneUseCount || 0) > 0) {
-    return { valid: false as const, message: "이미 이 휴대폰번호로 사용한 쿠폰입니다." };
+  const hasUsedRequestedProduct = (phoneUses || []).some((order) => {
+    const metadata = (order.metadata || {}) as CouponOrderMetadata;
+    return isActiveCouponUsage(metadata) && usesAnyEntitlement(metadata, productCode);
+  });
+  if (hasUsedRequestedProduct) {
+    return { valid: false as const, message: "이미 이 휴대폰번호로 해당 상품에 사용한 쿠폰입니다." };
   }
 
   if (maxUses && maxUses > 0) {
-    const { count, error: countError } = await supabaseAdmin
+    const { data: couponUses, error: countError } = await supabaseAdmin
       .from("orders")
-      .select("id", { count: "exact", head: true })
+      .select("metadata")
       .contains("metadata", { couponId: coupon.id })
       .in("status", ["paid", "delivered"]);
     if (countError) {
       console.error("[Selah Money] Coupon usage lookup failed", countError);
       throw new Error("쿠폰 사용 가능 여부를 확인하지 못했습니다.");
     }
-    if ((count || 0) >= maxUses) {
+    const activeUseCount = (couponUses || []).filter((order) =>
+      isActiveCouponUsage((order.metadata || {}) as CouponOrderMetadata),
+    ).length;
+    if (activeUseCount >= maxUses) {
       return { valid: false as const, message: "쿠폰 사용 가능 횟수가 모두 소진되었습니다." };
     }
   }
