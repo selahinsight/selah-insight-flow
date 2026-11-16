@@ -1,5 +1,5 @@
 ﻿import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { toPng } from "html-to-image";
 import QRCode from "qrcode";
 import {
@@ -438,7 +438,7 @@ function Runner({
   const [editorialPreview, setEditorialPreview] = useState(false);
   const [resultRestoreState, setResultRestoreState] = useState<"idle" | "loading" | "error">("idle");
   const [resultRestoreError, setResultRestoreError] = useState("");
-  const [resultPublishState, setResultPublishState] = useState<"ready" | "saving">("ready");
+  const [resultPublishState, setResultPublishState] = useState<"ready" | "saving" | "error">("ready");
   const [customerContact, setCustomerContact] = useState<
     { id: string; contactToken: string } | null
   >(null);
@@ -687,6 +687,39 @@ function Runner({
     setPhase("done");
   }
 
+  const captureCurrentResultImage = useCallback(async () => {
+    await new Promise<void>((resolve) => window.requestAnimationFrame(() => window.requestAnimationFrame(() => resolve())));
+    await document.fonts?.ready;
+    const node = emailCaptureRef.current;
+    if (!node || node.dataset.emailResultBody !== "true") throw new Error("개인 결과 캡처 영역을 확인하지 못했습니다.");
+    const images = Array.from(node.querySelectorAll("img"));
+    await Promise.all(images.map((image) => image.complete
+      ? Promise.resolve()
+      : new Promise<void>((resolve, reject) => {
+          image.addEventListener("load", () => resolve(), { once: true });
+          image.addEventListener("error", () => reject(new Error("결과 이미지 자산을 불러오지 못했습니다.")), { once: true });
+        })));
+    const width = node.scrollWidth;
+    const height = node.scrollHeight;
+    if (width < 280 || height < 600) throw new Error("개인 결과 캡처 영역의 크기가 올바르지 않습니다.");
+    const dataUrl = await toPng(node, {
+      cacheBust: true,
+      pixelRatio: 2,
+      backgroundColor: theme.bg,
+      width,
+      height,
+    });
+    if (!dataUrl.startsWith("data:image/png;base64,") || dataUrl.length < 10_000 || dataUrl.length > 24_000_000) {
+      throw new Error("개인 결과 이미지 데이터가 올바르지 않습니다.");
+    }
+    return {
+      dataUrl,
+      filename: "selah-money-result-body-v3.png",
+      imageRole: "result_body" as const,
+      sourceVersion: "body-only-v3" as const,
+    };
+  }, [theme.bg]);
+
   useEffect(() => {
     if (
       survey.slug !== "selah-money-diagnosis" ||
@@ -738,36 +771,6 @@ function Runner({
       let lastError: unknown = null;
       for (let attempt = 1; attempt <= 2 && !cancelled; attempt += 1) {
         try {
-          await new Promise<void>((resolve) => window.requestAnimationFrame(() => window.requestAnimationFrame(() => resolve())));
-          await document.fonts?.ready;
-          const node = emailCaptureRef.current;
-          if (!node || node.dataset.emailResultBody !== "true") throw new Error("개인 결과 캡처 영역을 확인하지 못했습니다.");
-          const images = Array.from(node.querySelectorAll("img"));
-          await Promise.all(images.map((image) => image.complete
-            ? Promise.resolve()
-            : new Promise<void>((resolve, reject) => {
-                image.addEventListener("load", () => resolve(), { once: true });
-                image.addEventListener("error", () => reject(new Error("결과 이미지 자산을 불러오지 못했습니다.")), { once: true });
-              })));
-          const width = node.scrollWidth;
-          const height = node.scrollHeight;
-          if (width < 280 || height < 600) throw new Error("개인 결과 캡처 영역의 크기가 올바르지 않습니다.");
-          const dataUrl = await toPng(node, {
-            cacheBust: true,
-            pixelRatio: 2,
-            backgroundColor: theme.bg,
-            width,
-            height,
-          });
-          if (!dataUrl.startsWith("data:image/png;base64,") || dataUrl.length < 10_000 || dataUrl.length > 24_000_000) {
-            throw new Error("개인 결과 이미지 데이터가 올바르지 않습니다.");
-          }
-          const emailResultImage = {
-            dataUrl,
-            filename: "selah-money-result-body-v3.png",
-            imageRole: "result_body" as const,
-            sourceVersion: "body-only-v3" as const,
-          };
           const emailContent = buildResultEmailContent({
             name,
             surveyTitle: survey.title,
@@ -776,9 +779,9 @@ function Runner({
             faith: selahResult.primaryFaithLens,
           });
           const saved = await sendStudioIntake({
-            data: { ...intakeBase, answers: { ...diagnosisAnswers, __result_image_capture: { status: "stored", version: "body-only-v3" } }, emailContent: { ...emailContent, emailResultImage } },
+            data: { ...intakeBase, answers: diagnosisAnswers, emailContent },
           });
-          if (saved.status !== "saved") throw new Error("개인 결과 이미지 저장을 완료하지 못했습니다.");
+          if (saved.status !== "saved") throw new Error("진단 결과 저장을 완료하지 못했습니다.");
           if (!cancelled) setResultPublishState("ready");
           return;
         } catch (error) {
@@ -786,30 +789,31 @@ function Runner({
         }
       }
 
-      try {
-        await sendStudioIntake({
-          data: {
-            ...intakeBase,
-            answers: {
-              ...diagnosisAnswers,
-              __result_image_capture: {
-                status: "failed",
-                error: lastError instanceof Error ? lastError.message.slice(0, 240) : "unknown",
-              },
-            },
-          },
-        });
-      } catch (error) {
-        console.warn("[selah] diagnosis result recovery record failed", error);
-      }
-      console.warn("[selah] diagnosis result image save failed", lastError);
-      if (!cancelled) setResultPublishState("ready");
+      console.warn("[selah] diagnosis result save failed", lastError);
+      if (!cancelled) setResultPublishState("error");
     })();
 
     return () => {
       cancelled = true;
     };
-  }, [answers, name, phase, responseId, result, resultPublishState, selahResult, survey, theme.bg]);
+  }, [answers, name, phase, responseId, result, resultPublishState, selahResult, survey]);
+
+  useEffect(() => {
+    if (survey.slug !== "selah-money-diagnosis" || phase !== "done" || resultRestoreState !== "idle") return;
+    const params = new URLSearchParams(window.location.search);
+    const captureNonce = params.get("captureNonce") || "";
+    const captureOrigin = params.get("captureOrigin") || "";
+    if (params.get("capture") !== "email-result-body-v3" || !captureNonce || captureOrigin !== "https://studio.selahinsight.co.kr") return;
+    let cancelled = false;
+    void captureCurrentResultImage()
+      .then((image) => {
+        if (!cancelled) window.parent.postMessage({ type: "selah-email-result-body-v3", captureNonce, image }, captureOrigin);
+      })
+      .catch((error) => {
+        if (!cancelled) window.parent.postMessage({ type: "selah-email-result-body-v3-error", captureNonce, error: error instanceof Error ? error.message : "개인 결과 이미지를 생성하지 못했습니다." }, captureOrigin);
+      });
+    return () => { cancelled = true; };
+  }, [captureCurrentResultImage, phase, resultRestoreState, survey.slug]);
 
   async function submitEmailRequest() {
     if (submitting) return;
@@ -831,6 +835,7 @@ function Runner({
     setEmailSendError(null);
     setSubmitting(true);
     try {
+      const emailResultImage = await captureCurrentResultImage();
       const emailContent = buildResultEmailContent({
         name,
         surveyTitle: survey.title,
@@ -872,7 +877,7 @@ function Runner({
           primaryFaithLensId: selahResult?.primaryFaithLens?.id,
           privacyConsent: true,
           marketingConsent,
-          emailContent,
+          emailContent: { ...emailContent, emailResultImage },
         },
       });
 
@@ -1232,6 +1237,22 @@ function Runner({
             <div className="money-loading money-result-save-loading" aria-live="polite">
               <img src="/selah-insight-logo-transparent.png" alt="Selah Insight" />
               <p>진단 결과를 준비하고 있습니다.</p>
+            </div>
+          )}
+          {isMoneyDiagnosis && resultPublishState === "error" && (
+            <div className="money-loading money-result-save-loading" aria-live="assertive">
+              <img src="/selah-insight-logo-transparent.png" alt="Selah Insight" />
+              <p>진단 결과를 저장하지 못했습니다.</p>
+              <button
+                type="button"
+                className="money-report-purchase-button"
+                onClick={() => {
+                  resultSaveRunRef.current = null;
+                  setResultPublishState("saving");
+                }}
+              >
+                다시 시도하기
+              </button>
             </div>
           )}
         <Wrap theme={theme} design={design} introMode>
