@@ -593,7 +593,13 @@ function Runner({
       })
       .catch((error) => {
         if (cancelled) return;
-        setResultRestoreError(error instanceof Error ? error.message : "진단 결과를 불러오지 못했습니다.");
+        const message = error instanceof Error ? error.message : "진단 결과를 불러오지 못했습니다.";
+        const captureNonce = params.get("captureNonce") || "";
+        const captureOrigin = params.get("captureOrigin") || "";
+        if (params.get("capture") === "email-result-body-v3" && captureNonce && captureOrigin === "https://studio.selahinsight.co.kr") {
+          window.parent.postMessage({ type: "selah-email-result-body-v3-error", captureNonce, error: message }, captureOrigin);
+        }
+        setResultRestoreError(message);
         setResultRestoreState("error");
       });
     return () => {

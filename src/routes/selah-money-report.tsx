@@ -12,6 +12,8 @@ import { LimitedLaunchPrice } from "../components/LimitedLaunchPrice";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 import { validateMoneyCoupon } from "../lib/coupon.functions";
+import { allSelahMoneyResults, customerFaithResultTitle } from "../lib/selah-money-results";
+import { loadStudioSurveyResult } from "../lib/studio-result-access.functions";
 
 export const Route = createFileRoute("/selah-money-report")({
   head: () => ({
@@ -33,6 +35,7 @@ type ReportContext = {
   faithTitle?: string;
   email?: string;
   responseId?: string;
+  resultAccessToken?: string;
 };
 
 const reportBenefits = [
@@ -80,6 +83,8 @@ const workbookSamples = [
 
 function SelahMoneyReportPage() {
   const [context, setContext] = useState<ReportContext>({});
+  const [contextState, setContextState] = useState<"loading" | "ready" | "error">("loading");
+  const [contextError, setContextError] = useState("");
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [termsConsent, setTermsConsent] = useState(false);
   const [digitalConsent, setDigitalConsent] = useState(false);
@@ -97,14 +102,47 @@ function SelahMoneyReportPage() {
   const [couponMessage, setCouponMessage] = useState("");
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const resultNumber = params.get("result")?.trim() || "";
+    const token = params.get("token")?.trim() || "";
+    if (resultNumber && token) {
+      void loadStudioSurveyResult({ data: { resultNumber, token } })
+        .then((restored) => {
+          const diagnosis = restored.answers.__diagnosis_result && typeof restored.answers.__diagnosis_result === "object"
+            ? restored.answers.__diagnosis_result as Record<string, unknown>
+            : {};
+          const moneyTypeId = restored.primaryMoneyTypeId || restored.resultTypeId || String(diagnosis.moneyResultCode || "");
+          const faithTypeId = restored.primaryFaithLensId || String(diagnosis.faithResultCode || "");
+          const resultTypes = allSelahMoneyResults();
+          const moneyType = resultTypes.find((item) => item.id === moneyTypeId);
+          const faithType = resultTypes.find((item) => item.id === faithTypeId);
+          if (!restored.name || !moneyType || !faithType) throw new Error("저장된 진단 결과 연결을 확인하지 못했습니다.");
+          const loaded = {
+            name: restored.name,
+            moneyTitle: moneyType.title,
+            faithTitle: customerFaithResultTitle(faithType.id, faithType.title),
+            responseId: restored.responseId,
+            resultAccessToken: token,
+          };
+          setContext(loaded);
+          setContextState("ready");
+        })
+        .catch((error) => {
+          setContextError(error instanceof Error ? error.message : "진단 결과 연결을 확인하지 못했습니다.");
+          setContextState("error");
+        });
+      return;
+    }
     try {
       const saved = window.sessionStorage.getItem("selahMoneyReportContext");
-      if (!saved) return;
-      const parsed = JSON.parse(saved) as ReportContext;
+      const parsed = saved ? JSON.parse(saved) as ReportContext : null;
+      if (!parsed?.name || !parsed.moneyTitle || !parsed.faithTitle || !parsed.responseId) throw new Error();
       setContext(parsed);
       setEmail(parsed.email ?? "");
+      setContextState("ready");
     } catch {
-      // Direct visits use the sample state below.
+      setContextError("연결된 진단 결과가 없습니다. 진단 결과 화면이나 결과 메일에서 다시 열어주세요.");
+      setContextState("error");
     }
   }, []);
 
@@ -123,11 +161,15 @@ function SelahMoneyReportPage() {
       });
   }, []);
 
-  const displayName = context.name?.trim() || "OOO";
-  const moneyTitle = context.moneyTitle?.trim() || "회피위로형";
-  const faithTitle = context.faithTitle?.trim() || "신앙연결형";
+  const displayName = context.name?.trim() || "";
+  const moneyTitle = context.moneyTitle?.trim() || "";
+  const faithTitle = context.faithTitle?.trim() || "";
 
   function openCheckout() {
+    if (contextState !== "ready" || !displayName || !moneyTitle || !faithTitle || !context.responseId) {
+      window.alert(contextError || "진단 결과 연결을 확인해주세요.");
+      return;
+    }
     setTermsConsent(false);
     setDigitalConsent(false);
     setCustomConsent(false);
@@ -259,10 +301,17 @@ function SelahMoneyReportPage() {
             <br />‘나만의 맞춤 리포트’가 만들어집니다
           </p>
           <span className="money-report-detail-divider" aria-hidden="true" />
-          <p className="money-report-detail-result-label">{displayName}님의 진단 결과</p>
-          <p className="money-report-detail-types">
-            {moneyTitle} <strong>×</strong> {faithTitle}
-          </p>
+          {contextState === "ready" ? (
+            <>
+              <p className="money-report-detail-result-label">{displayName}님의 진단 결과</p>
+              <p className="money-report-detail-types">{moneyTitle} <strong>×</strong> {faithTitle}</p>
+            </>
+          ) : (
+            <>
+              <p className="money-report-detail-result-label">{contextState === "loading" ? "진단 결과 연결 중" : "결과 연결 오류"}</p>
+              {contextState === "error" && <p className="money-report-detail-types">{contextError}</p>}
+            </>
+          )}
 
           <div className="money-report-detail-product">
             <img src="/selah-money-report-preview/page-01-cover.png" alt="셀라 머니 심층 리포트 표지" />

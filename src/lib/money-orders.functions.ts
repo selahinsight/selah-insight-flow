@@ -3,6 +3,8 @@ import { z } from "zod";
 import { MONEY_PRODUCTS } from "@/lib/money-products";
 import { syncPortOnePayment } from "@/lib/portone-payment.server";
 import { resolveMoneyCoupon } from "@/lib/coupon.functions";
+import { allSelahMoneyResults, customerFaithResultTitle } from "@/lib/selah-money-results";
+import { loadStoredSurveyResultInternal } from "@/lib/studio-result-access.functions";
 
 const createMoneyOrderInput = z.object({
   productCode: z.enum(["report", "workbook", "set"]),
@@ -49,6 +51,28 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
       throw new Error("판매 상품 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.");
     }
 
+    let verifiedCustomerName = data.customerName || null;
+    let verifiedMoneyType = data.moneyType || null;
+    let verifiedFaithType = data.faithType || null;
+    if (data.productCode === "report") {
+      if (!data.surveyResponseId) throw new Error("연결된 진단 결과를 확인하지 못했습니다. 진단 결과 화면에서 다시 시작해주세요.");
+      const stored = await loadStoredSurveyResultInternal(data.surveyResponseId);
+      const diagnosis = stored.answers.__diagnosis_result && typeof stored.answers.__diagnosis_result === "object"
+        ? stored.answers.__diagnosis_result as Record<string, unknown>
+        : {};
+      const moneyTypeId = stored.primaryMoneyTypeId || stored.resultTypeId || String(diagnosis.moneyResultCode || "");
+      const faithTypeId = stored.primaryFaithLensId || String(diagnosis.faithResultCode || "");
+      const resultTypes = allSelahMoneyResults();
+      const moneyType = resultTypes.find((item) => item.id === moneyTypeId);
+      const faithType = resultTypes.find((item) => item.id === faithTypeId);
+      if (stored.responseId !== data.surveyResponseId || !stored.name || !moneyType || !faithType) {
+        throw new Error("저장된 진단 결과 연결을 확인하지 못했습니다.");
+      }
+      verifiedCustomerName = stored.name;
+      verifiedMoneyType = moneyType.title;
+      verifiedFaithType = customerFaithResultTitle(faithType.id, faithType.title);
+    }
+
     const coupon = data.couponCode
       ? await resolveMoneyCoupon(data.couponCode, data.productCode, studioProduct.price_krw, data.couponPhone || "")
       : null;
@@ -64,7 +88,7 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
         product_id: studioProduct.id,
         amount_krw: finalAmount,
         buyer_email: data.email.toLowerCase(),
-        buyer_name: data.customerName || null,
+        buyer_name: verifiedCustomerName,
         buyer_phone: coupon?.valid ? coupon.phone : null,
         refund_consent_at: data.refundConsentAt,
         requested_at: now,
@@ -79,8 +103,8 @@ export const createMoneyOrder = createServerFn({ method: "POST" })
           surveyResponseId: data.surveyResponseId || null,
           survey_response_id: data.surveyResponseId || null,
           result_number: data.surveyResponseId || null,
-          moneyType: data.moneyType || null,
-          faithType: data.faithType || null,
+          moneyType: verifiedMoneyType,
+          faithType: verifiedFaithType,
           productCode: product.code,
           downloadToken: product.code === "workbook" || product.code === "set"
             ? crypto.randomUUID().replaceAll("-", "")
