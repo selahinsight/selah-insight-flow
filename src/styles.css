@@ -2051,6 +2051,10 @@
   font-weight: 500;
 }
 
+.money-result-save-loading {
+  z-index: 10000;
+}
+
 .money-intro-line {
   display: inline;
 }

@@ -29,7 +29,7 @@ const studioIntakeInput = z.object({
       dataUrl: z.string().regex(/^data:image\/(?:png|jpeg);base64,/),
       filename: z.string().min(1).max(120),
       imageRole: z.literal("result_body"),
-      sourceVersion: z.literal("body-only-v2"),
+      sourceVersion: z.literal("body-only-v3"),
     }).optional(),
   }).optional(),
 });

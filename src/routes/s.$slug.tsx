@@ -438,11 +438,13 @@ function Runner({
   const [editorialPreview, setEditorialPreview] = useState(false);
   const [resultRestoreState, setResultRestoreState] = useState<"idle" | "loading" | "error">("idle");
   const [resultRestoreError, setResultRestoreError] = useState("");
+  const [resultPublishState, setResultPublishState] = useState<"ready" | "saving">("ready");
   const [customerContact, setCustomerContact] = useState<
     { id: string; contactToken: string } | null
   >(null);
   const lastPickRef = useRef<{ qid: string; resultType: string } | null>(null);
   const emailCaptureRef = useRef<HTMLDivElement>(null);
+  const resultSaveRunRef = useRef<string | null>(null);
 
   function restartDiagnosis() {
     setI(0);
@@ -455,6 +457,8 @@ function Runner({
     setPrepCommitment(false);
     setPreviewMode(false);
     setEditorialPreview(false);
+    setResultPublishState("ready");
+    resultSaveRunRef.current = null;
     setPhase("intro");
     window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
   }
@@ -679,49 +683,133 @@ function Runner({
     setResponseId(id);
     setResult(rt);
     setSelahResult(selah);
+    if (survey.slug === "selah-money-diagnosis") setResultPublishState("saving");
     setPhase("done");
-    if (survey.slug === "selah-money-diagnosis") {
-      void sendStudioIntake({
-        data: {
-          email: null,
-          name: name.trim() || undefined,
-          responseId: id,
-          surveyId: survey.id || survey.slug,
-          surveySlug: survey.slug,
-          surveyTitle: survey.title,
-          answers: {
-            ...answersForStudio(survey, answers),
-            __contact: { email: null },
-            __consents: {
-              privacy: true,
-              sensitiveInfo: true,
-              consentVersion: "2026-08-27-v2",
-              identifiableRetention: "3_years",
-              anonymousStatisticsRetention: "indefinite",
-            },
-            ...(selah ? {
-              __diagnosis_result: {
-                scoringVersion: "2026-07-17",
-                scores: selah.scores,
-                moneyResultCode: rt?.id,
-                faithResultCode: selah.primaryFaithLens?.id,
-                includedMoneyTypeIds: selah.includedMoneyTypeIds ?? [],
-                hasMoneyTie: selah.hasMoneyTie ?? false,
-              },
-            } : {}),
-          },
-          resultTypeId: rt?.id,
-          primaryMoneyTypeId: selah?.primaryMoneyType?.id,
-          secondaryMoneyTypeId: selah?.secondaryMoneyType?.id,
-          primaryFaithLensId: selah?.primaryFaithLens?.id,
-          privacyConsent: true,
-          marketingConsent: false,
-        },
-      }).then((studioRes) => {
-        if (studioRes.status !== "saved") console.warn("[selah] diagnosis completion save was not completed", studioRes);
-      }).catch((error) => console.warn("[selah] diagnosis completion save failed", error));
-    }
   }
+
+  useEffect(() => {
+    if (
+      survey.slug !== "selah-money-diagnosis" ||
+      phase !== "done" ||
+      resultPublishState !== "saving" ||
+      !responseId ||
+      !result ||
+      !selahResult ||
+      resultSaveRunRef.current === responseId
+    ) return;
+
+    resultSaveRunRef.current = responseId;
+    let cancelled = false;
+    const diagnosisAnswers = {
+      ...answersForStudio(survey, answers),
+      __contact: { email: null },
+      __consents: {
+        privacy: true,
+        sensitiveInfo: true,
+        consentVersion: "2026-08-27-v2",
+        identifiableRetention: "3_years",
+        anonymousStatisticsRetention: "indefinite",
+      },
+      __diagnosis_result: {
+        scoringVersion: "2026-07-17",
+        scores: selahResult.scores,
+        moneyResultCode: result.id,
+        faithResultCode: selahResult.primaryFaithLens?.id,
+        includedMoneyTypeIds: selahResult.includedMoneyTypeIds ?? [],
+        hasMoneyTie: selahResult.hasMoneyTie ?? false,
+      },
+    };
+    const intakeBase = {
+      email: null,
+      name: name.trim() || undefined,
+      responseId,
+      surveyId: survey.id || survey.slug,
+      surveySlug: survey.slug,
+      surveyTitle: survey.title,
+      resultTypeId: result.id,
+      primaryMoneyTypeId: selahResult.primaryMoneyType?.id,
+      secondaryMoneyTypeId: selahResult.secondaryMoneyType?.id,
+      primaryFaithLensId: selahResult.primaryFaithLens?.id,
+      privacyConsent: true,
+      marketingConsent: false,
+    };
+
+    void (async () => {
+      let lastError: unknown = null;
+      for (let attempt = 1; attempt <= 2 && !cancelled; attempt += 1) {
+        try {
+          await new Promise<void>((resolve) => window.requestAnimationFrame(() => window.requestAnimationFrame(() => resolve())));
+          await document.fonts?.ready;
+          const node = emailCaptureRef.current;
+          if (!node || node.dataset.emailResultBody !== "true") throw new Error("개인 결과 캡처 영역을 확인하지 못했습니다.");
+          const images = Array.from(node.querySelectorAll("img"));
+          await Promise.all(images.map((image) => image.complete
+            ? Promise.resolve()
+            : new Promise<void>((resolve, reject) => {
+                image.addEventListener("load", () => resolve(), { once: true });
+                image.addEventListener("error", () => reject(new Error("결과 이미지 자산을 불러오지 못했습니다.")), { once: true });
+              })));
+          const width = node.scrollWidth;
+          const height = node.scrollHeight;
+          if (width < 280 || height < 600) throw new Error("개인 결과 캡처 영역의 크기가 올바르지 않습니다.");
+          const dataUrl = await toPng(node, {
+            cacheBust: true,
+            pixelRatio: 2,
+            backgroundColor: theme.bg,
+            width,
+            height,
+          });
+          if (!dataUrl.startsWith("data:image/png;base64,") || dataUrl.length < 10_000 || dataUrl.length > 24_000_000) {
+            throw new Error("개인 결과 이미지 데이터가 올바르지 않습니다.");
+          }
+          const emailResultImage = {
+            dataUrl,
+            filename: "selah-money-result-body-v3.png",
+            imageRole: "result_body" as const,
+            sourceVersion: "body-only-v3" as const,
+          };
+          const emailContent = buildResultEmailContent({
+            name,
+            surveyTitle: survey.title,
+            primary: result,
+            secondary: selahResult.secondaryMoneyType,
+            faith: selahResult.primaryFaithLens,
+          });
+          const saved = await sendStudioIntake({
+            data: { ...intakeBase, answers: { ...diagnosisAnswers, __result_image_capture: { status: "stored", version: "body-only-v3" } }, emailContent: { ...emailContent, emailResultImage } },
+          });
+          if (saved.status !== "saved") throw new Error("개인 결과 이미지 저장을 완료하지 못했습니다.");
+          if (!cancelled) setResultPublishState("ready");
+          return;
+        } catch (error) {
+          lastError = error;
+        }
+      }
+
+      try {
+        await sendStudioIntake({
+          data: {
+            ...intakeBase,
+            answers: {
+              ...diagnosisAnswers,
+              __result_image_capture: {
+                status: "failed",
+                error: lastError instanceof Error ? lastError.message.slice(0, 240) : "unknown",
+              },
+            },
+          },
+        });
+      } catch (error) {
+        console.warn("[selah] diagnosis result recovery record failed", error);
+      }
+      console.warn("[selah] diagnosis result image save failed", lastError);
+      if (!cancelled) setResultPublishState("ready");
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [answers, name, phase, responseId, result, resultPublishState, selahResult, survey, theme.bg]);
 
   async function submitEmailRequest() {
     if (submitting) return;
@@ -743,36 +831,6 @@ function Runner({
     setEmailSendError(null);
     setSubmitting(true);
     try {
-      let emailResultImage: {
-        dataUrl: string;
-        filename: string;
-        imageRole: "result_body";
-        sourceVersion: "body-only-v2";
-      } | undefined;
-      if (isMoneyDiagnosis && emailCaptureRef.current) {
-        await document.fonts?.ready;
-        const node = emailCaptureRef.current;
-        if (node.dataset.emailResultBody !== "true") {
-          throw new Error("이메일 결과 이미지 캡처 대상이 개인 결과 카드가 아닙니다.");
-        }
-        const dataUrl = await toPng(node, {
-          cacheBust: true,
-          pixelRatio: 2,
-          backgroundColor: theme.bg,
-          width: node.scrollWidth,
-          height: node.scrollHeight,
-        });
-        if (dataUrl.length > 24_000_000) {
-          throw new Error("결과 이미지 용량이 너무 큽니다.");
-        }
-        emailResultImage = {
-          dataUrl,
-          filename: "selah-money-result-body-v2.png",
-          imageRole: "result_body",
-          sourceVersion: "body-only-v2",
-        };
-      }
-
       const emailContent = buildResultEmailContent({
         name,
         surveyTitle: survey.title,
@@ -814,7 +872,7 @@ function Runner({
           primaryFaithLensId: selahResult?.primaryFaithLens?.id,
           privacyConsent: true,
           marketingConsent,
-          emailContent: { ...emailContent, emailResultImage },
+          emailContent,
         },
       });
 
@@ -1169,6 +1227,13 @@ function Runner({
   if (phase === "done") {
     if (result) {
       return (
+        <>
+          {isMoneyDiagnosis && resultPublishState === "saving" && (
+            <div className="money-loading money-result-save-loading" aria-live="polite">
+              <img src="/selah-insight-logo-transparent.png" alt="Selah Insight" />
+              <p>진단 결과를 준비하고 있습니다.</p>
+            </div>
+          )}
         <Wrap theme={theme} design={design} introMode>
           <div
             ref={isMoneyDiagnosis ? emailCaptureRef : undefined}
@@ -1585,6 +1650,7 @@ function Runner({
 
           {isMoneyDiagnosis && <FunnelCtas theme={theme} design={design} isMoneyDiagnosis />}
         </Wrap>
+        </>
       );
     }
 
