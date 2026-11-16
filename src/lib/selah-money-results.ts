@@ -29,6 +29,15 @@ const moneyCombinations = resultLibrary.moneyCombinationResults as ResultType[];
 const faithResults = resultLibrary.faithResults as ResultType[];
 const noClearMoneyResult = resultLibrary.noClearMoneyResult as ResultType;
 
+const baseResultTitles: Record<string, string> = {
+  organizing_delay: "정리미룸형",
+  safety_seeking: "안전추구형",
+  gaze_sensitive: "시선민감형",
+  emotional_reward: "마음보상형",
+  faith_burden: "신앙부담형",
+  faith_separation: "신앙분리형",
+};
+
 const baseResultOverrides: Record<string, Partial<ResultType>> = {
   organizing_delay: {
     interpretation: "정리미룸형은 돈을 마주할 때 부담을 크게 느끼는 편입니다.\n\n통장 잔액, 카드값, 구독, 할부 내역을 확인해야 한다는 걸 알지만, 막상 보려고 하면 머리가 복잡해지고 마음이 무거워질 수 있어요.",
@@ -65,6 +74,21 @@ export function allSelahMoneyResults(baseResults: ResultType[] = []): ResultType
     byId.set(result.id, { ...result, ...baseResultOverrides[result.id] });
   }
   return [...byId.values()];
+}
+
+export function resolveSelahMoneyResultTitle(
+  candidateIds: Array<string | null | undefined>,
+): { id: string; title: string } | undefined {
+  const resultTitles = new Map(
+    allSelahMoneyResults().map((result) => [result.id, result.title]),
+  );
+  for (const candidateId of candidateIds) {
+    const id = candidateId?.trim();
+    if (!id) continue;
+    const title = resultTitles.get(id) || baseResultTitles[id];
+    if (title) return { id, title };
+  }
+  return undefined;
 }
 
 export function classifySelahMoneyDiagnosis(

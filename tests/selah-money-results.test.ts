@@ -1,5 +1,10 @@
 import assert from "node:assert/strict";
-import { classifySelahMoneyDiagnosis, customerFaithResultTitle, MONEY_TYPE_IDS } from "../src/lib/selah-money-results";
+import {
+  classifySelahMoneyDiagnosis,
+  customerFaithResultTitle,
+  MONEY_TYPE_IDS,
+  resolveSelahMoneyResultTitle,
+} from "../src/lib/selah-money-results";
 import type { ResultType } from "../src/lib/survey-store";
 
 const singles: ResultType[] = MONEY_TYPE_IDS.map((id) => ({ id, title: id }));
@@ -82,4 +87,20 @@ assert.equal(
   "높은 신앙 조합형",
 );
 
-console.log("Selah Money scoring: 16 boundary and result cases passed");
+for (const [id, title] of [
+  ["organizing_delay", "정리미룸형"],
+  ["safety_seeking", "안전추구형"],
+  ["gaze_sensitive", "시선민감형"],
+  ["emotional_reward", "마음보상형"],
+  ["faith_burden", "신앙부담형"],
+  ["faith_separation", "신앙분리형"],
+] as const) {
+  assert.equal(resolveSelahMoneyResultTitle([id])?.title, title, `${id} 저장 결과 연결`);
+}
+assert.equal(
+  resolveSelahMoneyResultTitle(["money_combo_gaze_reward", "gaze_sensitive"])?.title,
+  "비교위로형",
+  "최종 결과 코드를 보조 유형 ID보다 우선",
+);
+
+console.log("Selah Money scoring and stored-result resolution: 23 cases passed");

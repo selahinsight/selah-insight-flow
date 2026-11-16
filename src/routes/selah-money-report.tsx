@@ -12,7 +12,7 @@ import { LimitedLaunchPrice } from "../components/LimitedLaunchPrice";
 import { createMoneyOrder, verifyMoneyPayment } from "../lib/money-orders.functions";
 import { requestMoneyPayment } from "../lib/portone-payment";
 import { validateMoneyCoupon } from "../lib/coupon.functions";
-import { allSelahMoneyResults, customerFaithResultTitle } from "../lib/selah-money-results";
+import { customerFaithResultTitle, resolveSelahMoneyResultTitle } from "../lib/selah-money-results";
 import { loadStudioSurveyResult } from "../lib/studio-result-access.functions";
 
 export const Route = createFileRoute("/selah-money-report")({
@@ -111,11 +111,15 @@ function SelahMoneyReportPage() {
           const diagnosis = restored.answers.__diagnosis_result && typeof restored.answers.__diagnosis_result === "object"
             ? restored.answers.__diagnosis_result as Record<string, unknown>
             : {};
-          const moneyTypeId = restored.primaryMoneyTypeId || restored.resultTypeId || String(diagnosis.moneyResultCode || "");
-          const faithTypeId = restored.primaryFaithLensId || String(diagnosis.faithResultCode || "");
-          const resultTypes = allSelahMoneyResults();
-          const moneyType = resultTypes.find((item) => item.id === moneyTypeId);
-          const faithType = resultTypes.find((item) => item.id === faithTypeId);
+          const moneyType = resolveSelahMoneyResultTitle([
+            String(diagnosis.moneyResultCode || ""),
+            restored.resultTypeId,
+            restored.primaryMoneyTypeId,
+          ]);
+          const faithType = resolveSelahMoneyResultTitle([
+            String(diagnosis.faithResultCode || ""),
+            restored.primaryFaithLensId,
+          ]);
           if (!restored.name || !moneyType || !faithType) throw new Error("저장된 진단 결과 연결을 확인하지 못했습니다.");
           const loaded = {
             name: restored.name,
