@@ -452,15 +452,28 @@ function Runner({
     setResult(undefined);
     setSelahResult(undefined);
     setResponseId(undefined);
+    setName("");
+    setEmail("");
+    setPrivacyConsent(false);
+    setSensitiveInfoConsent(false);
+    setMarketingConsent(false);
     setEmailSaved(false);
     setEmailSendError(null);
     setPrepCommitment(false);
+    setSubmitting(false);
+    setStarting(false);
     setPreviewMode(false);
     setEditorialPreview(false);
+    setResultRestoreState("idle");
+    setResultRestoreError("");
     setResultPublishState("ready");
+    setCustomerContact(null);
+    lastPickRef.current = null;
     resultSaveRunRef.current = null;
-    setPhase("intro");
-    window.requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+    window.sessionStorage.removeItem("selahMoneyReportContext");
+    window.sessionStorage.removeItem("selahMoneyPendingOrder");
+    window.sessionStorage.removeItem("selahMoneyCheckoutConsent");
+    window.location.assign("/s/selah-money-diagnosis");
   }
 
   useEffect(() => {
@@ -978,7 +991,7 @@ function Runner({
             type="button"
             className="money-report-purchase-button"
             style={{ ...btnPrimary, marginTop: 28 }}
-            onClick={() => window.location.assign("/s/selah-money-d")}
+            onClick={restartDiagnosis}
           >
             무료 진단 다시하기
           </button>

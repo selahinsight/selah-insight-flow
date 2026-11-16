@@ -177,7 +177,9 @@ function SelahMoneySetPage() {
   function restartDiagnosis() {
     setEmail("");
     window.sessionStorage.removeItem("selahMoneyReportContext");
-    window.location.assign("/s/selah-money-d");
+    window.sessionStorage.removeItem("selahMoneyPendingOrder");
+    window.sessionStorage.removeItem("selahMoneyCheckoutConsent");
+    window.location.assign("/s/selah-money-diagnosis");
   }
 
   return (
