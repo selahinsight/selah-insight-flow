@@ -156,7 +156,9 @@ function SelahMoneySetPage() {
       );
       window.sessionStorage.setItem("selahMoneyPendingOrder", JSON.stringify(order));
       if (order.amount === 0) {
-        window.alert("100% 쿠폰이 적용되었습니다. 결제 없이 주문이 완료되었으며, 워크북은 이메일로 제공되고 맞춤 리포트는 24시간 이내 보내드립니다.");
+        window.alert(order.deliveryEmailStatus === "sent"
+          ? "100% 쿠폰이 적용되었습니다. 주문이 완료되었고 워크북 이메일을 발송했습니다. 맞춤 리포트는 24시간 이내 보내드립니다."
+          : "100% 쿠폰이 적용되었습니다. 주문은 완료되었으며 워크북 이메일 발송 상태를 확인하고 있습니다. 맞춤 리포트는 24시간 이내 보내드립니다.");
         setCheckoutOpen(false);
         return;
       }

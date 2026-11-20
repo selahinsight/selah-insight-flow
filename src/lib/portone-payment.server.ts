@@ -101,6 +101,9 @@ export async function syncPortOnePayment(paymentId: string, source: "browser" | 
   }
   if (source === "browser" && !paid) throw new Error(`결제 상태가 완료가 아닙니다: ${paymentStatus}`);
 
+  const orderMetadata = order.metadata && typeof order.metadata === "object" && !Array.isArray(order.metadata)
+    ? order.metadata as Record<string, unknown>
+    : {};
   let delivery: { downloadUrl: string; emailStatus: string } | null = null;
   if (paid) {
     const { provisionWorkbookDelivery } = await import("@/lib/workbook-delivery.server");
@@ -108,7 +111,7 @@ export async function syncPortOnePayment(paymentId: string, source: "browser" | 
       id: order.id,
       buyer_email: order.buyer_email,
       delivery_status: order.delivery_status,
-      metadata: order.metadata,
+      metadata: orderMetadata,
     });
   }
 
@@ -119,6 +122,6 @@ export async function syncPortOnePayment(paymentId: string, source: "browser" | 
     status,
     downloadUrl: delivery?.downloadUrl || null,
     deliveryEmailSent: delivery?.emailStatus === "sent",
-    productCode: typeof order.metadata?.productCode === "string" ? order.metadata.productCode : null,
+    productCode: typeof orderMetadata.productCode === "string" ? orderMetadata.productCode : null,
   };
 }
